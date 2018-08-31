@@ -1,0 +1,15 @@
+classes:
+  - jenkins.client.job.vnf-onboarding.deploy_cloudify
+parameters:
+  _param:
+    cluster_public_protocol: https
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+    vnf_gerrit_credentials: "gerrit"
+    vnf_openstack_api_url: "${_param:cluster_public_protocol}://${_param:cluster_public_host}:5000/v2.0"
+    vnf_openstack_api_credentials: "test-openstack"
+    vnf_openstack_api_admin_credentials: "admin-openstack"
+    vnf_openstack_ssh_key_credentials: "openstack_key"
+    vnf_elastic_url: "${_param:stacklight_log_address}:${_param:cluster_elasticsearch_port}"
+    vnf_docker_registry_path: "${_param:mcp_docker_registry}/mirantis/vnf-onboarding"
+    vnf_artifactory_url: "https://artifactory.mcp.mirantis.net/artifactory/vnf-onboarding-sandbox"
+    contrail_api_url: "http://127.0.0.1:8082"

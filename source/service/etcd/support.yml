@@ -1,0 +1,15 @@
+parameters:
+  etcd:
+    _support:
+      prometheus:
+        enabled: true
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      grafana:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true

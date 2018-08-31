@@ -1,0 +1,23 @@
+parameters:
+  linux:
+    network:
+      bridge: openvswitch
+      interface:
+        br-dvs:
+          enabled: true
+          type: ovs_bridge
+  neutron:
+    gateway:
+      bridge_mappings:
+        dvs: br-dvs
+      dvr: false
+      agents:
+        dhcp:
+          dhcp_driver: vmware_nsx.plugins.dvs.dhcp.Dnsmasq
+      services:
+        - 'neutron-metadata-agent'
+        - 'neutron-dhcp-agent'
+      pkgs:
+        - 'neutron-dhcp-agent'
+        - 'openvswitch-common'
+        - 'neutron-metadata-agent'

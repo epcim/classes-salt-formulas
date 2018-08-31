@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    billometer_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          user:
+            billometer:
+              password: ${_param:keystone_billometer_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            billometer:
+              type: billing
+              description: OpenStack Billing Service
+              endpoints:
+                billometer_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:9753/v1
+                  region: ${_param:openstack_region}
+                billometer_internal:
+                  interface: 'internal'
+                  url: ${_param:billometer_service_protocol}://${_param:billometer_service_host}:9753/v1
+                  region: ${_param:openstack_region}
+                billometer_admin:
+                  interface: 'admin'
+                  url: ${_param:billometer_service_protocol}://${_param:billometer_service_host}:9753/v1
+                  region: ${_param:openstack_region}

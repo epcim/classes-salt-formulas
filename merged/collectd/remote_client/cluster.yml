@@ -1,0 +1,26 @@
+applications:
+- collectd
+classes:
+- collectd.remote_client.output.heka
+parameters:
+  collectd:
+    remote_client:
+      automatic_starting: false
+      enabled: true
+      read_interval: 10
+      read_threads: 10
+      use_fqdn: false
+      write_queue_limit_high: 10000
+      write_queue_limit_low: 10000
+  keepalived:
+    cluster:
+      instance:
+        stacklight_monitor_vip:
+          notify_action:
+            backup:
+            - remote_collectd stop
+            fault:
+            - remote_collectd stop
+            master:
+            - remote_collectd start
+

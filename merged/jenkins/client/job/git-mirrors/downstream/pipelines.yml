@@ -1,0 +1,15 @@
+classes:
+  - jenkins.client.job.git-mirrors.downstream
+parameters:
+  _param:
+    gerrit_pipeline_library_repo: https://github.com/Mirantis/pipeline-library
+    gerrit_mk_pipelines_repo: https://github.com/Mirantis/mk-pipelines
+    jenkins_git_mirror_downstream_jobs:
+      - name: pipeline-library
+        downstream: mcp-ci/pipeline-library
+        upstream: "${_param:gerrit_pipeline_library_repo}"
+        branches: master
+      - name: mk-pipelines
+        downstream: mk/mk-pipelines
+        upstream: "${_param:gerrit_mk_pipelines_repo}"
+        branches: master

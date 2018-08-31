@@ -1,0 +1,8 @@
+applications:
+- watchdog
+parameters:
+  watchdog:
+    server:
+      enabled: true
+      run_wd_keepalive: 0
+

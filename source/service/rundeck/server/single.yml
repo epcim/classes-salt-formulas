@@ -1,0 +1,21 @@
+applications:
+  - rundeck
+classes:
+  - service.rundeck.common
+  - service.rundeck.support
+parameters:
+  rundeck:
+    server:
+      enabled: true
+      users:
+        admin:
+          name: ${_param:rundeck_admin_username}
+          password: ${_param:rundeck_admin_password}
+          roles:
+            - user
+            - admin
+            - architect
+            - deploy
+            - build
+      tokens:
+        admin: ${_param:rundeck_admin_token}

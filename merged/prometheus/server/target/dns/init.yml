@@ -1,0 +1,6 @@
+classes:
+- prometheus.server.target.dns.alertmanager
+- prometheus.server.target.dns.prometheus
+- prometheus.server.target.dns.pushgateway
+- prometheus.server.target.dns.remote_agent
+- prometheus.server.target.dns.remote_storage_adapter

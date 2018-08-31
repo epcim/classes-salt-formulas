@@ -1,0 +1,9 @@
+applications:
+- python
+parameters:
+  python:
+    environment:
+      enabled: true
+      module:
+        development: False
+        django: False

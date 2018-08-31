@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    docker_keycloak_network_subnet: 10.70.0.0/24
+  docker:
+    client:
+      network:
+        keycloak_backend:
+          subnet: ${_param:docker_keycloak_network_subnet}
+          driver: overlay
+          attachable: true
+

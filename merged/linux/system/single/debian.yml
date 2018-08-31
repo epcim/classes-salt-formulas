@@ -1,0 +1,36 @@
+classes:
+- linux.system.single
+
+# DEBIAN family overrides
+parameters:
+  linux:
+    system:
+      package:
+        apt-transport-https:
+          version: latest
+        cloud-init:
+          version: purged
+        mcelog:
+          version: latest
+        python-msgpack:
+          version: latest
+        unattended-upgrades:
+          version: purged
+      apt:
+        config:
+          compression-workaround:
+            "Acquire::CompressionTypes::Order": "gz"
+          aws-s3-mirrors-workaround:
+            "Acquire::http::Pipeline-Depth": "0"
+          dont_install_recommends:
+            "APT::Install-Recommends": "false"
+          dont_install_suggests:
+            "APT::Install-Suggests": "false"
+          dont_acquire_all_languages:
+            "Acquire::Languages": "none"
+          dont_update_package_list:
+            "APT::Periodic::Update-Package-Lists": "0"
+          dont_update_download_upg_packages:
+            "APT::Periodic::Download-Upgradeable-Packages": "0"
+          disable_unattended_upgrade:
+            "APT::Periodic::Unattended-Upgrade": "0"

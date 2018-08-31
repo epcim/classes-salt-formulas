@@ -1,0 +1,16 @@
+classes:
+- nova.client
+parameters:
+  nova:
+    client:
+      server:
+        admin_identity:
+          flavor:
+            avi_ctrl.small:
+              ram: 4096
+              disk: 70
+              vcpus: 4
+            backend.avi:
+              ram: 2048
+              disk: 10
+              vcpus: 1

@@ -1,0 +1,60 @@
+applications:
+- barbican
+classes:
+- service.barbican.support
+parameters:
+  _param:
+    openstack_log_appender: false
+    openstack_fluentd_handler_enabled: false
+    openstack_ossyslog_handler_enabled: false
+    keystone_barbican_endpoint_type: internalURL
+    barbican_service_protocol: 'http'
+  barbican:
+    server:
+      enabled: true
+      version: ${_param:barbican_version}
+      region: ${_param:openstack_region}
+      host_href: "${_param:barbican_service_protocol}://${_param:single_address}:9311"
+      is_proxied: false
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          watchedfile:
+            enabled: true
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+      bind:
+        address: ${_param:single_address}
+        port: 9311
+        admin_port: 9312
+      database:
+        engine: "mysql+pymysql"
+        host: ${_param:single_address}
+        port: 3306
+        name: barbican
+        user: barbican
+        password: ${_param:mysql_barbican_password}
+        sql_idle_timeout: 180
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        port: 35357
+        domain: default
+        tenant: service
+        user: barbican
+        password: ${_param:keystone_barbican_password}
+        endpoint_type: ${_param:keystone_barbican_endpoint_type}
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+      cache:
+        members:
+        - host: ${_param:single_address}
+          port: 11211
+

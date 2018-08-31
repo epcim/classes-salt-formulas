@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        ohryhorov:
+          enabled: true
+          name: ohryhorov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Oleh Hryhorov
+          home: /home/ohryhorov
+          email: ohryhorov@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        ohryhorov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDURrVLvo44rOSe/2GBh69SPS06Jam21dJrunM9TzuxcHkw7u/rVLMA+pDMMwu/x2n8fFkW7wrd3/6QH7cLOGt1Xw4PDfFA17ZGmV7HwZ1XOeoux2+47TFkGeHyeHOqf7xKMW4o35tKDXd5uipW9opl7+Zm/l7ucd6TKnGjh9vA3nD9xqF8Gxb6qvY7W35EFMPAwU9sK9lMwM/LkuUJirEP11sIK38OoEC2aysNtXZyKdQ9LgmBWZGbaCod0LzgAJd29zQOxWOHHWOE7PK4zHVWYN3AxfiIWSg2mxqARMnqZpPulqbgwVETxLsJJSnPOvvTwoVggimxXh1HPUI7wUnb ohryhorov@ohryhorov-pc
+          user: ${linux:system:user:ohryhorov}

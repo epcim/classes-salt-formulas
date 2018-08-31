@@ -1,0 +1,15 @@
+parameters:
+  salt:
+    master:
+      environment:
+        prd:
+          formula:
+            fluentd:
+              source: pkg
+              name: salt-formula-fluentd
+            prometheus:
+              source: pkg
+              name: salt-formula-prometheus
+            telegraf:
+              source: pkg
+              name: salt-formula-telegraf

@@ -1,0 +1,14 @@
+classes:
+- salt.minion.cert.libvirtd
+parameters:
+  nova:
+    compute:
+      libvirt:
+        tls:
+          enabled: True
+          key_file: ${_param:libvirtd_server_ssl_key_file}
+          cert_file: ${_param:libvirtd_server_ssl_cert_file}
+          ca_file: ${_param:libvirtd_ssl_ca_file}
+          client:
+            key_file: ${_param:libvirtd_client_ssl_key_file}
+            cert_file: ${_param:libvirtd_client_ssl_cert_file}

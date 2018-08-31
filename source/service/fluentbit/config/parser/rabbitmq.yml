@@ -1,0 +1,21 @@
+classes:
+- service.fluentbit.config
+
+parameters:
+  fluentbit:
+    config:
+      parser:
+        rabbitmq.conf:
+          rabbitmq:
+            format: regex
+            # https://regex101.com/r/
+            regex: '^=(?<severity>[^ ]\w+)\s+REPORT[=\s]*(?<log_time>[^ =]*)\s*[=]+(?<message>.*)$'
+            time_key: log_time
+            time_format: ${_param:fluentbit_config_timeformat}
+            time_keep: 'Off'
+            #types:
+            #  - 'serverity:string'
+            #  - 'message:string'
+    service:
+      parsers_file:
+        - 'parser_rabbitmq.conf'

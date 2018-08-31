@@ -1,0 +1,18 @@
+classes:
+  - jenkins.client.job.deploy.update.package
+  - jenkins.client.job.deploy.update.config
+  - jenkins.client.job.deploy.update.saltenv
+  - jenkins.client.job.deploy.update.update_salt_environment
+  - jenkins.client.job.deploy.update.update_mirror_image
+  - jenkins.client.job.deploy.update.upgrade
+  - jenkins.client.job.deploy.update.upgrade_compute
+  - jenkins.client.job.deploy.update.upgrade_mcp_release
+  - jenkins.client.job.deploy.update.upgrade_ovs_gateway
+  - jenkins.client.job.deploy.update.upgrade_opencontrail
+  - jenkins.client.job.deploy.update.upgrade_opencontrail4_0
+  - jenkins.client.job.deploy.update.restore_mysql
+  - jenkins.client.job.deploy.update.restore_cassandra
+  - jenkins.client.job.deploy.update.restore_zookeeper
+  - jenkins.client.job.deploy.update.virt_snapshot
+  - jenkins.client.job.deploy.update.cloud_update
+  - jenkins.client.job.deploy.update.kubernetes_update

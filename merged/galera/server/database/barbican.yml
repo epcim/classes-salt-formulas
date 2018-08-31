@@ -1,0 +1,19 @@
+parameters:
+  _param:
+    mysql_barbican_ssl_option: []
+  mysql:
+    server:
+      database:
+        barbican:
+          encoding: utf8
+          users:
+          - name: barbican
+            password: ${_param:mysql_barbican_password}
+            host: '%'
+            rights: all
+            ssl_option: ${_param:mysql_barbican_ssl_option}
+          - name: barbican
+            password: ${_param:mysql_barbican_password}
+            host: ${_param:cluster_vip_address}
+            rights: all
+            ssl_option: ${_param:mysql_barbican_ssl_option}

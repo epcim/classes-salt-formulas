@@ -1,0 +1,21 @@
+parameters:
+  cinder:
+    _support:
+      collectd:
+        enabled: true
+      fluentd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      config:
+        enabled: true
+      grafana:
+        enabled: true
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true

@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    nagios_default_host_alarm_clusters: 00-clusters
+    nagios_host_dimension_key: nagios_host
+    nagios_username: nagiosadmin
+  heka:
+    aggregator:
+      nagios_default_host_alarm_clusters: ${_param:nagios_default_host_alarm_clusters}
+      nagios_host: ${_param:nagios_host}
+      nagios_host_dimension_key: ${_param:nagios_host_dimension_key}
+      nagios_password: ${_param:nagios_password}
+      nagios_username: ${_param:nagios_username}
+

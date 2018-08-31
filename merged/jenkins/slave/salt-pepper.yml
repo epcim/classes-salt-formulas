@@ -1,0 +1,8 @@
+ classes:
+   - jenkins.slave
+ parameters:
+   linux:
+     system:
+       package:
+         salt-pepper:
+           version: latest

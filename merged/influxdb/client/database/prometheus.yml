@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    influxdb_prometheus_rp_duration: 30d
+  influxdb:
+    client:
+      database:
+        prometheus:
+          enabled: true
+          name: prometheus
+          retention_policy:
+          - name: lma
+            is_default: true
+            duration: ${_param:influxdb_prometheus_rp_duration}
+            replication: 1
+      user:
+        lma:
+          enabled: true
+          name: lma
+          password: ${_param:influxdb_stacklight_password}
+      grant:
+        lma_all_on_prometheus:
+          enabled: true
+          user: lma
+          database: prometheus
+          privilege: all

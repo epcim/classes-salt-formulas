@@ -1,0 +1,70 @@
+applications:
+- kubernetes
+classes:
+- service.kubernetes.support
+- service.kubernetes.common
+parameters:
+  kubernetes:
+    master:
+      enabled: true
+      unschedulable: true
+      registry:
+        host: tcpcloud
+      host:
+        name: ${linux:system:name}
+      service_addresses: 10.254.0.0/16
+      admin:
+        username: ${_param:kubernetes_admin_user}
+        password: ${_param:kubernetes_admin_password}
+      kubelet:
+        address: ${_param:cluster_local_address}
+        allow_privileged: True
+        fail_on_swap: True
+      apiserver:
+        address: ${_param:cluster_local_address}
+        bind_address: 0.0.0.0
+        vip_address: ${_param:cluster_vip_address}
+        secure_port: 6443
+        internal_address: ${_param:kubernetes_internal_api_address}
+        insecure_address: 127.0.0.1
+        insecure_port: 8080
+        count: 3
+      etcd:
+        members:
+          - host: ${_param:cluster_node01_address}
+            name: ${_param:cluster_node01_hostname}
+          - host: ${_param:cluster_node02_address}
+            name: ${_param:cluster_node02_hostname}
+          - host: ${_param:cluster_node03_address}
+            name: ${_param:cluster_node03_hostname}
+      token:
+        admin: ${_param:kubernetes_admin_token}
+        kubelet: ${_param:kubernetes_kubelet_token}
+        kube_proxy: ${_param:kubernetes_kube-proxy_token}
+        scheduler: ${_param:kubernetes_scheduler_token}
+        controller_manager: ${_param:kubernetes_controller-manager_token}
+        dns: ${_param:kubernetes_dns_token}
+      ca: kubernetes
+      storage:
+        engine: none
+      namespace:
+        kube-system:
+          enabled: True
+      network:
+        calico:
+          etcd:
+            members:
+            - host: ${_param:cluster_node01_address}
+              port: 4001
+            - host: ${_param:cluster_node02_address}
+              port: 4001
+            - host: ${_param:cluster_node03_address}
+              port: 4001
+      federation:
+        enabled: False
+        name: federation
+        namespace: federation-system
+        source: https://dl.k8s.io/v1.6.2/kubernetes-client-linux-amd64.tar.gz
+        hash: f8ef17b8b4bb8f6974fa2b3faa992af3c39ad318c30bdfe1efab957361d8bdfe
+        service_type: NodePort
+        dns_provider: coredns

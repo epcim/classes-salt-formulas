@@ -1,0 +1,49 @@
+applications:
+- maas
+classes:
+- maas.cluster.single
+parameters:
+  _param:
+    maas_admin_username: mirantis
+    maas_region_main_archive: http://mirror.mirantis.com/${_param:apt_mk_version}/ubuntu/
+  maas:
+    cluster:
+      enabled: true
+      region:
+        host: ${_param:single_address}
+        port: 5242
+      role: master
+    region:
+      admin:
+        email: email@example.com
+        password: ${_param:maas_admin_password}
+        username: ${_param:maas_admin_username}
+      bind:
+        host: ${_param:single_address}
+        port: 80
+      database:
+        engine: postgresql
+        host: localhost
+        name: maasdb
+        password: ${_param:maas_db_password}
+        username: maas
+      enable_iframe: true
+      enabled: true
+      maas_config:
+        active_discovery_interval: 600
+        commissioning_distro_series: xenial
+        default_distro_series: xenial
+        default_min_hwe_kernel: ""
+        default_osystem: ubuntu
+        default_storage_layout: lvm
+        disk_erase_with_secure_erase: true
+        dnssec_validation: "no"
+        enable_http_proxy: false
+        enable_third_party_drivers: true
+        maas_name: mas01
+        main_archive: ${_param:maas_region_main_archive}
+        ntp_external_only: true
+        upstream_dns: ${_param:dns_server01}
+      salt_master_ip: ${_param:infra_config_deploy_address}
+      theme: mirantis
+

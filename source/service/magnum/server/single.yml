@@ -1,0 +1,10 @@
+applications:
+- magnum
+classes:
+- service.magnum.support
+parameters:
+  magnum:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

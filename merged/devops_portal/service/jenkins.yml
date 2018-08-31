@@ -1,0 +1,20 @@
+parameters:
+  _param:
+    oss_jenkins_user: admin
+    oss_jenkins_password: password
+  devops_portal:
+    config:
+      service:
+        jenkins:
+          configure_proxy: true
+          proxy_connect_timeout: 300
+          proxy_send_timeout: 300
+          proxy_read_timeout: 300
+          send_timeout: 300
+          endpoint:
+            address: ${_param:haproxy_jenkins_bind_host}
+            port: ${_param:haproxy_jenkins_bind_port}
+            https: ${_param:haproxy_jenkins_ssl:enabled}
+          credentials:
+            username: ${_param:oss_jenkins_user}
+            password: ${_param:oss_jenkins_password}

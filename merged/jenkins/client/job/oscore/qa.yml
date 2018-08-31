@@ -1,0 +1,184 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        oscore-build-docker-image:
+          name: "{{job_prefix}}-{{oscore-qa-project}}-build-docker-image"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 25
+              artifact:
+                keep_num: 25
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: build-docker-image-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  mcp/{{oscore-qa-project}}:
+                    branches:
+                      - master
+                      - pike
+                event:
+                  change:
+                    - merged
+            param:
+              GIT_URL:
+                type: string
+                default: "ssh://mcp-ci-gerrit@gerrit.mcp.mirantis.net:29418/mcp/{{oscore-qa-project}}"
+              GIT_REF:
+                type: string
+                default: "master"
+              GIT_CREDS_ID:
+                type: string
+                default: "mcp-ci-gerrit"
+              IMAGE_NAME:
+                type: string
+                default: "mirantis/oscore/{{oscore-qa-project}}"
+              IMAGE_TAG:
+                type: string
+                default: ""
+              DOCKER_REGISTRY:
+                type: string
+                default: "docker-prod-local.docker.mirantis.net"
+        oscore-docker-image-systest-template:
+          name: "{{job_prefix}}-{{oscore-qa-project}}-image-systest-{{model}}"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: test-tempest-image-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  mcp/{{oscore-qa-project}}:
+                    branches:
+                      - master
+                      - pike
+                event:
+                  patchset:
+                    - created
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+                custom_url: '* $JOB_NAME $BUILD_URL'
+            param:
+              # general
+              BOOTSTRAP_EXTRA_REPO_PARAMS:
+                type: string
+                description: Extra repos for bootstrap stage
+                default: ""
+              CREDENTIALS_ID:
+                type: string
+                description: gerrit creds
+                default: "gerrit"
+              GERRIT_PROJECT_URL:
+                type: string
+                description: Url to project with docker image source
+                default: ""
+              GERRIT_BRANCH:
+                type: string
+                description: Branch of project with docker image source
+                default: ""
+              HEAT_STACK_ZONE:
+                type: string
+                description: AZ
+                default: "mcp-oscore-ci"
+              STACK_TEST_JOB:
+                type: string
+                description: Job for environment deployment
+                default: "{{stack_test_job}}"
+              STACK_TYPE:
+                type: string
+                default: "heat"
+              STACK_INSTALL:
+                type: string
+                description: components to install
+                default: 'core,openstack,ovs'
+              STACK_DELETE:
+                type: boolean
+                default: 'true'
+                description: Don't enable it if you need to use the lab after
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: '{{stack_reclass_address}}'
+                description: 'Url to repository with stack salt models'
+              STACK_RECLASS_BRANCH:
+                type: string
+                default: '{{stack_reclass_branch}}'
+                description: 'Branch of repository with stack salt models'
+              STACK_CLEANUP_JOB:
+                type: string
+                default: "{{stack_cleanup_job}}"
+              # salt
+              FORMULA_PKG_REVISION:
+                type: string
+                description: Version of formulas for salt-master bootstrap
+                default: "{{formula_pkg_revision}}"
+              UPLOAD_CREDENTIALS_ID:
+                type: string
+                description: ID of credentials to connect to target host
+                default: "heat-env-ssh"
+              # openstack api
+              OPENSTACK_API_URL:
+                type: string
+                default: "https://cloud-cz.bud.mirantis.net:5000"
+              OPENSTACK_API_CREDENTIALS:
+                type: string
+                default: "openstack-devcloud-credentials"
+              OPENSTACK_API_PROJECT:
+                type: string
+                default: "mcp-oscore-ci"
+              OPENSTACK_API_PROJECT_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_PROJECT_ID:
+                type: string
+                default: ""
+              OPENSTACK_API_USER_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_CLIENT:
+                type: string
+                default: ""
+              OPENSTACK_API_VERSION:
+                type: string
+                default: "3"
+              # test
+              TEST_CONF:
+                type: string
+                description: Tempest configuration file path inside container
+                default: "{{test_conf}}"
+              TEST_TARGET:
+                type: string
+                description: Node to run tests
+                default: "{{test_target}}"
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+                default: "{{model}}"
+              FAIL_ON_TESTS:
+                type: boolean
+                default: 'true'
+                description: Whether to fail build on test results
+              SALT_MASTER_IP:
+                type: string
+                description: Ip of env's salt master
+                default: ""

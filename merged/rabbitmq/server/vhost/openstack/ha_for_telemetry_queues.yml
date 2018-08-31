@@ -1,0 +1,10 @@
+parameters:
+  rabbitmq:
+    server:
+      host:
+        '/openstack':
+          policies:
+          - name: ha-notif
+            pattern: '^(alarm|alarming|event|metering|notifications)\.'
+            definition: '{"ha-mode":"all", "ha-sync-mode":"automatic"}'
+            priority: 0

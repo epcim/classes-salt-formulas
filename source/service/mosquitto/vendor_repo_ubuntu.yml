@@ -1,0 +1,7 @@
+parameters:
+  linux:
+    system:
+      repo:
+        mosquitto:
+          source: deb http://ppa.launchpad.net/mosquitto-dev/mosquitto-ppa/ubuntu trusty main
+          key: 262C4500

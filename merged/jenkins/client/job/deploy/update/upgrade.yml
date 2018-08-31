@@ -1,0 +1,55 @@
+#
+# Jobs to update packages on given Salt master environment
+#
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+  jenkins:
+    client:
+      job:
+        deploy-upgrade-control:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          display_name: "Deploy - upgrade control VMs"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: openstack-control-upgrade.groovy
+          param:
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            STAGE_TEST_UPGRADE:
+              type: boolean
+              default: 'true'
+              description: "Test if syncdb and APIs succeed"
+            STAGE_REAL_UPGRADE:
+              type: boolean
+              default: 'true'
+              description: "Run real control upgrade"
+            STAGE_ROLLBACK_UPGRADE:
+              type: boolean
+              default: 'true'
+              description: "Rollback if control upgrade fails"
+            OPERATING_SYSTEM_RELEASE_UPGRADE:
+              type: boolean
+              default: 'false'
+              description: "Set to true if operating system release upgrade is desired. For ex. from Ubuntu 14.04 currently running on ctl and prx nodes to Ubuntu 16.04"
+            SKIP_VM_RELAUNCH:
+              type: boolean
+              default: 'false'
+              description: "Set to true if vms should not be recreated"
+            INTERACTIVE:
+              type: boolean
+              default: 'true'
+              description: "Ask interactive questions during pipeline run (bool)"

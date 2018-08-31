@@ -1,0 +1,12 @@
+parameters:
+  prometheus:
+    server:
+      target:
+        dns:
+          enabled: true
+          endpoint:
+            - name: 'alertmanager'
+              domain:
+              - 'tasks.monitoring_alertmanager'
+              type: A
+              port: ${prometheus:alertmanager:bind:port}

@@ -1,0 +1,15 @@
+applications:
+- ceph
+classes:
+- ceph.common.single
+- ceph.support
+parameters:
+  ceph:
+    osd:
+      enabled: true
+    common:
+      keyring:
+        bootstrap_osd:
+          name: "bootstrap-osd"
+          caps:
+            mon: "allow profile bootstrap-osd"

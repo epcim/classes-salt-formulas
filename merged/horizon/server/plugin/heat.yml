@@ -1,0 +1,13 @@
+parameters:
+  horizon:
+    server:
+      plugin:
+        heat:
+          source:
+            engine: pkg
+            name: python-heat-dashboard
+      policy:
+        orchestration:
+          enabled: true
+          name: heat_policy.json
+          source: file

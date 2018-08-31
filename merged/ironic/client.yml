@@ -1,0 +1,7 @@
+applications:
+  - ironic
+parameters:
+  ironic:
+    client:
+      enabled: True
+      cloud_name: admin_identity

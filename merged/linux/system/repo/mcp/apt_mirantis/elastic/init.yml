@@ -1,0 +1,3 @@
+classes:
+- linux.system.repo.mcp.apt_mirantis.elastic.2x
+- linux.system.repo.mcp.apt_mirantis.elastic.5x

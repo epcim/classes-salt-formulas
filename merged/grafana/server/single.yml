@@ -1,0 +1,30 @@
+applications:
+- grafana
+parameters:
+  _param:
+    grafana_password: admin
+    grafana_port: 3000
+    grafana_user: admin
+  grafana:
+    server:
+      admin:
+        password: ${_param:grafana_password}
+        user: ${_param:grafana_user}
+      auth:
+        basic:
+          enabled: true
+      bind:
+        address: ${_param:single_address}
+        port: ${_param:grafana_port}
+      dashboards:
+        enabled: false
+        path: /var/lib/grafana/dashboards
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: grafana
+        password: ${_param:mysql_grafana_password}
+        port: 3306
+        user: grafana
+      enabled: true
+

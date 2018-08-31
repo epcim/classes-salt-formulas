@@ -1,0 +1,76 @@
+applications:
+- kubernetes
+classes:
+- haproxy.proxy.single
+- haproxy.proxy.listen.kubernetes.apiserver
+- keepalived.cluster.instance.kube_api_server_vip
+- kubernetes.master.common
+parameters:
+  kubernetes:
+    master:
+      admin:
+        password: ${_param:kubernetes_admin_password}
+        username: ${_param:kubernetes_admin_user}
+      apiserver:
+        address: ${_param:cluster_local_address}
+        bind_address: 0.0.0.0
+        count: 3
+        insecure_address: 127.0.0.1
+        insecure_port: 8080
+        internal_address: ${_param:kubernetes_internal_api_address}
+        secure_port: 6443
+        vip_address: ${_param:cluster_vip_address}
+      ca: kubernetes
+      calico:
+        prometheus:
+          enabled: true
+      enabled: true
+      etcd:
+        members:
+        - host: ${_param:cluster_node01_address}
+          name: ${_param:cluster_node01_hostname}
+        - host: ${_param:cluster_node02_address}
+          name: ${_param:cluster_node02_hostname}
+        - host: ${_param:cluster_node03_address}
+          name: ${_param:cluster_node03_hostname}
+      federation:
+        dns_provider: coredns
+        enabled: false
+        hash: f8ef17b8b4bb8f6974fa2b3faa992af3c39ad318c30bdfe1efab957361d8bdfe
+        name: federation
+        namespace: federation-system
+        service_type: NodePort
+        source: https://dl.k8s.io/v1.6.2/kubernetes-client-linux-amd64.tar.gz
+      host:
+        name: ${linux:system:name}
+      kubelet:
+        address: ${_param:cluster_local_address}
+        allow_privileged: true
+        fail_on_swap: true
+      namespace:
+        kube-system:
+          enabled: true
+      network:
+        calico:
+          etcd:
+            members:
+            - host: ${_param:cluster_node01_address}
+              port: 4001
+            - host: ${_param:cluster_node02_address}
+              port: 4001
+            - host: ${_param:cluster_node03_address}
+              port: 4001
+      registry:
+        host: tcpcloud
+      service_addresses: 10.254.0.0/16
+      storage:
+        engine: none
+      token:
+        admin: ${_param:kubernetes_admin_token}
+        controller_manager: ${_param:kubernetes_controller-manager_token}
+        dns: ${_param:kubernetes_dns_token}
+        kube_proxy: ${_param:kubernetes_kube-proxy_token}
+        kubelet: ${_param:kubernetes_kubelet_token}
+        scheduler: ${_param:kubernetes_scheduler_token}
+      unschedulable: true
+

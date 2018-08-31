@@ -1,0 +1,28 @@
+classes:
+- nova.client
+parameters:
+  nova:
+    client:
+      server:
+        admin_identity:
+          flavor:
+            MetaswitchMDM:
+              ram: 4096
+              disk: 20
+              vcpus: 2
+            MetaswitchMSC:
+              ram: 4096
+              disk: 30
+              vcpus: 2
+            MetaswitchDCM:
+              ram: 1024
+              disk: 10
+              vcpus: 1
+            MetaswitchSSC:
+              ram: 4096
+              disk: 80
+              vcpus: 2
+            backend.metaswitch:
+              ram: 2048
+              disk: 10
+              vcpus: 1

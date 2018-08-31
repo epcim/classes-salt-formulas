@@ -1,0 +1,29 @@
+applications:
+- heka
+classes:
+- heka.server
+parameters:
+  _param:
+    ceilometer_collector_max_message_size: 262144
+    ceilometer_collector_poolsize: 100
+  heka:
+    ceilometer_collector:
+      amqp_host: ${_param:openstack_message_queue_address}
+      amqp_password: ${_param:rabbitmq_openstack_password}
+      amqp_port: 5672
+      amqp_queue: metering.sample
+      amqp_user: openstack
+      amqp_vhost: /openstack
+      automatic_starting: true
+      elasticsearch_host: ${_param:stacklight_log_address}
+      enabled: true
+      influxdb_database: ceilometer
+      influxdb_host: ${_param:stacklight_telemetry_address}
+      influxdb_password: ${_param:ceilometer_influxdb_password}
+      influxdb_port: 8086
+      influxdb_time_precision: ms
+      influxdb_username: ceilometer
+      max_message_size: ${_param:ceilometer_collector_max_message_size}
+      poolsize: ${_param:ceilometer_collector_poolsize}
+      resource_decoding: true
+

@@ -1,0 +1,9 @@
+parameters:
+  _param:
+    salt_control_cluster_rng_backend: "/dev/random"
+  salt:
+    control:
+      cluster:
+        internal:
+          rng:
+            backend: ${_param:salt_control_cluster_rng_backend}

@@ -1,0 +1,26 @@
+applications:
+- xtrabackup
+classes:
+- openssh.client.root
+parameters:
+  _param:
+    xtrabackup_qpress_source: tar
+    xtrabackup_qpress_source_name: http://www.quicklz.com/qpress-11-linux-x64.tar
+    xtrabackup_remote_server: cfg01
+  xtrabackup:
+    client:
+      compression: true
+      compression_threads: 2
+      database:
+        password: ${_param:galera_server_admin_password}
+        user: root
+      enabled: true
+      full_backups_to_keep: 3
+      hours_before_full: 48
+      hours_before_incr: 12
+      qpress:
+        name: ${_param:xtrabackup_qpress_source_name}
+        source: ${_param:xtrabackup_qpress_source}
+      target:
+        host: ${_param:xtrabackup_remote_server}
+

@@ -1,0 +1,56 @@
+#
+# Jobs to update cloud packages on given Salt master environment
+#
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+    kubernetes_hyperkube_repo: docker-prod-virtual.docker.mirantis.net/mirantis/kubernetes
+  jenkins:
+    client:
+      job:
+        deploy-k8s-upgrade:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          display_name: "Deploy - update kubernetes cluster"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: k8s-upgrade-pipeline.groovy
+          param:
+            KUBERNETES_HYPERKUBE_IMAGE:
+              type: string
+              default: "${_param:kubernetes_hyperkube_repo}/hyperkube-amd64:v1.10.4-4"
+              description: "Versioned image to update control plane from. Should be null if update rolling via reclass-system level"
+            KUBERNETES_PAUSE_IMAGE:
+              type: string
+              default: "${_param:kubernetes_hyperkube_repo}/pause-amd64:v1.10.4-4"
+              description: "Versioned pause image to use in deployments. Should be null if update rolling via reclass-system level"
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt-qa-credentials"
+            PER_NODE:
+              type: boolean
+              default: 'true'
+              description: "Target nodes will be managed one by one"
+            TARGET_UPDATES:
+              type: string
+              default: "ctl,cmp"
+              description: "Comma separated list of nodes to update (Valid values are ctl,cmp)"
+            CTL_TARGET:
+              type: string
+              default: "I@kubernetes:master"
+              description: "Salt targeted kubernetes CTL nodes (ex. I@kubernetes:master). Kubernetes control plane"
+            CMP_TARGET:
+              type: string
+              default: "cmp* and I@kubernetes:pool"
+              description: "Salt targeted compute nodes (ex. 'cmp* and I@kubernetes:pool') Kubernetes computes"

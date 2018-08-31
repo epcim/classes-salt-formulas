@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_mcp_kibana_46_version: ${_param:apt_mk_version}
+  linux:
+    system:
+      repo:
+        mcp_kibana_46:
+          source: "deb [arch=amd64] http://mirror.mirantis.com/${_param:linux_system_repo_mcp_kibana_46_version}/kibana-4.6/${_param:linux_system_codename}/ stable main"
+          architectures: amd64
+          key_id: D88E42B4
+          key_server: keyserver.ubuntu.com
+          clean_file: true

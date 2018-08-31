@@ -1,0 +1,11 @@
+applications:
+  - fluentd
+classes:
+ - service.fluentd
+ - service.fluentd.support
+parameters:
+  fluentd:
+    agent:
+      enabled: true
+      dir:
+        positiondb: /var/lib/fluentd/positiondb

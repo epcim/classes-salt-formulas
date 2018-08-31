@@ -1,0 +1,19 @@
+parameters:
+  docker:
+    _support:
+      fluentd:
+        enabled: true
+      telegraf:
+        enabled: true
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      grafana:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      prometheus:
+        enabled: true

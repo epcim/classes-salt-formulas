@@ -1,0 +1,10 @@
+classes:
+ - manila.common.cluster
+parameters:
+  manila:
+    common:
+      dhss: false
+      version: ${_param:openstack_version}
+    share:
+      enabled: true
+      version: ${_param:openstack_version}

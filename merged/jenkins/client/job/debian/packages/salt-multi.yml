@@ -1,0 +1,144 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        build-debian-salt-multibranch:
+          name: build-debian-salt-formula-{{name}}-ubuntu-{{dist}}
+          jobs:
+            - name: ceilometer
+              upload_source_package: false
+              dist: trusty
+            - name: cinder
+              upload_source_package: false
+              dist: trusty
+            - name: glance
+              upload_source_package: false
+              dist: trusty
+            - name: heat
+              upload_source_package: false
+              dist: trusty
+            - name: horizon
+              upload_source_package: false
+              dist: trusty
+            - name: keystone
+              upload_source_package: false
+              dist: trusty
+            - name: kubernetes
+              upload_source_package: false
+              dist: trusty
+            - name: neutron
+              upload_source_package: false
+              dist: trusty
+            - name: nova
+              upload_source_package: false
+              dist: trusty
+            - name: swift
+              upload_source_package: false
+              dist: trusty
+            - name: ceilometer
+              upload_source_package: true
+              dist: xenial
+            - name: cinder
+              upload_source_package: true
+              dist: xenial
+            - name: glance
+              upload_source_package: true
+              dist: xenial
+            - name: heat
+              upload_source_package: true
+              dist: xenial
+            - name: horizon
+              upload_source_package: true
+              dist: xenial
+            - name: keystone
+              upload_source_package: true
+              dist: xenial
+            - name: kubernetes
+              upload_source_package: true
+              dist: xenial
+            - name: neutron
+              upload_source_package: true
+              dist: xenial
+            - name: nova
+              upload_source_package: true
+              dist: xenial
+            - name: swift
+              upload_source_package: false
+              dist: xenial
+          template:
+            discard:
+              build:
+                keep_num: 10
+              artifact:
+                keep_num: 10
+            type: workflow-scm
+            concurrent: false
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: build-debian-packages-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  salt-formulas/{{name}}:
+                    branches:
+                      - master
+                      - debian/{{dist}}
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+                event:
+                  ref:
+                    - updated
+            param:
+              SOURCE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/salt-formulas/{{name}}.git"
+              SOURCE_BRANCH:
+                type: string
+                default: "master"
+              SOURCE_CREDENTIALS:
+                type: string
+                default: "gerrit"
+              DEBIAN_BRANCH:
+                type: string
+                default: 'debian/{{dist}}'
+              DEBIAN_SNAPSHOT:
+                type: boolean
+                default: 'true'
+              EXTRA_REPO_URL:
+                type: string
+                default: "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3 xenial main; deb ${_param:jenkins_aptly_url}/{{dist}}/ testing salt"
+              EXTRA_REPO_KEY_URL:
+                type: string
+                default: "https://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3/SALTSTACK-GPG-KEY.pub; ${_param:jenkins_aptly_url}/public.gpg"
+              APTLY_URL:
+                type: string
+                default: "${_param:jenkins_aptly_api_url}"
+              APTLY_REPO:
+                type: string
+                default: "ubuntu-{{dist}}-salt"
+              OS:
+                type: string
+                default: "ubuntu"
+              DIST:
+                type: string
+                default: "{{dist}}"
+              ARCH:
+                type: string
+                default: "amd64"
+              PPA:
+                type: string
+                default: "salt-formulas/ppa"
+              UPLOAD_PPA:
+                type: boolean
+                default: 'true'
+              UPLOAD_APTLY:
+                type: boolean
+                default: '{{upload_source_package}}'
+              DEBUG:
+                type: boolean
+                default: 'false'

@@ -1,0 +1,54 @@
+applications:
+- glance
+classes:
+- service.glance.control.storage.file
+- service.glance.support
+parameters:
+  _param:
+    keystone_glance_endpoint_type: internalURL
+    openstack_log_appender: false
+    openstack_fluentd_handler_enabled: false
+    openstack_ossyslog_handler_enabled: false
+  glance:
+    server:
+      enabled: true
+      version: ${_param:glance_version}
+      workers: 1
+      database:
+        engine: mysql
+        host: localhost
+        port: 3306
+        name: glance
+        user: glance
+        password: ${_param:mysql_glance_password}
+      registry:
+        host: ${_param:single_address}
+        port: 9191
+      bind:
+        address: ${_param:single_address}
+        port: 9292
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        port: 35357
+        user: glance
+        password: ${_param:keystone_glance_password}
+        region: RegionOne
+        tenant: service
+        endpoint_type: ${_param:keystone_glance_endpoint_type}
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          watchedfile:
+            enabled: true
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'

@@ -1,0 +1,67 @@
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+  jenkins:
+    client:
+      job:
+        deploy_openstack:
+          type: workflow-scm
+          name: deploy-openstack
+          display_name: "Deploy - OpenStack"
+          discard:
+            build:
+              keep_num: 50
+          concurrent: true
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: cloud-deploy-pipeline.groovy
+          param:
+            # deployments and test settings
+            STACK_TYPE:
+              type: string
+              default: "physical"
+            STACK_INSTALL:
+              type: string
+              default: "core,kvm,openstack,stacklight"
+              description: "Components to be installed. Valid values are 'core,kvm,k8s,openstack,contrail,ovs,ceph,oss,cicd,stacklight,sl-legacy,finalize'. For all deployments it's recommended to run 'finalize' as a final step as Salt highstate on all nodes will be run."
+            # salt master
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            ASK_ON_ERROR:
+                type: boolean
+                default: 'false'
+            STATIC_MGMT_NETWORK:
+                type: boolean
+                default: 'false'
+                description: "Check if model contains static IP address definitions for all nodes"
+        deploy-openstack-compute:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 50
+          display_name: "Deploy - OpenStack Compute node"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: openstack-compute-install.groovy
+          param:
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            TARGET_SERVERS:
+              type: string
+              default: ""
+              description: "Salt compound target to match nodes to be updated [*, G@osfamily:debian]."

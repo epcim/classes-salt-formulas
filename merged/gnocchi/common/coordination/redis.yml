@@ -1,0 +1,7 @@
+parameters:
+  _param:
+    gnocchi_coordination_url: redis://${_param:single_address}:6379
+  gnocchi:
+    common:
+      coordination_backend:
+        url: ${_param:gnocchi_coordination_url}

@@ -1,0 +1,26 @@
+applications:
+- foreman
+parameters:
+  foreman:
+    server:
+      enabled: true
+      domain: ${_param:foreman_server_domain}
+      fqdn: ${_param:foreman_server_host}
+      bind:
+        address: 0.0.0.0
+        port: 8080
+      database:
+        engine: postgresql
+        host: 127.0.0.1
+        name: foreman
+        password: ${_param:postgresql_foreman_password}
+        user: foreman
+      cache:
+        engine: 'memcached'
+        host: '127.0.0.1'
+        prefix: 'CACHE_FOREMAN'
+      mail:
+        host: mail.domain.com
+        password: passwd
+        user: robot@domain.com
+        domain: domain.com

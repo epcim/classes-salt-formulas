@@ -1,0 +1,21 @@
+classes:
+  - postfix.support
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: false
+      myorigin: ${linux:system:name}.${linux:system:domain}
+      myhostname: ${postfix:server:myorigin}
+      message_size_limit: 25000000
+      amavis:
+        enabled: false
+      mailman:
+        enabled: false
+    relay:
+      enabled: false
+    backupmx:
+      enabled: true
+      queue:
+        lifetime: 5d

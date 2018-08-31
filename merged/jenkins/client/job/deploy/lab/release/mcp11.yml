@@ -1,0 +1,125 @@
+classes:
+  - jenkins.client.job.deploy.lab.deploy
+parameters:
+  _param:
+    jenkins_deploy_jobs:
+      - stack_name: virtual_mcp_contrail
+        stack_env: devcloud_mcp11_contrail
+        stack_install: core,openstack,contrail
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_dvr
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_ovs
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_ironic_small
+        stack_env: devcloud
+        stack_install: core,openstack
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_ironic_ssl_small
+        stack_env: devcloud
+        stack_install: core,openstack
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_aio_manila
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_aio_telemetry
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_aio
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp11_k8s_calico
+        stack_env: devcloud
+        stack_install: core,k8s,calico
+        stack_type: heat
+        stack_test: k8s
+        job_timer: "H H(0-6) * * *"
+      - stack_name: virtual_mcp11_k8s_contrail
+        stack_env: devcloud
+        stack_install: core,k8s,contrail
+        stack_type: heat
+        stack_test: k8s
+        job_timer: "H H(0-6) * * *"
+      - stack_name: virtual_mcp11_contrail_nfv
+        stack_env: devcloud_virtual_mcp11_contrail_nfv
+        stack_install: core,openstack,contrail
+        stack_type: heat
+        stack_test: ""
+        job_timer: "H H(0-6) * * *"
+      - stack_name: virtual_mcp11_ovs_dpdk
+        stack_env: devcloud_virtual_mcp11_ovs_dpdk
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: "H H(0-6) * * *"
+      - stack_name: virtual_mcp_mitaka_ovs
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_mitaka_dvr
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_newton_ovs
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_newton_dvr
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_pike_dvr
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_pike_dvr_ssl
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_pike_dvr_ssl_barbican
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp_pike_ovs
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""

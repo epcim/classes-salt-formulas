@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    designate_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            designate:
+              password: ${_param:keystone_designate_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            designate:
+                type: dns
+                description: OpenStack DNS service
+                endpoints:
+                  designate_public:
+                    interface: 'public'
+                    url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:9001/
+                    region: ${_param:openstack_region}
+                  designate_internal:
+                    interface: 'internal'
+                    url: ${_param:designate_service_protocol}://${_param:designate_service_host}:9001/
+                    region: ${_param:openstack_region}
+                  designate_admin:
+                    interface: 'admin'
+                    url: ${_param:designate_service_protocol}://${_param:designate_service_host}:9001/
+                    region: ${_param:openstack_region}

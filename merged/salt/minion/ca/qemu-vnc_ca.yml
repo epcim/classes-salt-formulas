@@ -1,0 +1,30 @@
+parameters:
+  _param:
+    qemu_vnc_ca_common_name: QEMU VNC CA
+    qemu_vnc_ca_country: cz
+    qemu_vnc_ca_locality: Prague
+    qemu_vnc_ca_organization: Mirantis
+    qemu_vnc_ca_days_valid_authority: 3650
+    qemu_vnc_ca_days_valid_certificate: 365
+  salt:
+    minion:
+      ca:
+        qemu_vnc_ca:
+          # We recommend using a dedicated certificate authority solely for the VNC service.
+          # This authority may be a child of the master certificate authority used for the OpenStack deployment.
+          # This is because libvirt does not currently have a mechanism to restrict what certificates can be presented by the proxy server.
+          # https://docs.openstack.org/nova/queens/admin/remote-console-access.html
+          common_name: ${_param:qemu_vnc_ca_common_name}
+          country: ${_param:qemu_vnc_ca_country}
+          locality: ${_param:qemu_vnc_ca_locality}
+          organization: ${_param:qemu_vnc_ca_organization}
+          signing_policy:
+            cert_server:
+              type: v3_edge_cert_server
+              minions: '*'
+            cert_client:
+              type: v3_edge_cert_client
+              minions: 'ctl*'
+          days_valid:
+            authority: ${_param:qemu_vnc_ca_days_valid_authority}
+            certificate: ${_param:qemu_vnc_ca_days_valid_certificate}

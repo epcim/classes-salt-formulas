@@ -1,0 +1,10 @@
+applications:
+- odoo
+classes:
+- service.odoo.support
+parameters:
+  odoo:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

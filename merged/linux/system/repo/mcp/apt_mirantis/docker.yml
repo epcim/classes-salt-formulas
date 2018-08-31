@@ -1,0 +1,14 @@
+classes:
+- linux.system.repo.keystorage.docker
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_url: http://mirror.mirantis.com/${_param:apt_mk_version}/
+    linux_system_repo_mcp_docker_url: ${_param:linux_system_repo_url}/docker/
+  linux:
+    system:
+      repo:
+        mcp_docker:
+          source: "deb [arch=amd64] ${_param:linux_system_repo_mcp_docker_url}/${_param:linux_system_codename}/ ${_param:linux_system_codename} stable"
+          architectures: amd64
+          clean_file: true

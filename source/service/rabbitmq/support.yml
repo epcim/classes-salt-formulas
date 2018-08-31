@@ -1,0 +1,23 @@
+parameters:
+  rabbitmq:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      iptables:
+        enabled: true
+      config:
+        enabled: true
+      grafana:
+        enabled: true
+      telegraf:
+        enabled: true
+      prometheus:
+        enabled: true
+      fluentd:
+        enabled: true

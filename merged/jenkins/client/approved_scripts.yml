@@ -1,0 +1,162 @@
+parameters:
+  jenkins:
+    client:
+      approved_scripts:
+        - field java.lang.String value
+        - field java.util.ArrayList size
+        - method com.cloudbees.jenkins.plugins.sshcredentials.SSHUserPrivateKey getPrivateKey
+        - method com.cloudbees.plugins.credentials.common.IdCredentials getId
+        - method com.cloudbees.plugins.credentials.common.PasswordCredentials getPassword
+        - method com.cloudbees.plugins.credentials.common.UsernameCredentials getUsername
+        - method groovy.json.JsonBuilder toPrettyString
+        - method groovy.json.JsonSlurperClassic parseText java.lang.String
+        - method groovy.lang.GString getBytes
+        - method groovy.lang.GroovyObject getProperty java.lang.String
+        - method groovy.util.Node get java.lang.String
+        - method groovy.util.Node attributes
+        - method groovy.util.XmlParser parse java.io.File
+        - method groovy.util.XmlParser parseText java.lang.String
+        - method hudson.EnvVars get java.lang.String java.lang.String
+        - method hudson.PluginManager getPlugins
+        - method hudson.PluginWrapper getShortName
+        - method hudson.model.Hudson getSlaves
+        - method hudson.model.Item getName
+        - method hudson.model.ItemGroup getItem java.lang.String
+        - method hudson.model.ItemGroup getItems
+        - method hudson.model.Job getBuildByNumber int
+        - method hudson.model.Job getBuilds
+        - method hudson.model.Job getLastBuild
+        - method hudson.model.Node getLabelString
+        - method hudson.model.Node getNodeName
+        - method hudson.model.Run getEnvironment
+        - method hudson.model.Run getId
+        - method hudson.model.Run getNumber
+        - method hudson.model.Run getResult
+        - method hudson.model.Run getTimeInMillis
+        - method hudson.model.Run isBuilding
+        - method java.io.File getAbsolutePath
+        - method java.io.File getName
+        - method java.io.File getParent
+        - method java.io.Writer write java.lang.String
+        - method java.lang.AutoCloseable close
+        - method java.lang.Class isInstance java.lang.Object
+        - method java.lang.Iterable iterator
+        - method java.lang.Throwable printStackTrace
+        - method java.net.HttpURLConnection getResponseCode
+        - method java.net.HttpURLConnection setRequestMethod java.lang.String
+        - method java.net.URI getHost
+        - method java.net.URI getPort
+        - method java.net.URL openConnection
+        - method java.net.URLConnection getHeaderField java.lang.String
+        - method java.net.URLConnection getInputStream
+        - method java.net.URLConnection getOutputStream
+        - method java.net.URLConnection setDoOutput boolean
+        - method java.net.URLConnection setRequestProperty java.lang.String java.lang.String
+        - method java.util.Collection remove java.lang.Object
+        - method java.util.Collection stream
+        - method java.util.Date getTime
+        - method java.util.LinkedHashMap$LinkedHashIterator hasNext
+        - method java.util.List add int java.lang.Object
+        - method java.util.List subList int int
+        - method java.util.Map containsValue java.lang.Object
+        - method java.util.Map get java.lang.Object
+        - method java.util.Map remove java.lang.Object
+        - method java.util.Map size
+        - method java.util.Map isEmpty
+        - method java.util.regex.MatchResult group int
+        - method java.util.regex.MatchResult groupCount
+        - method java.util.regex.Matcher find
+        - method java.util.regex.Matcher group java.lang.String
+        - method java.util.regex.Matcher matches
+        - method java.util.regex.Pattern matcher java.lang.CharSequence
+        - method java.util.stream.Stream collect java.util.stream.Collector
+        - method java.util.Calendar add int int
+        - method java.util.Calendar getTime
+        - method java.util.Date before java.util.Date
+        - method java.text.DateFormat parse java.lang.String
+        - method jenkins.model.Jenkins getItemByFullName java.lang.String
+        - method jenkins.model.Jenkins getPluginManager
+        - method org.jenkinsci.plugins.workflow.job.WorkflowRun doStop
+        - method org.jenkinsci.plugins.workflow.job.WorkflowRun finish hudson.model.Result java.lang.Throwable
+        - method org.jenkinsci.plugins.workflow.support.actions.EnvironmentAction getEnvironment
+        - method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper build
+        - new groovy.json.JsonBuilder
+        - new groovy.json.JsonBuilder java.lang.Object
+        - new groovy.json.JsonSlurperClassic
+        - new groovy.util.XmlParser
+        - new java.io.File java.lang.String
+        - new java.io.File java.lang.String java.lang.String
+        - new java.io.IOException java.lang.String
+        - new java.io.OutputStreamWriter java.io.OutputStream
+        - new java.lang.Exception java.lang.String
+        - new java.lang.InterruptedException
+        - new java.lang.RuntimeException java.lang.String
+        - new java.lang.StringBuilder
+        - new java.lang.StringBuilder int
+        - new java.net.URI java.lang.String
+        - new java.util.ArrayList
+        - new java.util.Date
+        - new java.util.HashMap
+        - new java.text.SimpleDateFormat java.lang.String java.util.Locale
+        - staticField groovy.io.FileType FILES
+        - staticMethod com.cloudbees.plugins.credentials.CredentialsProvider lookupCredentials java.lang.Class hudson.model.ItemGroup
+        - staticMethod java.lang.Double parseDouble java.lang.String
+        - staticMethod java.lang.Integer valueOf int
+        - staticMethod java.lang.Integer valueOf java.lang.String
+        - staticMethod java.lang.Math min int int
+        - staticMethod java.lang.String format java.lang.String java.lang.Object[]
+        - staticMethod java.lang.String valueOf int
+        - staticMethod java.lang.System exit int
+        - staticMethod java.lang.System getProperty java.lang.String
+        - staticMethod java.lang.System getenv java.lang.String
+        - staticMethod java.util.regex.Pattern compile java.lang.String
+        - staticMethod java.util.regex.Pattern quote java.lang.String
+        - staticMethod java.util.stream.Collectors joining java.lang.CharSequence
+        - staticMethod jenkins.model.Jenkins getInstance
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods asBoolean java.util.regex.Matcher
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods collect java.util.Map groovy.lang.Closure
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods eachFile java.io.File groovy.io.FileType groovy.lang.Closure
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods find java.util.Collection groovy.lang.Closure
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods findAll java.util.List groovy.lang.Closure
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods get java.util.Map java.lang.Object java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Iterable int
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.String int
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.util.List groovy.lang.Range
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getBytes java.io.File
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.InputStream
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods hasProperty java.lang.Object java.lang.String
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods iterator java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods iterator java.lang.Object[]
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods leftShift java.lang.StringBuffer java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods plus java.util.List java.lang.Iterable
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods plus java.util.List java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods plus java.util.List java.util.Collection
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods println java.lang.Object java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods putAt java.lang.Object java.lang.String java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods readLines java.lang.String
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods sort java.util.Collection
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods split java.lang.String
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods takeRight java.util.List int
+        - staticMethod org.codehaus.groovy.runtime.EncodingGroovyMethods encodeBase64 byte[]
+        - staticMethod org.codehaus.groovy.runtime.ScriptBytecodeAdapter bitwiseNegate java.lang.Object
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toBoolean java.lang.Boolean
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object java.lang.String
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods multiply java.lang.String java.lang.Number
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods minus java.lang.String java.lang.Object
+        - method java.io.File listFiles
+        - method java.lang.String concat java.lang.String
+        - method org.jenkinsci.plugins.workflow.steps.FlowInterruptedException getCauses
+        - method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild
+        - method hudson.model.Actionable getAction java.lang.Class
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toSorted java.lang.Iterable
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods intersect java.util.List java.lang.Iterable
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods reverse java.util.List
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.util.Collection java.lang.String
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods init java.util.List
+        - staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods asBoolean java.lang.CharSequence
+        - staticMethod hudson.model.Hudson getInstance
+        - method hudson.model.Job getProperty java.lang.Class
+        - method hudson.model.ParametersDefinitionProperty getParameterDefinitions
+        - method hudson.model.ParameterDefinition getName
+        - method hudson.model.StringParameterDefinition getDefaultValue
+        - method java.util.Collection toArray

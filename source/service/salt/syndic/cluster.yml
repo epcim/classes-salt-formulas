@@ -1,0 +1,6 @@
+parameters:
+  _param:
+    salt_syndic_enabled: true
+  salt:
+    syndic:
+      enabled: ${_param:salt_syndic_enabled}

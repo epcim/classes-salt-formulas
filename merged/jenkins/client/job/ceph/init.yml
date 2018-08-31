@@ -1,0 +1,7 @@
+classes:
+- jenkins.client.job.ceph.remove-osd
+- jenkins.client.job.ceph.replace-failed-osd
+- jenkins.client.job.ceph.add-node
+- jenkins.client.job.ceph.remove-node
+- jenkins.client.job.ceph.upgrade
+- jenkins.client.job.ceph.backend-migration

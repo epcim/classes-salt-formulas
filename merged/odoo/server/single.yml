@@ -1,0 +1,54 @@
+applications:
+- odoo
+classes:
+- odoo.support
+- postgresql.server.local
+- python.environment
+parameters:
+  _param:
+    postgresql_odoo_password: password
+  python:
+    environment:
+      development: true
+  odoo:
+    server:
+      enabled: true
+      workers: 1
+      bind:
+        address: localhost
+        protocol: tcp
+        port: 8069
+      enabled: true
+      source:
+        engine: git
+        address: https://www.github.com/odoo/odoo
+      database:
+        engine: postgres
+        host: 127.0.0.1
+        name: odoo
+        password: ${_param:postgresql_odoo_password}
+        user: odoo
+      mail:
+        engine: console
+  postgresql:
+    server:
+      database:
+        odoo:
+          enabled: true
+          encoding: 'UTF8'
+          locale: 'cs_CZ'
+          users:
+          - name: odoo
+            password: ${_param:postgresql_odoo_password}
+            host: localhost
+            createdb: true
+            rights: all privileges
+  nginx:
+    server:
+      site:
+        odoo_server:
+          enabled: true
+          type: odoo
+          name: odoo
+          host:
+            name: odoo.com

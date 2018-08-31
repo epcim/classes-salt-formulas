@@ -1,0 +1,7 @@
+classes:
+  - jenkins.client.job.salt-formulas.git-mirrors.2way
+parameters:
+  _param:
+    salt_formulas_branches: "master"
+    salt_formulas_extra_branches: "master,debian/xenial,debian/trusty"
+    salt_formulas_notification_recipients: "ci-notifications@mirantis.com"

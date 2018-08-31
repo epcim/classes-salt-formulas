@@ -1,0 +1,36 @@
+parameters:
+  _param:
+    gnocchi_api_workers: 2
+    apache_ssl:
+      enabled: false
+    apache_gnocchi_ssl: ${_param:apache_ssl}
+    apache_gnocchi_api_host: ${linux:network:fqdn}
+    apache_gnocchi_api_address: ${_param:single_address}
+    apache_gnocchi_api_port: 8041
+  apache:
+    server:
+      site:
+        gnocchi:
+          enabled: false
+          available: true
+          type: wsgi
+          name: gnocchi
+          ssl: ${_param:apache_gnocchi_ssl}
+          host:
+            name: ${_param:apache_gnocchi_api_host}
+            address: ${_param:apache_gnocchi_api_address}
+            port: ${_param:apache_gnocchi_api_port}
+          log:
+            custom:
+              format: >-
+                %v:%p %{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %D %O \"%{Referer}i\" \"%{User-Agent}i\"
+          wsgi:
+            daemon_process: gnocchi-api
+            processes: ${_param:gnocchi_api_workers}
+            threads: 10
+            user: gnocchi
+            group: gnocchi
+            display_name: '%{GROUP}'
+            script_alias: '/ /usr/bin/gnocchi-api'
+            application_group: '%{GLOBAL}'
+            authorization: 'On'

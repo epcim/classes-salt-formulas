@@ -1,0 +1,13 @@
+parameters:
+  designate:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      config:
+        enabled: true

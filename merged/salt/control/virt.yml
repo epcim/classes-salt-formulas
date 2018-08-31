@@ -1,0 +1,82 @@
+classes:
+- libvirt.server.kvm
+parameters:
+  salt:
+    control:
+      enabled: true
+      size:
+        large:
+          cpu: 4
+          disk_profile: default
+          net_profile: default
+          ram: 8
+        medium:
+          cpu: 2
+          disk_profile: default
+          net_profile: default
+          ram: 4
+        small:
+          cpu: 1
+          disk_profile: default
+          net_profile: default
+          ram: 2
+      virt_enabled: true
+  virt:
+    disk:
+      default:
+      - 
+          size: 50000
+      huge:
+      - 
+          size: 1000000
+      large:
+      - 
+          size: 100000
+      medium:
+      - 
+          size: 80000
+      small:
+      - 
+          size: 50000
+      xhuge:
+      - 
+          size: 1500000
+      xlarge:
+      - 
+          size: 150000
+      xsmall:
+      - 
+          size: 30000
+      xxhuge:
+      - 
+          size: 3000000
+      xxlarge:
+      - 
+          size: 300000
+      xxsmall:
+      - 
+          size: 15000
+      xxxhuge:
+      - 
+          size: 4000000
+      xxxlarge:
+      - 
+          size: 500000
+      xxxsmall:
+      - 
+          size: 8000
+      xxxxhuge:
+      - 
+          size: 5000000
+      xxxxlarge:
+      - 
+          size: 700000
+    nic:
+      default:
+        eth0:
+          bridge: br1
+          model: virtio
+        eth1:
+          bridge: br0
+          model: virtio
+

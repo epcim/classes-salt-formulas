@@ -1,0 +1,8 @@
+applications:
+- sphinx
+classes:
+- service.sphinx.support
+parameters:
+  sphinx:
+    server:
+      enabled: true

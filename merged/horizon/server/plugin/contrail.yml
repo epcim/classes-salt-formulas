@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    opencontrail_version: 3.2
+  horizon:
+    server:
+      plugin:
+        contrail:
+          source:
+            engine: pkg
+            name: openstack-dashboard-contrail-panels
+          opencontrail_version: ${_param:opencontrail_version}
+        horizon_overrides:
+          overrides:
+          - contrail_openstack_dashboard
+      openstack_neutron_network:
+        enable_fip_topology_check: False

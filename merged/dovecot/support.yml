@@ -1,0 +1,13 @@
+parameters:
+  dovecot:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: true
+      iptables:
+        enabled: true

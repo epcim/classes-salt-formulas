@@ -1,0 +1,17 @@
+classes:
+- service.fluentbit.config
+
+parameters:
+  fluentbit:
+    config:
+      parser:
+        glance.conf:
+          glance:
+            format: regex
+            regex: '^(?<log_time>[^ ][-.\d\+:T]+[ ]*[.:\d]*)\s+(?<pid>[^ ]\d+)\s+(?<severity>[^ ][.-_\w]+)\s+(?<component>[^ ][.-_\w]+)(\s+\[(-|(?<req_id>[^ ][-\w]*) (?<req_user>[^ ][-\w]*) (?<req_project>[^ ][-\w]*) (?<req_domain>[^ ][-\w]*) (?<req_user_domain>[^ ][-\w]*) (?<req_project_domain>[^ ][-\w]*))\]){1}\s+(?<message>.*)$'
+            time_key: log_time
+            time_format: ${_param:fluentbit_config_timeformat}
+            time_keep: 'Off'
+    service:
+      parsers_file:
+        - 'parser_glance.conf'

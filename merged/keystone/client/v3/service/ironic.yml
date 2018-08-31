@@ -1,0 +1,34 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    keystone_service_protocol: http
+    ironic_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            ironic:
+              password: ${_param:keystone_ironic_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          service:
+            ironic:
+              type: baremetal
+              description: OpenStack Baremetal Service
+              endpoints:
+                ironic_public:
+                  internface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:6385
+                  region: ${_param:openstack_region}
+                ironic_internal:
+                  internface: 'internal'
+                  url: ${_param:ironic_service_protocol}://${_param:ironic_service_host}:6385
+                  region: ${_param:openstack_region}
+                ironic_admin:
+                  internface: 'admin'
+                  url: ${_param:ironic_service_protocol}://${_param:ironic_service_host}:6385
+                  region: ${_param:openstack_region}

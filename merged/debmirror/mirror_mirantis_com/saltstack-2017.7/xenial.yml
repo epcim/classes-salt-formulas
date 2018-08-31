@@ -1,0 +1,21 @@
+parameters:
+  _param:
+    apt_mk_version: 'stable'
+    mirror_mirantis_com_saltstack_2017_7_xenial_force: False
+    debmirror_mirrors_base_target_dir: "/srv/volumes/aptly/public/${_param:apt_mk_version}/"
+  debmirror:
+    client:
+      enabled: true
+      mirrors:
+        mirror_mirantis_com_saltstack_2017_7_xenial:
+          force: ${_param:mirror_mirantis_com_saltstack_2017_7_xenial_force}
+          lock_target: True
+          extra_flags: [ '--verbose', '--progress', '--nosource', '--no-check-gpg', '--rsync-extra=none' ]
+          method: "rsync"
+          arch: [ 'amd64' ]
+          mirror_host: "mirror.mirantis.com"
+          mirror_root: ":mirror/${_param:apt_mk_version}/saltstack-2017.7/xenial/"
+          target_dir: "${_param:debmirror_mirrors_base_target_dir}/saltstack-2017.7/xenial/"
+          log_file: "/var/log/debmirror/mirror_mirantis_com_saltstack_2017_7_xenial.log"
+          dist: [ xenial ]
+          section: [ main ]

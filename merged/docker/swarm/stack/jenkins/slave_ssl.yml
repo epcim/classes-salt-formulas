@@ -1,0 +1,17 @@
+docker:
+  client:
+    stack:
+      jenkins:
+        service:
+          slave01:
+            volumes:
+              - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+              - /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}-with-chain.crt:/etc/ssl/certs/proxy-with-chain.crt:ro
+          slave02:
+            volumes:
+              - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+              - /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}-with-chain.crt:/etc/ssl/certs/proxy-with-chain.crt:ro
+          slave03:
+            volumes:
+              - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+              - /srv/salt/pki/${_param:cluster_name}/${salt:minion:cert:proxy:common_name}-with-chain.crt:/etc/ssl/certs/proxy-with-chain.crt:ro

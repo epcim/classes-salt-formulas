@@ -1,0 +1,10 @@
+parameters:
+  salt:
+    minion:
+      acceptance_wait_time_max: 60
+      acceptance_wait_time: 10
+      random_reauth_delay: 270
+      recon_default: 1000
+      recon_max: 60000
+      recon_randomize: True
+      auth_timeout: 60

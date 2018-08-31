@@ -1,0 +1,19 @@
+parameters:
+  monasca:
+    common:
+      mysql:
+        name: monasca
+        host: localhost
+        password: ${_param:mysql_monasca_password}
+        user: monasca
+      kafka:
+        members:
+        - host: localhost
+      zookeeper:
+        members:
+        - host: localhost
+      influxdb:
+        name: monasca
+        host: localhost
+        user: monasca
+        password: ${_param:monasca_influxdb_password}

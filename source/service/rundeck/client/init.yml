@@ -1,0 +1,6 @@
+applications:
+  - rundeck
+parameters:
+  rundeck:
+    client:
+      enabled: true

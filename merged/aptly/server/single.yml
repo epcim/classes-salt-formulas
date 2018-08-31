@@ -1,0 +1,54 @@
+applications:
+- aptly
+classes:
+- nginx.server.single
+- iptables.server
+parameters:
+  _param:
+    aptly_server_mirror_sources: false
+    aptly_server_mirror_ubuntu_sources: ${_param:aptly_server_mirror_sources}
+    aptly_server_secure: true
+    nginx_aptly_server_host: ${linux:network:fqdn}
+  aptly:
+    publisher:
+      enabled: true
+    server:
+      api:
+        bind:
+          host: 127.0.0.1
+          port: 8080
+        enabled: true
+      enabled: true
+      gpg:
+        keypair_id: ${_param:aptly_gpg_keypair_id}
+        passphrase: ${_param:aptly_gpg_passphrase}
+        private_key: ${_param:aptly_gpg_private_key}
+        public_key: ${_param:aptly_gpg_public_key}
+      mirror_update:
+        enabled: true
+        hour: '*/12'
+        minute: 0
+      secure: ${_param:aptly_server_secure}
+  nginx:
+    server:
+      site:
+        aptly_api:
+          check: false
+          enabled: true
+          host:
+            name: ${_param:nginx_aptly_server_host}
+            port: 8081
+          name: aptly_api
+          proxy:
+            host: 127.0.0.1
+            port: 8080
+            protocol: http
+            size: 1G
+          type: nginx_proxy
+        aptly_server:
+          enabled: true
+          host:
+            name: ${_param:nginx_aptly_server_host}
+          name: server
+          type: aptly
+

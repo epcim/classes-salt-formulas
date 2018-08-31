@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_glance_registry_protocol: 'http'
+    nginx_proxy_openstack_glance_registry_host: ${_param:glance_service_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_glance_registry:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_glance_registry
+          check: false
+          underscores_in_headers: true
+          proxy:
+            host: ${_param:nginx_proxy_openstack_glance_registry_host}
+            port: 9191
+            protocol: ${_param:nginx_proxy_openstack_glance_registry_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 9191
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

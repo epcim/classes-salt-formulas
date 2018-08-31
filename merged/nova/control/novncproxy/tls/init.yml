@@ -1,0 +1,16 @@
+classes:
+- salt.minion.cert.vnc.novncproxy_client
+- salt.minion.cert.vnc.novncproxy_server
+parameters:
+  _param:
+    nova_vnc_tls_enabled: true
+  nova:
+    controller:
+      # Communication between noVNC proxy and client machine over TLS
+      novncproxy:
+        tls:
+          enabled: ${_param:nova_vnc_tls_enabled}
+        # Only for Queens. Communication between noVNC proxy service and QEMU
+        vencrypt:
+          tls:
+            enabled: ${_param:nova_vnc_tls_enabled}

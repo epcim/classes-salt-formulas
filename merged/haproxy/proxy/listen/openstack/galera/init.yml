@@ -1,0 +1,26 @@
+parameters:
+  _param:
+    haproxy_params_check: 'check'
+  haproxy:
+    proxy:
+      listen:
+        mysql_cluster:
+          type: mysql
+          service_name: mysql
+          balance: first
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: 3306
+          servers:
+          - name: ${_param:cluster_node01_hostname}
+            host: ${_param:cluster_node01_address}
+            port: 3306
+            params: ${_param:haproxy_params_check} inter 20s fastinter 2s downinter 2s rise 3 fall 3
+          - name: ${_param:cluster_node02_hostname}
+            host: ${_param:cluster_node02_address}
+            port: 3306
+            params: backup ${_param:haproxy_params_check} inter 20s fastinter 2s downinter 2s rise 3 fall 3
+          - name: ${_param:cluster_node03_hostname}
+            host: ${_param:cluster_node03_address}
+            port: 3306
+            params: backup ${_param:haproxy_params_check} inter 20s fastinter 2s downinter 2s rise 3 fall 3

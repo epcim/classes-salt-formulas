@@ -1,0 +1,17 @@
+parameters:
+  kibana:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: false
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: true
+      grafana:
+        enabled: true
+      telegraf:
+        enabled: true
+      prometheus:
+        enabled: true

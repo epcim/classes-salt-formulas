@@ -1,0 +1,6 @@
+applications:
+- avinetworks
+parameters:
+  avinetworks:
+    server:
+      enabled: true

@@ -1,0 +1,15 @@
+classes:
+  - jenkins.client.job.git-mirrors.downstream
+parameters:
+  _param:
+    gerrit_vnf_onboaring_pipelines_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/pipelines"
+    gerrit_vnf_onboaring_nfv_platform_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/nfv-platform"
+    jenkins_git_mirror_downstream_jobs:
+      - name: vnf-pipelines
+        downstream: vnf-onboarding/pipelines
+        upstream: ${_param:gerrit_vnf_onboaring_pipelines_repo}
+        branches: master
+      - name: nfv-platform
+        downstream: vnf-onboarding/nfv-platform
+        upstream: ${_param:gerrit_vnf_onboaring_nfv_platform_repo}
+        branches: master

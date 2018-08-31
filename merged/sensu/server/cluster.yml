@@ -1,0 +1,40 @@
+classes:
+- git.client
+- redis.server.single
+- rabbitmq.server.cluster
+- rabbitmq.server.vhost.monitoring
+- sensu.server.single
+parameters:
+  _param:
+    rabbitmq_secret_key: secret
+    rabbitmq_admin_password: password
+    rabbitmq_cold_password: password
+    rabbitmq_monitor_password: password
+    sensu_message_queue_host: ${_param:cluster_vip_address}
+    cluster_redis_port: 6379
+  sensu:
+   server:
+     bind:
+       address: ${_param:single_address}
+     database:
+       engine: redis
+       host: ${_param:cluster_vip_address}
+       port: ${_param:cluster_redis_port}
+  rabbitmq:
+    cluster:
+      name: 'monitoring'
+  redis:
+    server:
+      version: 3.0
+      bind:
+        address: ${_param:single_address}
+    cluster:
+      enabled: True
+      mode: sentinel
+      role: ${_param:redis_cluster_role}
+      quorum: 2
+      master:
+        host: ${_param:cluster_node01_address}
+        port: 6379
+      sentinel:
+        address: ${_param:single_address}

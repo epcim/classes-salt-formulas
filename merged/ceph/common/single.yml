@@ -1,0 +1,14 @@
+applications:
+- ceph
+parameters:
+  _param:
+    ceph_mon_node01_hostname: cmn01
+  ceph:
+    common:
+      enabled: true
+      fsid: ${_param:ceph_cluster_fsid}
+      members:
+      - host: ${_param:ceph_mon_node01_address}
+        name: ${_param:ceph_mon_node01_hostname}
+      version: ${_param:ceph_version}
+

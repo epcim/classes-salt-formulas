@@ -1,0 +1,7 @@
+parameters:
+  supervisor:
+    server:
+      service:
+        statsd_server:
+          name: server
+          type: statsd

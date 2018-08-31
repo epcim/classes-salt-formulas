@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        vdrok:
+          enabled: true
+          name: vdrok
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Vladyslav Drok
+          home: /home/vdrok
+          email: vdrok@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        vdrok:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpnn6IyistbIGnzeV3DOWR+u/QLl1cuQspwuvcl1FxeZljkdIgLXcNVzFaFHSX+rOgrOLpcFf3X+dwnB55EoUDj85IOwKz1tVoD5Df42xZMnmjnvOaAScVTStrdcWxzpB6bWt/+GWpt1br3pLpTjqZxa1YipT7tz6bs7cNKplvQuBaoYeG/x9ycRhLIhYXFYOtHD/lxwTRqHnvpwdNKRYPtfakR/kaeZEaYQoJlVcAq0AKzws8l87InoWnjGo/NrBJTvgiLQPYw6uJ9mf17p2GVv1JGCbEpPKnRLyIitdwCFjYEwAKoSsisf2TdH9iY1DWwJEuPzsvjM2ZCPcc7baV vlad@carbon
+          user: ${linux:system:user:vdrok}

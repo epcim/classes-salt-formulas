@@ -1,0 +1,8 @@
+applications:
+- ceph
+parameters:
+  ceph:
+    monitoring:
+      node_stats:
+        enabled: true
+

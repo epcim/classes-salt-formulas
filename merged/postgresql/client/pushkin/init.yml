@@ -1,0 +1,54 @@
+classes:
+  - postgresql.client
+parameters:
+  _param:
+    pushkin_db_host: ${_param:haproxy_postgresql_bind_host}
+    pushkin_db_user: pushkin
+    pushkin_db_user_password: pushkin
+  postgresql:
+    client:
+      server:
+        server01:
+          database:
+            pushkin:
+              enabled: true
+              encoding: 'UTF8'
+              locale: 'en_US'
+              users:
+              - name: ${_param:pushkin_db_user}
+                password: ${_param:pushkin_db_user_password}
+                host: ${_param:pushkin_db_host}
+                createdb: true
+                rights: all privileges
+              init:
+                maintenance_db: pushkin
+                queries:
+                - ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO public;
+                - CREATE TABLE IF NOT EXISTS login (id int8 NOT NULL, language_id int2, PRIMARY KEY (id));
+                - CREATE TABLE IF NOT EXISTS device (id serial NOT NULL, login_id int8 NOT NULL, platform_id int2 NOT NULL, device_token text NOT NULL, device_token_new text, application_version int4, unregistered_ts timestamp, device_id text, PRIMARY KEY(id));
+                - CREATE INDEX IF NOT EXISTS idx_device_login_id ON device (login_id);
+                - ALTER TABLE device DROP CONSTRAINT IF EXISTS Ref_device_to_login;
+                - ALTER TABLE device ADD CONSTRAINT Ref_device_to_login FOREIGN KEY (login_id) REFERENCES login(id) MATCH SIMPLE ON DELETE CASCADE ON UPDATE NO ACTION NOT DEFERRABLE;
+                - CREATE TABLE IF NOT EXISTS message (id serial NOT NULL, name text NOT NULL, cooldown_ts int8, trigger_event_id int4, screen text NOT NULL DEFAULT '', PRIMARY KEY (id), CONSTRAINT c_message_unique_name UNIQUE(name));
+                - CREATE TABLE IF NOT EXISTS message_localization (id serial NOT NULL, message_id int4 NOT NULL, language_id int2 NOT NULL, message_title text NOT NULL, message_text text NOT NULL, PRIMARY KEY(id), CONSTRAINT c_message_loc_unique_message_language UNIQUE(message_id, language_id));
+                - ALTER TABLE message_localization DROP CONSTRAINT IF EXISTS ref_message_id_to_message;
+                - ALTER TABLE message_localization ADD CONSTRAINT ref_message_id_to_message FOREIGN KEY (message_id) REFERENCES message(id) MATCH SIMPLE ON DELETE CASCADE ON UPDATE NO ACTION NOT DEFERRABLE;
+                - CREATE TABLE IF NOT EXISTS user_message_last_time_sent (id serial NOT NULL, login_id int8 NOT NULL, message_id int4 NOT NULL, last_time_sent_ts_bigint int8 NOT NULL, PRIMARY KEY (id), CONSTRAINT c_user_unique_message UNIQUE(login_id, message_id));
+                - ALTER TABLE user_message_last_time_sent DROP CONSTRAINT IF EXISTS ref_login_id_to_login
+                - ALTER TABLE user_message_last_time_sent ADD CONSTRAINT ref_login_id_to_login FOREIGN KEY (login_id) REFERENCES login(id) MATCH SIMPLE ON DELETE CASCADE ON UPDATE NO ACTION NOT DEFERRABLE;
+                - ALTER TABLE user_message_last_time_sent DROP CONSTRAINT IF EXISTS ref_message_id_to_message
+                - ALTER TABLE user_message_last_time_sent ADD CONSTRAINT ref_message_id_to_message FOREIGN KEY (message_id) REFERENCES message(id) MATCH SIMPLE ON DELETE CASCADE ON UPDATE NO ACTION NOT DEFERRABLE;
+                - ALTER TABLE login OWNER TO ${_param:pushkin_db_user};
+                - ALTER TABLE device OWNER TO ${_param:pushkin_db_user};
+                - ALTER TABLE message OWNER TO ${_param:pushkin_db_user};
+                - ALTER TABLE message_localization OWNER TO ${_param:pushkin_db_user};
+                - ALTER TABLE user_message_last_time_sent OWNER TO ${_param:pushkin_db_user};
+                - GRANT ALL PRIVILEGES ON TABLE login TO ${_param:pushkin_db_user};
+                - GRANT ALL PRIVILEGES ON TABLE device TO ${_param:pushkin_db_user};
+                - GRANT ALL PRIVILEGES ON TABLE message TO ${_param:pushkin_db_user};
+                - GRANT ALL PRIVILEGES ON TABLE message_localization TO ${_param:pushkin_db_user};
+                - GRANT ALL PRIVILEGES ON TABLE user_message_last_time_sent TO ${_param:pushkin_db_user};
+              extension:
+                hstore:
+                  enabled: true
+

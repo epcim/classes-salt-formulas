@@ -1,0 +1,20 @@
+parameters:
+  _param:
+    mirror_grafana-trusty_source: https://packagecloud.io/grafana/stable/debian/
+    mirror_grafana-trusty_distribution: wheezy
+    mirror_grafana-trusty_components: main
+    mirror_grafana-trusty_gpgkeys:
+      - D59097AB
+  aptly:
+    server:
+      mirror:
+        grafana-trusty:
+          source: ${_param:mirror_grafana-trusty_source}
+          distribution: ${_param:mirror_grafana-trusty_distribution}
+          components: ${_param:mirror_grafana-trusty_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_grafana-trusty_gpgkeys}
+          publisher:
+            component: grafana
+            distributions:
+              - ubuntu-trusty/nightly

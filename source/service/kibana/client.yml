@@ -1,0 +1,91 @@
+applications:
+- kibana
+parameters:
+  _param:
+    kibana_client_default_index: index-template-log
+    kibana_version: 5
+  kibana:
+    client:
+      enabled: true
+      default_index: ${_param:kibana_client_default_index}
+      object:
+        logs:
+          enabled: true
+          template: kibana/files/objects/dashboard_logs.json
+          type: dashboard
+        notifications:
+          enabled: true
+          template: kibana/files/objects/dashboard_notifications.json
+          type: dashboard
+        index-template-log:
+          enabled: true
+          template: kibana/files/objects/index-pattern_logs.json
+          type: index-pattern
+        index-template-notification:
+          enabled: true
+          template: kibana/files/objects/index-pattern_notifications.json
+          type: index-pattern
+        index-template-audit:
+          enabled: true
+          template: kibana/files/objects/index-pattern_audit.json
+          type: index-pattern
+        search-logs:
+          enabled: true
+          template: kibana/files/objects/search_logs.json
+          type: search
+        search-notifications:
+          enabled: true
+          template: kibana/files/objects/search_notifications.json
+          type: search
+        search-audit:
+          enabled: true
+          template: kibana/files/objects/search_audit.json
+          type: search
+        LOG-MESSAGES-OVER-TIME-PER-SEVERITY:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_LOG-MESSAGES-OVER-TIME-PER-SEVERITY.json
+          type: visualization
+        LOG-MESSAGES-OVER-TIME-PER-SOURCE:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_LOG-MESSAGES-OVER-TIME-PER-SOURCE.json
+          type: visualization
+        NUMBER-OF-LOG-MESSAGES-PER-SEVERITY:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_NUMBER-OF-LOG-MESSAGES-PER-SEVERITY.json
+          type: visualization
+        TOP-10-HOSTS:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_TOP-10-HOSTS.json
+          type: visualization
+        TOP-10-PROGRAMS:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_TOP-10-PROGRAMS.json
+          type: visualization
+        TOP-10-SOURCES:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_TOP-10-SOURCES.json
+          type: visualization
+        NOTIFICATIONS-OVER-TIME-PER-SOURCE:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_NOTIFICATIONS-OVER-TIME-PER-SOURCE.json
+          type: visualization
+        NOTIFICATIONS-OVER-TIME-PER-SEVERITY:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_NOTIFICATIONS-OVER-TIME-PER-SEVERITY.json
+          type: visualization
+        EVENT-TYPE-BREAKDOWN:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_EVENT-TYPE-BREAKDOWN.json
+          type: visualization
+        SOURCE-BREAKDOWN:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_SOURCE-BREAKDOWN.json
+          type: visualization
+        HOST-BREAKDOWN:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_HOST-BREAKDOWN.json
+          type: visualization
+        NOTIFICATIONS-PER-SEVERITY:
+          enabled: true
+          template: kibana/files/objects/v${_param:kibana_version}/visualization_NOTIFICATIONS-PER-SEVERITY.json
+          type: visualization

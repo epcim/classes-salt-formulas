@@ -1,0 +1,23 @@
+parameters:
+
+  keystone:
+    client:
+      enabled: true
+      server:
+        identity:
+          admin-test:
+            host: ${_param:keystone_service_host}
+            port: 35357
+            token: ${_param:keystone_service_token}
+            protocol: ${_param:keystone_service_protocol}
+          roles:
+          - admin
+          - Member
+          project:
+            test-cloudify:
+              description: "OpenStack tenant with predeployed cloudify manager"
+              user:
+                admin-test:
+                  is_admin: true
+                  password: ${_param:vnf_openstack_admin_user_password}
+                  email: ${_param:vnf_openstack_admin_user_email}

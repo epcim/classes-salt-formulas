@@ -1,0 +1,12 @@
+applications:
+- ceph
+classes:
+- service.ceph.support
+parameters:
+  _param:
+    ceph_monitoring_user: admin
+  ceph:
+    monitoring:
+      cluster_stats:
+        enabled: true
+        ceph_user: ${_param:ceph_monitoring_user}

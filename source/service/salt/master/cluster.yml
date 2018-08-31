@@ -1,0 +1,15 @@
+applications:
+- salt
+- git
+- openssh
+classes:
+- service.salt.support
+parameters:
+  salt:
+    master:
+      enabled: true
+      source:
+        engine: pkg
+      command_timeout: 5
+      worker_threads: 3
+      max_event_size: 100000000

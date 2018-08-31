@@ -1,0 +1,21 @@
+parameters:
+  _param:
+    libvirtd_server_ssl_key_file: /etc/pki/libvirt/private/serverkey.pem
+    libvirtd_server_ssl_cert_file: /etc/pki/libvirt/servercert.pem
+  salt:
+    minion:
+      cert:
+        libvirtd_server:
+          host: ${_param:salt_minion_ca_host}
+          authority: ${_param:salt_minion_ca_authority}
+          common_name: ${linux:system:name}.${_param:cluster_domain}
+          signing_policy: cert_server
+          alternative_names: >
+            IP:${_param:cluster_local_address},
+            DNS:${_param:cluster_local_address},
+            DNS:${linux:system:name},
+            DNS:${linux:network:fqdn}
+          key_usage: "digitalSignature,nonRepudiation,keyEncipherment"
+          key_file: ${_param:libvirtd_server_ssl_key_file}
+          cert_file: ${_param:libvirtd_server_ssl_cert_file}
+          ca_file: ${_param:libvirtd_ssl_ca_file}

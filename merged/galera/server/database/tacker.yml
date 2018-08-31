@@ -1,0 +1,19 @@
+parameters:
+  _param:
+    mysql_tacker_ssl_option: []
+  mysql:
+    server:
+      database:
+        tacker:
+          encoding: utf8
+          users:
+          - name: tacker
+            password: ${_param:mysql_tacker_password}
+            host: '%'
+            rights: all
+            ssl_option: ${_param:mysql_tacker_ssl_option}
+          - name: tacker
+            password: ${_param:mysql_tacker_password}
+            host: ${_param:cluster_local_address}
+            rights: all
+            ssl_option: ${_param:mysql_tacker_ssl_option}

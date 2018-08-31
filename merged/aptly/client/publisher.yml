@@ -1,0 +1,10 @@
+applications:
+- aptly.publisher
+parameters:
+  aptly:
+    publisher:
+      enabled: true
+      source:
+        engine: docker
+        image: mirantis/aptly-publisher
+

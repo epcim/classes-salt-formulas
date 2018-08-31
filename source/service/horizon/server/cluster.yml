@@ -1,0 +1,91 @@
+applications:
+- horizon
+classes:
+- service.horizon.support
+parameters:
+  _param:
+    horizon_version: liberty
+    horizon_identity_host: localhost
+    horizon_identity_version: 3
+    horizon_identity_encryption: none
+    horizon_identity_endpoint_type: internalURL
+    neutron_enable_bgp_vpn: false
+  horizon:
+    server:
+      enabled: true
+      version: ${_param:horizon_version}
+      secret_key: ${_param:horizon_secret_key}
+      session:
+        timeout: 43200
+        engine: 'signed_cookies'
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 80
+      wsgi:
+        processes: 3
+        threads: 10
+      mail:
+        identity: ${_param:horizon_identity_version}
+      cache:
+        engine: memcached
+        prefix: 'CACHE_HORIZON'
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      identity:
+        engine: keystone
+        port: 5000
+        host: ${_param:horizon_identity_host}
+        encryption: ${_param:horizon_identity_encryption}
+        endpoint_type: ${_param:horizon_identity_endpoint_type}
+      themes:
+        default: "default"
+        directory: "themes"
+        cookie_name: "theme"
+        available:
+          default:
+            name: "Default"
+            description: "Default style theme"
+            enabled: True
+          material:
+            name: "Material"
+            description: "Google's Material Design style theme"
+            enabled: True
+      policy:
+        identity:
+          source: file
+          name: keystone_policy.json
+          enabled: true
+        compute:
+          source: file
+          name: nova_policy.json
+          enabled: true
+        network:
+          source: file
+          name: neutron_policy.json
+          enabled: true
+        image:
+          source: file
+          name: glance_policy.json
+          enabled: true
+        volume:
+          source: file
+          name: cinder_policy.json
+          enabled: true
+        telemetry:
+          source: file
+          name: ceilometer_policy.json
+          enabled: true
+        orchestration:
+          source: file
+          name: heat_policy.json
+          enabled: true
+        networking_bgpvpn:
+          source: file
+          name: bgpvpn_policy.json
+          enabled: ${_param:neutron_enable_bgp_vpn}
+

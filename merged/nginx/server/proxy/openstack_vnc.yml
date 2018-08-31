@@ -1,0 +1,19 @@
+parameters:
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_novnc:
+          enabled: true
+          type: nginx_proxy
+          name: novnc
+          check: false
+          proxy:
+            host: ${_param:openstack_control_address}
+            port: 6080
+            protocol: http
+            websocket: true
+          host:
+            name: ${_param:cluster_public_host}
+            port: 6080
+          ssl: ${_param:nginx_proxy_ssl}

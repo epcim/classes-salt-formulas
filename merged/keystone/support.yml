@@ -1,0 +1,21 @@
+parameters:
+  keystone:
+    _support:
+      collectd:
+        enabled: true
+      fluentd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      config:
+        enabled: true
+      grafana:
+        enabled: true
+      telegraf:
+        enabled: true
+      prometheus:
+        enabled: true

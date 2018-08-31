@@ -1,0 +1,11 @@
+classes:
+- fluentd.agent.single
+- system
+parameters:
+  _param:
+    td_agent_log_rotate_size: 10000000
+  fluentd:
+    agent:
+      td_agent_log_rotate_size: ${_param:td_agent_log_rotate_size}
+    dollar: ${_param:dollarsign}
+

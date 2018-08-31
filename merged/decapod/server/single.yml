@@ -1,0 +1,10 @@
+applications:
+- decapod
+classes:
+- decapod.support
+modules:
+- decapod
+parameters:
+  decapod:
+    server:
+      enabled: true

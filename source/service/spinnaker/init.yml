@@ -1,0 +1,96 @@
+applications:
+- spinnaker
+parameters:
+  spinnaker:
+    master:
+      conf_dir: "/etc/kubernetes/oss/spinnaker"
+      global:
+        spinnaker:
+          environment: oss
+      services:
+        redis:
+          timeout: 30000
+        front50:
+          cassandra:
+            enabled: false
+          redis:
+            enabled: true
+      providers:
+        kubernetes:
+          enabled: true
+          primaryCredentials:
+            name: oss-kubernetes
+            dockerRegistryAccount: oss-dockerhub
+        dockerRegistry:
+          enabled: true
+          primaryCredentials:
+            name: oss-dockerhub
+            address: https://index.docker.io
+    clouddriver:
+      image: quay.io/spinnaker/clouddriver
+      tag: v1.532.0
+      aws:
+        enabled: false
+      azure:
+        enabled: false
+      cf:
+        enabled: false
+      google:
+        enabled: false
+      credentials:
+        primaryAccountTypes: default
+        challengeDesctructiveActionsEnvironments: default
+      default:
+        account:
+          env: oss-spinnaker
+      kubernetes:
+        enabled: true
+        accounts:
+        - name: oss-kubernetes
+          user: kubelet
+          cluster: cluster-local
+          namespaces:
+            - default
+            - kube-system
+            - spinnaker
+          kubeconfigFile: "/etc/kubernetes/spinnaker.kubeconfig"
+          dockerRegistries:
+            - accountName: oss-dockerhub
+      dockerRegistry:
+        enabled: true
+        accounts:
+        - name: oss-dockerhub
+          address: https://index.docker.io
+          repositories:
+            - library/nginx
+      credentials:
+        primaryAccountTypes: default
+        challengeDesctructiveActionsEnvironments: default
+    echo:
+      image: quay.io/spinnaker/echo
+      tag: v1.132.0
+    fiat:
+      image: quay.io/spinnaker/fiat
+      tag: v0.21.0
+    front50:
+      image: quay.io/spinnaker/front50
+      tag: v1.83.0
+    gate:
+      image: quay.io/spinnaker/gate
+      tag: v3.8.0
+    igor:
+      image: quay.io/spinnaker/igor
+      tag: v1.63.0
+    orca:
+      image: quay.io/spinnaker/orca
+      tag: v1.341.0
+    rosco:
+      image: quay.io/spinnaker/rosco
+      tag: v0.90.0
+    deck:
+      image: quay.io/spinnaker/deck
+      tag: v2.1005.0
+    redis:
+      image: gcr.io/kubernetes-spinnaker/redis-cluster
+      tag: v2
+

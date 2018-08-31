@@ -1,0 +1,22 @@
+parameters:
+  _param:
+    ceph_version: luminous
+    apt_mk_version: stable
+    mirror_ceph-trusty_source: http://download.ceph.com/debian-${_param:ceph_version}
+    mirror_ceph-trusty_distribution: trusty
+    mirror_ceph-trusty_components: main
+    mirror_ceph-trusty_gpgkeys:
+      - 460F3994
+  aptly:
+    server:
+      mirror:
+        ceph-trusty:
+          source: ${_param:mirror_ceph-trusty_source}
+          distribution: ${_param:mirror_ceph-trusty_distribution}
+          components: ${_param:mirror_ceph-trusty_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_ceph-trusty_gpgkeys}
+          publisher:
+            component: ceph
+            distributions:
+              - ubuntu-trusty/${_param:apt_mk_version}

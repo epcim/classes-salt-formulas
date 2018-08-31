@@ -1,0 +1,14 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_mcp_cassandra_version: ${_param:apt_mk_version}
+    linux_system_repo_mcp_cassandra_version_number: "21x"
+  linux:
+    system:
+      repo:
+        mcp_cassandra:
+          source: "deb [arch=amd64] http://mirror.mirantis.com/${_param:linux_system_repo_mcp_cassandra_version}/cassandra/${_param:linux_system_codename}/ ${_param:linux_system_repo_mcp_cassandra_version_number} main"
+          architectures: amd64
+          key_id: F8358FA2F2833C93
+          key_server: keyserver.ubuntu.com
+          clean_file: true

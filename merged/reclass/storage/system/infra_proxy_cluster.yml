@@ -1,0 +1,30 @@
+parameters:
+  _param:
+    infra_proxy_node01_hostname: prx01
+    infra_proxy_node02_hostname: prx02
+    infra_proxy_system_codename: trusty
+  reclass:
+    storage:
+      node:
+        infra_proxy_node01:
+          name: ${_param:infra_proxy_node01_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.proxy
+          - cluster.${_param:cluster_name}.stacklight.proxy
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:infra_proxy_system_codename}
+            single_address: ${_param:infra_proxy_node01_address}
+            keepalived_vip_priority: 102
+        infra_proxy_node02:
+          name: ${_param:infra_proxy_node02_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.proxy
+          - cluster.${_param:cluster_name}.stacklight.proxy
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:infra_proxy_system_codename}
+            single_address: ${_param:infra_proxy_node02_address}
+            keepalived_vip_priority: 101

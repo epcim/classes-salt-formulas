@@ -1,0 +1,62 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+  jenkins:
+    client:
+      job:
+        test_service_job:
+          name: deploy-test-service
+          type: workflow-scm
+          discard:
+            build:
+              keep_num: 50
+          concurrent: true
+          display_name: "Deploy - Test services in environment"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: test-service.groovy
+          param:
+
+            # salt
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt-qa-credentials"
+            SALT_MASTER_URL:
+              type: string
+              default: ""
+
+            # test
+            TEST_K8S_API_SERVER:
+              type: string
+              default: "http://127.0.0.1:8080"
+            TEST_K8S_CONFORMANCE_IMAGE:
+              type: string
+              default: "docker-dev-virtual.docker.mirantis.net/mirantis/kubernetes/k8s-conformance:v1.7.5-2_1504192939316"
+
+            TEST_TEMPEST_IMAGE:
+              type: string
+              description: "Tempest docker image"
+              default: "${_param:mcp_docker_registry}/mirantis/oscore/rally-tempest"
+            TEST_TEMPEST_TARGET:
+              type: string
+              description: "Node to run tests. use FQDN for ctl01 e.g. ctl01.deploy-heat-os_ha_contrail-17.bud-mk.local"
+              default: ""
+            TEST_DOCKER_INSTALL:
+              type: boolean
+              description: "Install docker on the target if true"
+              default: "true"
+            TEST_TEMPEST_PATTERN:
+              type: string
+              description: "Run tests matched to pattern only e.g. tempest.api.identity"
+              default: "false"
+            TEST_SERVICE:
+              type: string
+              description: "openstack or k8s"
+              default: "openstack"
+            TEST_JUNIT_RATIO:
+              type: string
+              description: "The amplification factor to apply to test failures when computing the test result contribution to the build health score."
+              default: "1.0"

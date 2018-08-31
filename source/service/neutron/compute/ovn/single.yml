@@ -1,0 +1,29 @@
+applications:
+- neutron
+classes:
+- service.neutron.support
+parameters:
+  _param:
+    ovn_external_bridge: br-floating
+    openstack_log_appender: false
+    openstack_fluentd_handler_enabled: false
+    openstack_ossyslog_handler_enabled: false
+  neutron:
+    compute:
+      enabled: true
+      version: ${_param:neutron_version}
+      local_ip: ${_param:tenant_address}
+      controller_vip: ${_param:cluster_vip_address}
+      external_access: true
+      external_bridge: ${_param:ovn_external_bridge}
+      backend:
+        engine: ovn
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          watchedfile:
+            enabled: true
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}

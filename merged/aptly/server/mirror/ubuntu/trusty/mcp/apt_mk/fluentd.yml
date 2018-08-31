@@ -1,0 +1,21 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    mirror_mirantis_openstack_trusty_fluentd_source: http://mirror.mirantis.com/${_param:apt_mk_version}/td-agent/trusty
+    mirror_mirantis_openstack_trusty_fluentd_distribution: trusty
+    mirror_mirantis_openstack_trusty_fluentd_components: contrib
+    mirror_mirantis_openstack_trusty_fluentd_gpgkeys:
+      - 901F9177AB97ACBE
+  aptly:
+    server:
+      mirror:
+        mirantis_openstack_trusty_fluentd:
+          source: ${_param:mirror_mirantis_openstack_trusty_fluentd_source}
+          distribution: ${_param:mirror_mirantis_openstack_trusty_fluentd_distribution}
+          components: ${_param:mirror_mirantis_openstack_trusty_fluentd_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_mirantis_openstack_trusty_fluentd_gpgkeys}
+          publisher:
+            component: contrib
+            distributions:
+              - ubuntu-trusty/fluentd/${_param:apt_mk_version}

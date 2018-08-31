@@ -1,0 +1,102 @@
+applications:
+- horizon
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- apache.server.single
+- haproxy.proxy.listen.openstack.horizon
+- memcached.server.single
+parameters:
+  _param:
+    horizon_identity_encryption: none
+    horizon_identity_endpoint_type: internalURL
+    horizon_identity_host: localhost
+    horizon_identity_version: 3
+    horizon_site_branding: OpenStack Dashboard
+    horizon_version: liberty
+    neutron_enable_bgp_vpn: false
+  apache:
+    server:
+      modules:
+      - wsgi
+  horizon:
+    server:
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 8078
+      branding: ${_param:horizon_site_branding}
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+        prefix: CACHE_HORIZON
+      enabled: true
+      identity:
+        encryption: ${_param:horizon_identity_encryption}
+        endpoint_type: ${_param:horizon_identity_endpoint_type}
+        engine: keystone
+        host: ${_param:horizon_identity_host}
+        port: 5000
+      mail:
+        identity: ${_param:horizon_identity_version}
+      plugin: {}
+      policy:
+        compute:
+          enabled: true
+          name: nova_policy.json
+          source: file
+        identity:
+          enabled: true
+          name: keystone_policy.json
+          source: file
+        image:
+          enabled: true
+          name: glance_policy.json
+          source: file
+        network:
+          enabled: true
+          name: neutron_policy.json
+          source: file
+        networking_bgpvpn:
+          enabled: ${_param:neutron_enable_bgp_vpn}
+          name: bgpvpn_policy.json
+          source: file
+        orchestration:
+          enabled: true
+          name: heat_policy.json
+          source: file
+        telemetry:
+          enabled: true
+          name: ceilometer_policy.json
+          source: file
+        volume:
+          enabled: true
+          name: cinder_policy.json
+          source: file
+      secret_key: ${_param:horizon_secret_key}
+      session:
+        engine: cache
+        timeout: 43200
+      themes:
+        available:
+          default:
+            description: Default style theme
+            enabled: true
+            name: Default
+          material:
+            description: Google's Material Design style theme
+            enabled: true
+            name: Material
+        cookie_name: theme
+        default: default
+        directory: themes
+      version: ${_param:horizon_version}
+      wsgi:
+        processes: 3
+        threads: 10
+

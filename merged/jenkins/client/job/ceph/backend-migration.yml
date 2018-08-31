@@ -1,0 +1,58 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        ceph-backend-migration:
+          type: workflow-scm
+          concurrent: true
+          display_name: "Ceph - backend migration"
+          discard:
+            build:
+              keep_num: 50
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: ceph-backend-migration.groovy
+          param:
+            # general parameters
+            SALT_MASTER_URL:
+              type: string
+              description: URL of Salt master
+              default: "http://${_param:salt_master_host}:6969"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              description: Credentials for login to Salt API
+              default: salt
+            TARGET:
+              type: string
+              description: OSD hosts (minion ids) to be targeted
+              default: 'osd*'
+            OSD:
+              type: string
+              description: OSD ids to be migrated (comma-separated list - 1,2,3)
+              default: '*'
+            ADMIN_HOST:
+              type: string
+              description: Host with admin keyring and access to cluster management
+              default: 'cmn01*'
+            CLUSTER_FLAGS:
+              type: string
+              description: Flags to be aplied before pipeline and after pipeline (comma-separated list)
+            WAIT_FOR_HEALTHY:
+              type: boolean
+              default: 'true'
+              description: Wait for healthy during pipeline
+            PER_OSD_CONTROL:
+              type: boolean
+              default: 'true'
+              description: Set to true if Ceph status verification after every osd disk migration is desired
+            PER_OSD_HOST_CONTROL:
+              type: boolean
+              default: 'true'
+              description: Set to true if Ceph status verificaton after whole OSD host migration is desired
+            ORIGIN_BACKEND:
+              type: string
+              description: Ceph backend before migration
+              default: 'filestore'

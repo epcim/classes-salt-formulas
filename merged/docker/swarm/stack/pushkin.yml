@@ -1,0 +1,69 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    docker_pushkin_replicas: 1
+    docker_image_pushkin: ${_param:mcp_docker_registry}/mirantis/oss/pushkin
+    pushkin_bind_host: pushkin-api
+    pushkin_bind_port: ${_param:haproxy_pushkin_bind_port}
+    pushkin_elasticsearch: ${_param:elasticsearch_bind_host}
+    pushkin_ssl:
+      enabled: false
+    pushkin_db: pushkin
+    pushkin_db_host: ${_param:haproxy_postgresql_bind_host}
+    pushkin_smtp_host: smtp.gmail.com
+    pushkin_smtp_port: 587
+    pushkin_smtp_use_tls: true
+    webhook_from: your_sender@mail.com
+    pushkin_email_sender_password: your_sender_password
+    webhook_recipients: "recepient1@mail.com,recepient2@mail.com"
+    webhook_login_id: 13
+    webhook_application_id: 24
+    sfdc_auth_url: https://login.salesforce.com/services/oauth2/token
+    sfdc_username: user@example.net
+    sfdc_password: secret
+    sfdc_consumer_key: example_consumer_key
+    sfdc_consumer_secret: example_consumer_secret
+    sfdc_organization_id: example_organization_id
+    sfdc_environment_id: 0
+    sfdc_sandbox_enabled: true
+  docker:
+    client:
+      stack:
+        pushkin:
+          environment:
+            POSTGRES_USER: ${_param:pushkin_db_user}
+            POSTGRES_PASSWORD: ${_param:pushkin_db_user_password}
+            POSTGRES_DB: ${_param:pushkin_db}
+            PUSHKINDBHOST: ${_param:pushkin_db_host}
+            PUSHKINELASTICHOST: ${_param:pushkin_elasticsearch}
+            WEBHOOK_FROM: ${_param:webhook_from}
+            EMAIL_SENDER_PASSWORD: ${_param:pushkin_email_sender_password}
+            SMTP_HOST: ${_param:pushkin_smtp_host}
+            SMTP_PORT: ${_param:pushkin_smtp_port}
+            SMTP_USE_TLS: ${_param:pushkin_smtp_use_tls}
+            WEBHOOK_RECIPIENTS: ${_param:webhook_recipients}
+            WEBHOOK_LOGIN_ID: ${_param:webhook_login_id}
+            WEBHOOK_APPLICATION_ID: ${_param:webhook_application_id}
+            SFDC_AUTH_URL: ${_param:sfdc_auth_url}
+            SFDC_USERNAME: ${_param:sfdc_username}
+            SFDC_PASSWORD: ${_param:sfdc_password}
+            SFDC_CONSUMER_KEY: ${_param:sfdc_consumer_key}
+            SFDC_CONSUMER_SECRET: ${_param:sfdc_consumer_secret}
+            SFDC_ORGANIZATION_ID: ${_param:sfdc_organization_id}
+            SFDC_ENVIRONMENT_ID: ${_param:sfdc_environment_id}
+            SFDC_SANDBOX_ENABLED: ${_param:sfdc_sandbox_enabled}
+          service:
+            pushkin-api:
+              image: ${_param:docker_image_pushkin}
+              deploy:
+                replicas: ${_param:docker_pushkin_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_pushkin_exposed_port}:${_param:haproxy_pushkin_bind_port}
+              volumes:
+                - /srv/volumes/pushkin/api:/var/log/pushkin
+          network:
+            default:
+              external:
+                name: oss_backend

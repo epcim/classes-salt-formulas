@@ -1,0 +1,10 @@
+applications:
+- ardupilot
+classes:
+- service.ardupilot.support
+parameters:
+  ardupilot:
+    copter:
+      enabled: true
+      bind:
+        address: 0.0.0.0

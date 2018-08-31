@@ -1,0 +1,13 @@
+applications:
+- ceph
+classes:
+- ceph.support
+parameters:
+  ceph:
+    mgr:
+      dashboard:
+        enabled: true
+        host: ${_param:single_address}
+        port: 7000
+      enabled: true
+

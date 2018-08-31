@@ -1,0 +1,9 @@
+applications:
+  - devops_portal
+classes:
+  - service.devops_portal.support
+parameters:
+  devops_portal:
+    config:
+      enabled: true
+      service: {}

@@ -1,0 +1,6 @@
+classes:
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-backports
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-proposed
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-security
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-updates

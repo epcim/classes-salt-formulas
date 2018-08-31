@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        sgarbuz:
+          enabled: true
+          name: sgarbuz
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Serhii Garbuz
+          home: /home/sgarbuz
+          email: sgarbuz@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        sgarbuz:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKDwmQ8Zf6X4Ztu7MDaggm6Y2/hpf8Y7gQFcfqX0q84a9OZLw5jLgqTXewKW+0LPAsF7Gx0K7G9mFtcvXb5B74cbLg8SnETMET6t6fipOOVVu17/2N5RFGJ0Alwia0WQCDmGv6yYRB63NgFcavvcD8AEQ2LTlGIU8zPclq1j2kOJNLzH0xVsOiUTdEeUk8mOMBqSHQxVCZeyBBpkLHeECiM7AzsVtCWo1R+Sdo82BHs4+Ig9SOhIjLstBXS9DSjS6gzTOQLvCoGjB2P8spllSX0QtPXXNZndKfrj1YWht5O456ILTCocT8F/OGehy+7QL4+iq7JWBXn7ZamO+l8ceH sgarbuz@sgarbuz-pc
+          user: ${linux:system:user:sgarbuz}

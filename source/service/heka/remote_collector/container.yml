@@ -1,0 +1,10 @@
+applications:
+- heka
+classes:
+- service.heka.support
+parameters:
+  heka:
+    remote_collector:
+      enabled: true
+      container_mode: true
+      owner: root

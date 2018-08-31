@@ -1,0 +1,9 @@
+applications:
+- monasca.thresh
+classes:
+- service.monasca.common
+parameters:
+  monasca:
+    notification:
+      enabled: true
+      version: ${_param:monasca_version}

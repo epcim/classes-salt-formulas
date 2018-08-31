@@ -1,0 +1,31 @@
+applications:
+- ceilometer
+classes:
+- ceilometer.server.single.common
+parameters:
+  ceilometer:
+    server:
+      database:
+        elasticsearch:
+          enabled: true
+          host: ${_param:stacklight_monitor_address}
+          port: 9200
+        engine: mongodb
+        host: ${_param:ceilometer_database_host}
+        influxdb:
+          database: ceilometer
+          host: ${_param:stacklight_monitor_node01_address}
+          password: ${_param:ceilometer_influxdb_password}
+          port: 8086
+          user: ceilometer
+        name: ceilometer
+        password: ${_param:mongodb_ceilometer_password}
+        port: 27017
+        user: ceilometer
+      publisher:
+        default:
+          enabled: true
+          publish_event: true
+          publish_metric: true
+      role: ${_param:openstack_node_role}
+

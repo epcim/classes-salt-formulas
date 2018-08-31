@@ -1,0 +1,15 @@
+classes:
+- heka.remote_collector.cluster
+- heka.server
+parameters:
+  keepalived:
+    cluster:
+      instance:
+        prometheus_server_vip:
+          notify_action:
+            master:
+              - remote_collector start
+            backup:
+              - remote_collector stop
+            fault:
+              - remote_collector stop

@@ -1,0 +1,37 @@
+parameters:
+  _param:
+    haproxy_etcd_bind_host: ${_param:haproxy_bind_address}
+    haproxy_etcd_bind_port: 4001
+    haproxy_etcd_exposed_port: 14001
+    haproxy_etcd_ssl:
+      enabled: false
+  haproxy:
+    proxy:
+      timeout:
+        queue: '8h'
+        client: '8h'
+        server: '8h'
+        check: '10s'
+      listen:
+        etcd:
+          mode: http
+          balance: source
+          options:
+          - tcp-check
+          binds:
+            - address: ${_param:haproxy_etcd_bind_host}
+              port: ${_param:haproxy_etcd_bind_port}
+              ssl: ${_param:haproxy_etcd_ssl}
+          servers:
+            - name: ${_param:cluster_node01_name}
+              host: ${_param:cluster_node01_address}
+              port: ${_param:haproxy_etcd_exposed_port}
+              params: check port ${_param:haproxy_etcd_exposed_port}
+            - name: ${_param:cluster_node02_name}
+              host: ${_param:cluster_node02_address}
+              port: ${_param:haproxy_etcd_exposed_port}
+              params: backup check port ${_param:haproxy_etcd_exposed_port}
+            - name: ${_param:cluster_node03_name}
+              host: ${_param:cluster_node03_address}
+              port: ${_param:haproxy_etcd_exposed_port}
+              params: backup check port ${_param:haproxy_etcd_exposed_port}

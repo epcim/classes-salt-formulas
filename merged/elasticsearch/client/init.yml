@@ -1,0 +1,30 @@
+applications:
+- elasticsearch
+parameters:
+  _param:
+    elasticsearch_client_host: ${_param:haproxy_elasticsearch_bind_host}
+    elasticsearch_client_port: ${_param:haproxy_elasticsearch_http_bind_port}
+    elasticsearch_version: 5
+  elasticsearch:
+    client:
+      enabled: true
+      index:
+        audit:
+          enabled: true
+          force_operation: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_audit.json
+        kibana:
+          enabled: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_kibana.json
+        log:
+          enabled: true
+          force_operation: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_log.json
+        notification:
+          enabled: true
+          force_operation: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_notification.json
+      server:
+        host: ${_param:elasticsearch_client_host}
+        port: ${_param:elasticsearch_client_port}
+

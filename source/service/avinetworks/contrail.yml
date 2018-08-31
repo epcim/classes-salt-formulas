@@ -1,0 +1,18 @@
+applications:
+- avinetworks.contrail
+
+parameters:
+  _param:
+    avinetworks_service_appliance_name: avi_adc_v2
+    avinetworks_service_appliance_driver: 'neutron_lbaas.drivers.avi.avi_ocdriver.OpencontrailAviLoadbalancerDriver'
+    avinetworks_service_appliance_cloud: Default-Cloud
+    avinetworks_service_appliance_ha_mode: active-backup
+  avinetworks:
+    service_appliance:
+      name: ${_param:avinetworks_service_appliance_name}
+      driver: ${_param:avinetworks_service_appliance_driver}
+      address: ${avinetworks:api:ip}
+      user: ${avinetworks:api:user}
+      password: ${avinetworks:api:password}
+      cloud: ${_param:avinetworks_service_appliance_cloud}
+      ha_mode: ${_param:avinetworks_service_appliance_ha_mode}

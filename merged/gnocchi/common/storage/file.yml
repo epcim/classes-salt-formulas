@@ -1,0 +1,9 @@
+parameters:
+  _param:
+    gnocchi_storage_file_basepath: /var/lib/gnocchi
+    gnocchi_storage_driver: file
+  gnocchi:
+    common:
+      storage:
+        driver: ${_param:gnocchi_storage_driver}
+        file_basepath: ${_param:gnocchi_storage_file_basepath}

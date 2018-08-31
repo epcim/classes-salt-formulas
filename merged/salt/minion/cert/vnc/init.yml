@@ -1,0 +1,4 @@
+parameters:
+  _param:
+    salt_minion_ca_host: cfg01.${_param:cluster_domain}
+    qemu_vnc_ca_authority: qemu_vnc_ca

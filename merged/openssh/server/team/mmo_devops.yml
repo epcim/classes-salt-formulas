@@ -1,0 +1,17 @@
+## DEPRECATED, this class will be removed 01/2018
+classes:
+# DevOps/SRE Team
+- openssh.server.team.members.cade
+- openssh.server.team.members.jmosher
+- openssh.server.team.members.ecantwell
+- openssh.server.team.members.lmercl
+- openssh.server.team.members.mwilson
+- openssh.server.team.members.osmola
+- openssh.server.team.members.pcizinsky
+- openssh.server.team.members.pmathews
+- openssh.server.team.members.pmichalec
+# Missing- team members still in flux
+# - system.openssh.server.team.members.bpiotrowski
+parameters:
+  _param:
+    linux_system_user_sudo: true

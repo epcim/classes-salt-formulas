@@ -1,0 +1,16 @@
+applications:
+- zookeeper
+classes:
+- service.zookeeper.support
+parameters:
+  zookeeper:
+    server:
+      enabled: true
+      id: ${_param:database_id}
+      members:
+      - host: ${_param:cluster_node01_address}
+        id: 1
+      - host: ${_param:cluster_node02_address}
+        id: 2
+      - host: ${_param:cluster_node03_address}
+        id: 3

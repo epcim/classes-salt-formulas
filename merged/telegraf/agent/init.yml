@@ -1,0 +1,16 @@
+applications:
+- telegraf
+classes:
+- telegraf.agent.input.http_listener
+- telegraf.agent.output.prometheus_client
+- telegraf.sudo
+parameters:
+  telegraf:
+    agent:
+      collection_jitter: 2
+      enabled: true
+      interval: 15
+      metric_batch_size: 1000
+      metric_buffer_limit: 10000
+      round_interval: false
+

@@ -1,0 +1,67 @@
+#
+# Job to manage libvirt live snapshots
+#
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+  jenkins:
+    client:
+      job:
+        manage-virt-snapshot:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          display_name: "Deploy - virt snapshot VM"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: libvirt-live-snapshots.groovy
+          param:
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            CREATE_LIVE_SNAPSHOT:
+              type: boolean
+              default: 'true'
+              description: "Ensures that the live snapshot exists"
+            ROLLBACK_LIVE_SNAPSHOT:
+              type: boolean
+              default: 'false'
+              description: "Rollback the VM to a state before live snapshot was taken"
+            REMOVE_LIVE_SNAPSHOT:
+              type: boolean
+              default: 'false'
+              description: "Ensures that the live snapshot does not exist"
+            MERGE_LIVE_SNAPSHOT:
+              type: boolean
+              default: 'false'
+              description: "Ensures that the live snapshot is merged into it's base image"
+            NODE_PROVIDER:
+              type: string
+              default: "kvm01"
+              description: "KVM node that hosts the VM (for ex. kvm02)"
+            TARGET:
+              type: string
+              default: "ctl01"
+              description: "Unique identification of the VM being snapshoted without domain name (for ex. ctl01)"
+            SNAPSHOT_NAME:
+              type: string
+              default: "snapshot1"
+              description: "Snapshot name"
+            PATH:
+              type: string
+              default: "/var/lib/libvirt/images"
+              description: "Path where snapshot image and dumpxml are being put"
+            DISK_NAME:
+              type: string
+              default: "vda"
+              description: "Disk name of the snapshot"

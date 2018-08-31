@@ -1,0 +1,38 @@
+parameters:
+  haproxy:
+    proxy:
+      listen:
+        keystone_public_api:
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: 5000
+          servers:
+          - name: ${_param:cluster_node01_hostname}
+            host: ${_param:cluster_node01_address}
+            port: 5000
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node02_hostname}
+            host: ${_param:cluster_node02_address}
+            port: 5000
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node03_hostname}
+            host: ${_param:cluster_node03_address}
+            port: 5000
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+        keystone_admin_api:
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: 35357
+          servers:
+          - name: ${_param:cluster_node01_hostname}
+            host: ${_param:cluster_node01_address}
+            port: 35357
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node02_hostname}
+            host: ${_param:cluster_node02_address}
+            port: 35357
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node03_hostname}
+            host: ${_param:cluster_node03_address}
+            port: 35357
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3

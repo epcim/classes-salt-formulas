@@ -1,0 +1,46 @@
+parameters:
+  _param:
+    apache_ssl:
+      enabled: false
+    apache_nova_placement_ssl: ${_param:apache_ssl}
+    apache_nova_placement_api_address: 0.0.0.0
+    apache_nova_placement_api_host: ${linux:network:fqdn}
+  nova_placement:
+    server:
+      service_name: apache2
+  apache:
+    server:
+      enabled: true
+      default_mpm: event
+      site:
+        nova_placement:
+          enabled: false
+          available: true
+          type: wsgi
+          name: nova_placement
+          ssl: ${_param:apache_nova_placement_ssl}
+          wsgi:
+            daemon_process: nova-placement
+            processes: 5
+            threads: 1
+            user: nova
+            group: nova
+            display_name: '%{GROUP}'
+            script_alias: '/ /usr/bin/nova-placement-api'
+            application_group: '%{GLOBAL}'
+            authorization: 'On'
+          limits:
+            request_body: 114688
+          host:
+            address: ${_param:apache_nova_placement_api_address}
+            name: ${_param:apache_nova_placement_api_host}
+            port: 8778
+          log:
+            custom:
+              format: >-
+                %v:%p %{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %D %O \"%{Referer}i\" \"%{User-Agent}i\"
+              file: '/var/log/apache2/nova_placement_access.log'
+            error:
+              enabled: true
+              format: '%M'
+              file: '/var/log/apache2/nova_placement_error.log'

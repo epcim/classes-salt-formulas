@@ -1,0 +1,16 @@
+applications:
+- statsd
+parameters:
+  _param:
+    statsd_server_backend_host: localhost
+    statsd_server_backend_port: 2003
+  statsd:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0
+        port: 8125
+      backend:
+        engine: carbon
+        host: ${_param:statsd_server_backend_host}
+        port: ${_param:statsd_server_backend_port}

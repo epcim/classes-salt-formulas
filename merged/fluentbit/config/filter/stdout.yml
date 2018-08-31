@@ -1,0 +1,14 @@
+parameters:
+  _param:
+    fluentbit_config_filter_kubernetes_kube_url: https://localhost:443
+  fluentbit:
+    config:
+      filter:
+        kubernetes.conf:
+          kubernetes:
+            match: '*'
+            kube_url: ${_param:fluentbit_config_filter_kubernetes_kube_url}
+            use_journal: 'On'
+      service:
+        td-agent-bit.conf:
+          - '@INCLUDE filter_kubernetes.conf'

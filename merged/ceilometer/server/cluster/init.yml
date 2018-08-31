@@ -1,0 +1,58 @@
+applications:
+- ceilometer
+classes:
+- ceilometer.server.cluster.common
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.ceilometer
+- keepalived.cluster.instance.openstack_telemetry_vip
+parameters:
+  ceilometer:
+    server:
+      bind:
+        host: ${_param:cluster_local_address}
+        port: 8777
+      cluster: true
+      database:
+        engine: mongodb
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 27017
+        - host: ${_param:cluster_node02_address}
+          port: 27017
+        - host: ${_param:cluster_node03_address}
+          port: 27017
+        name: ceilometer
+        password: ${_param:mongodb_ceilometer_password}
+        user: ceilometer
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_ceilometer_password}
+        port: 35357
+        region: ${_param:openstack_region}
+        tenant: service
+        user: ceilometer
+      message_queue:
+        engine: rabbitmq
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        user: openstack
+        virtual_host: /openstack
+      notification:
+        batch_timeout: 30
+        workload_partitioning: true
+      publisher:
+        default:
+          enabled: true
+          publish_event: true
+          publish_metric: true
+      region: ${_param:openstack_region}
+      role: ${_param:openstack_node_role}
+      secret: ${_param:ceilometer_secret_key}
+      ttl: 86400
+      version: ${_param:ceilometer_version}
+

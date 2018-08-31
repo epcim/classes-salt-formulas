@@ -1,0 +1,17 @@
+parameters:
+  _param:
+    banner_company_name: COMPANY_NAME_HERE
+  linux:
+    system:
+      banner:
+        enabled: true
+        contents: |
+          =================================== WARNING ====================================
+          You have accessed a computer managed by ${_param:banner_company_name}.
+          You are required to have authorization from ${_param:banner_company_name}
+          before you proceed and you are strictly limited to use set out within that
+          authorization. Unauthorized access to or misuse of this system is prohibited
+          and constitutes an offence under the Computer Misuse Act 1990.
+          If you disclose any information obtained through this system without authority
+          ${_param:banner_company_name} may take legal action against you.
+          ================================================================================

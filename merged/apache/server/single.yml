@@ -1,0 +1,47 @@
+applications:
+- apache
+parameters:
+  apache:
+    server:
+      bind:
+        address: 0.0.0.0
+        ports:
+        - 80
+        - 443
+        protocol: tcp
+      default_mpm: prefork
+      enabled: true
+      modules:
+      - ssl
+      - rewrite
+      mpm:
+        event:
+          limit: 64
+          max_clients: 150
+          servers:
+            max_requests: 0
+            spare:
+              max: 75
+              min: 25
+            start: 5
+            threads_per_child: 25
+        prefork:
+          limit: ${apache:server:mpm:prefork:max_clients}
+          max_clients: 150
+          servers:
+            max_requests: 0
+            spare:
+              max: 10
+              min: ${apache:server:mpm:prefork:servers:start}
+            start: 5
+        worker:
+          limit: 64
+          max_clients: 150
+          servers:
+            max_requests: 0
+            spare:
+              max: 75
+              min: 25
+            start: 5
+            threads_per_child: 25
+

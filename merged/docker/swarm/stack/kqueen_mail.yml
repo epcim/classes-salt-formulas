@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    mail_server_hostname: mail
+  docker:
+    client:
+      stack:
+        kqueen:
+          service:
+            mail:
+              image: modularitycontainers/postfix
+              environment:
+                MYHOSTNAME: ${_param:mail_server_hostname}
+          network:
+            default:
+              external:
+                name: kqueen_backend

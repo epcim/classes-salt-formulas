@@ -1,0 +1,26 @@
+parameters:
+  _param:
+    linux_system_country_code: cz
+    aptly_server_mirror_ubuntu_xenial_sources: ${_param:aptly_server_mirror_ubuntu_sources}
+    ubuntu_mirror_url: ${_param:linux_system_country_code}.archive.ubuntu.com
+    mirror_xenial-security-main_source: http://${_param:ubuntu_mirror_url}/ubuntu/
+    mirror_xenial-security-main_distribution: xenial-security
+    mirror_xenial-security-main_components: main
+    mirror_xenial-security-main_gpgkeys:
+      - 40976EAF437D05B5
+      - 437D05B5
+      - C0B21F32
+  aptly:
+    server:
+      mirror:
+        xenial-security-main:
+          source: ${_param:mirror_xenial-security-main_source}
+          distribution: ${_param:mirror_xenial-security-main_distribution}
+          sources: ${_param:aptly_server_mirror_ubuntu_xenial_sources}
+          components: ${_param:mirror_xenial-security-main_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_xenial-security-main_gpgkeys}
+          publisher:
+            component: main
+            distributions:
+              - ubuntu/xenial-security

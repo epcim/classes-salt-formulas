@@ -1,0 +1,12 @@
+applications:
+- haproxy
+classes:
+- haproxy.support
+parameters:
+  haproxy:
+    proxy:
+      enabled: true
+      logging: syslog
+      max_connections: 1024
+      mode: tcp
+

@@ -1,0 +1,36 @@
+classes:
+- keystone.client.v3.service.panko
+parameters:
+  _param:
+    cluster_public_protocol: https
+    panko_service_protocol: http
+    panko_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      server:
+        identity:
+          project:
+            service:
+              user:
+                panko:
+                  is_admin: true
+                  password: ${_param:keystone_panko_password}
+                  email: ${_param:admin_email}
+          service:
+            panko:
+              type: event
+              description: OpenStack Event Service
+              endpoints:
+              - region: ${_param:openstack_region}
+                public_address: ${_param:panko_public_host}
+                public_protocol: ${_param:cluster_public_protocol}
+                public_port: 8977
+                public_path: '/'
+                internal_address: ${_param:panko_service_host}
+                internal_port: 8977
+                internal_path: '/'
+                internal_protocol: ${_param:panko_service_protocol}
+                admin_protocol: ${_param:panko_service_protocol}
+                admin_address: ${_param:panko_service_host}
+                admin_port: 8977
+                admin_path: '/'

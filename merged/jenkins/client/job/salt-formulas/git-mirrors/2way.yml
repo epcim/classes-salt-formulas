@@ -1,0 +1,490 @@
+parameters:
+  _param:
+    jenkins_pollscm_spec: "H/60 * * * *"
+    job_description_2way: <br>Syncronizes code projects with GitHub.<br>
+  jenkins:
+    client:
+      job_template:
+        git-mirror-2way-salt-formula:
+          name: git-mirror-2way-salt-formula-{{name}}
+          jobs:
+            - name: aodh
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: apache
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: aptcacher
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: aptly
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: artifactory
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: avinetworks
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: auditd
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: backupninja
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: barbican
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: baremetal-simulator
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: billometer
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: bind
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: bird
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: cadf
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: calico
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: cassandra
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: ccp
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: ceilometer
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: ceph
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: chrony
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: cinder
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: collectd
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: debmirror
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: dekapod
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: devops-portal
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: docker
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: dogtag
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: dovecot
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: elasticsearch
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: etcd
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: fluentbit
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: fluentd
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: foreman
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: freeipa
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: galera
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: gerrit
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: git
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: gitlab
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: glance
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: glusterfs
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: gnocchi
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: grafana
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: graphite
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: haproxy
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: heat
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: heka
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: heketi
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: helm
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: horizon
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: influxdb
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: iptables
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: ironic
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: isc-dhcp
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: java
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: jenkins
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: kedb
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: keepalived
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: keystone
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: kibana
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: kubernetes
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: letsencrypt
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: libvirt
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: linux
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: lldp
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: logrotate
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: maas
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: magnum
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: manila
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: memcached
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: mirascan
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: midonet
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: monasca
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: mongodb
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: murano
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: mysql
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: nagios
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: network
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: neutron
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: nfs
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: nginx
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: nodejs
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: nova
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: ntp
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: octavia
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: opencontrail
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: openldap
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: openssh
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: openvpn
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: openvstorage
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: oslo-templates
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: owncloud
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: panko
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: postfix
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: postgresql
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: powerdns
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: pritunl
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: prometheus
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: python
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: rabbitmq
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: reclass
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: redis
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: roundcube
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: rsync
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: rsyslog
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: rundeck
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: runtest
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: sahara
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: salt
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: sensu
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: sentry
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: sphinx
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: spinnaker
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: statsd
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: supervisor
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: swift
+              branches: ${_param:salt_formulas_extra_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: taiga
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: telegraf
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: tinyproxy
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: varnish
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: watchdog
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: xtrabackup
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: zookeeper
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
+          template:
+            description: ${_param:job_description_2way}
+            discard:
+              build:
+                keep_num: 10
+              artifact:
+                keep_num: 10
+            type: workflow-scm
+            concurrent: false
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: git-mirror-2way-pipeline.groovy
+              github:
+                url: "https://github.com/salt-formulas/salt-formula-{{name}}"
+            trigger:
+              github:
+              pollscm:
+                spec: ${_param:jenkins_pollscm_spec}
+              gerrit:
+                project:
+                  salt-formulas/{{name}}:
+                    branches:
+                      - master
+                event:
+                  ref:
+                    - updated
+            param:
+              SOURCE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/salt-formulas/{{name}}.git"
+              TARGET_URL:
+                type: string
+                default: "git@github.com:salt-formulas/salt-formula-{{name}}.git"
+              CREDENTIALS_ID:
+                type: string
+                default: "gerrit"
+              BRANCHES:
+                type: string
+                default: "{{branches}}"
+              NOTIFICATION_RECIPIENTS:
+                type: string
+                default: "{{notification_recipients}}"
+      job:
+        git-mirror-2way-salt-formulas-scripts:
+          description: ${_param:job_description_2way}
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          type: workflow-scm
+          concurrent: false
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: git-mirror-2way-pipeline.groovy
+            github:
+              url: "https://github.com/salt-formulas/salt-formulas-scripts"
+          trigger:
+            github:
+            pollscm:
+              spec: ${_param:jenkins_pollscm_spec}
+          param:
+            SOURCE_URL:
+              type: string
+              default: "${_param:jenkins_gerrit_url}/salt-formulas/salt-formulas-scripts.git"
+            TARGET_URL:
+              type: string
+              default: "git@github.com:salt-formulas/salt-formulas-scripts.git"
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"
+            BRANCHES:
+              type: string
+              default: "master"
+        git-mirror-2way-salt-formulas-cookiecutter:
+          description: ${_param:job_description_2way}
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          type: workflow-scm
+          concurrent: false
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: git-mirror-2way-pipeline.groovy
+            github:
+              url: "https://github.com/salt-formulas/salt-formulas-cookiecutter"
+          trigger:
+            github:
+            pollscm:
+              spec: ${_param:jenkins_pollscm_spec}
+          param:
+            SOURCE_URL:
+              type: string
+              default: "${_param:jenkins_gerrit_url}/salt-formulas/cookiecutter-salt-formula"
+            TARGET_URL:
+              type: string
+              default: "git@github.com:salt-formulas/cookiecutter-salt-formula"
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"
+            BRANCHES:
+              type: string
+              default: "master"

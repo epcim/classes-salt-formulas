@@ -1,0 +1,10 @@
+applications:
+- oslo_templates
+classes:
+- service.oslo_templates.support
+parameters:
+  oslo_templates:
+    template:
+      enabled: true
+      bind:
+        address: 0.0.0.0

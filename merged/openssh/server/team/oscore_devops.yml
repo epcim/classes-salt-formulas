@@ -1,0 +1,16 @@
+classes:
+- linux.system.sudo
+- openssh.server.team.members.vsaienko
+- openssh.server.team.members.vnogin
+- openssh.server.team.members.mkarpin
+- openssh.server.team.members.iudovichenko
+- openssh.server.team.members.vdrok
+- openssh.server.team.members.ikolodyazhny
+- openssh.server.team.members.ohryhorov
+- openssh.server.team.members.ogrudev
+- openssh.server.team.members.kkushaev
+- openssh.server.team.members.sgarbuz
+- openssh.server.team.members.oshyshko
+parameters:
+  _param:
+    linux_system_user_sudo: true

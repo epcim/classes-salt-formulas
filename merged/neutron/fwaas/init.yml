@@ -1,0 +1,11 @@
+applications:
+- neutron
+parameters:
+  _param:
+    fwaas_version: v1
+  neutron:
+    fwaas:
+      api_version: ${_param:fwaas_version}
+      enabled: true
+      version: ${_param:neutron_version}
+

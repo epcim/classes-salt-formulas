@@ -1,0 +1,11 @@
+classes:
+- openssh.server.team.members.listomin
+- openssh.server.team.members.sgalkin
+- openssh.server.team.members.obasov
+- openssh.server.team.members.mikhailkraynov
+- openssh.server.team.members.prazumovsky
+- openssh.server.team.members.mcp-scale-jenkins
+
+parameters:
+  _param:
+    linux_system_user_sudo: true

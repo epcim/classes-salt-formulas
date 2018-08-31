@@ -1,0 +1,31 @@
+applications:
+- monasca.api
+classes:
+- monasca.common
+parameters:
+  monasca:
+    api:
+      enabled: true
+      version: ${_param:monasca_version}
+      verbose: true
+      debug: false
+      bind:
+        address: 0.0.0.0
+      identity:
+        region: RegionOne
+        host: ${_param:single_address}
+        user: monasca
+        password: ${_param:keystone_monasca_password}
+      keystore:
+        enabled: true
+        password: ${_param:monasca_keystore_password}
+        cert_path: /etc/ssl/certs/monasca-api.bootstrap.local.crt
+        cert_source: ${_param:monasca_keystore_cert_source}
+      hibernate:
+        enabled: true
+        driver_class:
+        database:
+          host: localhost
+          name: monasca
+          user: monasca
+          password: ${_param:monasca_hibernate_password}

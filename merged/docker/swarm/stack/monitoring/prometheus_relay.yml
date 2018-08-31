@@ -1,0 +1,27 @@
+parameters:
+  docker:
+    client:
+      stack:
+        monitoring:
+          network:
+            monitoring:
+              driver: overlay
+              driver_opts:
+                encrypted: 1
+          service:
+            relay:
+              networks:
+                - monitoring
+              deploy:
+                replicas: 2
+                labels:
+                  com.mirantis.monitoring: "relay"
+                restart_policy:
+                  condition: any
+              labels:
+                com.mirantis.monitoring: "relay"
+              image: ${_param:docker_image_prometheus_relay}
+              ports:
+                - 15016:8080
+              environment:
+                PROMETHEUS_RELAY_DNS: 'tasks.monitoring_server'

@@ -1,0 +1,87 @@
+applications:
+- cinder
+classes:
+- cinder.control.cluster_control
+- haproxy.proxy.single
+- keepalived.cluster.single
+- haproxy.proxy.listen.openstack.cinder
+parameters:
+  _param:
+    cluster_internal_protocol: http
+    keystone_cinder_endpoint_type: internalURL
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  cinder:
+    controller:
+      backend: {}
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: cinder
+        password: ${_param:mysql_cinder_password}
+        port: 3306
+        user: cinder
+      default_volume_type: ""
+      enabled: true
+      glance:
+        host: ${_param:cluster_vip_address}
+        port: 9292
+        protocol: ${_param:cluster_internal_protocol}
+      identity:
+        endpoint_type: ${_param:keystone_cinder_endpoint_type}
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_cinder_password}
+        port: 35357
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: cinder
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      osapi:
+        host: ${_param:cluster_local_address}
+      role: ${_param:openstack_node_role}
+      version: ${_param:cinder_version}
+    volume:
+      backend: {}
+      default_volume_type: ""
+      enabled: false
+      logging:
+        heka:
+          enabled: true
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

@@ -1,0 +1,5 @@
+parameters:
+  heka:
+    log_collector:
+      sensu_host: 127.0.0.1
+

@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+    nginx_proxy_openstack_gnocchi_host: ${_param:gnocchi_service_host}
+    nginx_proxy_openstack_gnocchi_protocol: 'http'
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_gnocchi:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_gnocchi
+          check: false
+          proxy:
+            host: ${_param:nginx_proxy_openstack_gnocchi_host}
+            port: 8041
+            protocol: ${_param:nginx_proxy_openstack_gnocchi_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 8041
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

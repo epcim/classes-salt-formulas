@@ -1,0 +1,19 @@
+classes:
+- ceph.setup.single
+parameters:
+  ceph:
+    common:
+      keyring:
+        admin:
+          caps:
+            mds: "allow *"
+            mgr: "allow *"
+            mon: "allow *"
+            osd: "allow *"
+    mon:
+      enabled: true
+      keyring:
+        mon:
+          caps:
+            mon: "allow *"
+

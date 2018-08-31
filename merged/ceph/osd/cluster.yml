@@ -1,0 +1,20 @@
+applications:
+- ceph
+classes:
+- ceph.support
+parameters:
+  ceph:
+    common:
+      keyring:
+        bootstrap_osd:
+          caps:
+            mon: allow profile bootstrap-osd
+          name: bootstrap-osd
+    osd:
+      enabled: true
+  linux:
+    system:
+      kernel:
+        sysctl:
+          fs.aio-max-nr: 131072
+

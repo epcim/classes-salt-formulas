@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+    nginx_proxy_openstack_nova_host: ${_param:nova_service_host}
+    nginx_proxy_openstack_nova_protocol: 'http'
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_nova:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_nova
+          check: false
+          proxy:
+            host: ${_param:nginx_proxy_openstack_nova_host}
+            port: 8774
+            protocol: ${_param:nginx_proxy_openstack_nova_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 8774
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

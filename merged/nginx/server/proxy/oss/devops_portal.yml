@@ -1,0 +1,20 @@
+parameters:
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_devops_portal:
+          enabled: true
+          type: nginx_proxy
+          name: devops_portal
+          check: false
+          proxy:
+            host: ${_param:stacklight_monitor_address}
+            port: 8800
+            protocol: http
+            websocket: true
+          host:
+            name: ${_param:cluster_public_host}
+            port: 8800
+            protocol: https
+          ssl: ${_param:nginx_proxy_ssl}

@@ -1,0 +1,20 @@
+classes:
+  - jenkins.client.job.oscore.security_tests
+  - jenkins.client.job.oscore.tests
+  - jenkins.client.job.oscore.qa
+  - jenkins.client.job.oscore.salt_virtual_models
+  - jenkins.client.job.oscore.cookiecutter
+  - jenkins.client.job.oscore.release
+parameters:
+  _param:
+     job_description_oscore: <br>Deploy and test OpenStack.<br>
+  jenkins:
+    client:
+      view:
+        "OSCORE":
+          enabled: true
+          type: CategorizedJobsView
+          include_regex: "^oscore-.*"
+          categories:
+            - group_regex: "oscore-bandit-*"
+              naming_rule: "Bandit"

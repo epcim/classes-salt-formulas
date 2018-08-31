@@ -1,0 +1,46 @@
+classes:
+- glance.client
+parameters:
+  _param:
+    metaswitch_dcm_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_metaswitch_dcm_image_name}.qcow2"
+    metaswitch_dcm_image_name:  "${_param:vnf_metaswitch_dcm_image_name}"
+    metaswitch_mdm_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_metaswitch_mdm_image_name}.qcow2"
+    metaswitch_mdm_image_name:  "${_param:vnf_metaswitch_mdm_image_name}"
+    metaswitch_perimeta_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_metaswitch_perimeta_image_name}.qcow2"
+    metaswitch_perimeta_image_name:  "${_param:vnf_metaswitch_perimeta_image_name}"
+  glance:
+    client:
+      identity:
+        admin_identity:
+          endpoint_type: internalURL
+          image:
+            metaswitch-dcm:
+              name: ${_param:metaswitch_dcm_image_name}
+              location: ${_param:metaswitch_dcm_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'metaswitch'
+              visibility: public
+              wait_timeout: 1000
+            metaswitch-mdm:
+              name: ${_param:metaswitch_mdm_image_name}
+              location: ${_param:metaswitch_mdm_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'metaswitch'
+              visibility: public
+              wait_timeout: 1000
+            metaswitch-perimeta:
+              name: ${_param:metaswitch_perimeta_image_name}
+              location: ${_param:metaswitch_perimeta_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'metaswitch'
+              visibility: public
+              wait_timeout: 1000

@@ -1,0 +1,69 @@
+parameters:
+  _param:
+    jenkins_pollscm_spec: "H/60 * * * *"
+    job_description_2way: <br>Syncronizes code projects with GitHub.<br>
+  jenkins:
+    client:
+      job_template:
+        git-mirror-2way-common:
+          name: git-mirror-2way-{{name}}
+          jobs:
+            - name: mcp-common-scripts
+              source: mcp/mcp-common-scripts
+              target: Mirantis/mcp-common-scripts
+              branches: "master"
+            - name: mcp-local-repo-model
+              source: mcp/mcp-local-repo-model
+              target: Mirantis/mcp-local-repo-model
+              branches: "master"
+            - name: mcp-offline-model
+              source: mcp/mcp-offline-model
+              target: Mirantis/mcp-offline-model
+              branches: "master"
+            - name: mcp-drivetrain-model
+              source: mcp/mcp-drivetrain-model
+              target: Mirantis/mcp-drivetrain-model
+              branches: "master"
+          template:
+            description: ${_param:job_description_2way}
+            discard:
+              build:
+                keep_num: 10
+              artifact:
+                keep_num: 10
+            type: workflow-scm
+            concurrent: false
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: git-mirror-2way-pipeline.groovy
+              github:
+                url: "https://github.com/{{target}}"
+            trigger:
+              github:
+              pollscm:
+                spec: ${_param:jenkins_pollscm_spec}
+              gerrit:
+                project:
+                  "{{source}}":
+                    branches:
+                      - master
+                event:
+                  ref:
+                    - updated
+            param:
+              SOURCE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/{{source}}.git"
+              TARGET_URL:
+                type: string
+                default: "git@github.com:{{target}}.git"
+              CREDENTIALS_ID:
+                type: string
+                default: "gerrit"
+              BRANCHES:
+                type: string
+                default: "{{branches}}"
+                description: "Comma-separated list of branches to mirror"

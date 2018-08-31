@@ -1,0 +1,5 @@
+classes:
+- aptly.server.mirror.ubuntu.trusty.ubuntu.trusty-backports.main
+- aptly.server.mirror.ubuntu.trusty.ubuntu.trusty-backports.multiverse
+- aptly.server.mirror.ubuntu.trusty.ubuntu.trusty-backports.restricted
+- aptly.server.mirror.ubuntu.trusty.ubuntu.trusty-backports.universe

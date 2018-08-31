@@ -1,0 +1,34 @@
+applications:
+  - roundcube
+parameters:
+  roundcube:
+    server:
+      enabled: true
+      force_https: false
+      theme: larry
+      view:
+        show_images: 0
+        prefer_html: true
+        display_next: false
+      compose:
+        html_editor: 0
+      mail:
+        host: 127.0.0.1
+      session:
+        # Lifetime in minutes
+        lifetime: 30
+        # 24 random characters
+        des_key: 'Ckhuv6VW6iUdbxpovKzhbepk'
+      plugins:
+        - archive
+        - zipdownload
+        - newmail_notifier
+      mysql:
+        user: roundcube
+        database: roundcube
+        password: ${_param:mysql_roundcube_password}
+        host: 127.0.0.1
+      cache:
+        engine: db
+      addressbook:
+        type: 'sql'

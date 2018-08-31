@@ -1,0 +1,69 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        promote-release-component:
+          name: "{{job_prefix}}-promote-{{component}}-{{version}}-{{distribution}}"
+          template:
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: promote-release-component.groovy
+            trigger:
+              timer:
+               spec: "{{timer_spec}}"
+            param:
+              # general
+              AIO_JOB:
+                type: string
+                description: "Job name to deploy all-ini-one envs are going to be tested"
+                default: "{{job_prefix}}-{{aioJobPrefix}}"
+              MULTINODE_JOB:
+                type: string
+                description: "Job name to deploy multinode envs are going to be tested"
+                default: "{{job_prefix}}-{{multinodeJobPrefix}}"
+              SYSTEM_DISTRIBUTION:
+                type: string
+                default: "{{distribution}}"
+                description: "Distribution of operating system"
+              COMPONENT:
+                type: string
+                default: "{{component}}"
+                description: "Tested MCP Component"
+              VERSION:
+                type: string
+                default: "{{version}}"
+                description: "Tested MCP Component"
+              SRC_REVISION:
+                type: string
+                default: "nightly"
+                description: "Tested revision of component - e.g. nightly"
+              SNAPSHOT_ID:
+                type: string
+                default: ""
+                description: "Tested snapshot id of component"
+              TARGET_REVISION:
+                type: string
+                default: "testing"
+                description: "Revision to promote SRC_REVISION to, e.g. testing"
+              TEST_SCHEME:
+                type: string
+                default: "{{test_scheme}}"
+                description: "Structure which defines parameters of deployment jobs"
+              MIRROR_HOST:
+                type: string
+                default: "mirror.mirantis.com"
+                description: "mirror with snapshots and packages"
+              AUTO_PROMOTE:
+                type: boolean
+                default: "{{auto_promote}}"
+                description: Enable to autopromote repo

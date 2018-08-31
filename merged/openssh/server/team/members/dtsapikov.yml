@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        dtsapikov:
+          enabled: true
+          name: dtsapikov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Dmitry Tsapikov
+          home: /home/dtsapikov
+          email: dtsapikov@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        dtsapikov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDqcQyBOTEtVB82WmUSOpFN2e3/38BxaX3+Gq0lIsBatGK4WlTeSlrnquq9ANenAUzf6yphPy5sQFiegf8mVJ2jD7a8N7MH2K1zVsQUIM2d84SA4f8YxUOyBsAL32nesmxrsFvGQiV2U1XRIuuNqTqjrX5gsTUznkVqYZWvmvoEVT/GsoFKH7aPb7w88/3EAXysSkfJBTEINjWV14+jpv5u/hWv/K/UU/gptx9aEUw9bYUaH5rW8lW9nyIp+BPT0z5BvHTtk+KIDjqS2SEAYVnV/qWoHIU1rGDXbAXcNgN0iFVdOfLhvenxhkyXV/9+UFoAibLBzBTrXxbnoK5AkTyF dtsapikov@Dmitrys-MacBook-Pro.local
+          user: ${linux:system:user:dtsapikov}

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        mpolreich:
+          enabled: true
+          name: mpolreich
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Martin Polreich
+          home: /home/mpolreich
+          email: mpolreich@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        mpolreich:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC6jbVpCqvru+Te2RGLPy/AkcaoRqyqxdBi3OjjXdRjPQYGNuAEFgmlQDZvs5xBMAKOcrcCl8wLcFb3mmpr9+xBJAdR4K0bEqwMfCKRejsN+6AubCbrOeoWb9SsTdvBOl7rOFyICt/XuSNX56C8k1hJojC0U21DIertWSCd8h5RExE8Skqd9+KdHSFa+TZffWbysMrwba29UBt7XsAPuQr1BUOqhA8JOx146ul5HszitCOSvglre8pSJKpw6a4Fk/cb1J8Oc/AfSMdTvTLAfuF+d2Mw6SEawFEocSXq0WKCdZfJpZrWPr6SEB+7zoq3kvhIWgUH2ypYZvvqf0EVlWx polreichmartin@gmail.com
+          user: ${linux:system:user:mpolreich}

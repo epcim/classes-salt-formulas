@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+  maas:
+    region:
+      boot_sources_selections:
+        mcp_xenial:
+          url: ${maas:region:boot_sources:mcp_resources_mirror:url}
+          os: "ubuntu"
+          release: "xenial"
+          arches: "amd64"
+          subarches: '"*"'
+          labels: '"*"'

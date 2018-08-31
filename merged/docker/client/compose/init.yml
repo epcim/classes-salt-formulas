@@ -1,0 +1,11 @@
+classes:
+  - docker.client
+parameters:
+  _param:
+    docker_image_compose: docker/compose:1.17.1
+  docker:
+    client:
+      compose:
+        source:
+          engine: docker
+          image: ${_param:docker_image_compose}

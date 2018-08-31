@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        iudovichenko:
+          enabled: true
+          name: iudovichenko
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Ivan Udovichenko
+          home: /home/iudovichenko
+          email: iudovichenko@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        iudovichenko:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1Dxt3m6w1jZjDxLJEWi2X5uXYZwpJVmfcOoXayofmxvdRyXe5OAEFZpdiPeCgwwcKZGvLjJ0/KXsoBuQw++XhdzZnE1+zaAjpB7fzkTQq4QRvEOMr3z16/AdJdYlqcZH4n3USUhahGdfhpCVDAo1YyYGDTzUH3r1DtYPAGbNiNgb7xu8H3iwp9UiI2t6kH3tx7db2wbVJ6HpnIlA1/Yj4W5j4Cz8f8MnG5oTnmZwT0hXwX/TCPyW56bHOGCAVpHINM+ZU4jUoHMUxjwd4mjMw4TIjID5b+ks91MdBhe/9IDRDrIUK2sK4h+S4ciuD6IAT637DD8/n8P6Vj8qDR0rP
+          user: ${linux:system:user:iudovichenko}

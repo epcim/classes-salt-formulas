@@ -1,0 +1,14 @@
+applications:
+- salt
+classes:
+- service.salt.support
+parameters:
+  salt:
+    minion:
+      enabled: true
+      max_event_size: 100000000
+      source:
+        engine: pkg
+      local: true
+      pillar:
+        engine: reclass

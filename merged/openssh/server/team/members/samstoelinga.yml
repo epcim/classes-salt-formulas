@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        sstoelinga:
+          enabled: true
+          name: sstoelinga
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Sam Stoelinga
+          home: /home/sstoelinga
+          email: sstoelinga@mirantis.com
+  openssh:
+    server:
+      user:
+        sstoelinga:
+          enabled: true
+          public_keys:
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDh3j+qNzTJJJrbgWaNEJ4/wF0HZB8jFlz8jO3tA4QJCPJGT76LeFZgeFK1Avp0rRHD4dnHyDvjynJpE5TckBEFiQ2kbyRRiv4SmJe+cEaSz+okoXSuW4ZbsiOhX7IZfWqhR9ra0uxviiaecWOIwoci55EPob34stthIbLPlcSYS81kdivhJLUZwRTvVX4rRf6gFiAjYyv5Zc4ckwwtkIG0A6XiuoHEpO7lDlps12GfN9DEsNUfzFGrEWzucGsPIBIDmHiods4kMv3UNYKImX0EltLF5bGlSDOsy6t65Qr/zCXyB23yF4oU7991/yIjMWzSwUJzcmcHk+0Fr0b1WHh/
+          user: ${linux:system:user:sstoelinga}
+

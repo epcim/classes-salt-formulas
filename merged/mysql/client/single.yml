@@ -1,0 +1,18 @@
+applications:
+- mysql
+classes:
+- mysql.client
+- mysql.client.database.aodh
+- mysql.client.database.ceilometer
+- mysql.client.database.cinder
+- mysql.client.database.glance
+- mysql.client.database.heat
+- mysql.client.database.keystone
+- mysql.client.database.nova
+- mysql.client.database.nova_api
+- mysql.client.database.neutron
+parameters:
+  mysql:
+    client:
+      enabled: true
+

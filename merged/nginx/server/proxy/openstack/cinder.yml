@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+    nginx_proxy_openstack_cinder_host: ${_param:cinder_service_host}
+    nginx_proxy_openstack_cinder_protocol: 'http'
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_cinder:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_cinder
+          check: false
+          proxy:
+            host: ${_param:nginx_proxy_openstack_cinder_host}
+            port: 8776
+            protocol: ${_param:nginx_proxy_openstack_cinder_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 8776
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

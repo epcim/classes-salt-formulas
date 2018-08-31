@@ -1,0 +1,34 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    panko_service_protocol: http
+    panko_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            panko:
+              password: ${_param:keystone_panko_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            panko:
+              type: event
+              description: OpenStack Event Service
+              endpoints:
+                panko_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:panko_public_host}:8977/
+                  region: ${_param:openstack_region}
+                panko_internal:
+                  interface: 'internal'
+                  url: ${_param:panko_service_protocol}://${_param:panko_service_host}:8977/
+                  region: ${_param:openstack_region}
+                panko_admin:
+                  interface: 'admin'
+                  url: ${_param:panko_service_protocol}://${_param:panko_service_host}:8977/
+                  region: ${_param:openstack_region}

@@ -1,0 +1,17 @@
+parameters:
+  ntp:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: false
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true
+      grafana:
+        enabled: true

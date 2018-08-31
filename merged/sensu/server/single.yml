@@ -1,0 +1,34 @@
+applications:
+- sensu
+classes:
+- git.client
+- redis.server.local
+parameters:
+  _param:
+    rabbitmq_monitor_password: password
+    sensu_message_queue_host: 127.0.0.1
+  sensu:
+    server:
+      bind:
+        address: 0.0.0.0
+        port: 4567
+      check_handlers:
+      - default
+      database:
+        engine: redis
+        host: 127.0.0.1
+        port: 6379
+      enabled: true
+      handler:
+        default:
+          enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:sensu_message_queue_host}
+        password: ${_param:rabbitmq_monitor_password}
+        port: 5672
+        user: monitor
+        virtual_host: /monitor
+      metric_handlers:
+      - graphite
+

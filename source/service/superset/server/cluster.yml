@@ -1,0 +1,10 @@
+applications:
+- superset
+classes:
+- service.superset.support
+parameters:
+  superset:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

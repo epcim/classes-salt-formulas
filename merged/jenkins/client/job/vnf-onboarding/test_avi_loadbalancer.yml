@@ -1,0 +1,7 @@
+parameters:
+  _param:
+    vnf_onboarding_avi_jobs:
+      - edition: enterprise
+        cfy_image: cloudify-manager-4.3.1ga
+      - edition: community
+        cfy_image: cloudify-manager-community-18.2.28

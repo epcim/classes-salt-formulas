@@ -1,0 +1,36 @@
+classes:
+- keystone.client.v3.service.ceilometer
+parameters:
+  _param:
+    cluster_public_protocol: https
+    ceilometer_service_protocol: http
+    ceilometer_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      server:
+        identity:
+          project:
+            service:
+              user:
+                ceilometer:
+                  is_admin: true
+                  password: ${_param:keystone_ceilometer_password}
+                  email: ${_param:admin_email}
+          service:
+            ceilometer:
+              type: metering
+              description: OpenStack Telemetry Service
+              endpoints:
+              - region: ${_param:openstack_region}
+                public_address: ${_param:ceilometer_public_host}
+                public_protocol: ${_param:cluster_public_protocol}
+                public_port: 8777
+                public_path: '/'
+                internal_address: ${_param:ceilometer_service_host}
+                internal_port: 8777
+                internal_path: '/'
+                internal_protocol: ${_param:ceilometer_service_protocol}
+                admin_protocol: ${_param:ceilometer_service_protocol}
+                admin_address: ${_param:ceilometer_service_host}
+                admin_port: 8777
+                admin_path: '/'

@@ -1,0 +1,28 @@
+parameters:
+  _param:
+    kubernetes_proxy_node01_hostname: prx01
+    kubernetes_proxy_node02_hostname: prx02
+    kubernetes_proxy_system_codename: xenial
+  reclass:
+    storage:
+      node:
+        kubernetes_proxy_node01:
+          name: ${_param:kubernetes_proxy_node01_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.kubernetes.proxy
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:kubernetes_proxy_system_codename}
+            single_address: ${_param:kubernetes_proxy_node01_address}
+            keepalived_vip_priority: 102
+        kubernetes_proxy_node02:
+          name: ${_param:kubernetes_proxy_node02_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.kubernetes.proxy
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:kubernetes_proxy_system_codename}
+            single_address: ${_param:kubernetes_proxy_node02_address}
+            keepalived_vip_priority: 101

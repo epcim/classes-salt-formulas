@@ -1,0 +1,21 @@
+# This instance is needed for the example case, where on control node the GlusterFS is deployed with keepalived and
+# a `remote_agent` from `Stacklight` sends its queries to the control's VIP to gather the GlusterFS data.
+# In case of `glusterd` process failure, the VIP should be moved to another node, to prevent `remote_agent` from failing.
+# In addition, check for haproxy process too, as on its failure VIP should be also moved to another node.
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_vip_vrrp_check_script_content: "pidof glusterd && pidof haproxy"
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        vrrp_check:
+          content: ${_param:keepalived_vip_vrrp_check_script_content}
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        VIP:
+          track_script: vrrp_check

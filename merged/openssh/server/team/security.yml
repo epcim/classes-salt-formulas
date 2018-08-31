@@ -1,0 +1,7 @@
+classes:
+- linux.system.sudo
+- openssh.server.team.members.ahecko
+- openssh.server.team.members.pmichalec
+parameters:
+  _param:
+    linux_system_user_sudo: true

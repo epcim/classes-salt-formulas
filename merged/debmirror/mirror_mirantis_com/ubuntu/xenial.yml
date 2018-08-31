@@ -1,0 +1,182 @@
+parameters:
+  _param:
+    apt_mk_version: 'stable'
+    mirror_mirantis_com_ubuntu_xenial_force: False
+    debmirror_mirrors_base_target_dir: "/srv/volumes/aptly/public/${_param:apt_mk_version}/"
+  debmirror:
+    client:
+      enabled: true
+      mirrors:
+        # This mirror is used to build unmodified(no meta changes) but reduced offline ubuntu-mirror.
+        mirror_mirantis_com_ubuntu_xenial:
+          force: ${_param:mirror_mirantis_com_ubuntu_xenial_force}
+          lock_target: True
+          extra_flags: [ '--verbose', '--progress', '--nosource', '--no-check-gpg', '--rsync-extra=none' ]
+          method: "rsync"
+          arch: [ 'amd64' ]
+          mirror_host: "mirror.mirantis.com"
+          mirror_root: ":mirror/${_param:apt_mk_version}/ubuntu/"
+          target_dir: "${_param:debmirror_mirrors_base_target_dir}/ubuntu/"
+          log_file: "/var/log/debmirror/mirror_mirantis_com_ubuntu_xenial.log"
+          dist: [ xenial , xenial-security, xenial-updates ]
+          section: [ main , restricted, universe ]
+          # Don't exclude main/x11 - its required for many pkgs.
+          exclude_deb_section:
+          - Xfce
+          - comm
+          - doc
+          - electronics
+          - games
+          - gnome
+          - graphics
+          - hamradio
+          - kde
+          - localization
+          - news
+          - science
+          - sound
+          - translations
+          - video
+          - main/debug
+          - main/science
+          - restricted/Xfce
+          - restricted/comm
+          - restricted/debug
+          - restricted/doc
+          - restricted/electronics
+          - restricted/games
+          - restricted/gnome
+          - restricted/graphics
+          - restricted/hamradio
+          - restricted/kde
+          - restricted/localization
+          - restricted/news
+          - restricted/science
+          - restricted/sound
+          - restricted/translations
+          - restricted/video
+          - restricted/x11
+          - universe/Xfce
+          - universe/comm
+          - universe/debug
+          - universe/doc
+          - universe/electronics
+          - universe/games
+          - universe/gnome
+          - universe/graphics
+          - universe/hamradio
+          - universe/kde
+          - universe/localization
+          - universe/news
+          - universe/science
+          - universe/sound
+          - universe/translations
+          - universe/video
+          - universe/x11
+          # Updating filter, please always start from section, aka main|universe|multiverse
+          filter:
+            1: "--exclude='android*'"
+            2: "--exclude='/(main|universe)/f/firefox'"
+            3: "--exclude='/chromium-browser*'"
+            5: "--exclude='/*-wallpapers*'"
+            6: "--exclude='/language-pack-(?!en)'"
+            7: "--exclude='thunderbird*'"
+            8: "--exclude='libreoffice*'"
+            9: "--exclude='openoffice*'"
+            10: "--exclude='live-image-*-desktop*'"
+            11: "--exclude='lubuntu-*'"
+            12: "--exclude='kubuntu-*'"
+            13: "--exclude='cinnamon-*'"
+            14: "--exclude='mate-*'"
+            15: "--exclude='desktop-*'"
+            16: "--exclude='flashplugin*'"
+            17: "--exclude='gnome*'"
+            18: "--exclude='/unity*'"
+            20: "--exclude='openjdk-*-(dbg|demo|source).*'"
+            22: "--exclude='(kde|ubuntu|xfce4|sabily).*artwork*'"
+            23: "--exclude='ubuntu-touch*'"
+            24: "--exclude='remmina*'"
+            25: "--exclude='/libbluetooth*'"
+            26: "--exclude='/libandroid*'"
+            27: "--exclude='/banshee*'"
+            27: "--exclude='/*(.xorg)*joystick'"
+            28: "--exclude='/xserver-xorg-video(.*vivid|.*wily|.*utopic)'"
+            30: "--exclude='/*universe.*bluez.*'"
+            32: "--exclude='/main/a/a11y-profile-manager/'"
+            33: "--exclude='/universe/.*(alsa|ubuntuone|telepathy|debian-multimedia|kodi|mediaplayer|nagios|getfem|gammaray|geotranz)'"
+            34: "--exclude='/universe/.*(pyqt|usb-creator|gcc-mingw-w64|gcc-snapshot)'"
+            35: "--exclude='/universe/q/qt'"
+            36: "--exclude='/universe/.*(brasero|mediascanner2|mediatomb|mediawiki|qtmultimedia|pidgin|skype|eclipse|esys-particle|fusion|0/0ad|e/emboss|e/empathy|g/globus)'"
+            84: "--exclude='/multiverse/(v/virtualbox|w/wine|playonlinux)'"
+            86: "--exclude='/main/(m/mozc/|n/nut/|o/oxide-qt/|o/orbit2/|q/(qtbase-opensource-src|qtdeclarative-opensource-src)/|t/telepathy-glib|w/webkit2gtk|w/webrtc-audio-processing)'"
+            87: "--exclude='universe/(s/syncevolution|r/r-bioc-)'"
+            88: "--exclude='universe/t/texlive-lang/texlive-lang-(?!.*english)'"
+            89: "--exclude='/universe/k/(kde)'"
+            90: "--exclude='/universe/p/(psi-plus|puppet-module|plasma|pcl/)'"
+            91: "--exclude='golang-github-*'"
+            92: "--exclude='/(llvm-toolchain|address-book|amule|openclipart|rhythmbox|gimp|sonic-visualiser|games|bsdgame|gazebo|arduino|webkitgtk|widelands|wxwidget|warzone|wings3d).*'"
+            93: "--exclude='/(asterisk|abiword|webbrowser-app|imagemagick|.*clamav|wireshar|vlc|.*transmission|tryton-modules|trilinos|tomboy|wine1|wine-dev|compiz|mythtv|ubuntustudio).*'"
+            94: "--exclude='/universe/o/(openstack-debian-images).*'"
+            95: "--exclude='/gcc-.*-cross.*'"
+            96: "--exclude='/(nvidia).*'"
+            97: "--exclude='/universe/.*(metastudent).*'"
+            # List of unused linux kernels and unsupported arch
+            300: "--exclude='/.*(arm64|powerpc|s390x|armel|armhf|sparc64|mips64|ppc64el|mipsn32)(?!.*amd64)'"
+            301: "--exclude='(main|universe)/l/linux-*-(.*azure|.*aws|gke|gcp|.*azure-edge|.*oem/|.*euclid/)'"
+            302: "--exclude='/*universe.*(-armel-|-arm-)(?!.*amd64)'"
+            303: "--exclude='/main/l/linux(.*)/linux-source-*'"
+            # Old minor version of kernel|tools|extra|cloud and related.
+            # Generic: Old - if minor less then < 127, but not 4numeric
+            304: '--exclude="main/l/linux.*/linux-.*4\.4\.0-(([0-9][0-9])|([0-9][0-2][0-6]))(\.|_|-)"'
+            # Hwe 4.8: Old - if minor in 30-49 and < 57.
+            305: '--exclude="main/l/linux.*/linux-.*4\.8\.0-(([0-4][0-9])|([0-9][0-6]))"'
+            # Hwe 4.10: Old - if minor in 0-39, < 42 .
+            306: '--exclude="main/l/linux.*/linux-.*4\.10\.0-(([0-3][0-9])|(4[0-1]))"'
+            # Hwe 4.13: Old - if minor in 0-39, < 44
+            307: '--exclude="main/l/linux.*/linux-.*4\.13\.0-(([0-3][0-9])|(4[0-4]))"'
+            # Hwe 4.15: Old - if minor in 0-19, < 24
+            308: '--exclude="main/l/linux.*/linux-.*4\.15\.0-(([0-1][0-9])|([0-2][0-3]))"'
+            # List of packages, that should be fetched from fresh ppa or other mirror
+            # So,removing them from upstream mirror.
+            500: "--exclude='/main/m/maas/'"
+            501: "--exclude='/universe/g/glusterfs/'"
+            502: "--exclude='/universe/d/(docker-|docker.io)/'"
+            503: "--exclude='/(main|universe)/c/ceph'"
+            504: "--exclude='/universe/a/aptly'"
+            505: "--exclude='/universe/e/elasticsearch'"
+            506: "--exclude='/universe/g/grafana/'"
+            507: "--exclude='/universe/i/influxdb(?!.*python)'"
+            508: "--exclude='/universe/s/salt'"
+            509: "--exclude='/universe/z/zabbix'"
+            510: "--exclude='(universe|main)/(o|d|n)/(openvswitch|dpdk|networking-ovs-dpdk)'"
+            511: "--exclude='/main/libv/.*(libvirt)'"
+            512: "--exclude='/main/s/.*(seabios)'"
+            513: "--exclude='/universe/.*libvirt'"
+            514: "--exclude='/(universe|main)/c/(cinder|ceilometer)'"
+            515: "--exclude='/(universe|main)/p/python-(cinder|ceilometer)client'"
+            516: "--exclude='/(universe|main)/n/(nova|neutron)'"
+            517: "--exclude='/(universe|main)/p/python-(nova|neutron)client'"
+            518: "--exclude='/(universe|main)/g/(glance)'"
+            519: "--exclude='/(universe|main)/p/python-(glance)client'"
+            520: "--exclude='/(universe|main)/b/(barbican)'"
+            521: "--exclude='/(universe|main)/k/(keystone)'"
+            522: "--exclude='/(universe|main)/d/(designate)'"
+            523: "--exclude='/(universe|main)/p/python-(barbican|keystone|designate)client'"
+            524: "--exclude='/(universe|main)/h/(horizon|heat)'"
+            525: "--exclude='/(universe|main)/p/python-(horizon|heat)client'"
+            526: "--exclude='/(universe|main)/m/(murano|mistral|manila)'"
+            527: "--exclude='/(universe|main)/p/python-(murano|mistral|manila)client'"
+            528: "--exclude='/(universe|main)/i/(ironic)'"
+            529: "--exclude='/(universe|main)/a/(aodh)'"
+            530: "--exclude='/(universe|main)/p/python-(ironic|aodh)client'"
+            # List of extra includes, founded after tests.
+            800: "--include='/main(.*)manpages'"
+            801: "--include='/main(.*)python-(.*)doc'"
+            802: "--include='/main(.*)python-(.*)network'"
+            803: "--include='/main(.*)unittest2'" # openstack* pkgs
+            804: "--include='/main(.*)libbluetooth3'" # python-guestfs
+            # Get required llvm.But drop old llvm toolset.Old - if major in 1-5.
+            805: '--include="/main(.*)llvm-toolchain-(?![1-5])"' # pki-ca: < 389-ds-base < dogtag
+            806: "--include='/main(.*)man-db'" # include man tool
+            807: "--include='/main(.*)zfs-doc'" # Some extra fs dep's for MAAS provision stage.PROD-21531
+

@@ -1,0 +1,32 @@
+applications:
+- ceph
+parameters:
+  _param:
+    ceph_auth_client_required: cephx
+    ceph_client_prefix_dir: /srv/volumes/ceph
+  ceph:
+    client:
+      config:
+        client:
+          rbd_cache: true
+          rbd_cache_max_dirty: 134217728
+          rbd_cache_max_dirty_age: 5
+          rbd_cache_size: 268435456
+        global:
+          auth_client_required: ${_param:ceph_auth_client_required}
+          cluster_network: ${_param:ceph_cluster_network}
+          fsid: ${_param:ceph_fsid}
+          mon_host: ${_param:ceph_mon_host}
+          mon_initial_members: ${_param:ceph_mon_initial_members}
+          osd_fs_mount_options_xfs: rw,noatime
+          osd_fs_type: xfs
+          public_network: ${_param:ceph_public_network}
+        mon:
+          mon_debug_dump_transactions: false
+        osd:
+          filestore_xattr_use_omap: true
+          osd_journal_size: 7500
+      container_mode: true
+      enabled: true
+      prefix_dir: ${_param:ceph_client_prefix_dir}
+

@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    heat_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          heat-cfn:
+            type: cloudformation
+            description: OpenStack CloudFormation Service
+            endpoints:
+              heat-cfn_public_v1:
+                interface: 'public'
+                url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:8000/v1
+                region: ${_param:openstack_region}
+              heat-cfn_internal_v1:
+                interface: 'internal'
+                url: ${_param:heat_service_protocol}://${_param:heat_service_host}:8000/v1
+                region: ${_param:openstack_region}
+              heat-cfn_admin_v1:
+                interface: 'admin'
+                url: ${_param:heat_service_protocol}://${_param:heat_service_host}:8000/v1
+                region: ${_param:openstack_region}

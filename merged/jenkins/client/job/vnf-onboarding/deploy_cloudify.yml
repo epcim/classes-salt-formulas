@@ -1,0 +1,72 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        deploy_cloudify_enterprise:
+          type: workflow-scm
+          name: deploy-cloudify-enterprise
+          display_name: "Deploy Cloudify Enterprise"
+          discard:
+            build:
+              keep_num: 20
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/vnf-onboarding/pipelines"
+            credentials: "${_param:vnf_gerrit_credentials}"
+            script: deploy_cloudify.groovy
+          param:
+            OPENSTACK_API_URL:
+              type: string
+              default: "${_param:vnf_openstack_api_url}"
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "${_param:vnf_openstack_api_admin_credentials}"
+            OPENSTACK_API_TENANT:
+              type: string
+              default: "test-cloudify"
+            NFV_PLATFORM_REPO:
+              type: string
+              description: "Take Cloudify blueprints, Dockerfile and CI scripts from this repo"
+              default: "${_param:jenkins_gerrit_url}/vnf-onboarding/nfv-platform"
+            NFV_PLATFORM_REPO_BRANCH:
+              type: string
+              default: "master"
+            NFV_PLATFORM_REPO_CREDENTIALS:
+              type: string
+              default: "${_param:vnf_gerrit_credentials}"
+            CFM_IMAGE:
+              type: string
+              default: "cloudify-manager-4.3.1ga"
+            CFM_FLAVOR:
+              type: string
+              default: "cfy.mngr"
+            CFM_DISK_SIZE:
+              type: string
+              default: "80"
+            CFM_NET_NAME:
+              type: string
+              default: "cfm-net-shared"
+            SHARE_CFM_NET:
+              type: boolean
+              default: true
+            CFM_SUBNET_CIDR:
+              type: string
+              default: "10.10.1.1/24"
+            CFM_SUBNET_DNS:
+              type: string
+              default: "${_param:dns_server01}"
+            CFM_SSH_KEY_ID:
+              type: string
+              default: "openstack-key"
+            EXTERNAL_NET:
+              type: string
+              default: "public"
+            VNF_DOCKER_REGISTRY_PATH:
+              type: string
+              default: "${_param:vnf_docker_registry_path}"
+            VNF_DOCKER_CLI_TAG:
+              type: string
+              default: "latest"
+            VNF_DOCKER_CLI_PLATFORM:
+              type: string
+              default: "ubuntu"

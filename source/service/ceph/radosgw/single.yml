@@ -1,0 +1,16 @@
+applications:
+- ceph
+classes:
+- service.ceph.common.single
+- service.ceph.support
+parameters:
+  _param:
+    ceph_radosgw_hostname: ${linux:system:name}
+    ceph_radosgw_bind_port: 8080
+  ceph:
+    radosgw:
+      enabled: true
+      hostname: ${_param:ceph_radosgw_hostname}
+      bind:
+        address: ${_param:single_address}
+        port: ${_param:ceph_radosgw_bind_port}

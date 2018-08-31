@@ -1,0 +1,28 @@
+parameters:
+  _param:
+    infra_kvm01_hostname: kvm01
+    infra_kvm02_hostname: kvm02
+    infra_kvm03_hostname: kvm03
+    cicd_control_node01_hostname: cid01
+    cicd_control_node02_hostname: cid02
+    cicd_control_node03_hostname: cid03
+  salt:
+    control:
+      cluster:
+        internal:
+          node:
+            cid01:
+              name: ${_param:cicd_control_node01_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
+              size: cicd.control
+            cid02:
+              name: ${_param:cicd_control_node02_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
+              size: cicd.control
+            cid03:
+              name: ${_param:cicd_control_node03_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+              size: cicd.control

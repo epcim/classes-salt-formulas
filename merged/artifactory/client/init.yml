@@ -1,0 +1,369 @@
+parameters:
+  artifactory:
+    client:
+        enabled: True
+        source:
+          engine: pip
+        server:
+          host: ${_param:artifactory_server_host}
+          port: ${_param:artifactory_server_port}
+          proto: ${_param:artifactory_server_proto}
+          ssl_verify: ${_param:artifactory_server_verify_ssl}
+          user: ${_param:artifactory_client_user}
+          password: ${_param:artifactory_client_password}
+          license_key: ${_param:artifactory_license_key}
+          ldap_server: ${_param:artifactory_security_ldap_server}
+          ldap_account_base: ${_param:artifactory_security_ldap_root_dn}
+          ldap_searchFilter: ${_param:artifactory_security_ldap_searchFilter}
+        repo:
+          # Please keep repo list sorted
+
+          _genericRepository-local:
+            rclass: local
+            packageType: generic
+            description: "Used by Jimbo"
+
+          _genericRepository-remote:
+            rclass: remote
+            packageType: generic
+            description: "Used by Jimbo"
+            url: http://localhost
+
+          _genericRepository-virtual:
+            rclass: virtual
+            packageType: generic
+            description: "Used by Jimbo"
+            repositories:
+            - _genericRepository-local
+            - _genericRepository-remote
+
+          apk-local:
+            rclass: local
+            packageType: generic
+
+          apk-remote:
+            rclass: remote
+            packageType: generic
+            url: http://dl-cdn.alpinelinux.org/alpine/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          apk-virtual:
+            rclass: virtual
+            packageType: generic
+            repositories:
+            - apk-local
+            - apk-remote
+
+          apt-docker-project:
+            rclass: remote
+            packageType: debian
+            url: https://apt.dockerproject.org/repo
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          artifactory-pro-debian:
+            rclass: remote
+            packageType: debian
+            url: https://jfrog.bintray.com/artifactory-pro-debs
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          artifactory-pro-rpm:
+            rclass: remote
+            packageType: yum
+            url: http://jfrog.bintray.com/artifactory-pro-rpms
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          binary-dev-local:
+            rclass: local
+            packageType: generic
+
+          binary-dev-virtual:
+            rclass: virtual
+            packageType: generic
+            repositories:
+            - binary-dev-local
+            - binary-prod-local
+            - binary-remote
+            defaultDeploymentRepo: binary-dev-local
+
+          binary-prod-local:
+            rclass: local
+            packageType: generic
+
+          binary-prod-virtual:
+            rclass: virtual
+            packageType: generic
+            repositories:
+            - binary-prod-local
+            - binary-remote
+            - gcs-remote
+            defaultDeploymentRepo: binary-prod-local
+
+          binary-remote:
+            rclass: remote
+            packageType: generic
+            url: https://artifactory.mcp.mirantis.net/artifactory/binary-prod-virtual
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          centos:
+            rclass: virtual
+            packageType: yum
+            repositories:
+            - centos-local
+            - centos-remote
+            - artifactory-pro-rpm
+
+          centos-local:
+            rclass: local
+            packageType: yum
+
+          centos-remote:
+            rclass: remote
+            packageType: yum
+            url: http://mirror.centos.org/centos/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          centos-virtual:
+            rclass: virtual
+            packageType: yum
+            repositories:
+            - centos-local
+            - centos-remote
+            defaultDeploymentRepo: centos-local
+
+          debian-local:
+            rclass: local
+            packageType: debian
+
+          debian-mariadb-remote:
+            rclass: remote
+            packageType: debian
+            url: http://sfo1.mirrors.digitalocean.com/mariadb/repo/10.1/debian/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-nginx:
+            rclass: remote
+            packageType: debian
+            url: http://nginx.org/packages/debian/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-percona-remote:
+            rclass: remote
+            packageType: debian
+            url: http://repo.percona.com/apt
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-rabbitmq-remote:
+            rclass: remote
+            packageType: debian
+            url: http://www.rabbitmq.com/debian/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-remote:
+            rclass: remote
+            packageType: debian
+            url: http://ftp.us.debian.org/debian
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-security-remote:
+            rclass: remote
+            packageType: debian
+            url: http://security.debian.org/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          debian-virtual:
+            rclass: virtual
+            packageType: generic
+            repositories:
+            - debian-local
+            - debian-remote
+            - debian-security-remote
+            defaultDeploymentRepo: debian-local
+
+          docker-dev-local:
+            rclass: local
+            packageType: docker
+
+          docker-dev-virtual:
+            rclass: virtual
+            packageType: docker
+            repositories:
+            - docker-dev-local
+            - docker-prod-local
+            - docker-remote
+            defaultDeploymentRepo: docker-dev-local
+
+          docker-prod-local:
+            rclass: local
+            packageType: docker
+
+          docker-prod-virtual:
+            rclass: virtual
+            packageType: docker
+            repositories:
+            - docker-prod-local
+            - docker-remote
+            defaultDeploymentRepo: docker-prod-local
+
+          docker-remote:
+            rclass: remote
+            packageType: docker
+            url: https://registry-1.docker.io/
+            description: "Remote repository for DockerHub"
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          gcs-remote:
+            rclass: remote
+            packageType: generic
+            url: https://storage.googleapis.com
+            description: "Has zero downloads. Can be removed."
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          gerrit-plugins:
+            rclass: remote
+            packageType: generic
+            url: http://builds.quelltextlich.at/gerrit/nightly
+            description: "Overlaps with maven-local. We should resolve overlap and remove this repo."
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          helm-local:
+            rclass: local
+            packageType: helm
+            description: "Helm Chart Repository (local)"
+            notes: "https://mirantis.jira.com/browse/PROD-18913"
+            propertySets:
+            - artifactory
+
+          helm-virtual:
+            rclass: virtual
+            packageType: helm
+            description: "Helm Chart Repository (virtual one having correct index)"
+            notes: "https://mirantis.jira.com/browse/PROD-19175"
+            repositories:
+            - helm-local
+            defaultDeploymentRepo: helm-local
+
+          jcenter:
+            rclass: remote
+            packageType: maven
+            url: https://jcenter.bintray.com
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          jenkins-deb-pkgs:
+            rclass: remote
+            packageType: generic
+            url: https://pkg.jenkins.io/debian-stable/binary
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          jenkins-plugins:
+            rclass: remote
+            packageType: generic
+            url: http://mirrors.jenkins-ci.org/plugins
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          jenkins-plugins-jars:
+            rclass: remote
+            packageType: maven
+            url: https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          jenkins-updates:
+            rclass: remote
+            packageType: generic
+            url: https://updates.jenkins.io/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          k8s-tests-images:
+            rclass: local
+            packageType: docker
+
+          maven-local:
+            rclass: local
+            packageType: maven
+            description: "Hosts Java libraries needed to build Docker images"
+
+          mcp-k8s:
+            rclass: virtual
+            packageType: docker
+            repositories:
+            - mcp-k8s-local
+
+          mcp-k8s-ci:
+            rclass: local
+            packageType: docker
+
+          mcp-k8s-local:
+            rclass: local
+            packageType: docker
+
+          mysql-connector-java:
+            rclass: remote
+            packageType: maven
+            url: http://repo.jfrog.org/artifactory/remote-repos/mysql/mysql-connector-java/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          pypi-local:
+            rclass: local
+            packageType: pypi
+
+          pypi-remote:
+            rclass: remote
+            packageType: pypi
+            url: https://pypi.python.org
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          pypi-virtual:
+            rclass: virtual
+            packageType: pypi
+            repositories:
+            - pypi-local
+            - pypi-remote
+            defaultDeploymentRepo: pypi-local
+
+          test-images:
+            rclass: local
+            packageType: generic
+
+          ubuntu-local:
+            rclass: local
+            packageType: debian
+
+          ubuntu-remote:
+            rclass: remote
+            packageType: debian
+            url: http://us.archive.ubuntu.com/ubuntu/
+            unusedArtifactsCleanupEnabled: true
+            unusedArtifactsCleanupPeriodHours: 720
+
+          ubuntu-virtual:
+            rclass: virtual
+            packageType: generic
+            repositories:
+            - ubuntu-local
+            - ubuntu-remote
+            defaultDeploymentRepo: ubuntu-local
+
+          vm-images:
+            rclass: local
+            packageType: generic

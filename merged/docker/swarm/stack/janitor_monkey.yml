@@ -1,0 +1,97 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    docker_janitor_monkey_replicas: 1
+    docker_image_mongodb: library/mongo:3.4
+    docker_mongodb_admin_username: admin
+    docker_mongodb_admin_password: password
+    docker_image_janitor_monkey: ${_param:mcp_docker_registry}/mirantis/oss/janitor-monkey
+    janitor_monkey_bind_host: cleanup-service-api
+    janitor_monkey_bind_port: 8080
+    janitor_monkey_ssl:
+      enabled: false
+    janitor_monkey_enabled: true
+    janitor_monkey_dryrun_mode: false
+    janitor_monkey_mongodb_host: cleanup-service-mongodb
+    janitor_monkey_mongodb_port: ${_param:haproxy_mongodb_bind_port}
+    mongodb_ssl:
+      enabled: false
+    janitor_monkey_base_url: http://${_param:janitor_monkey_mongodb_host}:${_param:janitor_monkey_mongodb_port}
+    janitor_monkey_mongodb_db: mcp_cloud
+    janitor_monkey_mongodb_username: janitor
+    janitor_monkey_mongodb_password: password
+    janitor_monkey_elasticsearch: ${_param:elasticsearch_bind_host}:${_param:elasticsearch_binary_bind_port}
+    janitor_monkey_cloudfire_region: RegionOne
+    janitor_monkey_cis_clustername: ${_param:elasticsearch_cluster_name}
+    janitor_monkey_instance_age_threshold: 15
+    janitor_monkey_notification_oss_url: http://${_param:haproxy_pushkin_bind_host}:${_param:haproxy_pushkin_bind_port}/post_notification_json
+    janitor_monkey_notification_oss_login_id: 12
+    janitor_monkey_notification_oss_application_id: 2
+    janitor_monkey_openstack:
+      project_domain_name: default
+      project_name: admin
+      auth_url: http://yourcloud.com:5000/v3/auth/tokens
+      username: admin
+      password: password
+      endpoint_type: public
+      ssl_verify: False
+      source_credentials_dir: /srv/volumes/rundeck/storage
+      destination_credentials_dir: /opt/os_creds
+      cacert_path: ${_param:janitor_monkey_openstack:destination_credentials_dir}/content/keys/cis/openstack/cert.pem
+  docker:
+    client:
+      stack:
+        janitor_monkey:
+          environment:
+            MONGO_INITDB_ROOT_USERNAME: ${_param:docker_mongodb_admin_username}
+            MONGO_INITDB_ROOT_PASSWORD: ${_param:docker_mongodb_admin_password}
+            simianarmy.recorder.mongodb.host: ${_param:janitor_monkey_mongodb_host}
+            simianarmy.recorder.mongodb.port: ${_param:janitor_monkey_mongodb_port}
+            simianarmy.recorder.mongodb.database: ${_param:janitor_monkey_mongodb_db}
+            simianarmy.recorder.mongodb.user: ${_param:janitor_monkey_mongodb_username}
+            simianarmy.recorder.mongodb.password: ${_param:janitor_monkey_mongodb_password}
+            simianarmy.base.url: ${_param:janitor_monkey_base_url}
+            simianarmy.janitor.enabled: ${_param:janitor_monkey_enabled}
+            simianarmy.janitor.leashed: ${_param:janitor_monkey_dryrun_mode}
+            simianarmy.calendar.isMonkeyTime: true
+            simianarmy.janitor.resources.sdb.domain: ${_param:janitor_monkey_mongodb_db}
+            simianarmy.client.cloudfire.cis.hosts: ${_param:janitor_monkey_elasticsearch}
+            simianarmy.client.cloudfire.region: ${_param:janitor_monkey_cloudfire_region}
+            simianarmy.client.cloudfire.cis.clustername: ${_param:janitor_monkey_cis_clustername}
+            simianarmy.client.cloudfire.identityEndpoint: ${_param:janitor_monkey_openstack:auth_url}
+            simianarmy.client.cloudfire.identityEndpointType: ${_param:janitor_monkey_openstack:endpoint_type}
+            simianarmy.client.cloudfire.accountKey: ${_param:janitor_monkey_openstack:username}
+            simianarmy.client.cloudfire.secretKey: ${_param:janitor_monkey_openstack:password}
+            simianarmy.client.cloudfire.domain: ${_param:janitor_monkey_openstack:project_domain_name}
+            simianarmy.client.cloudfire.project: ${_param:janitor_monkey_openstack:project_name}
+            simianarmy.client.cloudfire.SSLVerify: ${_param:janitor_monkey_openstack:ssl_verify}
+            simianarmy.client.cloudfire.cafile: ${_param:janitor_monkey_openstack:cacert_path}
+            simianarmy.janitor.rule.stoppedInstanceRule.instanceAgeThreshold: ${_param:janitor_monkey_instance_age_threshold}
+            simianarmy.janitor.notification.oss.url: ${_param:janitor_monkey_notification_oss_url}
+            simianarmy.janitor.notification.oss.login_id: ${_param:janitor_monkey_notification_oss_login_id}
+            simianarmy.janitor.notification.oss.application_id: ${_param:janitor_monkey_notification_oss_application_id}
+          service:
+            cleanup-service-mongodb:
+              image: ${_param:docker_image_mongodb}
+              deploy:
+                replicas: ${_param:docker_janitor_monkey_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_mongodb_exposed_port}:${_param:haproxy_mongodb_bind_port}
+              volumes:
+                - /srv/volumes/mongodb:/data/db
+            cleanup-service-api:
+              image: ${_param:docker_image_janitor_monkey}
+              deploy:
+                replicas: ${_param:docker_janitor_monkey_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_janitor_monkey_exposed_port}:${_param:janitor_monkey_bind_port}
+              volumes:
+                - ${_param:janitor_monkey_openstack:source_credentials_dir}:${_param:janitor_monkey_openstack:destination_credentials_dir}:ro
+          network:
+            default:
+              external:
+                name: oss_backend

@@ -1,0 +1,62 @@
+applications:
+- designate
+parameters:
+  _param:
+    designate_admin_api_enabled: false
+    internal_protocol: http
+  designate:
+    server:
+      admin_api:
+        enabled: ${_param:designate_admin_api_enabled}
+        enabled_extensions_admin: quotas
+      bind:
+        api:
+          address: ${_param:single_address}
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name:
+          main_database: designate
+          pool_manager: designate_pool_manager
+        password: ${_param:mysql_designate_password}
+        port: 3306
+        user: designate
+      domain_id: ${_param:designate_domain_id}
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_designate_password}
+        port: 35357
+        protocol: ${_param:internal_protocol}
+        tenant: service
+        user: designate
+      local_bind: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      pools:
+        default:
+          description: default pool
+          nameservers: ${_param:designate_pool_nameservers}
+          ns_records: ${_param:designate_pool_ns_records}
+          targets:
+            default:
+              description: default target
+              masters: ${_param:designate_pool_target_masters}
+              options: ${_param:designate_pool_target_options}
+              type: ${_param:designate_pool_target_type}
+      region: ${_param:openstack_region}
+      role: ${_param:openstack_node_role}
+      version: ${_param:designate_version}
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

@@ -1,0 +1,9 @@
+applications:
+- ceph
+classes:
+- ceph.support
+parameters:
+  ceph:
+    mon:
+      enabled: true
+

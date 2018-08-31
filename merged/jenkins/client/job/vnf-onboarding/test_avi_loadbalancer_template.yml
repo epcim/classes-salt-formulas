@@ -1,0 +1,143 @@
+parameters:
+  _param:
+    vnf_onboarding_avi_jobs: []
+  jenkins:
+    client:
+      plugin:
+        gerrit-trigger: {}
+      job-template:
+        test_avi_loadbalancer:
+          name: "test-avi-loadbalancer-{{edition}}"
+          template:
+            type: workflow-scm
+            display_name: "Onboarding tests for the AVI Loadbalancer VNF against CFY {{edition}} edition"
+            discard:
+              build:
+                keep_num: 20
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/vnf-onboarding/pipelines"
+              credentials: "${_param:vnf_gerrit_credentials}"
+              script: test_vnf_onboarding.groovy
+            trigger:
+              gerrit:
+                project:
+                  "vnf-onboarding/avi-loadbalancer":
+                    branches:
+                      - compare_type: "ANT"
+                        name: "**"
+                event:
+                  patchset:
+                    - created:
+                        excludeDrafts: false
+                        excludeTrivialRebase: false
+                        excludeNoCodeChange: false
+                  change:
+                   - merged
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '(retest|recheck|reverify)'
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+            param:
+              DEFAULT_GIT_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/vnf-onboarding/avi-loadbalancer"
+              DEFAULT_GIT_REF:
+                type: string
+                default: master
+              OPENSTACK_API_URL:
+                type: string
+                default: "${_param:vnf_openstack_api_url}"
+              OPENSTACK_API_CREDENTIALS:
+                type: string
+                default: "${_param:vnf_openstack_api_credentials}"
+              OPENSTACK_API_TENANT:
+                type: string
+                default: "test-avi"
+              GERRIT_CREDENTIALS:
+                type: string
+                default: "${_param:vnf_gerrit_credentials}"
+              ELASTIC_URL:
+                type: string
+                default: "${_param:vnf_elastic_url}"
+              DEBUG_OPTIONS:
+                type: string
+                description: "Example: skip_all=1 skip_deploy=1 skip_inspection=1"
+              NFV_PLATFORM_REPO:
+                type: string
+                description: "Take Cloudify blueprints, Dockerfile and CI scripts from this repo"
+                default: "${_param:jenkins_gerrit_url}/vnf-onboarding/nfv-platform"
+              NFV_PLATFORM_REPO_BRANCH:
+                type: string
+                default: "master"
+              NFV_PLATFORM_REPO_CREDENTIALS:
+                type: string
+                default: "${_param:vnf_gerrit_credentials}"
+              CONTRAIL_ENABLED:
+                type: boolean
+                default: false
+              CONTRAIL_API_URL:
+                type: string
+                default: "${_param:contrail_api_url}"
+              SETUP_OWN_CLOUDIFY:
+                type: boolean
+                description: "Use temporary private Cloudify instance"
+                default: false
+              CLOUDIFY_MANAGER_IP:
+                type: string
+                description: "IP address of extrenal Cloudify. \"auto\" refers to address of deploy_cloudify_enterprise job Cloudify instance"
+                default: "auto"
+              CLOUDIFY_MANAGER_OPTIONS:
+                type: string
+                description: "Parameters for cloudify manager VM. Can be skipped if cloudify predeployed."
+                default: "CFM_IMAGE={{cfy_image}} CFM_FLAVOR=cfy.mngr CFM_DISK_SIZE=80 CFM_SUBNET_CIDR=10.10.1.1/24 CFM_SUBNET_DNS=172.19.0.6 EXTERNAL_NET=public "
+              CFM_SSH_KEY_ID:
+                type: string
+                description: "Credentials ID of ssh key for connection to Cloudify"
+                default: "${_param:vnf_openstack_ssh_key_credentials}"
+              CLOUDIFY_AGENT_OPTIONS:
+                type: string
+                description: "Parameters for cloudify agent VMs."
+                default: "CFY_AGENT_NET=cfm-net-shared CFY_AGENT_FLAVOR=cfy.agent CFY_AGENT_BACKEND_FLAVOR=backend.avi CFY_AGENT_IMAGE=agent_vm CFY_AGENT_BASE_IMAGE=base_agent_vm CFY_AGENT_BACKEND_IMAGE=base_backend_vm"
+              CLOUDIFY_MANAGER_VERSION:
+                type: choice
+                choices:
+                 - enterprise
+                 - community
+                default: "{{edition}}"
+                description: "CFY edition version, make sure that it is consistent with CFY Manager image"
+              VNF_ARTIFACTORY_URL:
+                type: string
+                default: "${_param:vnf_artifactory_url}"
+              VNF_ARTIFACTORY_PLUGINS_DIR:
+                type: string
+                default: "${_param:vnf_artifactory_url}/cloudify/plugins/"
+              VNF_DOCKER_REGISTRY_PATH:
+                type: string
+                default: "${_param:vnf_docker_registry_path}"
+              VNF_DOCKER_CLI_TAG:
+                type: string
+                default: "latest"
+              VNF_DOCKER_SCRUN_TAG:
+                type: string
+                default: "latest"
+              VNF_DOCKER_AVICFG_TAG:
+                type: string
+                default: "latest"
+              VNF_PLUGINS:
+                type: string
+                description: "Plugins to fetch from artifactory and install during build package step"
+                default: "vnf_onboarding_tools-0.2-py27-none-linux_x86_64_CentOS_Core"
+              VNF_OPTIONS:
+                type: string
+                default: "AVI_VERSION=17.2.3 AVI_USERNAME=admin AVI_PASSWORD=Swordfish1234 AVI_IMAGE_PASSWORD=58NFaGDJm(PJH0G AVI_OS_FLAVOR=avi_ctrl.small AVI_OS_IMAGE=avi-control-17.2.3"
+              VNF_DOCKER_CLI_PLATFORM:
+                type: string
+                default: "ubuntu"
+              VNF_DEPLOYMENT_TIMEOUT:
+                type: string
+                description: "Set up timeout for cloudify deployment (depends on each VNF specific and network throughput)."
+                default: 1800

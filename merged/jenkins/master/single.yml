@@ -1,0 +1,18 @@
+applications:
+- jenkins
+parameters:
+  jenkins:
+    master:
+      enabled: true
+      http:
+        network: any
+        port: 8080
+        protocol: http
+      mode: NORMAL
+      sudo: false
+      user:
+        admin:
+          api_token: ${_param:jenkins_admin_token}
+          email: root@domain.com
+          password: ${_param:jenkins_admin_password}
+

@@ -1,0 +1,117 @@
+applications:
+- nova
+classes:
+- haproxy.proxy.single
+- keepalived.cluster.single
+- haproxy.proxy.listen.openstack.nova
+- haproxy.proxy.listen.openstack.novnc
+- salt.minion.cert.mysql.clients.openstack.nova
+parameters:
+  _param:
+    cluster_internal_protocol: http
+    galera_ssl_enabled: false
+    metadata_password: metadataPass
+    nova_cpu_allocation_ratio: 16
+    nova_disk_allocation_ratio: 1
+    nova_networking: default
+    nova_ram_allocation_ratio: 1.5
+    nova_vncproxy_url: http://${_param:cluster_vip_address}:6080
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
+    openstack_ossyslog_handler_enabled: false
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+  nova:
+    controller:
+      bind:
+        novncproxy_address: ${_param:cluster_local_address}
+        novncproxy_port: 6080
+        private_address: ${_param:cluster_local_address}
+        public_address: ${_param:cluster_vip_address}
+        public_name: ${_param:cluster_vip_address}
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      cpu_allocation_ratio: ${_param:nova_cpu_allocation_ratio}
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: nova
+        password: ${_param:mysql_nova_password}
+        port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
+        user: nova
+        x509:
+          ca_file: ${_param:mysql_nova_ssl_ca_file}
+          cert_file: ${_param:mysql_nova_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_nova_client_ssl_key_file}
+      dhcp_domain: novalocal
+      disk_allocation_ratio: ${_param:nova_disk_allocation_ratio}
+      enabled: true
+      glance:
+        host: ${_param:cluster_vip_address}
+        port: 9292
+        protocol: ${_param:cluster_internal_protocol}
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_nova_password}
+        port: 35357
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: nova
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      metadata:
+        password: ${_param:metadata_password}
+      network:
+        engine: neutron
+        host: ${_param:neutron_service_host}
+        mtu: 1500
+        password: ${_param:keystone_neutron_password}
+        port: 9696
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: neutron
+      networking: ${_param:nova_networking}
+      ram_allocation_ratio: ${_param:nova_ram_allocation_ratio}
+      role: ${_param:openstack_node_role}
+      scheduler_default_filters: DifferentHostFilter,SameHostFilter,RetryFilter,AvailabilityZoneFilter,RamFilter,CoreFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter,NUMATopologyFilter,AggregateInstanceExtraSpecsFilter
+      security_group: false
+      version: ${_param:nova_version}
+      vncproxy_url: ${_param:nova_vncproxy_url}
+      workers: 8
+

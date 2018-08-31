@@ -1,0 +1,236 @@
+applications:
+- opencontrail
+classes:
+- haproxy.proxy.single
+parameters:
+  _param:
+    keystone_admin_password: none
+    keystone_service_token: none
+    opencontrail_identity_port: 35357
+    opencontrail_identity_version: "2.0"
+    opencontrail_kafka_log_cleanup_dir: /usr/share/kafka/logs/
+    opencontrail_kafka_log_cleanup_mtime: "+7"
+    opencontrail_version: 2.2
+    openstack_region: RegionOne
+  haproxy:
+    proxy:
+      listen:
+        contrail_api:
+          binds:
+          - address: ${_param:single_address}
+            port: 8082
+          check: false
+          servers:
+          - host: ${_param:single_address}
+            name: ctl01
+            params: check inter 2000 rise 2 fall 3
+            port: 9100
+          service_name: contrail
+          type: contrail-api
+        contrail_collector_stats:
+          binds:
+          - address: '*'
+            port: 5938
+          format: listen
+          password: ${_param:opencontrail_stats_password}
+          service_name: contrail
+          type: contrail-config
+          user: haproxy
+        contrail_config_stats:
+          binds:
+          - address: '*'
+            port: 5937
+          format: listen
+          password: ${_param:opencontrail_stats_password}
+          service_name: contrail
+          type: contrail-config
+          user: haproxy
+        contrail_discovery:
+          binds:
+          - address: ${_param:single_address}
+            port: 5998
+          servers:
+          - host: ${_param:single_address}
+            name: ctl01
+            params: check inter 2000 rise 2 fall 3
+            port: 9110
+          service_name: contrail
+          type: contrail-api
+        contrail_openstack_stats:
+          binds:
+          - address: '*'
+            port: 5936
+          format: listen
+          password: ${_param:opencontrail_stats_password}
+          service_name: contrail
+          type: contrail-config
+          user: haproxy
+  linux:
+    system:
+      job:
+        kafka_logs_cleanup:
+          command: find ${_param:opencontrail_kafka_log_cleanup_dir} -name '*.log.*'
+            -type f -mtime ${_param:opencontrail_kafka_log_cleanup_mtime} -exec rm
+            {} \;
+          hour: 0
+          identifier: kafka_logs_cleanup
+          minute: 0
+      kernel:
+        modules:
+        - nf_conntrack_ipv4
+      package:
+        contrail-api-cli:
+          version: latest
+        librdkafka1:
+          version: 0.9.0-0contrail0
+        python-kafka:
+          version: 1.0.1-0contrail1
+  opencontrail:
+    collector:
+      aaa_mode: no-auth
+      alarm_gen:
+        port_prefix: 59
+        workers: 1
+      bind:
+        address: ${_param:single_address}
+        port: 9081
+      data_ttl: 1
+      database:
+        members:
+        - host: ${_param:single_address}
+          port: 9160
+      discovery:
+        host: ${_param:single_address}
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        region: RegionOne
+        tenant: admin
+        token: ${_param:keystone_service_token}
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      master:
+        host: ${_param:single_address}
+      version: ${_param:opencontrail_version}
+    common:
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        token: ${_param:keystone_service_token}
+      network:
+        engine: neutron
+        host: ${_param:single_address}
+        port: 9696
+      version: ${_param:opencontrail_version}
+    config:
+      analytics:
+        host: ${_param:single_address}
+      bind:
+        address: ${_param:single_address}
+        api_port: 9100
+        discovery_port: 9110
+      cache:
+        members:
+        - host: ${_param:single_address}
+          port: 11211
+      database:
+        members:
+        - host: ${_param:single_address}
+          port: 9160
+      discovery:
+        host: ${_param:single_address}
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        region: ${_param:openstack_region}
+        tenant: admin
+        token: ${_param:keystone_service_token}
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      members:
+      - host: ${_param:single_address}
+        id: 1
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        port: 5672
+      multi_tenancy: true
+      network:
+        engine: neutron
+        host: ${_param:single_address}
+        port: 9696
+      version: ${_param:opencontrail_version}
+    control:
+      bind:
+        address: ${_param:single_address}
+      discovery:
+        host: ${_param:single_address}
+      enabled: true
+      master:
+        host: ${_param:single_address}
+      members:
+      - host: ${_param:single_address}
+        id: 1
+      version: ${_param:opencontrail_version}
+    database:
+      bind:
+        host: ${_param:single_address}
+        port: 9042
+        port_configdb: 9041
+        rpc_port: 9160
+        rpc_port_configdb: 9161
+      cassandra:
+        version: 2
+      data_dirs:
+      - /var/lib/cassandra
+      discovery:
+        host: ${_param:single_address}
+      enabled: true
+      id: ${_param:opencontrail_database_id}
+      members:
+      - host: ${_param:single_address}
+        id: 1
+      minimum_disk: 10
+      name: Contrail
+      original_token: 0
+      version: ${_param:opencontrail_version}
+    web:
+      analytics:
+        host: ${_param:single_address}
+      bind:
+        address: ${_param:single_address}
+      cache:
+        engine: redis
+        host: ${_param:single_address}
+        port: 6379
+      database:
+        engine: cassandra
+        port: 9042
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        tenant: admin
+        token: ${_param:keystone_service_token}
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      master:
+        host: ${_param:single_address}
+      members:
+      - host: ${_param:single_address}
+        id: 1
+      network:
+        engine: neutron
+        host: ${_param:single_address}
+      version: ${_param:opencontrail_version}
+

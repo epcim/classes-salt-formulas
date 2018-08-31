@@ -1,0 +1,9 @@
+parameters:
+  gnocchi:
+    server:
+      role: ${_param:openstack_node_role}
+      identity:
+        region: ${_param:openstack_region}
+      metricd:
+        metric_processing_delay: 15
+        metric_reporting_delay: 30

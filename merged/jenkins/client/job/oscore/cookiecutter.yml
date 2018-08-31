@@ -1,0 +1,129 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        oscore-test-cookiecutter-model:
+          display_name: oscore-test-cookiecutter-model
+          name: oscore-test-cookiecutter-model
+          concurrent: true
+          description: Test specified cookiecutter context
+          discard:
+            build:
+             keep_num: 60
+            artifact:
+             keep_num: 60
+          type: workflow-scm
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines"
+            credentials: "gerrit"
+            branch: 'master'
+            script: test-cookiecutter-model-pipeline.groovy
+          param:
+            CREDENTIALS_ID:
+              type: string
+              description: "ID of jenkins credentials to be used when connecting to gerrit."
+              default: "gerrit"
+            COOKIECUTTER_TEMPLATE_CONTEXT_FILE:
+              type: choice
+              description: "Context for coockiecutter template specified as filename."
+              choices:
+                - openstack-ovs-core-ocata
+                - openstack-ovs-core-pike
+                - openstack-ovs-core-ssl-pike
+                - openstack-ovs-core-barbican-pike
+                - openstack-ovs-core-manila-pike
+                - openstack-ovs-core-telemetry-pike
+                - openstack-ovs-core-queens
+            STACK_INSTALL:
+              type: string
+              default: 'core,openstack,ovs'
+            STACK_DELETE:
+              type: boolean
+              description: "Delete Heat stack when finished (bool)"
+              default: 'false'
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore"
+            HEAT_STACK_ZONE:
+              type: string
+              default: "mcp-oscore"
+            FLAVOR_PREFIX:
+              type: string
+              default: 'dev'
+            RUN_SMOKE:
+              type: boolean
+              description: "Run smoke after deployment or not. (bool)"
+              default: 'false'
+            COOKIECUTTER_EXTRA_CONTEXT:
+              type: text
+              description: "Extra context items, will be merged to COOKIECUTTER_TEMPLATE_CONTEXT_FILE"
+              default: |-
+                #Extra context that will be merged with content of COOKIECUTTER_TEMPLATE_CONTEXT_FILE
+                default_context:
+                  openssh_groups: "qa_scale,oscore_devops,networking,tcpcloud,stacklight,k8s_team"
+                  cookiecutter_template_url: https://gerrit.mcp.mirantis.net/mk/cookiecutter-templates.git
+                  cookiecutter_template_branch: 'master'
+                  shared_reclass_url: https://gerrit.mcp.mirantis.net/salt-models/reclass-system.git
+                  shared_reclass_branch: 'master'
+            STACK_INSTALL:
+              type: string
+              default: 'core,openstack,ovs'
+            STACK_DELETE:
+              type: boolean
+              description: "Delete Heat stack when finished (bool)"
+              default: 'false'
+        oscore-test-cookiecutter-models:
+          display_name: oscore-test-cookiecutter-models
+          name: oscore-test-cookiecutter-models
+          concurrent: true
+          discard:
+            build:
+              keep_num: 30
+            artifact:
+              keep_num: 30
+          type: workflow-scm
+          concurrent: true
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+            credentials: "gerrit"
+            branch: 'master'
+            script: test-cookiecutter-models-pipeline.groovy
+          trigger:
+            gerrit:
+             project:
+               "^mk/cookiecutter-templates$":
+                 compare_type: 'REG_EXP'
+                 branches:
+                   - master
+             skip_vote:
+               - successful
+               - failed
+               - unstable
+               - not_built
+             event:
+               comment:
+                 - addedContains:
+                    commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+          param:
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"
+              description: "ID of jenkins credentials to be used when connecting to gerrit."
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore-ci"
+            HEAT_STACK_ZONE:
+              type: string
+              default: "mcp-oscore-ci"
+            FLAVOR_PREFIX:
+              type: string
+              default: 'dev'
+            TEST_SCHEME:
+              type: text
+              description: "Yaml based scheme to test specific models."
+              default: |-
+                openstack-ovs-core-pike:
+                  run_smoke: true
+                  stack_install: 'core,openstack,ovs'

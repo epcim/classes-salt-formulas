@@ -1,0 +1,98 @@
+classes:
+  - service.postfix.support
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: true
+      myorigin: ${linux:system:name}.${linux:system:domain}
+      myhostname: ${postfix:server:myorigin}
+      mailbox_base: /srv/mail
+      dovecot_lmtp:
+        enabled: true
+        type: unix
+        address: private/dovecot-lmtp
+      message_size_limit: 25000000
+      aliases:
+        postmaster: root
+      admin:
+        enabled: true
+        encrypt: "md5"
+        url: "/admin"
+        # Default password is changeme, and this is what you should do
+        setup_password: 'dcae0c85ae2ec6ed7922a98d96a4f891:34de2e58483b2e6df1eb984e030ba7a405dfa1d0'
+        email: postmaster@${postfix:server:origin}
+        default_aliases:
+          root: root@${postfix:server:origin}
+          abuse: abuse@${postfix:server:origin}
+          hostmaster: hostmaster@${postfix:server:origin}
+          postmaster: postmaster@${postfix:server:origin}
+          webmaster: webmaster@${postfix:server:origin}
+        vacation:
+          enabled: false
+          domain: autoreply.${postfix:server:origin}
+        footer:
+          show_text: true
+          text: "Return to webmail"
+          link: "https://${postfix:server:origin}"
+      user:
+        name: vmail
+        group: vmail
+        uid: 125
+        gid: 125
+        home: ${postfix:server:mailbox_base}
+      mysql:
+        user: mailserver
+        database: mailserver
+        password: ${_param:mysql_mailserver_password}
+        host: 127.0.0.1
+      ssl:
+        enabled: true
+      dkim:
+        enabled: false
+        trusted_hosts:
+          - 127.0.0.1
+          - ::1
+          - localhost
+          - ${postfix:server:origin}
+      mailman:
+        enabled: false
+        admin_password: changeme
+        default_domain: lists.${postfix:server:origin}
+        send_reminders: false
+        use_https: false
+        domains:
+          - lists.${postfix:server:origin}
+        lists:
+          # Default list, required by mailman itself
+          - name: mailman
+            admin: ${postfix:server:admin:email}
+            password: ${postfix:server:mailman:admin_password}
+            # Domain to which list belongs to, eg. example.com for
+            # list on mailman@example.com
+            domain: ${postfix:server:origin}
+            # Lists web interface hostname (eg. lists.example.com)
+            domainweb: lists.${postfix:server:origin}
+            parameters:
+              advertised: 0
+              subscribe_policy: 2
+              private_roster: 2
+              archive_private: 1
+      amavis:
+        enabled: false
+        processes: 2
+        virus_destiny: D_DISCARD
+        banned_destiny: D_PASS
+        spam_destiny: D_PASS
+        bad_header_destiny: D_PASS
+        spamassassin:
+          subject_tag: '[SPAM]'
+          tag_level: '2.0'
+          tag2_level: '6.31'
+          kill_level: '6.31'
+          dsn_cutoff_level: '10'
+    relay:
+      enabled: false
+    backupmx:
+      enabled: false

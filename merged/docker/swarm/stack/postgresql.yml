@@ -1,0 +1,32 @@
+parameters:
+  _param:
+    docker_postgresql_replicas: 1
+    docker_image_postgresql: library/postgres:9.6
+    postgresql_bind_host: postgresql-db
+    postgresql_bind_port: ${_param:haproxy_postgresql_bind_port}
+    postgresql_ssl:
+      enabled: false
+    postgresql_admin_user: postgres
+    postgresql_admin_user_password: postgrespassword
+  docker:
+    client:
+      stack:
+        postgresql:
+          environment:
+            POSTGRES_USER: ${_param:postgresql_admin_user}
+            POSTGRES_PASSWORD: ${_param:postgresql_admin_user_password}
+          service:
+            postgresql-db:
+              image: ${_param:docker_image_postgresql}
+              deploy:
+                replicas: ${_param:docker_postgresql_replicas}
+                restart_policy:
+                  condition: any
+              volumes:
+                - /srv/volumes/postgresql/data:/var/lib/postgresql/data
+              ports:
+                - ${_param:haproxy_postgresql_exposed_port}:${_param:haproxy_postgresql_bind_port}
+          network:
+            default:
+              external:
+                name: oss_backend

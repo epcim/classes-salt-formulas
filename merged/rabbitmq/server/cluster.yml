@@ -1,0 +1,60 @@
+applications:
+- rabbitmq
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+parameters:
+  haproxy:
+    proxy:
+      listen:
+        rabbitmq_cluster:
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: 5672
+          servers:
+          - host: ${_param:cluster_node01_address}
+            name: ${_param:cluster_node01_hostname}
+            params: check inter 5000 rise 2 fall 3
+            port: 5672
+          - host: ${_param:cluster_node02_address}
+            name: ${_param:cluster_node02_hostname}
+            params: backup check inter 5000 rise 2 fall 3
+            port: 5672
+          - host: ${_param:cluster_node03_address}
+            name: ${_param:cluster_node03_hostname}
+            params: backup check inter 5000 rise 2 fall 3
+            port: 5672
+          type: rabbitmq
+  rabbitmq:
+    cluster:
+      enabled: true
+      master: ${_param:cluster_node01_hostname}
+      members:
+      - host: ${_param:cluster_node01_address}
+        name: ${_param:cluster_node01_hostname}
+      - host: ${_param:cluster_node02_address}
+        name: ${_param:cluster_node02_hostname}
+      - host: ${_param:cluster_node03_address}
+        name: ${_param:cluster_node03_hostname}
+      mode: disc
+      name: openstack
+      role: ${_param:rabbitmq_cluster_role}
+    server:
+      admin:
+        name: admin
+        password: ${_param:rabbitmq_admin_password}
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 5672
+      enabled: true
+      management:
+        bind:
+          address: ${_param:cluster_local_address}
+          port: 15672
+      memory:
+        vm_high_watermark: 0.8
+      plugins:
+      - amqp_client
+      - rabbitmq_management
+      secret_key: ${_param:rabbitmq_secret_key}
+

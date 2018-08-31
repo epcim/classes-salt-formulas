@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    mirror_mirantis_openstack_xenial_cassandra_source: http://mirror.mirantis.com/${_param:apt_mk_version}/cassandra/xenial/
+    mirror_mirantis_openstack_xenial_cassandra_distribution: 21x
+    mirror_mirantis_openstack_xenial_cassandra_components: main
+    mirror_mirantis_openstack_xenial_cassandra_gpgkeys:
+      - A278B781FE4B2BDA
+      - F758CE318D77295D
+      - 2B5C1B00
+      - 0353B12C
+  aptly:
+    server:
+      mirror:
+        mirantis_openstack_xenial_cassandra:
+          source: ${_param:mirror_mirantis_openstack_xenial_cassandra_source}
+          distribution: ${_param:mirror_mirantis_openstack_xenial_cassandra_distribution}
+          components: ${_param:mirror_mirantis_openstack_xenial_cassandra_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_mirantis_openstack_xenial_cassandra_gpgkeys}
+          publisher:
+            component: 21x
+            distributions:
+              - ubuntu-xenial/cassandra/${_param:apt_mk_version}

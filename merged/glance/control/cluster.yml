@@ -1,0 +1,82 @@
+applications:
+- glance
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.glance
+parameters:
+  _param:
+    keystone_glance_endpoint_type: internalURL
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  glance:
+    server:
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 9292
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: glance
+        password: ${_param:mysql_glance_password}
+        port: 3306
+        user: glance
+      enabled: true
+      identity:
+        endpoint_type: ${_param:keystone_glance_endpoint_type}
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_glance_password}
+        port: 35357
+        region: ${_param:openstack_region}
+        tenant: service
+        user: glance
+      images: []
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      rabbit:
+        host: ${_param:cluster_vip_address}
+      registry:
+        host: ${_param:cluster_vip_address}
+        port: 9191
+      role: ${_param:openstack_node_role}
+      show_multiple_locations: true
+      storage:
+        engine: file
+      version: ${_param:glance_version}
+      workers: 8
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

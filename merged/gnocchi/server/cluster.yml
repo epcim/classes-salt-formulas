@@ -1,0 +1,29 @@
+classes:
+- haproxy.proxy.single
+- apache.server.site.gnocchi
+- haproxy.proxy.listen.openstack.gnocchi
+- keepalived.cluster.instance.openstack_telemetry_vip
+parameters:
+  _param:
+    gnocchi_memcached_node01_address: ${_param:cluster_node01_address}
+    gnocchi_memcached_node02_address: ${_param:cluster_node02_address}
+    gnocchi_memcached_node03_address: ${_param:cluster_node03_address}
+  gnocchi:
+    server:
+      enable_proxy_headers_parsing: true
+      role: ${_param:openstack_node_role}
+      metricd:
+        metric_processing_delay: 15
+        metric_reporting_delay: 30
+      identity:
+        host: ${_param:openstack_control_address}
+        region: ${_param:openstack_region}
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:gnocchi_memcached_node01_address}
+          port: 11211
+        - host: ${_param:gnocchi_memcached_node02_address}
+          port: 11211
+        - host: ${_param:gnocchi_memcached_node03_address}
+          port: 11211

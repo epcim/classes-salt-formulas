@@ -1,0 +1,10 @@
+applications:
+- bind
+parameters:
+  bind:
+    server:
+      enabled: true
+      recursion:
+        hosts:
+        - localhost
+

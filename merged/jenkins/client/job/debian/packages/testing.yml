@@ -1,0 +1,80 @@
+parameters:
+  _param:
+    jenkins_pollscm_spec: "H/60 * * * *"
+  jenkins:
+    client:
+      job_template:
+        build-debian-python-flask-hello:
+          name: build-debian-{{package}}-ubuntu-{{dist}}
+          jobs:
+            - package: python-flask-hello
+              dist: trusty
+              build: pipeline
+              branch: master
+          template:
+            type: workflow-scm
+            concurrent: false
+            discard:
+              build:
+                keep_num: 10
+              artifact:
+                keep_num: 10
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: build-debian-packages-{{build}}.groovy
+            trigger:
+              gerrit:
+                project:
+                  mk/{{package}}:
+                    branches:
+                      - "{{branch}}"
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+                event:
+                  ref:
+                    - updated
+            param:
+              SOURCE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/mk/python-flask-hello"
+              SOURCE_BRANCH:
+                type: string
+                default: "{{branch}}"
+              SOURCE_CREDENTIALS:
+                type: string
+                default: "gerrit"
+              EXTRA_REPO_URL:
+                type: string
+                default: ""
+              EXTRA_REPO_KEY_URL:
+                type: string
+                default: "${_param:jenkins_aptly_url}/public.gpg"
+              APTLY_URL:
+                type: string
+                default: "${_param:jenkins_aptly_api_url}"
+              APTLY_REPO:
+                type: string
+                default: "ubuntu-{{dist}}-extra"
+              OS:
+                type: string
+                default: "ubuntu"
+              DIST:
+                type: string
+                default: "{{dist}}"
+              ARCH:
+                type: string
+                default: "amd64"
+              PPA:
+                type: string
+                default: "mirantis-opencontrail/extra"
+              UPLOAD_PPA:
+                type: boolean
+                default: 'false'
+              UPLOAD_APTLY:
+                type: boolean
+                default: 'true'

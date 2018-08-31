@@ -1,0 +1,10 @@
+parameters:
+  _param:
+    gnocchi_storage_incoming_redis_url: redis://${_param:single_address}:6379
+    gnocchi_storage_incoming_driver: redis
+  gnocchi:
+    common:
+      storage:
+        incoming:
+          driver: ${_param:gnocchi_storage_incoming_driver}
+          redis_url: ${_param:gnocchi_storage_incoming_redis_url}

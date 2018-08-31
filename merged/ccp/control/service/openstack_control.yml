@@ -1,0 +1,5 @@
+classes:
+- ccp.control.service.keystone
+- ccp.control.service.nova_controller
+parameters:
+  _param: {}

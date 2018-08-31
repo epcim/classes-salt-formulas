@@ -1,0 +1,12 @@
+applications:
+- docker
+classes:
+  - service.docker.support
+parameters:
+  docker:
+    host:
+      enabled: true
+      options:
+        log-driver: json-file
+        log-opts:
+          max-size: 50m

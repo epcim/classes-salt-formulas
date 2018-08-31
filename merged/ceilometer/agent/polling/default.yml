@@ -1,0 +1,8 @@
+parameters:
+  ceilometer:
+    agent:
+      polling:
+        sources:
+          default_pollsters:
+            meters: ${_param:ceilometer_agent_default_polling_meters}
+            interval: ${_param:ceilometer_agent_default_polling_interval}

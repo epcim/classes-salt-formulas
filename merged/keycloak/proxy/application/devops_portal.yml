@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    keycloak_proxy_devops_portal_base_path: "/"
+  keycloak:
+    proxy:
+      applications:
+        devops_portal:
+          base_path: "${_param:keycloak_proxy_devops_portal_base_path}"
+          adapter_config:
+            realm: "jaeger"
+            auth_server_url: "http://keycloak/auth"
+            resource: "proxy-jaeger"
+

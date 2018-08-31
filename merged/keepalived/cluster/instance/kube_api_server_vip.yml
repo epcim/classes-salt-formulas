@@ -1,0 +1,28 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_vip_priority: 101
+    keepalived_kube_apiserver_vrrp_script_content: "pidof haproxy && systemctl status kube-apiserver.service --quiet --no-pager"
+    keepalived_k8s_apiserver_vip_interface: ens3
+    keepalived_k8s_apiserver_vip_address: ${_param:kubernetes_control_address}
+    keepalived_k8s_apiserver_vip_password: password
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        k8s_vip:
+          content: ${_param:keepalived_kube_apiserver_vrrp_script_content}
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        kube_apiserver_vip:
+          address: ${_param:keepalived_k8s_apiserver_vip_address}
+          password: ${_param:keepalived_k8s_apiserver_vip_password}
+          interface: ${_param:keepalived_k8s_apiserver_vip_interface}
+          virtual_router_id: 60
+          priority: ${_param:keepalived_vip_priority}
+          track_script: k8s_vip

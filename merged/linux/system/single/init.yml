@@ -1,0 +1,5 @@
+classes:
+- linux.system.single.mcp
+- salt.minion.master
+- openssh.server.single
+- ntp.client.single

@@ -1,0 +1,808 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        test-openstack-component-formula:
+          name: "{{job_prefix}}-formula-systest-{{model}}-{{openstack_version}}"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            plugin_properties:
+              throttleconcurrents:
+                enabled: true
+                throttle_option: category
+                categories:
+                  - oscore-ci-builds
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: test-openstack-component-pipeline.groovy
+            param:
+              # general
+              HEAT_STACK_ZONE:
+                type: string
+                description: AZ
+                default: "mcp-oscore-ci"
+              OPENSTACK_VERSION:
+                type: string
+                description: Version of openstack to test
+                default: "{{openstack_version}}"
+              STACK_TEST_JOB:
+                type: string
+                description: Job for environment deployment
+                default: "{{stack_test_job}}"
+              STACK_TYPE:
+                type: string
+                default: "{{stack_type}}"
+              STACK_INSTALL:
+                type: string
+                description: components to install
+                default: 'core,openstack,ovs'
+              STACK_DELETE:
+                type: boolean
+                default: 'true'
+                description: Don't enable it if you need to use the lab after
+              STACK_CLEANUP_JOB:
+                type: string
+                default: "{{stack_cleanup_job}}"
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: '{{stack_reclass_address}}'
+                description: 'Url to repository with stack salt models'
+              STACK_RECLASS_BRANCH:
+                type: string
+                default: '{{stack_reclass_branch}}'
+                description: 'Branch of repository with stack salt models'
+              STACK_CLUSTER_NAME:
+                type: string
+                default: ""
+                description: "Cluster name to use from reclass"
+              # salt
+              SALT_OVERRIDES:
+                type: text
+                default: ""
+                description: YAML with overrides for Salt deployment
+              FORMULA_PKG_REVISION:
+                type: string
+                description: Version of formulas for salt-master bootstrap
+                default: "{{formula_pkg_revision}}"
+              # openstack api
+              OPENSTACK_API_URL:
+                type: string
+                default: "https://cloud-cz.bud.mirantis.net:5000"
+              OPENSTACK_API_CREDENTIALS:
+                type: string
+                default: "openstack-devcloud-credentials"
+              OPENSTACK_API_PROJECT:
+                type: string
+                default: "mcp-oscore-ci"
+              OPENSTACK_API_PROJECT_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_PROJECT_ID:
+                type: string
+                default: ""
+              OPENSTACK_API_USER_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_CLIENT:
+                type: string
+                default: ""
+              OPENSTACK_API_VERSION:
+                type: string
+                default: "3"
+              # test
+              TEST_CONF:
+                type: string
+                description: Tempest configuration file path inside container
+                default: "{{test_conf}}"
+              TEST_TARGET:
+                type: string
+                description: Node to run tests
+                default: "{{test_target}}"
+              TEST_PATTERN:
+                type: string
+                description: Run tests matched to pattern only
+                default: "tempest"
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+                default: "{{model}}"
+              TEST_PASS_THRESHOLD:
+                type: string
+                description: Tests pass rate to consider build successful
+                default: "{{test_threshold}}"
+              TESTRAIL:
+                type: boolean
+                default: 'false'
+                description: Whether to upload results to testrail
+              FAIL_ON_TESTS:
+                type: boolean
+                default: 'true'
+                description: Whether to fail build on test results
+              BOOTSTRAP_EXTRA_REPO_PARAMS:
+                type: string
+                default: ""
+                description: "Defines a list of extra repos with parameters, format: repo 1, repo priority 1, repo pin 1; repo 2, repo priority 2, repo pin 2"
+              ARTIFACTORY_CREDENTIALS:
+                type: string
+                default: "artifactory"
+                description: Jenkins credential ID for Artifactory
+              SALT_MASTER_CREDENTIALS:
+                type: string
+                default: "salt-qa-credentials"
+                description: Jenkins credential ID for Salt master
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+                default: ""
+        test-openstack-component-periodic:
+          name: "{{job_prefix}}-{{milestone}}-{{model}}-{{openstack_version}}-{{formula_pkg_revision}}"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: test-openstack-component-pipeline.groovy
+            trigger:
+              timer:
+               spec: "H 03 * * *"
+            param:
+              # general
+              HEAT_STACK_ZONE:
+                type: string
+                description: AZ
+                default: "mcp-oscore-ci"
+              OPENSTACK_VERSION:
+                type: string
+                description: Version of openstack to test
+                default: "{{openstack_version}}"
+              STACK_TEST_JOB:
+                type: string
+                description: Job for environment deployment
+                default: "{{stack_test_job}}"
+              STACK_TYPE:
+                type: string
+                default: "{{stack_type}}"
+              STACK_INSTALL:
+                type: string
+                description: components to install
+                default: 'core,openstack,ovs'
+              STACK_DELETE:
+                type: boolean
+                default: 'false'
+                description: Don't enable it if you need to use the lab after
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: '{{stack_reclass_address}}'
+                description: 'Url to repository with stack salt models'
+              STACK_RECLASS_BRANCH:
+                type: string
+                default: '{{stack_reclass_branch}}'
+                description: 'Branch of repository with stack salt models'
+              STACK_CLEANUP_JOB:
+                type: string
+                default: "{{stack_cleanup_job}}"
+              # salt
+              SALT_OVERRIDES:
+                type: text
+                default: ""
+                description: YAML with overrides for Salt deployment
+              FORMULA_PKG_REVISION:
+                type: string
+                description: Version of formulas for salt-master bootstrap
+                default: "{{formula_pkg_revision}}"
+              # openstack api
+              OPENSTACK_API_URL:
+                type: string
+                default: "https://cloud-cz.bud.mirantis.net:5000"
+              OPENSTACK_API_CREDENTIALS:
+                type: string
+                default: "openstack-devcloud-credentials"
+              OPENSTACK_API_PROJECT:
+                type: string
+                default: "mcp-oscore-ci"
+              OPENSTACK_API_PROJECT_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_PROJECT_ID:
+                type: string
+                default: ""
+              OPENSTACK_API_USER_DOMAIN:
+                type: string
+                default: "default"
+              OPENSTACK_API_CLIENT:
+                type: string
+                default: ""
+              OPENSTACK_API_VERSION:
+                type: string
+                default: "3"
+              # test
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+                default: "{{milestone}}"
+              TEST_CONF:
+                type: string
+                description: Tempest configuration file path inside container
+                default: "{{test_conf}}"
+              TEST_TARGET:
+                type: string
+                description: Node to run tests
+                default: "{{test_target}}"
+              TEST_PATTERN:
+                type: string
+                description: Run tests matched to pattern only
+                default: "{{test_pattern}}"
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+                default: "{{model}}"
+              TEST_PASS_THRESHOLD:
+                type: string
+                description: Tests pass rate to consider build successful
+                default: "{{test_threshold}}"
+              FAIL_ON_TESTS:
+                type: boolean
+                default: 'true'
+                description: Whether to fail build on test results
+              RUN_SMOKE:
+                type: boolean
+                default: "{{run_smoke}}"
+                description: Enabling of running smoke tests
+              ARTIFACTORY_CREDENTIALS:
+                type: string
+                default: "artifactory"
+                description: Jenkins credential ID for Artifactory
+              SALT_MASTER_CREDENTIALS:
+                type: string
+                default: "salt-qa-credentials"
+                description: Jenkins credential ID for Salt master
+        test-runner-template:
+          name: "{{job_prefix}}-{{test_type}}-runner"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: run-openstack-tests.groovy
+            param:
+              # general
+              FAIL_ON_TESTS:
+                type: boolean
+                default: 'true'
+                description: Whether to fail build on test results
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+              OPENSTACK_VERSION:
+                type: string
+                description: Version of openstack to test
+              PROC_RESULTS_JOB:
+                type: string
+                description: Job for results processing
+                default: "{{proc_results_job}}"
+              TEST_TYPE:
+                type: string
+                description: Name of test type
+                default: "{{test_type}}"
+              SLAVE_NODE:
+                type: string
+                default: 'python'
+              # salt
+              SALT_MASTER_CREDENTIALS:
+                type: string
+                default: "salt-qa-credentials"
+              SALT_MASTER_URL:
+                type: string
+                default: ""
+              # test
+              TESTRAIL:
+                type: boolean
+                default: 'false'
+                description: Upload results to testrail or not
+              TEST_TARGET:
+                type: string
+                description: Salt target to run tests
+              TEST_IMAGE:
+                type: string
+                description: Url to tempest docker image
+                default: "{{test_image}}"
+              LOCAL_TEMPEST_IMAGE:
+                type: string
+                description: Path to local docker image
+                default: ''
+              TEST_PATTERN:
+                type: string
+                description: Run tests matched to pattern only
+              TEST_CONCURRENCY:
+                type: string
+                description: How much test threads to run
+                default: "2"
+              TEST_CONF:
+                type: string
+                description: Tempest configuration file path inside container
+                default: "mcp.conf"
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+              TEST_DOCKER_INSTALL:
+                type: boolean
+                default: 'true'
+                description: Whether to install docker for tempest
+              TEST_PASS_THRESHOLD:
+                type: string
+                description: Tests pass rate to consider build successful
+                default: "90"
+              USE_PEPPER:
+                type: boolean
+                description: Whether to use pepper to connect to salt master
+                default: 'false'
+        results-checker-template:
+          name: "{{job_prefix}}-{{test_type}}-results-checker"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: process-openstack-test-results.groovy
+            param:
+              # general
+              FAIL_ON_TESTS:
+                type: boolean
+                default: 'false'
+                description: Whether to fail build on test results
+              OPENSTACK_VERSION:
+                type: string
+                description: Version of openstack to test
+              TARGET_JOB:
+                type: string
+                description: Job to analyse results from
+              TARGET_BUILD_NUMBER:
+                type: string
+                description: Build number to analyse results from
+              # test
+              TESTRAIL:
+                type: boolean
+                default: 'false'
+                description: Whether to upload results to testrail or not
+              TESTRAIL_QA_CREDENTIALS:
+                type: string
+                default: "{{testrail_credentials}}"
+                description: Credentials for results upload to testrail
+              TEST_TARGET:
+                type: string
+                description: Node to run tests
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+              TEST_SUITE:
+                type: string
+                description: Testrail test suite
+                default: "{{test_suite}}"
+              TEST_PLAN:
+                type: string
+                description: Testrail test plan
+                default: ''
+              TEST_GROUP:
+                type: string
+                description: Testrail test group
+                default: ''
+              TEST_REPORTER_IMAGE:
+                type: string
+                description: Docker image of testrail reporter tool
+                default: "{{test_reporter_image}}"
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+              TEST_DATE:
+                type: string
+                description: "TEST run date"
+              TEST_PASS_THRESHOLD:
+                type: string
+                description: Tests pass rate to consider build successful
+                default: "90"
+        deploy-kvm-virtual-template:
+          name: "{{job_prefix}}-deploy-kvm-VMs"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: deploy-kvm-pipeline.groovy
+            param:
+              # general
+              STACK_NAME:
+                type: string
+                description: "VM prefix name"
+                default: "kvm-aio-node"
+              TEMPLATE:
+                type: choice
+                choices:
+                  - AIO
+                  - Multi
+                default: "AIO"
+              DEPLOY_OPENSTACK:
+                type: boolean
+                default: 'false'
+                description: "Enable it if openstack deployment is required"
+              JOB_DEP_NAME:
+                type: string
+                default:
+                description: "Name of the job to deploy openstack"
+              DESTROY_ENV:
+                type: boolean
+                default: 'false'
+                description: "Enable if env have to be destoyed."
+              CREATE_ENV:
+                type: boolean
+                default: 'true'
+                description: "Enable it if KVM VM have to be created."
+              STACK_DELETE:
+                type: boolean
+                default: 'false'
+                description: "Enable it if KVM VM have to be deleted."
+              STACK_TYPE:
+                type: string
+                default: "{{stack_type}}"
+              OPENSTACK_API_PROJECT:
+                type: string
+                default: "mcp-oscore-ci"
+              HEAT_STACK_ZONE:
+                type: string
+                description: AZ
+                default: "mcp-oscore-ci"
+              STACK_INSTALL:
+                type: string
+                description: components to install
+                default: 'core,openstack,ovs'
+              STACK_TEST:
+                type: string
+                description: Job for environment deployment
+                default: ''
+              # salt
+              SALT_MASTER_CREDENTIALS:
+                type: string
+                default: "salt-qa-credentials"
+              SALT_MASTER_URL:
+                type: string
+                default: ""
+              SALT_OVERRIDES:
+                type: text
+                default: ""
+                description: YAML with overrides for Salt deployment
+              TEST_MODEL:
+                type: string
+                description: Environment salt model
+                default: "{{model}}"
+        oscore-oscc-ci-template:
+          name: "{{job_prefix}}-oscc-ci"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: oscc-ci-pipeline.groovy
+            trigger:
+              timer:
+               spec: "H 01 * * *"
+            param:
+              # general
+              DEPLOY_JOB_NAME:
+                type: string
+                description: "Job name tp deploy envs are going to be tested"
+                default: "{{job_prefix}}-{{deployJobPrefix}}"
+              DISTRIBUTION:
+                type: string
+                default: "{{distribution}}"
+                description: "Distribution for the published repo"
+              COMPONENTS:
+                type: string
+                default: "{{components}}"
+                description: "Components for repo"
+              TMP_REPO_NODE_NAME:
+                type: string
+                default: "{{tmp_repo_node_name}}"
+                description: "Node name where temp repo will be published"
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: "{{stack_reclass_address}}"
+              SOURCE_REPO_NAME:
+                type: string
+                description: "Name of the repo where packages are stored"
+                default: "{{source_repo_name}}"
+              APTLY_API_URL:
+                type: string
+                description: URL for the aptly API
+                default: "${_param:jenkins_aptly_api_url}"
+              STACK_DELETE:
+                type: boolean
+                default: "{{stack_delete}}"
+                description: Do not enable it if you need to use the lab after
+              OPENSTACK_COMPONENTS_LIST:
+                type: string
+                description: "OpenStack related components list"
+                default: "{{openstack_components_list}}"
+              AUTO_PROMOTE:
+                type: boolean
+                default: "{{auto_promote}}"
+                description: Enable to autopromote repo
+              TEST_SCHEMAS:
+                type: string
+                default: "{{test_schemas}}"
+                description: "Defines structure to pass aio:cluster-name1:branch1,branch2|multinode:cluster-name2:branch1,branch2"
+              TESTRAIL:
+                type: boolean
+                default: "{{testrail}}"
+                description: Whether to upload results to testrail
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+                default: "{{milestone}}"
+        build-salt-formula-refspec-template:
+          name: "{{job_prefix}}-build-salt-formula-refspec"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: build-debian-packages-pipeline.groovy
+            param:
+              SOURCE_URL:
+                type: string
+                default: ""
+                description: Project Git repo URL
+              SOURCE_REFSPEC:
+                type: string
+                default: ""
+                description: Refspec to checkout
+              SOURCE_BRANCH:
+                type: string
+                default: "master"
+                description: Name of local branch name for checked out refspec
+              SOURCE_CREDENTIALS:
+                type: string
+                default: "gerrit"
+                description: Credentials to Git repo
+              DEBIAN_SNAPSHOT:
+                type: boolean
+                default: 'true'
+                description: Whether to make a snapshot build
+              EXTRA_REPO_URL:
+                type: string
+                default: "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3 xenial main; deb ${_param:jenkins_aptly_url}/{{dist}}/ testing salt"
+                description: Extra repo for building process
+              EXTRA_REPO_KEY_URL:
+                type: string
+                default: "https://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3/SALTSTACK-GPG-KEY.pub; ${_param:jenkins_aptly_url}/public.gpg"
+                description: Extra repo GPG public key URL
+              OS:
+                type: string
+                default: "ubuntu"
+                description: OS name
+              DIST:
+                type: string
+                default: "{{dist}}"
+                description: OS distributive name
+              UPLOAD_PPA:
+                type: boolean
+                default: 'false'
+                description: Whether to upload to PPA
+              UPLOAD_APTLY:
+                type: boolean
+                default: 'false'
+                description: Whether to upload to Aptly
+              DEBIAN_BRANCH:
+                type: string
+                default: "debian/{{dist}}"
+                description: Source repo branch name with build spec
+              LINTIAN_CHECK:
+                type: boolean
+                default: 'false'
+                description: Whether to perform lintian check
+        test-salt-formula-refspec-template:
+          name: "{{job_prefix}}-test-salt-formula-refspec"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: deploy-formula-change-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  "^salt-formulas/(nova|cinder|glance|keystone|horizon|neutron|designate|heat|ironic|barbican|aodh|ceilometer|gnocchi|panko|manila|salt|linux|reclass|galera|memcached|rabbitmq|bind|apache|runtest|oslo-templates|auditd)$":
+                    compare_type: 'REG_EXP'
+                    branches:
+                      - master
+                skip_vote:
+                  - successful
+                  - failed
+                  - unstable
+                  - not_built
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+            param:
+              SOURCE_CREDENTIALS:
+                type: string
+                default: "gerrit"
+              UPLOAD_APTLY:
+                type: boolean
+                default: 'true'
+                description: Whether to upload to Aptly
+              APTLY_REPO:
+                type: string
+                default: ""
+                description: Aptly repo name
+              BUILD_PACKAGE:
+                type: boolean
+                default: 'true'
+                description: Whether to build package
+              APTLY_REPO_URL:
+                type: string
+                default: "${_param:jenkins_aptly_url}"
+                description: Aptly url
+              APTLY_API_URL:
+                type: string
+                default: "${_param:jenkins_aptly_api_url}"
+                description: Aptly API url
+              OPENSTACK_RELEASES:
+                type: string
+                default: "{{openstack_releases}}"
+                description: Comma separated list of OpenStack releases to perform deploy and tests.
+              SOURCES:
+                type: text
+                default: ""
+                description: Optional parameter to list Git refspecs to be build
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: "{{stack_reclass_address}}"
+                description: Git repo URL to reclass
+              PKG_BUILD_JOB_NAME:
+                type: string
+                default: "{{pkg_build_job_name}}"
+                description: Jenkins job name to build package
+              STACK_DELETE:
+                type: boolean
+                default: 'true'
+                description: Whether to delete stacks ater tests
+              APTLY_PREFIX:
+                type: string
+                default: "{{aptly_prefix}}"
+                description: Aptly prefix
+              SYSTEST_JOB_PREFIX:
+                type: string
+                default: "{{systestJobPrefix}}"
+                description: "Systest job prefix. I.e. oscore-formula-systest-virtual_mcp11_aio-"
+              OPENSTACK_COMPONENTS_LIST:
+                type: string
+                description: "OpenStack related components list"
+                default: "{{openstack_components_list}}"
+              SOURCE_REPO_NAME:
+                type: string
+                description: "Name of the repo where packages are stored"
+                default: "{{source_repo_name}}"
+        test-deploy-virtual-model-change-template:
+          name: "{{job_prefix}}-deploy-virtual-model-change-{{job_suffix}}"
+          template:
+            description: ${_param:job_description_oscore}
+            discard:
+              build:
+                keep_num: 30
+              artifact:
+                keep_num: 30
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines.git"
+              credentials: "gerrit"
+              branch: 'master'
+              script: deploy-virtual-model-change-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  "^salt-models/mcp-virtual-aio$":
+                    compare_type: 'REG_EXP'
+                    branches:
+                      - master
+                      - stable/queens
+                      - stable/pike
+                      - stable/ocata
+                      - stable/newton
+                      - stable/mitaka
+                skip_vote:
+                  - successful
+                  - failed
+                  - unstable
+                  - not_built
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+            param:
+              CREDENTIALS_ID:
+                type: string
+                default: "{{credentials_id}}"
+              STACK_RECLASS_ADDRESS:
+                type: string
+                default: "{{stack_reclass_address}}"
+              STACK_RECLASS_BRANCH:
+                type: string
+                default: "{{stack_reclass_branch}}"
+              TEST_CLUSTER_NAMES:
+                type: string
+                default: "{{test_cluster_names}}"

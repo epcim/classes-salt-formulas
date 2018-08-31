@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    nginx_proxy_jenkins_server_proxy_host: ${_param:cicd_control_address}
+    nginx_proxy_jenkins_server_proxy_port: 8081
+    nginx_proxy_jenkins_server_site_host: ${_param:cluster_public_host}
+    nginx_proxy_jenkins_server_site_port: 8081
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_jenkins:
+          enabled: true
+          type: nginx_proxy
+          name: jenkins
+          proxy:
+            host: ${_param:nginx_proxy_jenkins_server_proxy_host}
+            port: ${_param:nginx_proxy_jenkins_server_proxy_port}
+            protocol: http
+          host:
+            name: ${_param:nginx_proxy_jenkins_server_site_host}
+            port: ${_param:nginx_proxy_jenkins_server_site_port}
+            protocol: https
+          ssl: ${_param:nginx_proxy_ssl}

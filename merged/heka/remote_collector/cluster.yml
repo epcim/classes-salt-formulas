@@ -1,0 +1,36 @@
+applications:
+- heka
+classes:
+- heka.server
+parameters:
+  _param:
+    remote_collector_max_message_size: 262144
+    remote_collector_poolsize: 100
+  heka:
+    remote_collector:
+      aggregator_host: ${_param:heka_aggregator_host}
+      aggregator_port: ${_param:aggregator_port}
+      automatic_starting: false
+      elasticsearch_host: ${_param:heka_elasticsearch_host}
+      elasticsearch_port: ${_param:elasticsearch_port}
+      enabled: true
+      influxdb_database: lma
+      influxdb_host: ${_param:heka_influxdb_host}
+      influxdb_password: ${_param:influxdb_stacklight_password}
+      influxdb_port: ${_param:influxdb_port}
+      influxdb_time_precision: ms
+      influxdb_username: lma
+      max_message_size: ${_param:remote_collector_max_message_size}
+      poolsize: ${_param:remote_collector_poolsize}
+  keepalived:
+    cluster:
+      instance:
+        stacklight_monitor_vip:
+          notify_action:
+            backup:
+            - remote_collector stop
+            fault:
+            - remote_collector stop
+            master:
+            - remote_collector start
+

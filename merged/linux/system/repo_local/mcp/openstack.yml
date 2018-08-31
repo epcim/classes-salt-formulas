@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_mk_openstack_version: ${_param:apt_mk_version}
+  linux:
+    system:
+      repo:
+        mirantis_openstack:
+          source: "deb [arch=amd64] http://${_param:local_repo_url}/ubuntu-${_param:linux_system_codename}/ ${_param:openstack_version} main"
+          architectures: amd64
+          key_url: "http://${_param:local_repo_url}/public.gpg"
+          pin:
+          - pin: 'release l=${_param:openstack_version}'
+            priority: 1100
+            package: '*'
+        mk_openstack:
+          source: "deb [arch=amd64] http://${_param:local_repo_url}/ubuntu-${_param:linux_system_codename}/ ${_param:linux_system_repo_mk_openstack_version} ${_param:openstack_version}"
+          architectures: amd64
+          key_url: "http://${_param:local_repo_url}/public.gpg"
+          pin:
+          - pin: 'release l=${_param:linux_system_repo_mk_openstack_version}'
+            priority: 1100
+            package: '*'

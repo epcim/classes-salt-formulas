@@ -1,0 +1,20 @@
+parameters:
+  fluentd:
+    agent:
+      config:
+        label:
+          default_metric:
+            filter:
+              add_general_fields:
+                tag: "**"
+                type: record_transformer
+                enable_ruby: true
+                record:
+                  - name: environment_label
+                    value: ${_param:cluster_domain}
+                  - name: Hostname
+                    value: ${fluentd:dollar}{ hostname }
+            match:
+              drop_everything:
+                tag: '**'
+                type: 'null'

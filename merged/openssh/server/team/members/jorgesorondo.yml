@@ -1,0 +1,22 @@
+parameters:
+  linux:
+    system:
+      user:
+        jsorondo:
+          enabled: true
+          name: jsorondo
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Jorge Sorondo
+          home: /home/jsorondo
+          email: jsorondo@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        jsorondo:
+          enabled: true
+          public_keys: ${public_keys:jsorondo}
+          user: ${linux:system:user:jsorondo}
+  public_keys:
+    jsorondo:
+      - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYN/Y6PeKVaW+ouilurh9jyi2k+PDn097LPXxi82ODgPJ+p/qzr6oBYIWDNtudMhNTWA1uV2ZnMbbl67REWAc8V++NFQWtAX9lmtQ4S5w/CvWutgGqrUr7gjJJoq/ySMMFE1F3sekdPM90y2JS4K1L300de5UviAwgPMo48wq292MaESqq6/X7CV3VHDy5srA1VFI1oZMv66NpOO2mHzElKMtVISTHF8/W4yg1P7LvjlcH2vB2clfO6UtOZfcDaAibAyE+bClUYzK6YSRejni5hWaRYFOvza3PyIF6YvjznPxtTU4aclmiZrtMm5gLZB/euvkijXuBOPFO0xgDw6Q9

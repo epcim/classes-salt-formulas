@@ -1,0 +1,9 @@
+classes:
+- master.pillar.composite
+parameters:
+  salt:
+    master:
+      pillar:
+        nacl:
+          index: 99
+

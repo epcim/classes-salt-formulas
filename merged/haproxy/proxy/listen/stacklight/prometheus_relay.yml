@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    cluster_prometheus_relay_port: 8080
+  haproxy:
+    proxy:
+      listen:
+        prometheus_relay:
+          service_name: prometheus_relay
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: ${_param:cluster_prometheus_relay_port}
+          servers:
+          - name: ${_param:cluster_node01_hostname}
+            host: ${_param:cluster_node01_address}
+            port: ${_param:prometheus_relay_bind_port}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node02_hostname}
+            host: ${_param:cluster_node02_address}
+            port: ${_param:prometheus_relay_bind_port}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+          - name: ${_param:cluster_node03_hostname}
+            host: ${_param:cluster_node03_address}
+            port: ${_param:prometheus_relay_bind_port}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3

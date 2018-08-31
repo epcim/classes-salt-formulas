@@ -1,0 +1,127 @@
+applications:
+- nova
+classes:
+- nova.compute.kvm
+parameters:
+  _param:
+    cluster_internal_protocol: http
+    nova_aggregates: []
+    nova_compute_avail_zone: null
+    nova_compute_ssh_private: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpAIBAAKCAQEApbSJ/dwXEzMzSv59ngc3uj8k5JiIHQ5HlzUfV+A6hOPFWvNK
+      I79qavMbmgcYjSEyc8pfuKeFL0016Ph5rl/Kmx76oDBl77j1AqZ3RH29q+u3+r6T
+      Kj8DIAa1INmSoDeDrEgx1Ph9HYmtHBGk48+ab21MvZSLEsoa6jlFRfa3iavm6AL1
+      RHnZvH1KombonowMNg9u/q0bXRD4LCjJ4d+tumBLK/et6uK41PybLFf4ijDbu5pN
+      mvpKDqyfmh73FVPMyY3wNGIIaHlU/yNxi1PzAf+LQ/0ckfBjPlGGyOLIAAu2TgnU
+      Mh3SYJxM8d0iSMHEuuVNE9l2L59qlx16ifYhmQIDAQABAoIBAQCYpqbwvE5tm59H
+      GQb0C8Ykx4LfLD1INx1wiLmlJKYEQihPTw0fvXj1qZvl21+cs9ZcoTRpUbn6B3EA
+      e9bs8sYc/P75j1x46LSdimkZKZUPygkk72d3ZbElUciOyKCxBDNDBQcTIQ9xpKFa
+      2E5Ep72npNMrWqp71r/Qwo20lEIkikIgAFPBgraxn5xIEdo59vzXNZsvyoIRi5p4
+      ayH9nWSAXdF1YU3p3ljtHD8o2G/0d2TWGmjrd9vztc6tgXjp0PF60vDNgcJiudBg
+      oNLDK/e5a44GJxlVDdJ84ESb7GprRStYmddl22xnI1SXlg87+t0QQwzR0CCtWXrz
+      neXkicHhAoGBANkG9tOZfErhSL/jmsElQTNPcMNQkPiJzEmOIpr6jgSzCusPT/QD
+      PnVwB42GC5+Zhd4e88BsTzECxPXmKk7r1cBKeJTg/ejgsrSfVAZqMsfhbp3mGOiH
+      jymF+zC6Urj5q/Zkof8pEFICtyA5zlHvZmsQL9PDiqXIWALki2JvIDPdAoGBAMN2
+      O+LWOM9qqwgSMaFY8VUdDdbmLx/ZMGWQ//Tx42WM8SU+cCpGTLDHHR0qC0gnRsV7
+      V63DySEwiHn4I1cQ/AMijRxuw4Dkgk2YMRlgsAbVWO7aIlECWjSg+pRjNeA7If4D
+      5L/gu6wZIv1vu8/fvOwRpPUzhWjGN5Z0RyvYc7btAoGALNnrmL9XmIIGbuGy0cfJ
+      OblpLHQyAas4tNrS/ARb5Uy7LOj1NRCWj96fMPhK3qjzqXvsFBBOLWrNGaR/id/j
+      ROIfGWWGE+KcDAgBbXH1HKnSGn+7FhMt2v79coyPG/s9NqaFdB4gaVJ2VgqcQQKg
+      v++QcssulCRbS/2/cJBWr2ECgYAJFCDL9G9HEwlGorGzcNIkxeiyppZhwFDDJuz8
+      j4+kU9uPg0rqa8F8JINxq1ZCz7A10/jKlWFuLTbpk2Dw1lUeQCiVvX9PKU30FLGT
+      IC6M4rPyxCb75EQUVbXN1p3WAGkfx0aEsweEgtZhNyNeEGJSBK/Iw8/agfpq/pOf
+      sboOMQKBgQClKmrAYKWnwdPPka3msyjl/AXDruR4XFvMlOPKbs3nYstolE7eR94F
+      7xDyBz85icFU0rceYQetwFH2p5tRL0GcUQhJmJFgIL0OXdCQvRNJrT3iS00N1aUo
+      SG9MrLHCd5l60aCUQg0UA5ed7Hd6SA314k+HwxJno9/wJ+voBeacMg==
+      -----END RSA PRIVATE KEY-----
+    nova_compute_ssh_public: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCltIn93BcTMzNK/n2eBze6PyTkmIgdDkeXNR9X4DqE48Va80ojv2pq8xuaBxiNITJzyl+4p4UvTTXo+HmuX8qbHvqgMGXvuPUCpndEfb2r67f6vpMqPwMgBrUg2ZKgN4OsSDHU+H0dia0cEaTjz5pvbUy9lIsSyhrqOUVF9reJq+boAvVEedm8fUqiZuiejAw2D27+rRtdEPgsKMnh3626YEsr963q4rjU/JssV/iKMNu7mk2a+koOrJ+aHvcVU8zJjfA0YghoeVT/I3GLU/MB/4tD/RyR8GM+UYbI4sgAC7ZOCdQyHdJgnEzx3SJIwcS65U0T2XYvn2qXHXqJ9iGZ
+      root@mirantis.com
+    nova_compute_virtualization: kvm
+    nova_vncproxy_url: https://${_param:cluster_public_host}:6080
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  nova:
+    compute:
+      aggregates: ${_param:nova_aggregates}
+      availability_zone: ${_param:nova_compute_avail_zone}
+      bind:
+        vnc_address: ${_param:cluster_local_address}
+        vnc_name: 0.0.0.0
+        vnc_port: 6080
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+        - host: ${_param:cluster_node03_address}
+          port: 11211
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: nova
+        password: ${_param:mysql_nova_password}
+        port: 3306
+        user: nova
+      enabled: true
+      heal_instance_info_cache_interval: 60
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_nova_password}
+        port: 35357
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: nova
+      image:
+        engine: glance
+        host: ${_param:cluster_vip_address}
+        port: 9292
+        protocol: ${_param:cluster_internal_protocol}
+      libvirt:
+        migration_inbound_addr: ${_param:single_address}
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      my_ip: ${_param:single_address}
+      network:
+        engine: neutron
+        host: ${_param:neutron_service_host}
+        password: ${_param:keystone_neutron_password}
+        port: 9696
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: neutron
+      user:
+        private_key: ${_param:nova_compute_ssh_private}
+        public_key: ${_param:nova_compute_ssh_public}
+      version: ${_param:nova_version}
+      virtualization: ${_param:nova_compute_virtualization}
+      vncproxy_url: ${_param:nova_vncproxy_url}
+  openssh:
+    client:
+      enabled: true
+      stricthostkeychecking: false
+      user: {}
+

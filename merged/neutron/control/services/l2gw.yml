@@ -1,0 +1,7 @@
+applications:
+- neutron
+parameters:
+  neutron:
+    server:
+      l2gw:
+        enabled: true

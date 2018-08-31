@@ -1,0 +1,15 @@
+parameters:
+  heka:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      prometheus:
+        enabled: true
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: true
+      telegraf:
+        enabled: true

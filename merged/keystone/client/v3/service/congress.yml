@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    congress_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            congress:
+              password: ${_param:keystone_congress_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                    name: admin
+                    project_id: service
+          services:
+            congress:
+              type: policy
+              description: Congress service
+              endpoints:
+                congress_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:1789/
+                  region: ${_param:openstack_region}
+                congress_internal:
+                  interface: 'internal'
+                  url: ${_param:congress_service_protocol}://${_param:congress_service_host}:1789/
+                  region: ${_param:openstack_region}
+                congress_admin:
+                  interface: 'admin'
+                  url: ${_param:congress_service_protocol}://${_param:congress_service_host}:1789/
+                  region: ${_param:openstack_region}

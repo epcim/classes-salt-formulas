@@ -1,0 +1,49 @@
+applications:
+- manila
+classes:
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.manila
+parameters:
+  _param:
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  manila:
+    common:
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: manila
+        password: ${_param:mysql_manila_password}
+        port: 3306
+        user: manila
+      identity:
+        auth_type: password
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_manila_password}
+        port: 35357
+        project_domain_id: default
+        protocol: http
+        region: ${_param:openstack_region}
+        tenant: service
+        user: manila
+        user_domain_id: default
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:openstack_message_queue_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      version: ${_param:openstack_version}
+

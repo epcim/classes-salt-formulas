@@ -1,0 +1,50 @@
+parameters:
+  _param:
+    salt_control_size_cpu_openstack_control: 24
+    salt_control_size_ram_openstack_control: 131072
+    salt_control_size_disk_profile_openstack_control: large
+    salt_control_size_net_profile_openstack_control: default
+    salt_control_size_cpu_openstack_database: 24
+    salt_control_size_ram_openstack_database: 65536
+    salt_control_size_disk_profile_openstack_database: huge
+    salt_control_size_net_profile_openstack_database: default
+    salt_control_size_cpu_openstack_message_queue: 32
+    salt_control_size_ram_openstack_message_queue: 200704
+    salt_control_size_disk_profile_openstack_message_queue: large
+    salt_control_size_net_profile_openstack_message_queue: default
+    salt_control_size_cpu_openstack_proxy: 8
+    salt_control_size_ram_openstack_proxy: 32768
+    salt_control_size_disk_profile_openstack_proxy: large
+    salt_control_size_net_profile_openstack_proxy: default
+    salt_control_size_cpu_openstack_upgrade: 8
+    salt_control_size_ram_openstack_upgrade: 16384
+    salt_control_size_disk_profile_openstack_upgrade: medium
+    salt_control_size_net_profile_openstack_upgrade: default
+  salt:
+    control:
+      size:
+        openstack.control:
+          cpu: ${_param:salt_control_size_cpu_openstack_control}
+          ram: ${_param:salt_control_size_ram_openstack_control}
+          disk_profile: ${_param:salt_control_size_disk_profile_openstack_control}
+          net_profile: ${_param:salt_control_size_net_profile_openstack_control}
+        openstack.database:
+          cpu: ${_param:salt_control_size_cpu_openstack_database}
+          ram: ${_param:salt_control_size_ram_openstack_database}
+          disk_profile: ${_param:salt_control_size_disk_profile_openstack_database}
+          net_profile: ${_param:salt_control_size_net_profile_openstack_database}
+        openstack.message_queue:
+          cpu: ${_param:salt_control_size_cpu_openstack_message_queue}
+          ram: ${_param:salt_control_size_ram_openstack_message_queue}
+          disk_profile: ${_param:salt_control_size_disk_profile_openstack_message_queue}
+          net_profile: ${_param:salt_control_size_net_profile_openstack_message_queue}
+        openstack.proxy:
+          cpu: ${_param:salt_control_size_cpu_openstack_proxy}
+          ram: ${_param:salt_control_size_ram_openstack_proxy}
+          disk_profile: ${_param:salt_control_size_disk_profile_openstack_proxy}
+          net_profile: ${_param:salt_control_size_net_profile_openstack_proxy}
+        openstack.upgrade:
+          cpu: ${_param:salt_control_size_cpu_openstack_upgrade}
+          ram: ${_param:salt_control_size_ram_openstack_upgrade}
+          disk_profile: ${_param:salt_control_size_disk_profile_openstack_upgrade}
+          net_profile: ${_param:salt_control_size_net_profile_openstack_upgrade}

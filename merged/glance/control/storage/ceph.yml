@@ -1,0 +1,9 @@
+parameters:
+  glance:
+    server:
+      storage:
+        default_store: rbd
+        engine: rbd,http
+        user: ${_param:glance_storage_user}
+        pool: ${_param:glance_storage_pool}
+        chunk_size: 8

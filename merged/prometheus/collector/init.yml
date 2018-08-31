@@ -1,0 +1,7 @@
+applications:
+- prometheus
+parameters:
+  prometheus:
+    collector:
+      enabled: true
+

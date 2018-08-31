@@ -1,0 +1,72 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    rundeck_cis_jobs_repository: https://gerrit.mcp.mirantis.net/oss/rundeck-cis-jobs
+    rundeck_cis_jobs_revision: master
+    rundeck_cis_elasticsearch_url: yourelastic:9200
+    rundeck_cis_os_docker_image: ${_param:mcp_docker_registry}/mirantis/oss/cis-openstack:latest
+    rundeck_cis_openstack:
+      auth_url: http://yourcloud.com:5000/v3/auth/tokens
+      endpoint_type: publicURL
+      username: admin
+      password: password
+      cert: plain-certificate
+      ssl_cert_file: cert.pem
+      project_name: admin
+      domain_id: default
+  rundeck:
+    client:
+      project:
+        cicd:
+          description: "CI/CD Runbooks"
+          node:
+            node01:
+              nodename: ${_param:cluster_node01_name}.${_param:cluster_domain}
+              hostname: ${_param:cluster_node01_address}
+              username: ${_param:rundeck_runbook_user}
+              tags: [cicd, docker]
+            node02:
+              nodename: ${_param:cluster_node02_name}.${_param:cluster_domain}
+              hostname: ${_param:cluster_node02_address}
+              username: ${_param:rundeck_runbook_user}
+              tags: [cicd, docker]
+            node03:
+              nodename: ${_param:cluster_node03_name}.${_param:cluster_domain}
+              hostname: ${_param:cluster_node03_address}
+              username: ${_param:rundeck_runbook_user}
+              tags: [cicd, docker]
+          plugin:
+            import:
+              address: ${_param:rundeck_cis_jobs_repository}
+              branch: ${_param:rundeck_cis_jobs_revision}
+      secret:
+        cis/elasticsearch/url:
+          type: password
+          content: ${_param:rundeck_cis_elasticsearch_url}
+        cis/openstack/image:
+          type: password
+          content: ${_param:rundeck_cis_os_docker_image}
+        cis/openstack/auth_url:
+          type: password
+          content: ${_param:rundeck_cis_openstack:auth_url}
+        cis/openstack/endpoint_type:
+          type: password
+          content: ${_param:rundeck_cis_openstack:endpoint_type}
+        cis/openstack/username:
+          type: password
+          content: ${_param:rundeck_cis_openstack:username}
+        cis/openstack/password:
+          type: password
+          content: ${_param:rundeck_cis_openstack:password}
+        cis/openstack/project_name:
+          type: password
+          content: ${_param:rundeck_cis_openstack:project_name}
+        cis/openstack/domain_id:
+          type: password
+          content: ${_param:rundeck_cis_openstack:domain_id}
+        cis/openstack/cert.pem:
+          type: password
+          content: ${_param:rundeck_cis_openstack:cert}
+        cis/openstack/cert_file:
+          type: password
+          content: ${_param:rundeck_cis_openstack:ssl_cert_file}

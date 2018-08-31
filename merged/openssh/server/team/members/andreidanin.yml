@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        adanin:
+          enabled: true
+          name: adanin
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Andrei Danin
+          home: /home/adanin
+          email: adanin@mirantis.com
+  openssh:
+    server:
+      user:
+        adanin:
+          enabled: true
+          public_keys:
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2eqUIe2KkA5Zlr1yDoY0E5egIaqmbDvIZ+8gyduCDwqouqikgYdwQtMztlEWXEu8FsQqOHKLjBDvzEyFgpEfvRQLYFmp7HtZ32GntBDC9oigtm8OXJr0MEnyAMsdUioDOCD3ixuAGktpJjgIwPPqnMhXgAXuH6Ww7N8sSkN/8paRezQjqDgFZcxaEavse6kj+TdbJb5w382Z7sILss8vWmjhQlYUxc1ZWa/0BCVx9mLnEXAZKfOiEDOX6Pv89VGjOiP5VxmNUCRfuPVEtY671Z73jpqXwduLz6IMbPVdAvz8HQTKqZeuZMPPTasrgNqOIfrSrG5OM8DBqO8LnEffp
+          user: ${linux:system:user:adanin}
+

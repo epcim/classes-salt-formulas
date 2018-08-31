@@ -1,0 +1,4 @@
+classes:
+  - jenkins.client.job.opencontrail.git-mirrors.downstream
+  - jenkins.client.job.opencontrail.git-mirrors.upstream
+  - jenkins.client.job.opencontrail.git-mirrors.2way

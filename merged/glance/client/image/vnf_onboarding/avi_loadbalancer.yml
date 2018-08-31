@@ -1,0 +1,22 @@
+classes:
+- glance.client
+parameters:
+  _param:
+    avi_control_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_avi_control_image_name}.qcow2"
+    avi_control_image_name:  "${_param:vnf_avi_control_image_name}"
+  glance:
+    client:
+      identity:
+        admin_identity:
+          endpoint_type: internalURL
+          image:
+            avi:
+              name: ${_param:avi_control_image_name}
+              location: ${_param:avi_control_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'avi'
+              visibility: public
+              wait_timeout: 1000

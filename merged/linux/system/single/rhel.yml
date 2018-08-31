@@ -1,0 +1,4 @@
+classes:
+- linux.system.single
+
+# RHEL family overrides

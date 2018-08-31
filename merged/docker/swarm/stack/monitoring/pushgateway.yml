@@ -1,0 +1,33 @@
+classes:
+- prometheus.pushgateway.container
+parameters:
+  docker:
+    client:
+      stack:
+        monitoring:
+          network:
+            monitoring:
+              driver: overlay
+              driver_opts:
+                encrypted: 1
+          service:
+            pushgateway:
+              networks:
+                - monitoring
+              deploy:
+                replicas: 2
+                labels:
+                  com.mirantis.monitoring: "pushgateway"
+                restart_policy:
+                  condition: any
+              environment:
+                PUSHGATEWAY_BIND_PORT: ${prometheus:pushgateway:bind:port}
+                PUSHGATEWAY_BIND_ADDRESS: ${prometheus:pushgateway:bind:address}
+                PUSHGATEWAY_DATA_DIR: ${_param:prometheus_pushgateway_data_directory}
+              labels:
+                com.mirantis.monitoring: "pushgateway"
+              image: ${_param:docker_image_pushgateway}
+              ports:
+                - 15012:${prometheus:pushgateway:bind:port}
+              volumes:
+                - ${prometheus:pushgateway:dir:data}:${_param:prometheus_pushgateway_data_directory}

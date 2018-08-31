@@ -1,0 +1,88 @@
+applications:
+- heat
+classes:
+- haproxy.proxy.single
+- keepalived.cluster.single
+- haproxy.proxy.listen.openstack.heat
+parameters:
+  _param:
+    cluster_internal_protocol: http
+    cluster_public_protocol: https
+    heat_client_default_endpoint_type: internalURL
+    heat_client_heat_endpoint_type: publicURL
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  heat:
+    server:
+      bind:
+        api:
+          address: ${_param:cluster_local_address}
+        api_cfn:
+          address: ${_param:cluster_local_address}
+        api_cloudwatch:
+          address: ${_param:cluster_local_address}
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: heat
+        password: ${_param:mysql_heat_password}
+        port: 3306
+        user: heat
+      enabled: true
+      identity:
+        endpoint_type_default: ${_param:heat_client_default_endpoint_type}
+        endpoint_type_heat: ${_param:heat_client_heat_endpoint_type}
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_heat_password}
+        port: 35357
+        protocol: ${_param:cluster_internal_protocol}
+        tenant: service
+        user: heat
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      metadata:
+        host: ${_param:cluster_public_host}
+        port: 8000
+        protocol: ${_param:cluster_public_protocol}
+      region: ${_param:openstack_region}
+      role: ${_param:openstack_node_role}
+      stack_domain_admin:
+        domain: heat
+        name: heat_domain_admin
+        password: ${_param:heat_domain_admin_password}
+      version: ${_param:heat_version}
+      waitcondition:
+        host: ${_param:cluster_public_host}
+        port: 8000
+        protocol: ${_param:cluster_public_protocol}
+      watch:
+        host: ${_param:cluster_public_host}
+        port: 8003
+        protocol: ${_param:cluster_public_protocol}
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

@@ -1,0 +1,10 @@
+applications:
+- knot
+classes:
+- service.knot.support
+parameters:
+  knot:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

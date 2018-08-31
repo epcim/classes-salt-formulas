@@ -1,0 +1,41 @@
+applications:
+- designate
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.designate
+- designate.server.cluster.simple
+parameters:
+  designate:
+    server:
+      bind:
+        api:
+          address: ${_param:cluster_local_address}
+      database:
+        engine: mysql
+        host: ${_param:cluster_vip_address}
+        name:
+          main_database: designate
+          pool_manager: designate_pool_manager
+        password: ${_param:mysql_designate_password}
+        port: 3306
+        user: designate
+      domain_id: 5186883b-91fb-4891-bd49-e6769234a8fc
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_designate_password}
+        port: 35357
+        tenant: service
+        user: designate
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      region: RegionOne
+      version: ${_param:designate_version}
+

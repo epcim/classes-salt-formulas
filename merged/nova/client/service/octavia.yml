@@ -1,0 +1,19 @@
+classes:
+- nova.client
+parameters:
+  nova:
+    client:
+      server:
+        admin_identity:
+          endpoint_type: internalURL
+          flavor:
+            m1.amphora:
+              flavor_id: ${_param:amp_flavor_id}
+              ram: 1024
+              disk: 2
+              vcpus: 1
+        octavia_identity:
+          endpoint_type: internalURL
+          keypair:
+            octavia_ssh_key:
+              pub_key: ${_param:octavia_public_key}

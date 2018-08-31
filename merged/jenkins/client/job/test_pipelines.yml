@@ -1,0 +1,63 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+  jenkins:
+    client:
+      job_template:
+        test-pipelines:
+          name: test-{{name}}
+          jobs:
+            - name: mk-mk-pipelines
+              repo: mk/mk-pipelines
+            - name: mcp-ci-pipeline-library
+              repo: mcp-ci/pipeline-library
+            - name: oss-jenkins-pipelines
+              repo: oss/jenkins/pipelines
+            - name: map-map-pipelines
+              repo: map/map-pipelines
+          template:
+            discard:
+              build:
+                keep_num: 25
+              artifact:
+                keep_num: 25
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: test-groovy-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  "{{repo}}":
+                    branches:
+                      - master
+                event:
+                  patchset:
+                    - created:
+                        excludeDrafts: false
+                        excludeTrivialRebase: false
+                        excludeNoCodeChange: false
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '(recheck|reverify)'
+            param:
+              CREDENTIALS_ID:
+                type: string
+                default: "gerrit"
+              GRADLE_IMAGE:
+                type: string
+                default: "${_param:mcp_docker_registry}/mirantis/cicd/niaquinto_gradle"
+              GRADLE_CMD:
+                type: string
+                default: "check --info"
+              DEFAULT_GIT_URL:
+                  type: string
+                  description: "Run against alternate system reclass"
+                  default: "${_param:jenkins_gerrit_url}/{{repo}}"
+              DEFAULT_GIT_REF:
+                  type: string
+                  default: master

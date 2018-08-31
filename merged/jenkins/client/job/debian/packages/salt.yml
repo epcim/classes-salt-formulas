@@ -1,0 +1,999 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        build-debian-salt-formula:
+          name: build-debian-salt-formula-{{name}}-ubuntu-{{dist}}
+          jobs:
+            - name: aodh
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: apache
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: aptcacher
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: aptly
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: artifactory
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: avinetworks
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: auditd
+              upload_source_packages: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: backupninja
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: baremetal-simulator
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: billometer
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: bind
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: bird
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: cadf
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: calico
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: cassandra
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: ccp
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: ceph
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: chrony
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: collectd
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: debmirror
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: trusty
+            - name: dekapod
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: designate
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: devops-portal
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: docker
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: dogtag
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: dovecot
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: elasticsearch
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: etcd
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: fluentbit
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: fluentd
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: foreman
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: freeipa
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: galera
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: gerrit
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: git
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: gitlab
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: glusterfs
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: grafana
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: graphite
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: haproxy
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: heka
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: heketi
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: trusty
+            - name: influxdb
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: iptables
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: ironic
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: isc-dhcp
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: java
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: jenkins
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: kedb
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: keepalived
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: keycloak
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: kibana
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: letsencrypt
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: libvirt
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: linux
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: lldp
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: logrotate
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: maas
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: magnum
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: manila
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: memcached
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: mirascan
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: midonet
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: monasca
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: mongodb
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: murano
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: mysql
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: nagios
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: network
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: nfs
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: nginx
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: nodejs
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: ntp
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: octavia
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: opencontrail
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: openldap
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: openssh
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: openvpn
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: openvstorage
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: oslo-templates
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: owncloud
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: postfix
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: postgresql
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: powerdns
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: pritunl
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: prometheus
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: python
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: rabbitmq
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: reclass
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: redis
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: roundcube
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: rsync
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: rsyslog
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: rundeck
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: runtest
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: sahara
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: salt
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: sensu
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: sentry
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: shibboleth
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: sphinx
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: spinnaker
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: statsd
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: supervisor
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: taiga
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: telegraf
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: tinyproxy
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: tftpd-hpa
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: varnish
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: xtrabackup
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: zookeeper
+              upload_source_package: false
+              upload_to_aptly: true
+              dist: trusty
+            - name: aodh
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: apache
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: aptcacher
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: aptly
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: artifactory
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: avinetworks
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: auditd
+              upload_source_packages: false
+              upload_to_aptly: true
+              dist: xenial
+            - name: barbican
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: baremetal-simulator
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: backupninja
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: billometer
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: bind
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: bird
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: cadf
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: calico
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: cassandra
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: ccp
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: ceph
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: chrony
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: collectd
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: debmirror
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: dekapod
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: designate
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: devops-portal
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: docker
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: dogtag
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: dovecot
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: elasticsearch
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: etcd
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: fluentbit
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: fluentd
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: foreman
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: freeipa
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: galera
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: gerrit
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: git
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: gitlab
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: glusterfs
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: gnocchi
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: grafana
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: graphite
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: haproxy
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: heka
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: heketi
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: helm
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: hubble
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: influxdb
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: iptables
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: ironic
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: isc-dhcp
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: java
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: jenkins
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: kedb
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: keepalived
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: keycloak
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: kibana
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: letsencrypt
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: libvirt
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: linux
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: lldp
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: logrotate
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: maas
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: magnum
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: manila
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: memcached
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: mirascan
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: midonet
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: monasca
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: mongodb
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: murano
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: mysql
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: nagios
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: network
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: nfs
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: nginx
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: nodejs
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: ntp
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: octavia
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: opencontrail
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: openldap
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: openscap
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: openssh
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: openvpn
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: openvstorage
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: oslo-templates
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: owncloud
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: panko
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: postfix
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: postgresql
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: pritunl
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: prometheus
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: powerdns
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: python
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: rabbitmq
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: reclass
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: redis
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: roundcube
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: rsync
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: rundeck
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: rsyslog
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: runtest
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: sahara
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: salt
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: sensu
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: sentry
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: shibboleth
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: sphinx
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: spinnaker
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: statsd
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: supervisor
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: taiga
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: telegraf
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: tinyproxy
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: tftpd-hpa
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: varnish
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: watchdog
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: xtrabackup
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+            - name: zookeeper
+              upload_source_package: true
+              upload_to_aptly: true
+              dist: xenial
+          template:
+            discard:
+              build:
+                keep_num: 10
+              artifact:
+                keep_num: 10
+            type: workflow-scm
+            concurrent: false
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: build-debian-packages-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  salt-formulas/{{name}}:
+                    branches:
+                      - master
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+                event:
+                  ref:
+                    - updated
+            param:
+              SOURCE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/salt-formulas/{{name}}.git"
+              SOURCE_BRANCH:
+                type: string
+                default: "master"
+              SOURCE_CREDENTIALS:
+                type: string
+                default: "gerrit"
+              DEBIAN_SNAPSHOT:
+                type: boolean
+                default: 'true'
+              REVISION_POSTFIX:
+                type: string
+                default: '~{{dist}}1'
+              EXTRA_REPO_URL:
+                type: string
+                default: "deb http://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3 xenial main; deb ${_param:jenkins_aptly_url}/{{dist}}/ testing salt"
+              EXTRA_REPO_KEY_URL:
+                type: string
+                default: "https://repo.saltstack.com/apt/ubuntu/16.04/amd64/2016.3/SALTSTACK-GPG-KEY.pub; ${_param:jenkins_aptly_url}/public.gpg"
+              APTLY_URL:
+                type: string
+                default: "${_param:jenkins_aptly_api_url}"
+              APTLY_REPO:
+                type: string
+                default: "ubuntu-{{dist}}-salt"
+              OS:
+                type: string
+                default: "ubuntu"
+              DIST:
+                type: string
+                default: "{{dist}}"
+              ARCH:
+                type: string
+                default: "amd64"
+              PPA:
+                type: string
+                default: "salt-formulas/ppa"
+              UPLOAD_PPA:
+                type: boolean
+                default: '{{upload_source_package}}'
+              UPLOAD_APTLY:
+                type: boolean
+                default: '{{upload_to_aptly}}'
+              DEBUG:
+                type: boolean
+                default: 'false'

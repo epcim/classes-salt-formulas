@@ -1,0 +1,3 @@
+classes:
+- aptly.server.mirror.ubuntu.xenial.mcp.apt_mk.elastic.2x
+- aptly.server.mirror.ubuntu.xenial.mcp.apt_mk.elastic.5x

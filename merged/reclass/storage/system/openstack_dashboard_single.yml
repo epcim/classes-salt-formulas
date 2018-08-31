@@ -1,0 +1,17 @@
+parameters:
+  _param:
+    openstack_proxy_hostname: prx01
+    openstack_proxy_system_codename: trusty
+    openstack_proxy_node01_address: 172.16.10.121
+  reclass:
+    storage:
+      node:
+        openstack_proxy_node01:
+          name: ${_param:openstack_proxy_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.dashboard
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_proxy_system_codename}
+            single_address: ${_param:openstack_proxy_node01_address}

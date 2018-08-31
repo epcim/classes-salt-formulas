@@ -1,0 +1,20 @@
+parameters:
+  prometheus:
+    alertmanager:
+      enabled: true
+      config:
+        route:
+          routes:
+            slack:
+              receiver: HTTP-slack
+              match_re:
+                - label: route
+                  value: '(.*slack.*)'
+              continue: true
+        receiver:
+          HTTP-slack:
+            enabled: true
+            slack_configs:
+              slack-endpoint:
+                api_url: "${_param:alertmanager_notification_slack_api_url}"
+                send_resolved: true

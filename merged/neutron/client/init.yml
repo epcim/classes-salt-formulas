@@ -1,0 +1,6 @@
+applications:
+  - neutron
+parameters:
+  neutron:
+    client:
+      enabled: true

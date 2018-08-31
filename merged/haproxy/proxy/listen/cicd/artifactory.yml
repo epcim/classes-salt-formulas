@@ -1,0 +1,38 @@
+parameters:
+  _param:
+    haproxy_artifactory_bind_host: ${_param:haproxy_bind_address}
+    haproxy_artifactory_bind_port: 8081
+    haproxy_artifactory_ssh_bind_host: ${_param:haproxy_artifactory_bind_host}
+    haproxy_artifactory_ssl:
+      enabled: false
+  haproxy:
+    proxy:
+      listen:
+        artifactory:
+          mode: http
+          options:
+            - forwardfor
+            - httpchk
+            - httpclose
+            - httplog
+          balance: source
+          acl:
+            is_docker: "path_beg /v1/ /v2/"
+            has_prefix: "path_beg /artifactory"
+          http_request:
+            - action: "add-header X-Artifactory-Override-Base-Url https://%[req.hdr(host)]/artifactory"
+            - action: "add-header X-Forwarded-Proto https"
+              condition: "if { ssl_fc }"
+            - action: "set-path /artifactory/api/docker/%[req.hdr(host),lower,field(1,'.')]%[path]"
+              condition: "if is_docker"
+            - action: "set-path /artifactory%[path]"
+              condition: "if !is_docker !has_prefix"
+          binds:
+            - address: ${_param:haproxy_artifactory_bind_host}
+              port: ${_param:haproxy_artifactory_bind_port}
+              ssl: ${_param:haproxy_artifactory_ssl}
+          servers:
+            - name: ${_param:cluster_node01_name}
+              host: localhost
+              port: 18082
+              params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3

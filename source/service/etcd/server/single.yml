@@ -1,0 +1,16 @@
+applications:
+- etcd
+classes:
+- service.etcd.support
+- service.etcd.linux
+parameters:
+  etcd:
+    server:
+      enabled: true
+      bind:
+        host: ${_param:single_address}
+      token: ${_param:etcd_initial_token}
+      members:
+        - host: ${_param:node_address}
+          name: ${_param:node_hostname}
+          port: ${_param:node_port}

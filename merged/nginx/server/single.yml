@@ -1,0 +1,16 @@
+applications:
+- nginx
+classes:
+- nginx.server.stats
+parameters:
+  nginx:
+    server:
+      bind:
+        address: 0.0.0.0
+        protocol: tcp
+      enabled: true
+      extras: false
+      logging:
+        heka:
+          enabled: true
+

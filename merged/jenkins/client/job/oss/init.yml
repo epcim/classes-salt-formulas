@@ -1,0 +1,6 @@
+classes:
+  - jenkins.client.job.oss.test_devops_portal
+  - jenkins.client.job.oss.test_devops_portal_backend
+  - jenkins.client.job.oss.test_devops_portal_nightly
+  - jenkins.client.job.oss.test_pushkin_codebase
+  - jenkins.client.job.oss.test_security_monkey_openstack

@@ -1,0 +1,7 @@
+classes:
+- openssh.server
+- openssh.server.cis
+
+parameters:
+  _param:
+    ssh_banner_company_name: COMPANY_NAME

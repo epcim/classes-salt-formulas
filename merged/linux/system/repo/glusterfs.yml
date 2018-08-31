@@ -1,0 +1,5 @@
+classes:
+- linux.system.repo.mcp.apt_mirantis.glusterfs
+parameters:
+  _param:
+    linux_system_repo_mcp_glusterfs_version_number: "3.10"

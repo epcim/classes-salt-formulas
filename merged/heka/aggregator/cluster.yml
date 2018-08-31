@@ -1,0 +1,32 @@
+applications:
+- heka
+classes:
+- heka.server
+parameters:
+  _param:
+    aggregator_max_message_size: 262144
+    aggregator_poolsize: 100
+  heka:
+    aggregator:
+      automatic_starting: false
+      enabled: true
+      influxdb_database: lma
+      influxdb_host: ${_param:heka_influxdb_host}
+      influxdb_password: ${_param:influxdb_stacklight_password}
+      influxdb_port: ${_param:influxdb_port}
+      influxdb_time_precision: ms
+      influxdb_username: lma
+      max_message_size: ${_param:aggregator_max_message_size}
+      poolsize: 200
+  keepalived:
+    cluster:
+      instance:
+        stacklight_monitor_vip:
+          notify_action:
+            backup:
+            - aggregator stop
+            fault:
+            - aggregator stop
+            master:
+            - aggregator start
+

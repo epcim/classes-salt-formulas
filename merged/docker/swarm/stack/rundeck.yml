@@ -1,0 +1,37 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    docker_rundeck_replicas: 1
+    docker_image_rundeck: ${_param:mcp_docker_registry}/mirantis/oss/rundeck:latest
+    rundeck_bind_host: rundeck-api
+    rundeck_bind_port: ${_param:haproxy_rundeck_bind_port}
+    rundeck_ssl:
+      enabled: false
+  docker:
+    client:
+      stack:
+        rundeck:
+          service:
+            rundeck-api:
+              image: ${_param:docker_image_rundeck}
+              deploy:
+                replicas: ${_param:docker_rundeck_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_rundeck_exposed_port}:${_param:haproxy_rundeck_bind_port}
+              volumes:
+                - /srv/volumes/rundeck/etc/framework.properties:/etc/rundeck/framework.properties
+                - /srv/volumes/rundeck/etc/tokens.properties:/etc/rundeck/tokens.properties
+                - /srv/volumes/rundeck/etc/realm.properties:/etc/rundeck/realm.properties
+                - /srv/volumes/rundeck/etc/rundeck-config.properties:/etc/rundeck/rundeck-config.properties
+                - /srv/volumes/rundeck/rundeck:/var/rundeck
+                - /srv/volumes/rundeck/data:/var/lib/rundeck/data
+                - /srv/volumes/rundeck/log:/var/log/rundeck
+                - /srv/volumes/rundeck/logs:/var/lib/rundeck/logs
+                - /srv/volumes/rundeck/plugins:/opt/rundeck-plugins
+                - /srv/volumes/rundeck/storage:/var/lib/rundeck/var/storage
+          network:
+            default:
+              external:
+                name: oss_backend

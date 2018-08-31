@@ -1,0 +1,37 @@
+parameters:
+  linux:
+    system:
+      repo:
+        mcp_glusterfs:
+          # Launchpad PPA for Gluster
+          # pub   4096R/3FE869A9 2014-08-15
+          key: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            Version: GnuPG v1
+
+            mQINBFPtYFcBEADcQMZ9aSR1ptbaEeq/8Bzu7kipaxVGh3Wcma4Lz+QPe0ofxRf+
+            oYR22UVGmJcPnVcGFbXJ50t8BAxwtQ/TSmGdQ93bl6LORAQBZ/ud1LTr2HKpaa0F
+            1bwpi/TAgBWqP64Hu0LBGISc0G5m3/hn/bi6XxIIOzJ/L/vqLh1deVaDrYYWy5Cm
+            e8AuPtqOARKsefvVgwlpnbCtk+QaE65vgl8MXiYCaOenT07GDCq1xb7hkoVlJS4b
+            f6F3UMJVMVy4oEyYkRw4SP7ULeT1s4yrBeDzbxhFaZRJFvGpvMW3AZxfrhX/5OpZ
+            SkQiFn5/2j4eJli4/MmptAAHpGr4tLA+s6mHmA9E9c7wMfyFZe+wMhvangSDp09g
+            SSZs00bqKSnYIJ/oGRjaxCllkw4SMfTOqv8l/GOxRs12yIcZD08SSmRpoyLffrl1
+            zElyaixtAJRenphTZyq7eRLPyQl6qEDA1XtLs3ThK5/4fghMbe7MOHiMB8MwL1Rz
+            LQkl/PU08vxfum9ki/m/LP5xpJopNHZs2L47RlX2+tq6FJWbDvQwOGoFTTnxmdDf
+            4EkMhlB4N+ujZw64pSMt3c08NShxty2UWpbSbc8/e7Ps4B7Lx6eq6AmqrcUChg8c
+            9+PI2LUqj6mDbc8jxpUslvjsLU05xnq6OLv4U//pUTUz6eI8FgFadVZcoQARAQAB
+            tBlMYXVuY2hwYWQgUFBBIGZvciBHbHVzdGVyiQI4BBMBAgAiBQJT7WBXAhsDBgsJ
+            CAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRAT4Bt7P+hpqZ3LEACYYC4UjxwSHouV
+            295Cxfwt9P32GcWJbFmLYtLHWVTt2vdN/M9Xb02YgVLJm/nVy2vJhqcMowSW2jO5
+            03mLq672g5mHitnIq1lh4zXcHEvP79aDRQuvkgsLEHjlk2NzYqdAsdRk3TgOLcK0
+            SRM7Cwgwd/b/gVUtPYrX1hvQKrjGJM9VZFcCMX2RmGAS0ft3QHzEAPZCgyamk0qB
+            2eo8tLZYm42iMvq+ZSxGulhzi7gJkpv/wNdaP4E6o8o7KY3JIWMmxBn8QZUKYMob
+            ze4PSBg4G4iG2ue9IrGCb8M1o+46aOSyEIc99bznF8Jrw7a8sBufVRjSZIE9A/oM
+            EtB1pTRDn9lwx/DyYbCV16DOsk6d5x4P8cqvgdaGzl7VNLvkwmMaCH0gRFIBr937
+            rEUbeSJHTqrVG0zXzSaUHEwXPZE0Lt2C9dEmMnT6nxC7FbJB1ATPDNx8kL7MvB4j
+            l5HkjrD1W9Xu2y0dzwAKlg5jvzwP46MJgvm+AYK808XhOhMZjWzzt5POeDcDhGhp
+            RSfQtAhSnRkOtKS1drMCt27hLZDEZfCp//aj7jvVL8FjamGEMfm91FLQa5LY7OoJ
+            aYoZlYUtthrXV6w5KHFjFYAKgA8tJzebTvc1Q9avCo2G5qWNZq6TSLxHEMo/g4gu
+            2aGRPRrKu9w2Ibosg4OqZ/YbXC8SjA==
+            =+Qna
+            -----END PGP PUBLIC KEY BLOCK-----

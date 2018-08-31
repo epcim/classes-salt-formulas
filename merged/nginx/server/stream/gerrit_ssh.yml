@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    nginx_proxy_gerrit_server_stream_host: ${_param:cicd_control_address}
+    nginx_proxy_gerrit_server_stream_port: 29418
+    nginx_proxy_gerrit_server_site_stream_port: 29418
+  nginx:
+    server:
+      stream:
+        gerrit_ssh:
+          backend:
+            cicd:
+              address: ${_param:nginx_proxy_gerrit_server_stream_host}
+              port: ${_param:nginx_proxy_gerrit_server_stream_port}
+          host:
+            port: ${_param:nginx_proxy_gerrit_server_site_stream_port}
+

@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    barbican_dogtag_host: localhost
+    barbican_dogtag_simple_cmc_profile: 'caOtherCert'
+  barbican:
+    server:
+      plugin:
+        dogtag:
+          dogtag_host: ${_param:barbican_dogtag_host}
+          dogtag_port: 8443
+          nss_db_path: '/etc/barbican/alias'
+          nss_db_path_ca: '/etc/barbican/alias-ca'
+          nss_password: "${_param:barbican_dogtag_nss_password}"
+          simple_cmc_profile: "${_param:barbican_dogtag_simple_cmc_profile}"
+          ca_expiration_time: 1
+          plugin_working_dir: '/etc/barbican/dogtag'

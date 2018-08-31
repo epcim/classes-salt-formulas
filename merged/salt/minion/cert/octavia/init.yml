@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    octavia_ca_hostname: ${linux:system:name}
+    octavia_ca_host: ${_param:octavia_ca_hostname}.${_param:cluster_domain}
+    octavia_ca_authority: octavia_ca
+  salt:
+    minion:
+      cert:
+        octavia_amp_client:
+          host: ${_param:octavia_ca_host}
+          authority: ${_param:octavia_ca_authority}
+          common_name: octavia_amp_client
+          signing_policy: cert_open
+          key_usage: "digitalSignature,nonRepudiation,keyEncipherment"
+          user: octavia
+          group: octavia

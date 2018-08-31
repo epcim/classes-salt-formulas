@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    nova_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            nova:
+              password: ${_param:keystone_nova_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            nova20:
+              type: compute_legacy
+              description: OpenStack Compute Service V2
+              endpoints:
+                nova_public_v2:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:8774/v2/$(project_id)s
+                  region: ${_param:openstack_region}
+                nova_internal_v2:
+                  interface: 'internal'
+                  url: ${_param:nova_service_protocol}://${_param:nova_service_host}:8774/v2/$(project_id)s
+                  region: ${_param:openstack_region}
+                nova_admin_v2:
+                  interface: 'admin'
+                  url: ${_param:nova_service_protocol}://${_param:nova_service_host}:8774/v2/$(project_id)s
+                  region: ${_param:openstack_region}

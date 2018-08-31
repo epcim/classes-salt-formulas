@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    nova_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          services:
+            placement:
+              type: placement
+              description: OpenStack Placement API
+              endpoints:
+                nova_placement_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:8778
+                  region: ${_param:openstack_region}
+                nova_placement_internal:
+                  interface: 'internal'
+                  url: ${_param:nova_service_protocol}://${_param:nova_service_host}:8778
+                  region: ${_param:openstack_region}
+                nova_placement_admin:
+                  interface: 'admin'
+                  url: ${_param:nova_service_protocol}://${_param:nova_service_host}:8778
+                  region: ${_param:openstack_region}

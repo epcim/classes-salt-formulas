@@ -1,0 +1,24 @@
+applications:
+- telegraf
+parameters:
+  telegraf:
+    remote_agent:
+      collection_jitter: 2
+      dir:
+        config: /srv/volumes/local/telegraf
+        config_d: /srv/volumes/local/telegraf/telegraf.d
+      enabled: true
+      input:
+        internal: null
+      interval: 15
+      metric_batch_size: 1000
+      metric_buffer_limit: 10000
+      omit_hostname: true
+      output:
+        prometheus_client:
+          bind:
+            address: 0.0.0.0
+            port: 9126
+          engine: prometheus
+      round_interval: false
+

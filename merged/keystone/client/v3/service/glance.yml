@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    glance_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            glance:
+              password: ${_param:keystone_glance_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            glance:
+              type: image
+              description: OpenStack Image Service
+              endpoints:
+                glance_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:9292
+                  region: ${_param:openstack_region}
+                glance_internal:
+                  interface: 'internal'
+                  url: ${_param:glance_service_protocol}://${_param:glance_service_host}:9292
+                  region: ${_param:openstack_region}
+                glance_admin:
+                  interface: 'admin'
+                  url: ${_param:glance_service_protocol}://${_param:glance_service_host}:9292
+                  region: ${_param:openstack_region}

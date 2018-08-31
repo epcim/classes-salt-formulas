@@ -1,0 +1,4 @@
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.galera

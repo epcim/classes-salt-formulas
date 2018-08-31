@@ -1,0 +1,15 @@
+parameters:
+  aodh:
+    _support:
+      collectd:
+        enabled: false
+      fluentd:
+        enabled: true
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      telegraf:
+        enabled: true

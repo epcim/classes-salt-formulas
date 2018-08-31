@@ -1,0 +1,15 @@
+parameters:
+  ccp:
+    control:
+      configs:
+        neutron:
+          bootstrap:
+            internal:
+              enable: true
+          contrail:
+            address: ${_param:opencontrail_control_cluster}
+            port: 8082
+          logging_debug: true
+      repos:
+      - git_url: https://git.openstack.org/openstack/fuel-ccp-neutron
+        name: fuel-ccp-neutron

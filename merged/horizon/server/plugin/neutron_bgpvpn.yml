@@ -1,0 +1,8 @@
+parameters:
+  horizon:
+    server:
+      plugin:
+        bgpvpn:
+          source:
+            engine: pkg
+            name: python-networking-bgpvpn

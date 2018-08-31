@@ -1,0 +1,9 @@
+parameters:
+  prometheus:
+    server:
+      target:
+        static:
+          prometheus_federation:
+            params:
+              match[]:
+                - '{__name__=~".+"}'

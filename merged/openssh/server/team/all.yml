@@ -1,0 +1,22 @@
+classes:
+# avoid teams w/sudo group restrictions, or override restrictions
+- openssh.server.team.lab
+- openssh.server.team.cicd
+- openssh.server.team.mcp_qa
+- openssh.server.team.mcp_ci
+- openssh.server.team.presales
+- openssh.server.team.services
+- openssh.server.team.stacklight
+- openssh.server.team.networking
+- openssh.server.team.security
+- openssh.server.team.oss_team
+- openssh.server.team.services_qa
+- openssh.server.team.qa_scale
+- openssh.server.team.oscore_devops
+- openssh.server.team.k8s_team
+- openssh.server.team.k8s_apps_team
+# to include support team, please integrate submodule opscare into cluster model
+# https://gerrit.mirantis.com/#/admin/projects/mmo-support/reclass-opscare
+parameters:
+  _param:
+    linux_system_user_sudo: true

@@ -1,0 +1,6 @@
+applications:
+- varnish
+parameters:
+  varnish:
+    server:
+      enabled: true

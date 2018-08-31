@@ -1,0 +1,49 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    keystone_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          cloud_name: 'admin_identity'
+          domains:
+            'Default':
+              projects:
+                service:
+                  description: "OpenStack Service tenant"
+                admin:
+                  description: "OpenStack Admin tenant"
+          roles:
+            service_admin:
+              name: admin
+              enabled: true
+            global_Member:
+              name: Member
+              enabled: true
+          users:
+            admin:
+              password: ${_param:keystone_admin_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  enabled: true
+                  project_id: admin
+          services:
+            keystone:
+              type: 'identity'
+              description: "OpenStack Identity Service"
+              endpoints:
+                keystone_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:5000/
+                  region: ${_param:openstack_region}
+                keystone_internal:
+                  interface: 'internal'
+                  url: ${_param:keystone_service_protocol}://${_param:keystone_service_host}:5000/
+                  region: ${_param:openstack_region}
+                keystone_admin:
+                  interface: 'admin'
+                  url: ${_param:keystone_service_protocol}://${_param:keystone_service_host}:5000/
+                  region: ${_param:openstack_region}

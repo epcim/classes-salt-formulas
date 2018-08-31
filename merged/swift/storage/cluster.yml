@@ -1,0 +1,58 @@
+applications:
+- swift
+classes:
+- rsync.server.single
+parameters:
+  rsync:
+    server:
+      module:
+        account:
+          gid: swift
+          max_connections: 100
+          path: /srv/node/
+          read_only: false
+          uid: swift
+        container:
+          gid: swift
+          max_connections: 100
+          path: /srv/node/
+          read_only: false
+          uid: swift
+        object:
+          gid: swift
+          max_connections: 100
+          path: /srv/node/
+          read_only: false
+          uid: swift
+  swift:
+    account:
+      bind:
+        address: 0.0.0.0
+        port: 6002
+      enabled: true
+      version: ${_param:swift_version}
+    common:
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:swift_proxy_node01_address}
+          port: 11211
+        - host: ${_param:swift_proxy_node02_address}
+          port: 11211
+      enabled: true
+      swift_hash_path_prefix: ${_param:swift_swift_hash_path_prefix}
+      swift_hash_path_suffix: ${_param:swift_swift_hash_path_suffix}
+      version: ${_param:swift_version}
+    container:
+      bind:
+        address: 0.0.0.0
+        port: 6001
+      enabled: true
+      version: ${_param:swift_version}
+    object:
+      bind:
+        address: 0.0.0.0
+        port: 6000
+      enabled: true
+      version: ${_param:swift_version}
+

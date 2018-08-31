@@ -1,0 +1,9 @@
+applications:
+- ceph
+classes:
+- service.ceph.common.cluster
+- service.ceph.support
+parameters:
+  ceph:
+    mon:
+      enabled: true

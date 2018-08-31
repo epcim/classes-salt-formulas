@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    prometheus_kqueen_api_host: ${_param:haproxy_bind_address}
+    prometheus_kqueen_api_port: 5000
+  prometheus:
+    server:
+      target:
+        static:
+          kqueen:
+            enabled: true
+            endpoint:
+            - address: ${_param:prometheus_kqueen_api_host}
+              port: ${_param:prometheus_kqueen_api_port}

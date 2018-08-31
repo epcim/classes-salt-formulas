@@ -1,0 +1,73 @@
+applications:
+- swift
+classes:
+- memcached.server.single
+- keepalived.cluster.single
+- haproxy.proxy.single
+parameters:
+  _param:
+    cluster_node01_address: ${_param:swift_proxy_node01_address}
+    cluster_node02_address: ${_param:swift_proxy_node02_address}
+  haproxy:
+    proxy:
+      listen:
+        swift_admin:
+          binds:
+          - address: ${_param:swift_proxy_vip_address}
+            port: 8080
+          check: false
+          type: stats
+        swift_proxy_cluster:
+          binds:
+          - address: ${_param:swift_proxy_vip_address}
+            port: 8080
+          check: false
+          servers:
+          - host: ${_param:swift_proxy_node01_address}
+            name: ${_param:swift_proxy_node01_hostname}
+            params: check
+            port: 8080
+          - host: ${_param:swift_proxy_node02_address}
+            name: ${_param:swift_proxy_node02_hostname}
+            params: check
+            port: 8080
+          type: general-service
+  keepalived:
+    cluster:
+      instance:
+        VIP:
+          virtual_router_id: ${_param:keepalived_vip_virtual_router_id}
+  swift:
+    common:
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:swift_proxy_node01_address}
+          port: 11211
+        - host: ${_param:swift_proxy_node02_address}
+          port: 11211
+      enabled: true
+      swift_hash_path_prefix: ${_param:swift_swift_hash_path_prefix}
+      swift_hash_path_suffix: ${_param:swift_swift_hash_path_suffix}
+      version: ${_param:swift_version}
+    proxy:
+      bind:
+        address: ${_param:single_address}
+        port: 8080
+      cache:
+        engine: memcached
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:control_vip_address}
+        password: ${_param:keystone_swift_password}
+        port: 35357
+        tenant: service
+        user: swift
+      version: ${_param:swift_version}
+

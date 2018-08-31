@@ -1,0 +1,5 @@
+parameters:
+  kubernetes:
+    master:
+      auth:
+        mode: Node,RBAC

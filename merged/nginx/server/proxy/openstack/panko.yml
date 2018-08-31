@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+    nginx_proxy_openstack_panko_host: ${_param:panko_service_host}
+    nginx_proxy_openstack_panko_protocol: 'http'
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_panko:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_panko
+          check: false
+          proxy:
+            host: ${_param:nginx_proxy_openstack_panko_host}
+            port: 8977
+            protocol: ${_param:nginx_proxy_openstack_panko_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 8977
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

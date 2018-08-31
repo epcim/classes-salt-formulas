@@ -1,0 +1,12 @@
+parameters:
+  _param:
+    salt_syndic_enabled: true
+    salt_syndic_master_address_01: 127.0.0.1
+    salt_syndic_master_address_02: 127.0.0.1
+  salt:
+    syndic:
+      enabled: ${_param:salt_syndic_enabled}
+      masters:
+      - host: ${_param:salt_syndic_master_address_01}
+      - host: ${_param:salt_syndic_master_address_02}
+

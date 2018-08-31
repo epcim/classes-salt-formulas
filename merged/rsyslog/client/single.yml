@@ -1,0 +1,7 @@
+applications:
+- rsyslog
+parameters:
+  rsyslog:
+    client:
+      enabled: true
+

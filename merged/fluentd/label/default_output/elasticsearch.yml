@@ -1,0 +1,41 @@
+classes:
+- fluentd.agent.output.elasticsearch
+parameters:
+  _param:
+    fluentd_elasticsearch_host: 127.0.0.1
+    elasticsearch_port: 9200
+  fluentd:
+    agent:
+      config:
+        label:
+          default_output:
+            filter:
+              drop_nested_timestamp_and_sensitive_data:
+                tag: "openstack.**"
+                type: record_transformer
+                enable_ruby: true
+                remove_keys: '["_dummy_1", "_dummy_2", "_dummy_3"]'
+                record:
+                  - name: _dummy_1
+                    value: ${fluentd:dollar}{if record.has_key?("context"); record["context"].delete("timestamp") ; end; nil }
+                  - name: _dummy_2
+                    value: ${fluentd:dollar}{if record.has_key?("context"); record["context"].delete("auth_token"); end; nil}
+                  - name: _dummy_3
+                    value: ${fluentd:dollar}{if record.has_key?("context"); record["context"].delete("auth_token_info"); end; nil}
+              drop_hostname_field:
+                tag: "openstack.**"
+                type: record_transformer
+                enable_ruby: true
+                remove_keys: '["hostname"]'
+              change_pid_field_value:
+                tag: "haproxy.**"
+                type: record_transformer
+                enable_ruby: true
+                record:
+                  - name: Pid
+                    value: ${fluentd:dollar}{record["pid"]}
+                remove_keys: '["pid"]'
+            match:
+              elasticsearch_output:
+                host: ${_param:fluentd_elasticsearch_host}
+                port: ${_param:elasticsearch_port}

@@ -1,0 +1,7 @@
+classes:
+- service.python.environment
+parameters:
+  python:
+    environment:
+      module:
+        django: True

@@ -1,0 +1,19 @@
+classes:
+  - jenkins.client.job.debian.packages.extra
+  - jenkins.client.job.debian.packages.salt
+  - jenkins.client.job.debian.packages.salt-multi
+  - jenkins.client.job.debian.packages.horizon
+  - jenkins.client.job.debian.packages.heat.resources
+  - jenkins.client.job.debian.packages.ceph
+parameters:
+  jenkins:
+    client:
+      view:
+        Xenial:
+          enabled: true
+          type: ListView
+          include_regex: "build-.*-ubuntu-xenial.*"
+        Trusty:
+          enabled: true
+          type: ListView
+          include_regex: "build-.*-ubuntu-trusty.*"

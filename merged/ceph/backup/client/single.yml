@@ -1,0 +1,3 @@
+classes:
+- ceph.backup.client
+- openssh.client.root

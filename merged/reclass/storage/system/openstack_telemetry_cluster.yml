@@ -1,0 +1,46 @@
+parameters:
+  _param:
+    openstack_telemetry_node01_hostname: mdb01
+    openstack_telemetry_node02_hostname: mdb02
+    openstack_telemetry_node03_hostname: mdb03
+    openstack_telemetry_system_codename: trusty
+  reclass:
+    storage:
+      node:
+        openstack_telemetry_node01:
+          name: ${_param:openstack_telemetry_node01_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.telemetry
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_telemetry_system_codename}
+            single_address: ${_param:openstack_telemetry_node01_address}
+            keepalived_vip_priority: 103
+            openstack_node_role: primary
+            ceilometer_create_gnocchi_resources: true
+            redis_cluster_role: 'master'
+        openstack_telemetry_node02:
+          name: ${_param:openstack_telemetry_node02_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.telemetry
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_telemetry_system_codename}
+            single_address: ${_param:openstack_telemetry_node02_address}
+            keepalived_vip_priority: 102
+            openstack_node_role: secondary
+            redis_cluster_role: 'slave'
+        openstack_telemetry_node03:
+          name: ${_param:openstack_telemetry_node03_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.telemetry
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_telemetry_system_codename}
+            single_address: ${_param:openstack_telemetry_node03_address}
+            keepalived_vip_priority: 101
+            openstack_node_role: secondary
+            redis_cluster_role: 'slave'

@@ -1,0 +1,13 @@
+parameters:
+  maas:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      backupninja:
+        enabled: true

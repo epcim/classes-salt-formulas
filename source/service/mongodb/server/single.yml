@@ -1,0 +1,11 @@
+applications:
+- mongodb
+classes:
+- service.mongodb.support
+parameters:
+  mongodb:
+    server:
+      enabled: true
+      bind:
+        address: 127.0.0.1
+        port: 27017

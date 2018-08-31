@@ -1,0 +1,89 @@
+applications:
+- keystone
+classes:
+- linux.system.users.keystone
+- keystone.server.fernet_rotation.single
+parameters:
+  _param:
+    keystone_admin_password: password
+    keystone_service_protocol: http
+    keystone_service_token: token
+    keystone_tokens_expiration: 3600
+    mysql_admin_password: password
+    mysql_admin_user: root
+    mysql_keystone_password: password
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_node_role: primary
+    openstack_ossyslog_handler_enabled: false
+  keystone:
+    database:
+      host: 127.0.0.1
+    server:
+      admin_email: ${_param:admin_email}
+      admin_name: admin
+      admin_password: ${_param:keystone_admin_password}
+      admin_tenant: admin
+      auth_methods:
+      - password
+      - token
+      bind:
+        address: ${_param:single_address}
+        private_address: ${_param:single_address}
+        private_port: 35357
+        private_protocol: ${_param:keystone_service_protocol}
+        protocol: ${_param:keystone_service_protocol}
+        public_address: ${_param:single_address}
+        public_port: 5000
+      cache:
+        engine: memcached
+        members:
+        - host: localhost
+          port: 11211
+      credential:
+        location: /var/lib/keystone/credential-keys
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: keystone
+        password: ${_param:mysql_keystone_password}
+        user: keystone
+      enabled: true
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        ha_queues: true
+        host: ${_param:single_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      region: ${_param:openstack_region}
+      role: ${_param:openstack_node_role}
+      roles:
+      - admin
+      - Member
+      - image_manager
+      service_tenant: service
+      service_token: ${_param:keystone_service_token}
+      tokens:
+        engine: fernet
+        expiration: ${_param:keystone_tokens_expiration}
+        location: /var/lib/keystone/fernet-keys
+        max_active_keys: 3
+      version: ${_param:keystone_version}
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

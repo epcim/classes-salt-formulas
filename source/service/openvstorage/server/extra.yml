@@ -1,0 +1,58 @@
+applications:
+  - openvstorage
+parameters:
+  openvstorage:
+    server:
+      enabled: true
+      type: extra
+      memcache:
+        servers:
+          - name: ${_param:cluster_master01_hostname}
+            address: ${_param:cluster_master01_address}:11211
+            id: ${_param:cluster_master01_id}
+          - name: ${_param:cluster_master02_hostname}
+            address: ${_param:cluster_master02_address}:11211
+            id: ${_param:cluster_master02_id}
+          - name: ${_param:cluster_master03_hostname}
+            address: ${_param:cluster_master03_address}:11211
+            id: ${_param:cluster_master03_id}
+      rabbitmq:
+        servers:
+          - name: ${_param:cluster_master01_hostname}
+            address: ${_param:cluster_master01_address}:5672
+            id: ${_param:cluster_master01_id}
+          - name: ${_param:cluster_master02_hostname}
+            address: ${_param:cluster_master02_address}:5672
+            id: ${_param:cluster_master02_id}
+          - name: ${_param:cluster_master03_hostname}
+            address: ${_param:cluster_master03_address}:5672
+            id: ${_param:cluster_master03_id}
+      setup:
+        target:
+          ip: 127.0.0.1
+          password: dummy
+        cluster:
+          name: ${_param:ovs_cluster_name}
+          ip: ${_param:single_address}
+          join: True
+          other_nodes: {}
+          master:
+            ip: ${_param:cluster_master01_address}
+            password: dummy
+        hypervisor:
+          type: KVM
+          name: ${_param:ovs_hypervisor_name}
+          # only for VMWare
+          ip: ${_param:single_address}
+          username: dummy
+          password: dummy
+        arakoon:
+          mountpoint: /mnt/cache1
+        config:
+          auto: True
+          memcached: False
+          rabbitmq: False
+        disk:
+          # use default partitioning
+          layout: {}
+        verbose: True

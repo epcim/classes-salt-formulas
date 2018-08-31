@@ -1,0 +1,15 @@
+classes:
+  - jenkins.client.job.git-mirrors.downstream
+parameters:
+  _param:
+    gerrit_vnf_onboaring_metaswitch_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/metaswitch-vsbc"
+    gerrit_vnf_onboaring_platform_tests_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/platform-tests"
+    jenkins_git_mirror_downstream_jobs:
+      - name: metaswitch-vsbc
+        downstream: vnf-onboarding/metaswitch-vsbc
+        upstream: ${_param:gerrit_vnf_onboaring_metaswitch_repo}
+        branches: master
+      - name: platform-tests
+        downstream: vnf-onboarding/platform-tests
+        upstream: ${_param:gerrit_vnf_onboaring_platform_tests_repo}
+        branches: master

@@ -1,0 +1,46 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    barbican_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          roles:
+            global_creator:
+              name: creator
+              enabled: true
+            global_key_manager_admin:
+              name: key-manager:service-admin
+              enabled: true
+          users:
+            barbican:
+              password: ${_param:keystone_barbican_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+                global_creator:
+                  name: creator
+                  project_id: service
+                global_key_manager_admin:
+                  name: key-manager:service-admin
+                  project_id: service
+          services:
+            barbican:
+              type: key-manager
+              description: OpenStack Key-Manager Service
+              endpoints:
+                barbican_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:9311/
+                  region: ${_param:openstack_region}
+                barbican_internal:
+                  interface: 'internal'
+                  url: ${_param:barbican_service_protocol}://${_param:barbican_service_host}:9311/
+                  region: ${_param:openstack_region}
+                barbican_admin:
+                  interface: 'admin'
+                  url: ${_param:barbican_service_protocol}://${_param:barbican_service_host}:9311/
+                  region: ${_param:openstack_region}

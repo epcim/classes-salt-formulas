@@ -1,0 +1,15 @@
+classes:
+- salt.minion.cert.rabbitmq_server
+parameters:
+  _param:
+    rabbitmq_port: 5671
+    rabbitmq_ssl_enabled: true
+  rabbitmq:
+    server:
+      ssl:
+        all_file: /etc/rabbitmq/ssl/all_file.pem
+        ca_file: /etc/rabbitmq/ssl/ca.pem
+        cert_file: /etc/rabbitmq/ssl/cert.pem
+        enabled: ${_param:rabbitmq_ssl_enabled}
+        key_file: /etc/rabbitmq/ssl/key.pem
+

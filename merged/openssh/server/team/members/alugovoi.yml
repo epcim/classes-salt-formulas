@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        alugovoi:
+          enabled: true
+          name: alugovoi
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Alexei Lugovoi
+          home: /home/alugovoi
+          email: alugovoi@mirantis.com
+  openssh:
+    server:
+      user:
+        alugovoi:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChbsvFGG96lVcXrKWiJuFkrKSYR+lv/0kWQw6NugJMfem4XycbC85J7op6WtjlbZPTEKLJUkF2WFRyY6sHlFNwuSNqEgQhxUwYT+TpbCXlW837fuykjBFR/XQH4FvOAH8X4Pd+jy+WRk0UN9rt2QZWFu1znzB1brB6OZBBHZooaSQjnbBPbnepvl6gOtCRMK/3qRqKaHe5at4cTML4UOwRn25eCwmbS1Tm2bVfRiabShIS2WA02Eit+Wme3M6J9l/iJ8vC9Y36cOSWD4sPmxRm4Lwv0TAN3eqJ2fqCVpKULYtsVQihsHgrmovkRzEMdhiEKvvjB3zNRUKtSqyo6Nox alugovoi@alugovoi-pc 
+          user: ${linux:system:user:alugovoi}

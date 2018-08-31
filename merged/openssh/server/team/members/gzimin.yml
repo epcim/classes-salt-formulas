@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        gzimin:
+          enabled: true
+          name: gzimin
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Gleb Zimin
+          home: /home/gzimin
+          email: gzimin@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        gzimin:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDitupT4OHwP9EsJTDu10Y3XslxjbvyTxC/EMjgxwDM1LxooJK7AO+WkgdCP0o5nkiPi3y50pw66yKGYDlzNu8JkTIWGRvzfBWK8aU55m0F2wmxNkoT7eiCCrhwThwKfNI44MV0ZZ7plf3eeIthAonsyc5rkC+7ZseF7xmErjKcwfApS3AWn44KXs3iSdp8uJbZ3GARGDtzjfcyEzYQK8c8J4AHeXtGStWQnk146UN7m9F8AztOEkmtzkQXLWR+DQgPkFsS+KfSacqCriYCHJPN3C9tcMSCfCdwN4/P1HoYoAGz8WE9YulRGnmb9JSCmo+Lu/f2liC63llhhcr5eJsj gzimin@Glebs-MacBook-Pro.local 
+          user: ${linux:system:user:gzimin}

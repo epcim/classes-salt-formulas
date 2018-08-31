@@ -1,0 +1,13 @@
+parameters:
+  horizon:
+    _support:
+      collectd:
+        enabled: false
+      fluentd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true

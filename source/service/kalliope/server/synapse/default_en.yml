@@ -1,0 +1,13 @@
+parameters:
+  kalliope:
+    server:
+      synapse:
+        default-synapse:
+          signals:
+          - order: "default-synapse"
+          neurons:
+          - say:
+              message:
+              - "I haven't understood"
+              - "I don't know this order"
+              - "I don't recognize that order"

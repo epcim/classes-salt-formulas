@@ -1,0 +1,108 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        deploy-stack-cleanup:
+          type: workflow-scm
+          concurrent: true
+          display_name: "Deploy - stack cleanup"
+          discard:
+            build:
+              keep_num: 50
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: cleanup-pipeline.groovy
+          param:
+            # general parameters
+            STACK_NAME:
+              type: string
+              description: This stack will be deleted.
+            STACK_TYPE:
+              type: choice
+              choices:
+                - heat
+                - aws
+              default: 'heat'
+
+            # heat parameters
+            OPENSTACK_API_URL:
+              type: string
+              default: "https://cloud-cz.bud.mirantis.net:5000"
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "openstack-devcloud-credentials"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-mk"
+            OPENSTACK_API_CLIENT:
+              type: string
+              default: ""
+            OPENSTACK_API_VERSION:
+              type: string
+              default: "3"
+            OPENSTACK_API_PROJECT_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_PROJECT_ID:
+              type: string
+              default: ""
+            OPENSTACK_API_USER_DOMAIN:
+              type: string
+              default: "default"
+
+            # aws parameters
+            AWS_API_CREDENTIALS:
+              type: string
+              default: "aws-credentials"
+            AWS_DEFAULT_REGION:
+              type: string
+              default: "eu-central-1"
+
+        delete-failed-stacks:
+          type: workflow-scm
+          concurrent: true
+          display_name: "Deploy - delete failed stacks"
+          discard:
+            build:
+              keep_num: 20
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: delete-broken-stacks-pipeline.groovy
+          trigger:
+            timer:
+              spec: "0 0 * * *"
+          param:
+            # openstack api
+            OPENSTACK_API_URL:
+              type: string
+              default: "https://cloud-cz.bud.mirantis.net:5000"
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "openstack-devcloud-credentials"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-k8s, mcp-maintenance, mcp-mk, mcp-networking, mcp-opencontrail, mcp-oss, mcp-platform,  mcp-scale, mcp-stacklight, mcp-support"
+            OPENSTACK_API_CLIENT:
+              type: string
+              default: ""
+            OPENSTACK_API_VERSION:
+              type: string
+              default: "3"
+            OPENSTACK_API_PROJECT_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_USER_DOMAIN_ID:
+              type: string
+              default: "default"
+            OPENSTACK_API_PROJECT_ID:
+              type: string
+              default: ""
+            OPENSTACK_API_USER_DOMAIN:
+              type: string
+              default: "default"

@@ -1,0 +1,11 @@
+applications:
+- sphinx
+classes:
+- git.client
+- nginx.server.single
+- nginx.server.stats
+parameters:
+  sphinx:
+    server:
+      enabled: true
+

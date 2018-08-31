@@ -1,0 +1,22 @@
+classes:
+  - postfix.support
+applications:
+  - postfix
+parameters:
+  postfix:
+    server:
+      enabled: false
+      myorigin: ${linux:system:name}.${linux:system:domain}
+      message_size_limit: 25000000
+      amavis:
+        enabled: false
+      mailman:
+        enabled: false
+    relay:
+      enabled: true
+      domain: ${linux:system:domain}
+      interfaces: loopback-only
+      aliases:
+        postmaster: root
+    backupmx:
+      enabled: false

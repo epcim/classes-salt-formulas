@@ -1,0 +1,10 @@
+applications:
+- watchdog
+classes:
+- service.watchdog.support
+parameters:
+  watchdog:
+    server:
+      enabled: true
+      # Enable correct restart of service
+      run_wd_keepalive: 0

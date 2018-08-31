@@ -1,0 +1,24 @@
+classes:
+  - jenkins.client.job.deploy.lab.deploy
+parameters:
+  _param:
+    jenkins_deploy_jobs:
+      - stack_name: ceph_ha
+        stack_env: devcloud
+        stack_type: heat
+        stack_install: core,ceph
+        stack_test: "ceph"
+        job_timer: ""
+      - stack_name: ceph_ha
+        stack_env: devcloud
+        stack_type: aws
+        stack_install: core,ceph
+        stack_test: "ceph"
+        job_timer: "H H * * *"
+      - stack_name: os_ha_ovs_ceph
+        stack_env: devcloud
+        stack_type: heat
+        stack_install: core,openstack,ovs,ceph
+        stack_test: ""
+        job_timer: "H H(0-6) * * *"
+

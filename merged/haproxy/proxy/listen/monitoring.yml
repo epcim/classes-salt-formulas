@@ -1,0 +1,8 @@
+classes:
+  - haproxy.proxy.single
+  - haproxy.proxy.stats
+  # Services
+  - haproxy.proxy._rabbitmq
+  - haproxy.proxy._uchiwa
+  - haproxy.proxy._sensu
+  - haproxy.proxy._redis

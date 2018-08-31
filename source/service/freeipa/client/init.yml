@@ -1,0 +1,8 @@
+applications:
+- freeipa
+classes:
+- service.freeipa.client.support
+parameters:
+  freeipa:
+    client:
+      enabled: true

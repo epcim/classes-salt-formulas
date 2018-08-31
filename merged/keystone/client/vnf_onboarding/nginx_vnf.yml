@@ -1,0 +1,26 @@
+parameters:
+
+  keystone:
+    client:
+      enabled: true
+      server:
+        identity:
+          test:
+            host: ${_param:keystone_service_host}
+            port: 35357
+            token: ${_param:keystone_service_token}
+            protocol: ${_param:keystone_service_protocol}
+          roles:
+          - Member
+          project:
+            test-nginx:
+              description: "OpenStack tenant to execute validation tests against Nginx VNF"
+              user:
+                test:
+                  is_admin: false
+                  password: ${_param:vnf_openstack_test_user_password}
+                  email: ${_param:vnf_openstack_test_user_email}
+                admin-test:
+                  is_admin: true
+                  password: ${_param:vnf_openstack_admin_user_password}
+                  email: ${_param:vnf_openstack_admin_user_email}

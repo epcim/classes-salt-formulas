@@ -1,0 +1,17 @@
+parameters:
+  horizon:
+    server:
+      plugin:
+        manila:
+          source:
+            engine: pkg
+            name: python-manila-ui
+      policy:
+        share:
+          source: file
+          name: manila_policy.json
+          enabled: true
+        sharev2:
+          source: file
+          name: manila_policy.json
+          enabled: true

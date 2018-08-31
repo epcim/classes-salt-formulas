@@ -1,0 +1,22 @@
+applications:
+- ntp
+classes:
+- ntp.client
+parameters:
+  _param:
+    ntp_strata_host1: ntp.cesnet.cz
+    ntp_strata_key1: null
+  ntp:
+    client:
+      enabled: true
+      logfile: /var/log/ntp.log
+      mode7: true
+      stratum:
+        primary:
+          key_id: ${_param:ntp_strata_key1}
+          server: ${_param:ntp_strata_host1}
+    server:
+      enabled: false
+      logfile: /var/log/ntp.log
+      mode7: false
+

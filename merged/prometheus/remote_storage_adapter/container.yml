@@ -1,0 +1,10 @@
+applications:
+- prometheus
+parameters:
+  prometheus:
+    remote_storage_adapter:
+      bind:
+        address: 0.0.0.0
+        port: 9201
+      enabled: true
+

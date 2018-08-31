@@ -1,0 +1,8 @@
+parameters:
+  linux:
+    system:
+      repo:
+        docker:
+          source: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu/ ${_param:linux_system_codename} stable'
+          architectures: amd64
+          key_url: https://download.docker.com/linux/ubuntu/gpg

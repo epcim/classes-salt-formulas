@@ -1,0 +1,61 @@
+applications:
+- aodh
+parameters:
+  _param:
+    aodh_alarm_history_ttl: 2592000
+    keystone_aodh_endpoint_type: internalURL
+    openstack_event_alarm_topic: alarm.all
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  aodh:
+    server:
+      bind:
+        host: ${_param:single_address}
+        port: 8042
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: aodh
+        password: ${_param:mysql_aodh_password}
+        port: 3306
+        user: aodh
+      enabled: true
+      event_alarm_topic: ${_param:openstack_event_alarm_topic}
+      expirer:
+        cron:
+          hour: 2
+          minute: 0
+      identity:
+        endpoint_type: ${_param:keystone_aodh_endpoint_type}
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_aodh_password}
+        port: 35357
+        region: ${_param:openstack_region}
+        tenant: service
+        user: aodh
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbit
+        host: ${_param:single_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        rpc_thread_pool_size: 5
+        user: openstack
+        virtual_host: /openstack
+      notifications:
+        store_events: true
+      region: ${_param:openstack_region}
+      role: ${_param:openstack_node_role}
+      ttl: ${_param:aodh_alarm_history_ttl}
+      version: ${_param:aodh_version}
+

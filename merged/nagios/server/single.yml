@@ -1,0 +1,6 @@
+classes:
+- nagios.server
+parameters:
+  _param:
+    nagios_automatic_starting: true
+

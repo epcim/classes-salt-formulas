@@ -1,0 +1,21 @@
+parameters:
+  linux:
+    system:
+      user:
+        vblokhin:
+          enabled: true
+          name: vblokhin
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Volodymyr Blokhin
+          home: /home/vblokhin
+          email: vblokhin@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        vblokhin:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDY5F0bDcbiCtO5HkwIVgjwAwCHcTRDZwEIE5cwuGlXNKWk9JtlDKh724Dp8f/Yny1e30Kt9oqs23bv6xfMh4pU4vrajjSv9f+s3hCSs1X9JrlEw92CD7r+jpq2R0vz3ufeHZWSWmeMsRR62BodtYy4EkoyPKvq16guq745KHTYgATm/qJgCkjQ5lxca280i0z14Fv+JOtVxrk52xMTxHS+N6wzVOjuEjBbW2vyktsV/RidT/SoJAVMHoPISjJTR+q5usVuKb6J5U83Y2vbmUCnygAnPX6l9k8atsAvwl1v54QxWE6Qz61kMPpwZZ56BNGhCZ458HqqXiybx4lU4PN6eg/zPA9Eq+xj5ZoXaUK1hg2UpJrmrtCh8H4T+/dPySZ+HMDBp221DCuH43x9No6V0QWhifhHPaGWyeK+mGsznbaSnlZ0QxRun5qWgjG7xHu97zgxjlyxmQII8FWGaOSuv/w6jg894A4jcsDfH5oxDbgVTbqqZG9o7TszIXKTImt1f2fmKKr/CT7ixwIKO3MioUNu3PoQ/GhmKajqugV+TIRe4vJ2FD5hl11ythzLlZCchzlEoymap4P6Y5dMh60YErCtYftn7jATJKSq9EHiLEeTIQDBVqhJzdS9/QWAXBV97mNX7mib1dO0H9TBZu1mYMZio7udbx9oursrVPq3fw== vblokhin@mirantis.com
+          user: ${linux:system:user:vblokhin}
+

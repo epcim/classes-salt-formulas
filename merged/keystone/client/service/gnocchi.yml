@@ -1,0 +1,36 @@
+classes:
+- keystone.client.v3.service.gnocchi
+parameters:
+  _param:
+    cluster_public_protocol: https
+    gnocchi_service_protocol: http
+    gnocchi_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      server:
+        identity:
+          project:
+            service:
+              user:
+                gnocchi:
+                  is_admin: true
+                  password: ${_param:keystone_gnocchi_password}
+                  email: ${_param:admin_email}
+          service:
+            gnocchi:
+              type: metric
+              description: OpenStack Metric Service
+              endpoints:
+              - region: ${_param:openstack_region}
+                public_address: ${_param:gnocchi_public_host}
+                public_protocol: ${_param:cluster_public_protocol}
+                public_port: 8041
+                public_path: '/'
+                internal_address: ${_param:gnocchi_service_host}
+                internal_port: 8041
+                internal_path: '/'
+                internal_protocol: ${_param:gnocchi_service_protocol}
+                admin_protocol: ${_param:gnocchi_service_protocol}
+                admin_address: ${_param:gnocchi_service_host}
+                admin_port: 8041
+                admin_path: '/'

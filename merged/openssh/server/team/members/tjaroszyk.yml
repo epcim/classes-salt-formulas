@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        tjaroszyk:
+          enabled: true
+          name: tjaroszyk
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Tomek Jaroszyk
+          home: /home/tjaroszyk
+          email: tjaroszyk@mirantis.com
+  openssh:
+    server:
+      user:
+        tjaroszyk:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIl9Jhv6t99Ek1qaKxnVZwNpPq+ueZ257PHxkfMBYD62r5KXtJM93mYiul5FaK+YH4u7wHaI3onMQzf0BVqj1/TfTgFJVHkB332ZLq6DNwpcF5rv4NeLHKAZKTsJ6RR/cVLmIHtZBUsJwsUShN4p1ESIYVfdaaLse9SxOzUeaL/qz0MxGvjydUVNkegH4jfi/9lMgRrNGDSU9dsiKO4gFLZaLNU3pl/JyuqH++xEksbxQZ2BNUvZV5H4HWaHPuMQ31u0OrmUnVF8UrquwrVxE7f4FNZVJNdzCHhsYr6vCV2m+C/KN8LdnHSln+sG+P6QKu4MlETiFRbraKqLzUPrUvrYckIZiU4LTo6NRB2G7ioVnycYyZFLAzoajCt2MQowAmrpuLjM6RXUhbZilfWfwHxnKlR8LmJRBS3Q+h7i55fvhoReZ3IrzPGNqC8QlEdNdLX9gXuZ+e8BtbxUuAB4wi2yRYrEBnQoqUEB7kj64W8YdBsM0ftKJJu44DLcY7djrMHuF6QFvxezEGIfIPsuE96DCyzFoQZtvJ11x7kjSJ1dQuycsWSRvsfpxTj87iQvHKR9aZXIoVtqxHefosaKoIhTZnI53HsPR50g6r4NwXPzcCpR1SOC3lpIDyK4rwkoze85aLVjaKWMgXY1GlMbMIhOk/mlVGZiezmFdgGTtCMQ== blady@figa
+          user: ${linux:system:user:tjaroszyk}

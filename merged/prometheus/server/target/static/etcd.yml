@@ -1,0 +1,13 @@
+parameters:
+  _param:
+    prometheus_etcd_host: ${_param:haproxy_bind_address}
+    prometheus_etcd_port: 4001
+  prometheus:
+    server:
+      target:
+        static:
+          etcd:
+            enabled: true
+            endpoint:
+            - address: ${_param:prometheus_etcd_host}
+              port: ${_param:prometheus_etcd_port}

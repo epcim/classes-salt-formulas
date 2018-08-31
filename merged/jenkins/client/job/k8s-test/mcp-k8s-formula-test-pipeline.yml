@@ -1,0 +1,67 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        mcp_k8s_formula_test_pipeline:
+          type: workflow-scm
+          name: mcp-k8s-formula-test-pipeline
+          display_name: "Kubernetes formula test pipeline"
+          description: "Run k8s conformance against gerrit commit"
+          discard:
+            build:
+              keep_num: 30
+            artifact:
+              keep_num: 30
+          concurrent: true
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/kubernetes-ci/kubernetes-pipelines"
+            credentials: "gerrit"
+            script: pipelines/mcp-formula-change-test-pipeline.groovy
+          param:
+            SOURCE_CREDENTIALS:
+              type: string
+              default: "gerrit"
+            UPLOAD_APTLY:
+              type: boolean
+              default: 'true'
+              description: Whether to upload to Aptly
+            APTLY_REPO:
+              type: string
+              default: ""
+              description: Aptly repo name
+            BUILD_PACKAGE:
+              type: boolean
+              default: 'true'
+              description: Whether to build package
+            APTLY_REPO_URL:
+              type: string
+              default: "${_param:jenkins_aptly_url}"
+              description: Aptly url
+            APTLY_API_URL:
+              type: string
+              default: "${_param:jenkins_aptly_api_url}"
+              description: Aptly API url
+            SOURCES:
+              type: text
+              default: ""
+              description: Optional parameter to list Git refspecs to be build
+            PKG_BUILD_JOB_NAME:
+              type: string
+              default: "oscore-build-salt-formula-refspec"
+              description: Jenkins job name to build package
+            STACK_DELETE:
+              type: boolean
+              default: 'true'
+              description: Whether to delete stacks ater tests
+            APTLY_PREFIX:
+              type: string
+              default: "oscc-dev"
+              description: Aptly prefix
+            SOURCE_REPO_NAME:
+              type: string
+              description: "Name of the repo where packages are stored"
+              default: "ubuntu-xenial-salt"
+            DEPLOY_JOB:
+              type: string
+              default: "deploy-heat-k8s_ha_calico"

@@ -1,0 +1,19 @@
+classes:
+- linux.system.repo.keystorage.jenkins
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_url: http://mirror.mirantis.com/${_param:apt_mk_version}/
+    linux_system_repo_mcp_jenkins_url: ${_param:linux_system_repo_url}/jenkins/
+  linux:
+    system:
+      repo:
+        mcp_jenkins:
+          # FIXME PROD-20733
+          source: "deb [arch=amd64 trusted=yes] ${_param:linux_system_repo_mcp_jenkins_url}/${_param:linux_system_codename}/ binary main"
+          architectures: amd64
+          clean_file: true
+          pin:
+          - pin: 'release o=jenkins.io'
+            priority: 1100
+            package: '*'

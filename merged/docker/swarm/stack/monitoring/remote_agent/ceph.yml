@@ -1,0 +1,13 @@
+# client role is deprecated. Use ceph_common.yml instead
+classes:
+- ceph.client.container
+- ceph.monitoring.cluster_stats
+parameters:
+  docker:
+    client:
+      stack:
+        monitoring:
+          service:
+            remote_agent:
+              volumes:
+                - ${ceph:client:prefix_dir}/etc/ceph:/etc/ceph

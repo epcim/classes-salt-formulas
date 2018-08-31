@@ -1,0 +1,24 @@
+applications:
+- elasticsearch
+parameters:
+  _param:
+    elasticsearch_version: 5
+  elasticsearch:
+    client:
+      enabled: true
+      index:
+        log:
+          force_operation: true
+          enabled: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_log.json
+        audit:
+          force_operation: true
+          enabled: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_audit.json
+        notification:
+          force_operation: true
+          enabled: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_notification.json
+        kibana:
+          enabled: true
+          template: elasticsearch/files/v${_param:elasticsearch_version}/es_template_kibana.json

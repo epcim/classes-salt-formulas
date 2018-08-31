@@ -1,0 +1,46 @@
+parameters:
+  _param:
+    infra_kvm01_hostname: kvm01
+    infra_kvm02_hostname: kvm02
+    infra_kvm03_hostname: kvm03
+    opencontrail_control_node01_hostname: ntw01
+    opencontrail_control_node02_hostname: ntw02
+    opencontrail_control_node03_hostname: ntw03
+    opencontrail_analytics_node01_hostname: nal01
+    opencontrail_analytics_node02_hostname: nal02
+    opencontrail_analytics_node03_hostname: nal03
+  salt:
+    control:
+      cluster:
+        internal:
+          node:
+            ntw01:
+              name: ${_param:opencontrail_control_node01_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
+              size: opencontrail.control
+            ntw02:
+              name: ${_param:opencontrail_control_node02_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
+              size: opencontrail.control
+            ntw03:
+              name: ${_param:opencontrail_control_node03_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+              size: opencontrail.control
+            nal01:
+              name: ${_param:opencontrail_analytics_node01_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
+              size: opencontrail.analytics
+            nal02:
+              name: ${_param:opencontrail_analytics_node02_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
+              size: opencontrail.analytics
+            nal03:
+              name: ${_param:opencontrail_analytics_node03_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+              size: opencontrail.analytics

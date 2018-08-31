@@ -1,0 +1,13 @@
+applications:
+- shibboleth
+classes:
+- service.shibboleth.support
+parameters:
+  shibboleth:
+    server:
+      enabled: true
+      keystone_protocol: http
+      keystone_public_address: ${_param:proxy_vip_address_public}
+      keystone_port: 5000
+      idp_url: "https://saml.example.com/oam/fed"
+      idp_metadata_url: "https://saml.example.com/oamfed/idp/metadata"

@@ -1,0 +1,71 @@
+classes:
+- glance.client
+parameters:
+  _param:
+    cloudify_enterprise_manager_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_cloudify_enterprise_manager_image_name}.qcow2"
+    cloudify_enterprise_manager_image_name:  "${_param:vnf_cloudify_enterprise_manager_image_name}"
+    cloudify_community_manager_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_cloudify_community_manager_image_name}.qcow2"
+    cloudify_community_manager_image_name: "${_param:vnf_cloudify_community_manager_image_name}"
+    agent_vm_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_agent_vm_image_name}.img"
+    agent_vm_image_name:  "${_param:vnf_agent_vm_image_name}"
+    base_agent_vm_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_base_agent_vm_image_name}.qcow2"
+    base_agent_vm_image_name:  "${_param:vnf_base_agent_vm_image_name}"
+    base_backend_vm_image_url: "${_param:vnf_artifactory_url}/${_param:vnf_base_backend_vm_image_name}.qcow2"
+    base_backend_vm_image_name:  "${_param:vnf_base_backend_vm_image_name}"
+  glance:
+    client:
+      identity:
+        admin_identity:
+          endpoint_type: internalURL
+          image:
+            agent_vm:
+              name: ${_param:agent_vm_image_name}
+              location: ${_param:agent_vm_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'vnf-onboarding'
+              visibility: public
+              wait_timeout: 1000
+            base_agent_vm:
+              name: ${_param:base_agent_vm_image_name}
+              location: ${_param:base_agent_vm_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'vnf-onboarding'
+              visibility: public
+              wait_timeout: 1000
+            base_backend_vm:
+              name: ${_param:base_backend_vm_image_name}
+              location: ${_param:base_backend_vm_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'vnf-onboarding'
+              visibility: public
+              wait_timeout: 1000
+            cloudify-enterprise:
+              name: ${_param:cloudify_enterprise_manager_image_name}
+              location: ${_param:cloudify_enterprise_manager_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'vnf-onboarding'
+              visibility: public
+              wait_timeout: 1000
+            cloudify-community:
+              name: ${_param:cloudify_community_manager_image_name}
+              location: ${_param:cloudify_community_manager_image_url}
+              import_from_format: 'qcow2'
+              container_format: 'bare'
+              disk_format: 'qcow2'
+              tags:
+                - 'vnf-onboarding'
+              visibility: public
+              wait_timeout: 1000
+

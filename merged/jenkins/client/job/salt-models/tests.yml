@@ -1,0 +1,402 @@
+parameters:
+  _param:
+    jenkins_pollscm_spec: "0 1 * * *"
+  jenkins:
+    client:
+      job_template:
+        test_salt_model:
+          name: test-salt-model-{{name}}
+          template:
+            type: workflow-scm
+            discard:
+              build:
+                keep_num: 50
+              artifact:
+                keep_num: 50
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: test-salt-models-pipeline.groovy
+            concurrent: true
+            trigger:
+              gerrit:
+                project:
+                  salt-models/{{name}}:
+                    branches:
+                      - compare_type: "REG_EXP"
+                        name: "{{branch}}"
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+            param:
+              SALT_OPTS:
+                type: string
+                default: "--force-color"
+              DEFAULT_GIT_URL:
+                type: string
+                description: "Salt model repo URL"
+                default: "${_param:jenkins_gerrit_url}/salt-models/{{name}}"
+              DEFAULT_GIT_REF:
+                type: string
+                default: master
+              CREDENTIALS_ID:
+                type: string
+                default: "gerrit"
+              PARALLEL_NODE_GROUP_SIZE:
+                type: string
+                default: "9"
+              # Salt master setup extra formulas
+              EXTRA_FORMULAS:
+                type: string
+                default: "{{extra_formulas}}"
+              FORMULAS_SOURCE:
+                type: string
+                default: "{{formulas_src}}"
+              FORMULAS_REVISION:
+                type: string
+                default: "{{formulas_revision}}"
+              SYSTEM_GIT_URL:
+                type: string
+                default: ""
+              SYSTEM_GIT_REF:
+                type: string
+                default: ""
+              CONFIG_NODE_NAME_PATTERN:
+                type: string
+                default: "{{config_node_name}}"
+              RECLASS_VERSION:
+                type: string
+                default: "master"
+              MAX_CPU_PER_JOB:
+                type: string
+                default: "2"
+              RECLASS_IGNORE_CLASS_NOTFOUND:
+                type: boolean
+                default: "{{reclass_ignore_class_notfound}}"
+              LEGACY_TEST_MODE:
+                type: boolean
+                default: "{{legacy_test_mode}}"
+              APT_REPOSITORY:
+                type: string
+                default: ""
+              APT_REPOSITORY_GPG:
+                type: string
+                default: ""
+        test_customers_salt_models:
+          name: test-customers-salt-models
+          template:
+            type: workflow-scm
+            discard:
+              build:
+                keep_num: 50
+              artifact:
+                keep_num: 50
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: test-customers-salt-models.groovy
+            concurrent: false
+            trigger:
+               timer:
+                 spec: "{{job_timer}}"
+            param:
+              CUSTOMERS:
+                type: string
+                description: "Comma separated list of customer model names"
+                default: "{{customers}}"
+
+        test_salt_model_customer:
+          name: test-salt-model-customer-{{name}}
+          template:
+            type: workflow-scm
+            discard:
+              build:
+                keep_num: 50
+              artifact:
+                keep_num: 50
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: test-salt-models-pipeline.groovy
+            concurrent: true
+            trigger:
+              gerrit:
+                project:
+                  salt-models/{{name}}:
+                    branches:
+                      - compare_type: "REG_EXP"
+                        name: "{{branch}}"
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+            param:
+              TEST_CLUSTER_NAMES:
+                type: string
+                description: "Comma separated list of cluster names, empty string means all valid clusters"
+                default: "{{test_cluster_names}}"
+              SALT_OPTS:
+                type: string
+                default: "--force-color"
+              DEFAULT_GIT_URL:
+                type: string
+                description: "Salt model repo URL"
+                default: "{{source}}"
+              DEFAULT_GIT_REF:
+                type: string
+                default: master
+              CREDENTIALS_ID:
+                type: string
+                default: "gerrit"
+              PARALLEL_NODE_GROUP_SIZE:
+                type: string
+                default: "9"
+              # Salt master setup extra formulas
+              EXTRA_FORMULAS:
+                type: string
+                default: "{{extra_formulas}}"
+              FORMULAS_SOURCE:
+                type: string
+                default: "{{formulas_src}}"
+              FORMULAS_REVISION:
+                type: string
+                default: "{{formulas_revision}}"
+              SYSTEM_GIT_URL:
+                type: string
+                default: ""
+              SYSTEM_GIT_REF:
+                type: string
+                default: ""
+              CONFIG_NODE_NAME_PATTERN:
+                type: string
+                default: "{{config_node_name}}"
+              MAX_CPU_PER_JOB:
+                type: string
+                default: "2"
+              RECLASS_IGNORE_CLASS_NOTFOUND:
+                type: boolean
+                default: "{{reclass_ignore_class_notfound}}"
+              RECLASS_VERSION:
+                type: string
+                default: "master"
+                description: "Version (branch) of Reclass we will use"
+              LEGACY_TEST_MODE:
+                type: boolean
+                default: "{{legacy_test_mode}}"
+              APT_REPOSITORY:
+                type: string
+                default: ""
+              APT_REPOSITORY_GPG:
+                type: string
+                default: ""
+        test_system_reclass:
+          name: test-salt-model-{{name}}
+          template:
+            type: workflow-scm
+            discard:
+             build:
+               keep_num: 50
+             artifact:
+               keep_num: 50
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "gerrit"
+              script: test-system-reclass-pipeline.groovy
+            trigger:
+              gerrit:
+                project:
+                  salt-models/{{name}}:
+                    branches:
+                      - master
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '(recheck|reverify)'
+            concurrent: true
+            param:
+              TEST_MODELS:
+                type: string
+                default: "{{clusters}}"
+              DEFAULT_GIT_URL:
+                type: string
+                description: "Run against alternate system reclass"
+                default: "${_param:jenkins_gerrit_url}/salt-models/reclass-system"
+              DEFAULT_GIT_REF:
+                type: string
+                default: master
+              PARALLEL_NODE_GROUP_SIZE:
+                type: string
+                default: "5"
+        test_mk_cookiecutter_templates:
+          name: test-mk-{{cookiecutter_template}}
+          jobs:
+            - cookiecutter_template: cookiecutter-templates
+          template:
+            discard:
+             build:
+               keep_num: 50
+             artifact:
+               keep_num: 50
+            type: workflow-scm
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+              branch: "${_param:jenkins_pipelines_branch}"
+              credentials: "jenkins-mk"
+              script: test-cookiecutter-reclass.groovy
+            trigger:
+              gerrit:
+                project:
+                  mk/{{cookiecutter_template}}:
+                    branches:
+                      - master
+                event:
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '^(?s:Patch Set \d+:.*(test|recheck|reverify)\s*)$'
+            param:
+              COOKIECUTTER_TEMPLATE_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/mk/{{cookiecutter_template}}"
+              CREDENTIALS_ID:
+                type: string
+                default: gerrit
+              COOKIECUTTER_TEMPLATE_BRANCH:
+                type: string
+                default: master
+              RECLASS_MODEL_URL:
+                type: string
+                default: "${_param:jenkins_gerrit_url}/salt-models/reclass-system"
+              RECLASS_MODEL_BRANCH:
+                type: string
+                default: master
+              DISTRIB_REVISION:
+                type: string
+                default: 'nightly'
+              SYSTEM_GIT_URL:
+                type: string
+                default: ""
+              SYSTEM_GIT_REF:
+                type: string
+                default: ""
+              PARALLEL_NODE_GROUP_SIZE:
+                type: string
+                default: "1"
+              EXTRA_FORMULAS:
+                type: string
+                default: "aptly artifactory auditd backupninja collectd devops-portal docker elasticsearch fluentd freeipa gerrit glusterfs grafana haproxy heka horizon influxdb jenkins keepalived kibana libvirt maas memcached mysql nginx ntp openldap openssh postfix prometheus rsync rsyslog rundeck sensu sphinx telegraf xtrabackup watchdog logrotate"
+              RECLASS_VERSION:
+                type: string
+                default: 'v1.5.4'
+                description: "Version (branch) of Reclass we will use"
+      job:
+        test-salt-model-node:
+          name: test-salt-model-node
+          discard:
+            build:
+              keep_num: 1000
+            artifact:
+              keep_num: 10
+          type: workflow-scm
+          concurrent: true
+          plugin_properties:
+            throttleconcurrents:
+              enabled: true
+              throttle_option: category
+              categories:
+              - test-model
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: test-salt-model-node.groovy
+          param:
+            NODE_TARGET:
+              type: string
+              default: ""
+            CLUSTER_NAME:
+              type: string
+              default: ""
+            DEFAULT_GIT_URL:
+              type: string
+              default: "${_param:jenkins_gerrit_url}/salt-models/{{name}}"
+            DEFAULT_GIT_REF:
+              type: string
+              default: master
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"
+            EXTRA_FORMULAS:
+              type: string
+              default: ""
+            FORMULAS_SOURCE:
+              type: string
+              default: "pkg"
+            FORMULAS_REVISION:
+              type: string
+              default: "stable"
+            SYSTEM_GIT_URL:
+              type: string
+              default: ""
+            SYSTEM_GIT_REF:
+              type: string
+              default: ""
+            RECLASS_VERSION:
+              type: string
+              # In our repos the latest reclass we using is 1.4.1. The new version 1.5.2 is not compatible
+              # by syntax with 1.4.1 more details may be found here PROD-20425.
+              # Run rendering tests against version we using on customer side, until new version of reclass is
+              # packaged and placed to our repos, so we can do smooth transition to new syntax.
+              default: "reclass-1.4.1"
+              description: "Version (branch) of Reclass we will use"
+            MAX_CPU_PER_JOB:
+              type: string
+              default: "2"
+            RECLASS_IGNORE_CLASS_NOTFOUND:
+              type: boolean
+              default: "false"
+            LEGACY_TEST_MODE:
+              type: boolean
+              default: "false"
+            APT_REPOSITORY:
+              type: string
+              default: ""
+            APT_REPOSITORY_GPG:
+              type: string
+              default: ""
+        test-mk-cookiecutter-templates-chunk:
+          name: test-mk-cookiecutter-templates-chunk
+          discard:
+            build:
+              keep_num: 300
+            artifact:
+              keep_num: 30
+          type: workflow-scm
+          concurrent: true
+          plugin_properties:
+            throttleconcurrents:
+              enabled: true
+              throttle_option: category
+              categories:
+              - test-model
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: test-cookiecutter-reclass-chunk.groovy
+          param:
+            EXTRA_VARIABLES_YAML:
+              type: string
+              default: ""

@@ -1,0 +1,11 @@
+applications:
+- freeipa
+classes:
+- freeipa.server.support
+parameters:
+  freeipa:
+    server:
+      enabled: true
+      ldap:
+        minssf: 56
+        anonymous: false

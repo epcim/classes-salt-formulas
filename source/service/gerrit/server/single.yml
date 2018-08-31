@@ -1,0 +1,14 @@
+applications:
+- gerrit
+classes:
+- service.gerrit.support
+parameters:
+  gerrit:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0
+      mail:
+        host: localhost
+        from: gerrit@domain.com
+        include_diff: true

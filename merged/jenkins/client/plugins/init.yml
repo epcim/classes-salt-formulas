@@ -1,0 +1,46 @@
+parameters:
+  jenkins:
+    client:
+      plugin:
+        antisamy-markup-formatter: {}
+        artifactory: {}
+        blueocean: {}
+        build-blocker-plugin: {}
+        build-monitor-plugin: {}
+        build-timeout: {}
+        build-user-vars-plugin: {}
+        categorized-view: {}
+        copyartifact: {}
+        description-setter: {}
+        discard-old-build: {}
+        docker-workflow: {}
+        email-ext: {}
+        envinject: {}
+        extended-choice-parameter: {}
+        extensible-choice-parameter: {}
+        gerrit-trigger: {}
+        git: {}
+        github: {}
+        heavy-job: {}
+        jobConfigHistory: {}
+        jira: {}
+        ldap: {}
+        lockable-resources: {}
+        matrix-auth: {}
+        monitoring: {}
+        multiple-scms: {}
+        performance: {}
+        permissive-script-security: {}
+        pipeline-utility-steps: {}
+        plot: {}
+        prometheus: {}
+        rebuild: {}
+        simple-theme-plugin: {}
+        slack: {}
+        ssh-agent: {}
+        test-stability: {}
+        throttle-concurrents: {}
+        workflow-cps: {}
+        workflow-remote-loader: {}
+        workflow-scm-step:
+          restart: true

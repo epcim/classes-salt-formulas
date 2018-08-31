@@ -1,0 +1,18 @@
+parameters:
+  _param:
+    sentry_mail_host: 127.0.0.1
+    sentry_mail_port: 25
+    sentry_mail_user: ""
+    sentry_mail_password: ""
+    sentry_mail_encryption: none
+    sentry_mail_from: sentry@localhost
+  sentry:
+    server:
+      mail:
+        engine: smtp
+        host: ${_param:sentry_mail_host}
+        port: ${_param:sentry_mail_port}
+        user: ${_param:sentry_mail_user}
+        password: ${_param:sentry_mail_password}
+        encryption: ${_param:sentry_mail_encryption}
+        from: ${_param:sentry_mail_from}

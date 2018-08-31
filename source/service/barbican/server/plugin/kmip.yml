@@ -1,0 +1,18 @@
+parameters:
+  _param:
+    barbican_kmip_username: admin
+    barbican_kmip_host: localhost
+    barbican_kmip_keyfile: '/etc/barbican/kmip/cert.key'
+    barbican_kmip_certfile: '/etc/barbican/kmip/cert.crt'
+    barbican_kmip_ca_certs: '/etc/barbican/kmip/LocalCA.crt'
+  barbican:
+    server:
+      plugin:
+        kmip:
+          username: "${_param:barbican_kmip_username}"
+          password: "${_param:barbican_kmip_password}"
+          host: ${_param:barbican_kmip_host}
+          port: 5696
+          keyfile: "${_param:barbican_kmip_keyfile}"
+          certfile: "${_param:barbican_kmip_certfile}"
+          ca_certs: "${_param:barbican_kmip_ca_certs}"

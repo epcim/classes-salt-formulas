@@ -1,0 +1,19 @@
+parameters:
+  kubernetes:
+    _support:
+      fluentd:
+        enabled: true
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      grafana:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true

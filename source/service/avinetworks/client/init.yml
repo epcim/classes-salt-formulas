@@ -1,0 +1,75 @@
+parameters:
+  _param:
+    avinetworks_cluster_enabled: True
+    avinetworks_cluster_name: avi_cluster
+    avinetworks_cluster_vip: 10.1.0.15
+
+    avinetworks_cluster_node01_hostname: avi01
+    avinetworks_cluster_node02_hostname: avi02
+    avinetworks_cluster_node03_hostname: avi03
+    avinetworks_cluster_node01_ip_address: 10.1.0.10
+    avinetworks_cluster_node02_ip_address: 10.1.0.11
+    avinetworks_cluster_node03_ip_address: 10.1.0.12
+
+    avinetworks_cloud_enabled: True
+    avinetworks_cloud_name: Openstack
+    avinetworks_cloud_mtu: 8950
+    avinetworks_cloud_dhcp_enabled: True
+    avinetworks_cloud_admin_tenant: avinetworks
+    avinetworks_cloud_openstack_admin: admin
+    avinetworks_cloud_openstack_password: password
+    avinetworks_cloud_openstack_admin_tenant: avinetworks
+    avinetworks_cloud_openstack_mgmt_network_name: avinetworks
+    avinetworks_cloud_openstack_privilege: WRITE_ACCESS
+    avinetworks_cloud_openstack_region: RegionOne
+    avinetworks_cloud_openstack_hypervisor: KVM
+    avinetworks_cloud_openstack_free_floatingips: True
+    avinetworks_cloud_openstack_img_format: OS_IMG_FMT_QCOW2
+    avinetworks_cloud_openstack_use_internal_endpoints: True
+    avinetworks_cloud_openstack_insecure: False
+    avinetworks_cloud_openstack_os_role: "'*'"
+    avinetworks_cloud_openstack_avi_role: Tenant-Admin
+
+
+  avinetworks:
+    api:
+      ip: ${_param:avinetworks_api_host}
+      user: ${_param:avinetworks_api_user}
+      password: ${_param:avinetworks_api_password}
+    client:
+      enabled: True
+      cluster:
+        enabled: ${_param:avinetworks_cluster_enabled}
+        name: ${_param:avinetworks_cluster_name}
+        virtual_ip: ${_param:avinetworks_cluster_vip}
+        nodes:
+          - node01:
+            name: ${_param:avinetworks_cluster_node01_hostname}
+            addr: ${_param:avinetworks_cluster_node01_ip_address}
+          - node02:
+            name: ${_param:avinetworks_cluster_node02_hostname}
+            addr: ${_param:avinetworks_cluster_node02_ip_address}
+          - node03:
+            name: ${_param:avinetworks_cluster_node03_hostname}
+            addr: ${_param:avinetworks_cluster_node03_ip_address}
+      cloud:
+        enabled: ${_param:avinetworks_cloud_enabled}
+        name: ${_param:avinetworks_cloud_name}
+        mtu: ${_param:avinetworks_cloud_mtu}
+        dhcp_enabled: ${_param:avinetworks_cloud_dhcp_enabled}
+        openstack:
+          username: ${_param:avinetworks_cloud_openstack_admin}
+          password: ${_param:avinetworks_cloud_openstack_password}
+          admin_tenant: ${_param:avinetworks_cloud_admin_tenant}
+          auth_url: ${_param:avinetworks_cloud_openstack_auth_url}
+          mgmt_network_name: ${_param:avinetworks_cloud_openstack_mgmt_network_name}
+          privilege: ${_param:avinetworks_cloud_openstack_privilege}
+          region: ${_param:avinetworks_cloud_openstack_region}
+          hypervisor: ${_param:avinetworks_cloud_openstack_hypervisor}
+          free_floatingips: ${_param:avinetworks_cloud_openstack_free_floatingips}
+          img_format: ${_param:avinetworks_cloud_openstack_img_format}
+          use_internal_endpoints: ${_param:avinetworks_cloud_openstack_use_internal_endpoints}
+          insecure: ${_param:avinetworks_cloud_openstack_insecure}
+          contrail_endpoint: ${_param:avinetworks_cloud_contrail_endpoint}
+          os_role: ${_param:avinetworks_cloud_openstack_os_role}
+          avi_role: ${_param:avinetworks_cloud_openstack_avi_role}

@@ -1,0 +1,19 @@
+parameters:
+  elasticsearch:
+    _support:
+      collectd:
+        enabled: true
+      telegraf:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: true
+      grafana:
+        enabled: true
+      prometheus:
+        enabled: true
+      fluentd:
+        enabled: true

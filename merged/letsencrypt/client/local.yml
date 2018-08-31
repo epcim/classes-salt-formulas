@@ -1,0 +1,8 @@
+applications:
+- letsencrypt
+classes:
+- letsencrypt.support
+parameters:
+  letsencrypt:
+    client:
+      enabled: true

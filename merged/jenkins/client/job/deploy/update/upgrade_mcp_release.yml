@@ -1,0 +1,54 @@
+#
+# Jobs to upgrade MCP release
+#
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+  jenkins:
+    client:
+      job:
+        upgrade-mcp-release:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          display_name: "Deploy - upgrade MCP Drivetrain"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: upgrade-mcp-release.groovy
+          param:
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            MCP_VERSION:
+              type: string
+              default: ""
+            UPDATE_CLUSTER_MODEL:
+              type: boolean
+              default: 'true'
+              description: "Replace `apt_mk_version` parameter in cluster level Reclass model."
+            UPGRADE_SALTSTACK:
+              type: boolean
+              default: 'true'
+              description: "Upgrade SaltStack packages."
+            UPDATE_PIPELINES:
+              type: boolean
+              default: 'true'
+              description: "Mirror pipelines from upstream/local mirror to Gerrit."
+            UPDATE_LOCAL_REPOS:
+              type: boolean
+              default: 'false'
+              description: "Use only when local repositories are present."
+            PIPELINE_TIMEOUT:
+              type: string
+              default: '12'
+              description: "Sets pipeline timeout in hours. Defaults to '12' if left empty."

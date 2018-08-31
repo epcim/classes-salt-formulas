@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+    nginx_proxy_openstack_api_address: 0.0.0.0
+    nginx_proxy_openstack_heat_host: ${_param:heat_service_host}
+    nginx_proxy_openstack_heat_protocol: 'http'
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_heat_cfn:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_heat_cfn
+          proxy:
+            host: ${_param:nginx_proxy_openstack_heat_host}
+            port: 8000
+            protocol: ${_param:nginx_proxy_openstack_heat_protocol}
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 8000
+            address: ${_param:nginx_proxy_openstack_api_address}
+          ssl: ${_param:nginx_proxy_ssl}

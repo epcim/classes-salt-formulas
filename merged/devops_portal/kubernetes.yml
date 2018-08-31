@@ -1,0 +1,16 @@
+applications:
+  - devops_portal
+parameters:
+  _param:
+    devops_portal_k8s_namespace: oss
+    devops_portal_external_port: 8800
+    docker_image_devops_portal: docker-sandbox.sandbox.mirantis.net/ikharin/oss/devops-portal:latest
+  devops_portal:
+    setup:
+      enabled: true
+      engine: kubernetes
+      kubernetes:
+        namespace: ${_param:devops_portal_k8s_namespace}
+        image: ${_param:devops_portal_image}
+        external_ip: ${_param:devops_portal_external_ip}
+        external_port: ${_param:devops_portal_external_port}

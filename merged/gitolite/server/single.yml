@@ -1,0 +1,8 @@
+applications:
+  - gitolite
+classes:
+  - gitolite.support
+parameters:
+  gitolite:
+    server:
+      enabled: true

@@ -1,0 +1,13 @@
+applications:
+- collectd
+classes:
+- collectd.remote_client.output.heka
+parameters:
+  collectd:
+    remote_client:
+      automatic_starting: true
+      enabled: true
+      read_interval: 10
+      read_threads: 10
+      use_fqdn: false
+

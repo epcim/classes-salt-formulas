@@ -1,0 +1,15 @@
+parameters:
+  mongodb:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: false
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true

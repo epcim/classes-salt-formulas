@@ -1,0 +1,13 @@
+applications:
+- prometheus
+classes:
+- prometheus.relay.cluster
+parameters:
+  _param:
+    prometheus_relay_bind_port: 9094
+  prometheus:
+    relay:
+      bind:
+        port: ${_param:prometheus_relay_bind_port}
+      enabled: true
+

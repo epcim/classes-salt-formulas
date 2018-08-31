@@ -1,0 +1,17 @@
+classes:
+  - jenkins.client.job.deploy.lab.deploy
+parameters:
+  _param:
+    jenkins_deploy_jobs:
+      - stack_name: virtual_mcp05_ovs_dvr
+        stack_env: devcloud_virtual_mcp05_dvr
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""
+      - stack_name: virtual_mcp05_ovs
+        stack_env: devcloud
+        stack_install: core,openstack,ovs
+        stack_type: heat
+        stack_test: ""
+        job_timer: ""

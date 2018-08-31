@@ -1,0 +1,6 @@
+applications:
+- nodejs
+parameters:
+  nodejs:
+    environment:
+      enabled: true

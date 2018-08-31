@@ -1,0 +1,15 @@
+applications:
+- influxdb
+parameters:
+  _param:
+    influxdb_client_port: 8086
+  influxdb:
+    client:
+      enabled: true
+      server:
+        host: ${_param:influxdb_client_host}
+        password: ${_param:influxdb_client_password}
+        port: ${_param:influxdb_client_port}
+        protocol: http
+        user: root
+

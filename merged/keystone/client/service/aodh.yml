@@ -1,0 +1,36 @@
+classes:
+- keystone.client.v3.service.aodh
+parameters:
+  _param:
+    cluster_public_protocol: https
+    aodh_service_protocol: http
+    aodh_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      server:
+        identity:
+          project:
+            service:
+              user:
+                aodh:
+                  is_admin: true
+                  password: ${_param:keystone_aodh_password}
+                  email: ${_param:admin_email}
+          service:
+            aodh:
+              type: alarming
+              description: OpenStack Alarming Service
+              endpoints:
+              - region: ${_param:openstack_region}
+                public_address: ${_param:aodh_public_host}
+                public_protocol: ${_param:cluster_public_protocol}
+                public_port: 8042
+                public_path: '/'
+                internal_address: ${_param:aodh_service_host}
+                internal_port: 8042
+                internal_path: '/'
+                internal_protocol: ${_param:aodh_service_protocol}
+                admin_protocol: ${_param:aodh_service_protocol}
+                admin_address: ${_param:aodh_service_host}
+                admin_port: 8042
+                admin_path: '/'

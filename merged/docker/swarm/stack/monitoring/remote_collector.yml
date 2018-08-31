@@ -1,0 +1,29 @@
+classes:
+- heka.remote_collector.container
+- heka.remote_collector.input.amqp
+- heka.remote_collector.output.elasticsearch
+- heka.remote_collector.output.telegraf
+- telegraf.agent.remote.input.http_listener
+parameters:
+  docker:
+    client:
+      stack:
+        monitoring:
+          service:
+            remote_collector:
+              networks:
+                - monitoring
+              deploy:
+                replicas: 1
+                labels:
+                  com.mirantis.monitoring: "remote_collector"
+                restart_policy:
+                  condition: any
+              labels:
+                com.mirantis.monitoring: "remote_collector"
+              image: ${_param:docker_image_remote_collector}
+              volumes:
+                - ${heka:remote_collector:prefix_dir}/etc/remote_collector:/etc/heka
+                - ${heka:remote_collector:prefix_dir}/usr/share/lma_collector:/usr/share/lma_collector
+              environment:
+                HEKA_CACHE_DIR: /var/cache/remote_collector

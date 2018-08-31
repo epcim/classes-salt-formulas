@@ -1,0 +1,8 @@
+applications:
+- debmirror
+classes:
+- debmirror.support
+parameters:
+  debmirror:
+    client:
+      enabled: false

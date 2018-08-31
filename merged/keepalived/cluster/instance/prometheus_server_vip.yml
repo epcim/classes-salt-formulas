@@ -1,0 +1,25 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_vip_priority: 101
+    keepalived_prometheus_vrrp_script_content: "pidof haproxy && docker service ls"
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        vip:
+          content: ${_param:keepalived_prometheus_vrrp_script_content}
+          interval: 30
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        prometheus_server_vip:
+          address: ${_param:keepalived_prometheus_vip_address}
+          password: ${_param:keepalived_prometheus_vip_password}
+          interface: ${_param:keepalived_prometheus_vip_interface}
+          virtual_router_id: 105
+          priority: ${_param:keepalived_vip_priority}
+          track_script: vip

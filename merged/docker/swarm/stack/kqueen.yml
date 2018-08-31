@@ -1,0 +1,102 @@
+parameters:
+  _param:
+    docker_kqueen_api_replicas: 1
+    docker_image_kqueen_api: kqueen/api:v0.18
+    docker_image_kqueen_ui: kqueen/ui:v0.8
+    kqueen_api_bind_host: kqueen-api
+    kqueen_api_bind_port: ${_param:haproxy_kqueen_api_bind_port}
+    kqueen_api_db_host: etcd
+    kqueen_api_debug: True
+    kqueen_api_prometheus_whitelist: '172.16.10.0/24' ##REcheck with network
+    kqueen_api_ldap_uri: 'ldap://ldap'
+    kqueen_api_ldap_dn: 'cn=admin,dc=example,dc=org'
+    kqueen_api_ldap_password: 'password'
+    kqueen_api_auth_modules: 'local'
+    docker_kqueen_ui_replicas: 1
+    kqueen_ui_bind_port: ${_param:haproxy_kqueen_ui_bind_port}
+    kqueen_ui_bind_host: kqueen-ui
+    kqueen_ui_mail_host: mail
+    kqueen_ui_mail_port: 10025
+    kqueen_ui_debug: True
+    kqueen_ui_enable_public_registration: False
+    kqueen_ui_ldap_auth_notify: False
+    kqueen_ui_local_auth_notify: True
+    kqueen_credentials:
+      kqueen_api_secret_key: 'pasteyoursecret'
+      kqueen_ui_secret_key: 'pasteyoursecret'
+      kqueen_api_bootstrap_admin: True
+      kqueen_api_admin_username: admin
+      kqueen_api_admin_password: default
+      kqueen_api_admin_organization: MirantisCloudPlatform
+      kqueen_api_admin_namespace: mcp
+  docker:
+    client:
+      stack:
+        kqueen:
+          environment:
+            KQUEEN_DEBUG: ${_param:kqueen_api_debug}
+            KQUEEN_CONFIG_FILE: config/prod.py
+            KQUEEN_LDAP_URI: ${_param:kqueen_api_ldap_uri}
+            KQUEEN_LDAP_DN: ${_param:kqueen_api_ldap_dn}
+            KQUEEN_LDAP_PASSWORD: ${_param:kqueen_api_ldap_password}
+            KQUEEN_AUTH_MODULES: ${_param:kqueen_api_auth_modules}
+            KQUEEN_ETCD_HOST: ${_param:kqueen_api_db_host}
+            KQUEEN_PROMETHEUS_WHITELIST: ${_param:kqueen_api_prometheus_whitelist}
+            KQUEEN_SECRET_KEY: ${_param:kqueen_credentials:kqueen_api_secret_key}
+            BOOTSTRAP_ADMIN: ${_param:kqueen_credentials:kqueen_api_bootstrap_admin}
+            BOOTSTRAP_ADMIN_USERNAME: ${_param:kqueen_credentials:kqueen_api_admin_username}
+            BOOTSTRAP_ADMIN_PASSWORD: ${_param:kqueen_credentials:kqueen_api_admin_password}
+            BOOTSTRAP_ADMIN_ORGANIZATION: ${_param:kqueen_credentials:kqueen_api_admin_organization}
+            BOOTSTRAP_ADMIN_NAMESPACE: ${_param:kqueen_credentials:kqueen_api_admin_namespace}
+            KQUEENUI_PREFERRED_URL_SCHEME: https
+            KQUEENUI_DEBUG: ${_param:kqueen_ui_debug}
+            KQUEEN_UI_CONFIG_FILE: config/prod.py
+            KQUEENUI_SECRET_KEY: ${_param:kqueen_credentials:kqueen_ui_secret_key}
+            KQUEENUI_KQUEEN_API_URL: http://${_param:kqueen_api_bind_host}:${_param:kqueen_api_bind_port}/api/v1/
+            KQUEENUI_KQUEEN_AUTH_URL: http://${_param:kqueen_api_bind_host}:${_param:kqueen_api_bind_port}/api/v1/auth
+            KQUEENUI_KQUEEN_SERVICE_USER_USERNAME: ${_param:kqueen_credentials:kqueen_api_admin_username}
+            KQUEENUI_KQUEEN_SERVICE_USER_PASSWORD: ${_param:kqueen_credentials:kqueen_api_admin_password}
+            KQUEENUI_MAIL_SERVER: ${_param:kqueen_ui_mail_host}
+            KQUEENUI_MAIL_PORT: ${_param:kqueen_ui_mail_port}
+            KQUEENUI_ENABLE_PUBLIC_REGISTRATION: ${_param:kqueen_ui_enable_public_registration}
+            KQUEENUI_LDAP_AUTH_NOTIFY: ${_param:kqueen_ui_ldap_auth_notify}
+            KQUEENUI_LOCAL_AUTH_NOTIFY: ${_param:kqueen_ui_local_auth_notify}
+            STATIC_DIR: /mnt/static/
+            ETCD_NAME: 0
+            ETCD_INITIAL_ADVERTISE_PEER_URLS: http://etcd:2380
+            ETCD_INITIAL_CLUSTER_STATE: new
+            ETCD_INITIAL_CLUSTER_TOKEN: etcd-cluster-1
+            ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:${_param:haproxy_etcd_bind_port}
+            ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+            ETCD_ADVERTISE_CLIENT_URLS: http://127.0.0.1:4001,http://etcd:${_param:haproxy_etcd_bind_port}
+          service:
+            kqueen-api:
+              image: ${_param:docker_image_kqueen_api}
+              deploy:
+                replicas: ${_param:docker_kqueen_api_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_kqueen_api_exposed_port}:${_param:haproxy_kqueen_api_bind_port}
+              volumes:
+                - /srv/volumes/kqueen/logs/:/var/log/kqueen-api
+            kqueen-ui:
+              image: ${_param:docker_image_kqueen_ui}
+              deploy:
+                replicas: ${_param:docker_kqueen_ui_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - ${_param:haproxy_kqueen_ui_exposed_port}:${_param:haproxy_kqueen_ui_bind_port}
+              volumes:
+                - /srv/volumes/kqueen/logs/:/var/log/kqueen-ui
+            etcd:
+              image: quay.io/coreos/etcd:latest
+              ports:
+                - ${_param:haproxy_etcd_exposed_port}:${_param:haproxy_etcd_bind_port}
+              volumes:
+                - /srv/volumes/etcd:/0.etcd/
+          network:
+            default:
+              external:
+                name: kqueen_backend

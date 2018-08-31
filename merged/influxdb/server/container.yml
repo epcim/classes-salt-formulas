@@ -1,0 +1,23 @@
+applications:
+- influxdb
+parameters:
+  influxdb:
+    server:
+      admin:
+        bind:
+          address: 0.0.0.0
+          port: 8083
+        enabled: true
+        user:
+          enabled: true
+          name: root
+          password: ${_param:influxdb_admin_password}
+      container_mode: true
+      enabled: true
+      http:
+        bind:
+          address: 0.0.0.0
+          port: 8086
+        enabled: true
+      prefix_dir: /srv/volumes/local/influxdb
+

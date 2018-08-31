@@ -1,0 +1,14 @@
+applications:
+- heka
+classes:
+- heka.server
+parameters:
+  _param:
+    remote_collector_prefix_dir: /srv/volumes/local/remote_collector
+  heka:
+    remote_collector:
+      container_mode: true
+      enabled: true
+      owner: root
+      prefix_dir: ${_param:remote_collector_prefix_dir}
+

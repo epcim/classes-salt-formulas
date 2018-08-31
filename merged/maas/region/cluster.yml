@@ -1,0 +1,18 @@
+classes:
+  - maas.region.single
+  - keepalived.server.cluster_maas
+  - linux.system.repo.keystorage.saltstack
+parameters:
+  _param:
+    cluster_vip_address: 10.0.175.80
+    linux_system_repo_mcp_saltstack_url: http://mirror.mirantis.com/${_param:apt_mk_version}/saltstack-2017.7/
+  maas:
+    cluster:
+      enabled: true
+      role: ${_param:maas_cluster_role}
+      region:
+        host: ${_param:cluster_vip_address}
+      saltstack_repo_key: ${linux:system:repo:mcp_saltstack:key}
+      saltstack_repo_trusty: "deb [arch=amd64] ${_param:linux_system_repo_mcp_saltstack_url}/trusty/ trusty main"
+      saltstack_repo_xenial: "deb [arch=amd64] ${_param:linux_system_repo_mcp_saltstack_url}/xenial/ xenial main"
+

@@ -1,0 +1,19 @@
+applications:
+- mongodb
+parameters:
+  _param:
+    mongodb_replica_set: stacklight
+  mongodb:
+    server:
+      bind:
+        address: 0.0.0.0
+        port: 27017
+      enabled: true
+      master: ${_param:cluster_node01_hostname}
+      members:
+      - host: ${_param:cluster_node01_address}
+        priority: 2
+      - host: ${_param:cluster_node02_address}
+      - host: ${_param:cluster_node03_address}
+      replica_set: ${_param:mongodb_replica_set}
+

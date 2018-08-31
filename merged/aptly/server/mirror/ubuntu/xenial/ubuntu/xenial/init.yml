@@ -1,0 +1,5 @@
+classes:
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial.main
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial.multiverse
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial.restricted
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial.universe

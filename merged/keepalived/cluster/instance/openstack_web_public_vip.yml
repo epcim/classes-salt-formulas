@@ -1,0 +1,26 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_openstack_web_public_vip_address: ${_param:cluster_vip_address}
+    keepalived_openstack_web_public_vip_password: password
+    keepalived_openstack_web_public_vip_interface: eth1
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        check_pidof:
+          args: "nginx"
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        openstack_web_public_vip:
+          address: ${_param:keepalived_openstack_web_public_vip_address}
+          password: ${_param:keepalived_openstack_web_public_vip_password}
+          interface: ${_param:keepalived_openstack_web_public_vip_interface}
+          virtual_router_id: 132
+          priority: ${_param:keepalived_vip_priority}
+          track_script: check_pidof

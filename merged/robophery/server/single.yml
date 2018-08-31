@@ -1,0 +1,8 @@
+applications:
+- robophery
+classes:
+- robophery.support
+parameters:
+  robophery:
+    server:
+      enabled: true

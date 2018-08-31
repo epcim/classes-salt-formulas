@@ -1,0 +1,7 @@
+## Ubuntu xenial
+classes:
+- aptly.server.mirror.ubuntu.xenial.ceph
+- aptly.server.mirror.ubuntu.xenial.docker
+- aptly.server.mirror.ubuntu.xenial.grafana
+- aptly.server.mirror.ubuntu.xenial.ubuntu
+- aptly.server.mirror.ubuntu.xenial.salt

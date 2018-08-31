@@ -1,0 +1,84 @@
+applications:
+- neutron
+classes:
+- galera.server.database.neutron
+parameters:
+  _param:
+    internal_protocol: http
+    keystone_neutron_endpoint_type: internal
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+  neutron:
+    server:
+      backend:
+        extension:
+          dns:
+            enabled: false
+            engine: designate
+            host: ${_param:single_address}
+            port: 9001
+            protocol: http
+            url: ${neutron:server:backend:extension:dns:protocol}://${neutron:server:backend:extension:dns:host}:${neutron:server:backend:extension:dns:port}/v2
+      bgp_vpn:
+        driver: bagpipe
+        enabled: false
+      bind:
+        address: ${_param:single_address}
+        port: 9696
+      compute:
+        host: ${_param:single_address}
+        password: ${_param:keystone_nova_password}
+        region: RegionOne
+        tenant: service
+        user: nova
+      controller_vip: ${_param:single_address}
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: neutron
+        password: ${_param:mysql_neutron_password}
+        port: 3306
+        user: neutron
+      dns_domain: novalocal
+      enabled: true
+      fwaas: false
+      identity:
+        endpoint_type: ${_param:keystone_neutron_endpoint_type}
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_neutron_password}
+        port: 35357
+        protocol: ${_param:internal_protocol}
+        region: RegionOne
+        tenant: service
+        user: neutron
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      qos: false
+      role: ${_param:openstack_node_role}
+      security_groups_enabled: true
+      tunnel_type: vxlan
+      version: ${_param:neutron_version}
+      vlan_aware_vms: false
+

@@ -1,0 +1,5 @@
+classes:
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-updates.main
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-updates.multiverse
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-updates.restricted
+- aptly.server.mirror.ubuntu.xenial.ubuntu.xenial-updates.universe

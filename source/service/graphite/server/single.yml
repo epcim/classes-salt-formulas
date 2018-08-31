@@ -1,0 +1,23 @@
+applications:
+- graphite
+classes:
+- service.graphite.support
+parameters:
+  graphite:
+    server:
+      enabled: true
+      timezone: ${linux:system:timezone}
+      cache:
+        engine: 'memcached'
+        host: '127.0.0.1'
+        prefix: 'GRAPHITE'
+      database:
+        engine: 'postgresql'
+        host: '127.0.0.1'
+        name: 'graphite'
+        password: ${_param:postgresql_graphite_password}
+        user: 'graphite'
+      mail:
+        host: localhost
+        password: password
+        user: username

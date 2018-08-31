@@ -1,0 +1,57 @@
+applications:
+- prometheus
+classes:
+- prometheus.alertmanager
+parameters:
+  prometheus:
+    alertmanager:
+      bind:
+        address: 0.0.0.0
+        port: 9093
+      config:
+        global:
+          resolve_timeout: 5m
+        inhibit_rule:
+          InhibitCriticalWhenDown:
+            enabled: false
+            equal:
+            - region
+            - service
+            source_match:
+              severity: down
+            target_match:
+              severity: critical
+          InhibitWarningWhenCritical:
+            enabled: false
+            equal:
+            - region
+            - service
+            source_match:
+              severity: critical
+            target_match:
+              severity: warning
+          InhibitWarningWhenDown:
+            enabled: false
+            equal:
+            - region
+            - service
+            source_match:
+              severity: down
+            target_match:
+              severity: warning
+        receiver:
+          default:
+            enabled: true
+        route:
+          group_by:
+          - alertname
+          - instance
+          group_interval: 5m
+          group_wait: 60s
+          receiver: default
+          repeat_interval: 3h
+      dir:
+        config: /srv/volumes/prometheus/alertmanager
+        data: /srv/volumes/local/prometheus/alertmanager
+      enabled: true
+

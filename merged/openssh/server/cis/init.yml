@@ -1,0 +1,14 @@
+classes:
+- openssh.server.cis.cis-5-2-2
+- openssh.server.cis.cis-5-2-3
+- openssh.server.cis.cis-5-2-4
+- openssh.server.cis.cis-5-2-5
+- openssh.server.cis.cis-5-2-6
+- openssh.server.cis.cis-5-2-7
+- openssh.server.cis.cis-5-2-8
+- openssh.server.cis.cis-5-2-9
+- openssh.server.cis.cis-5-2-10
+- openssh.server.cis.cis-5-2-11
+- openssh.server.cis.cis-5-2-12
+- openssh.server.cis.cis-5-2-13
+- openssh.server.cis.cis-5-2-15

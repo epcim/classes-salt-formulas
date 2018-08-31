@@ -1,0 +1,10 @@
+classes:
+- nginx.server.proxy.openstack.cinder
+- nginx.server.proxy.openstack.glance
+- nginx.server.proxy.openstack.heat
+- nginx.server.proxy.openstack.heat_cfn
+- nginx.server.proxy.openstack.heat_cloudwatch
+- nginx.server.proxy.openstack.keystone
+- nginx.server.proxy.openstack.keystone_private
+- nginx.server.proxy.openstack.neutron
+- nginx.server.proxy.openstack.nova

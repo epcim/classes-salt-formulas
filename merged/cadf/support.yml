@@ -1,0 +1,13 @@
+parameters:
+  cadf:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      logrotate:
+        enabled: true

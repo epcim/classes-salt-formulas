@@ -1,0 +1,32 @@
+applications:
+- ceph
+classes:
+- ceph.common.single
+- ceph.support
+parameters:
+  _param:
+    ceph_radosgw_bind_port: 8080
+    ceph_radosgw_hostname: ${linux:system:name}
+    radosgw_keyring_path: /etc/ceph/ceph.client.radosgw.keyring
+  ceph:
+    client:
+      config:
+        client.radosgw.gateway:
+          host: ${linux:system:name}
+          keyring: /etc/ceph/ceph.client.radosgw.keyring
+          rgw_content_length_compat: true
+          rgw_dns_name: ${_param:cluster_domain}
+          rgw_keystone_accepted_roles: _member_, Member, admin, swiftoperator
+          rgw_keystone_admin_token: ${_param:keystone_service_token}
+          rgw_keystone_revocation_interval: 60
+          rgw_keystone_url: ${_param:keystone_service_host}:5000
+          rgw_print_continue: true
+          rgw_socket_path: /tmp/radosgw.sock
+          user: www-data
+    radosgw:
+      bind:
+        address: ${_param:single_address}
+        port: ${_param:ceph_radosgw_bind_port}
+      enabled: true
+      hostname: ${_param:ceph_radosgw_hostname}
+

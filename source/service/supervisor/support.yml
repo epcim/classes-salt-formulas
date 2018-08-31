@@ -1,0 +1,13 @@
+parameters:
+  supervisor:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: true
+      sphinx:
+        enabled: false
+      backupninja:
+        enabled: false

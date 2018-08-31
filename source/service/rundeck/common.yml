@@ -1,0 +1,6 @@
+parameters:
+  _param:
+    rundeck_runbook_user: runbook
+    rundeck_admin_username: admin
+    rundeck_admin_password: password
+    rundeck_admin_token: password

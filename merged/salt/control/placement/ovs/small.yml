@@ -1,0 +1,28 @@
+parameters:
+  _param:
+    infra_kvm01_hostname: kvm01
+    infra_kvm02_hostname: kvm02
+    infra_kvm03_hostname: kvm03
+    openstack_gateway_node01_hostname: gtw01
+    openstack_gateway_node02_hostname: gtw02
+    openstack_gateway_node03_hostname: gtw03
+  salt:
+    control:
+      cluster:
+        internal:
+          node:
+            gtw01:
+              name: ${_param:openstack_gateway_node01_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
+              size: openstack.gateway
+            gtw02:
+              name: ${_param:openstack_gateway_node02_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
+              size: openstack.gateway
+            gtw03:
+              name: ${_param:openstack_gateway_node03_hostname}
+              image: ${_param:salt_control_xenial_image}
+              provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+              size: openstack.gateway

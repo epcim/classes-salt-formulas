@@ -1,0 +1,16 @@
+applications:
+- heka
+classes:
+- heka.server
+parameters:
+  _param:
+    log_collector_max_message_size: 262144
+    log_collector_poolsize: 100
+  heka:
+    log_collector:
+      elasticsearch_host: ${_param:heka_elasticsearch_host}
+      elasticsearch_port: 9200
+      enabled: true
+      max_message_size: ${_param:log_collector_max_message_size}
+      poolsize: ${_param:log_collector_poolsize}
+

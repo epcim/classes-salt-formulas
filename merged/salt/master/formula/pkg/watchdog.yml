@@ -1,0 +1,9 @@
+parameters:
+  salt:
+    master:
+      environment:
+        prd:
+          formula:
+            watchdog:
+              source: pkg
+              name: salt-formula-watchdog

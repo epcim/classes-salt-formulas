@@ -1,0 +1,2 @@
+classes:
+- manila.client.share_type.default

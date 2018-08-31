@@ -1,0 +1,32 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        release-salt-formulas:
+          type: workflow-scm
+          concurrent: false
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: release-salt-formulas-pipeline.groovy
+            github:
+              url: "https://github.com/salt-formulas/salt-formulas"
+          param:
+            TAG:
+              type: string
+            SOURCE_URL:
+              type: string
+              default: "https://github.com/salt-formulas/salt-formulas.git"
+            GERRIT_BASE:
+              type: string
+              default: "${_param:jenkins_gerrit_url}/salt-formulas"
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"

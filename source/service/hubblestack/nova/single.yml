@@ -1,0 +1,12 @@
+applications:
+- hubblestack
+classes:
+- service.hubblestack.support
+parameters:
+  hubblestack:
+    nova:
+      autosync: True
+      autoload: True
+      saltenv: ${_param:salt_master_base_environment}
+      module_dir: salt://hubblestack/hubblestack_nova
+      profile_dir: salt://hubblestack/hubblestack_nova_profiles

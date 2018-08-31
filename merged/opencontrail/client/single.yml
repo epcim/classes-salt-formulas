@@ -1,0 +1,24 @@
+applications:
+- opencontrail
+parameters:
+  _param:
+    opencontrail_identity_port: 35357
+    opencontrail_identity_version: "2.0"
+    opencontrail_version: 3
+  opencontrail:
+    client:
+      api:
+        engine: contrail
+        host: ${_param:cluster_local_address}
+        port: 8082
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:cluster_local_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        tenant: admin
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      version: ${_param:opencontrail_version}
+

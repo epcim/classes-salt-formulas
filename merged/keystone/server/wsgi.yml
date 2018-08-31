@@ -1,0 +1,30 @@
+classes:
+- apache.server.single
+parameters:
+  _param:
+    apache_ssl:
+      enabled: false
+    apache_keystone_ssl: ${_param:apache_ssl}
+    apache_keystone_api_host: ${linux:network:fqdn}
+  keystone:
+    server:
+      service_name: apache2
+  apache:
+    server:
+      enabled: true
+      default_mpm: event
+      site:
+        keystone:
+          enabled: true
+          type: keystone
+          name: wsgi
+          host:
+            name: ${_param:apache_keystone_api_host}
+          ssl: ${_param:apache_keystone_ssl}
+          log:
+            custom:
+              format: >-
+                %v:%p %{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %D %O \"%{Referer}i\" \"%{User-Agent}i\"
+
+      modules:
+        - wsgi

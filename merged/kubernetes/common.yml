@@ -1,0 +1,194 @@
+classes:
+- kubernetes.logging
+- kubernetes.monitoring
+parameters:
+  _param:
+    kubelet_fail_on_swap: true
+    kubernetes_calico_calicoctl_image: ${_param:kubernetes_calico_calicoctl_repo}/ctl:v1.6.4
+    kubernetes_calico_calicoctl_repo: ${_param:mcp_docker_registry}/mirantis/projectcalico/calico
+    kubernetes_calico_cni_image: ${_param:kubernetes_calico_cni_repo}/cni:v1.11.6
+    kubernetes_calico_cni_repo: ${_param:mcp_docker_registry}/mirantis/projectcalico/calico
+    kubernetes_calico_enabled: false
+    kubernetes_calico_image: ${_param:kubernetes_calico_repo}/node:v2.6.10
+    kubernetes_calico_repo: ${_param:mcp_docker_registry}/mirantis/projectcalico/calico
+    kubernetes_cluster_domain: ${_param:cluster_domain}
+    kubernetes_cniplugins_repo: https://docker-prod-local.artifactory.mirantis.com/artifactory/binary-prod-local/mirantis/kubernetes/containernetworking-plugins
+    kubernetes_cniplugins_source: ${_param:kubernetes_cniplugins_repo}/cni-plugins_v0.7.1-48-g696b1f9.tar.gz
+    kubernetes_cniplugins_source_hash: md5=5ec1cf5e989097c6127ea5365e277b02
+    kubernetes_contrail_cni_image: ${_param:kubernetes_contrail_cni_repo}/contrail-cni:v1.2.0
+    kubernetes_contrail_cni_repo: ${_param:mcp_docker_registry}/mirantis/kubernetes
+    kubernetes_contrail_network_controller_enabled: false
+    kubernetes_contrail_network_controller_image: ${_param:kubernetes_contrail_network_controller_repo}/contrail-network-controller:v1.2.0
+    kubernetes_contrail_network_controller_repo: ${_param:mcp_docker_registry}/mirantis/kubernetes/contrail-integration
+    kubernetes_coredns_enabled: false
+    kubernetes_criproxy_checksum: md5=a3f1f08bdc7a8d6eb73b7c8fa5bae200
+    kubernetes_criproxy_version: v0.11.1
+    kubernetes_dashboard_enabled: true
+    kubernetes_dashboard_image: ${_param:kubernetes_dashboard_repo}/kubernetes-dashboard-amd64:v1.8.3
+    kubernetes_dashboard_repo: k8s.gcr.io
+    kubernetes_dns_autoscaler_image: ${_param:kubernetes_kubedns_repo}/cluster-proportional-autoscaler-amd64:1.0.0
+    kubernetes_dnsmasq_image: ${_param:kubernetes_kubedns_repo}/k8s-dns-dnsmasq-amd64:1.14.5
+    kubernetes_docker_package: docker-engine=1.13.1-0~ubuntu-xenial
+    kubernetes_externaldns_enabled: false
+    kubernetes_externaldns_image: ${_param:kubernetes_externaldns_repo}/external-dns:v0.5.3
+    kubernetes_externaldns_provider: coredns
+    kubernetes_externaldns_repo: mirantis
+    kubernetes_flannel_enabled: false
+    kubernetes_flannel_image: ${_param:kubernetes_flannel_repo}/flannel:v0.10.0-amd64
+    kubernetes_flannel_repo: quay.io/coreos
+    kubernetes_fluentd_aggregator_bind_port: 24224
+    kubernetes_fluentd_aggregator_es_host: 127.0.0.1
+    kubernetes_fluentd_aggregator_es_port: 9200
+    kubernetes_fluentd_aggregator_es_scheme: http
+    kubernetes_fluentd_enabled: false
+    kubernetes_genie_enabled: false
+    kubernetes_genie_repo: https://docker-prod-local.artifactory.mirantis.com/artifactory/binary-prod-local/mirantis/kubernetes/cni-genie
+    kubernetes_genie_source: ${_param:kubernetes_genie_repo}/genie_v1.0-138-gbf5dbaa
+    kubernetes_genie_source_hash: md5=b024052ed4ecb1d5354e0cc8f51afaca
+    kubernetes_hyperkube_image: ${_param:kubernetes_hyperkube_repo}/hyperkube-amd64:v1.10.4-4
+    kubernetes_hyperkube_repo: ${_param:mcp_docker_registry}/mirantis/kubernetes
+    kubernetes_kubedns_enabled: true
+    kubernetes_kubedns_image: ${_param:kubernetes_kubedns_repo}/k8s-dns-kube-dns-amd64:1.14.5
+    kubernetes_kubedns_repo: gcr.io/google_containers
+    kubernetes_metallb_controller_image: ${_param:kubernetes_metallb_repo}/controller:v0.6.2
+    kubernetes_metallb_enabled: false
+    kubernetes_metallb_repo: metallb
+    kubernetes_metallb_speaker_image: ${_param:kubernetes_metallb_repo}/speaker:v0.6.2
+    kubernetes_netchecker_agent_image: ${_param:kubernetes_netchecker_agent_repo}/k8s-netchecker-agent:v1.2.2
+    kubernetes_netchecker_agent_repo: mirantis
+    kubernetes_netchecker_server_image: ${_param:kubernetes_netchecker_server_repo}/k8s-netchecker-server:v1.2.2
+    kubernetes_netchecker_server_repo: mirantis
+    kubernetes_opencontrail_enabled: false
+    kubernetes_pause_image: ${_param:kubernetes_hyperkube_repo}/pause-amd64:v1.10.4-4
+    kubernetes_sidecar_image: ${_param:kubernetes_kubedns_repo}/k8s-dns-sidecar-amd64:1.14.5
+    kubernetes_sriov_enabled: false
+    kubernetes_sriov_repo: https://docker-prod-local.artifactory.mirantis.com/artifactory/binary-prod-local/mirantis/kubernetes/sriov-cni
+    kubernetes_sriov_source: ${_param:kubernetes_sriov_repo}/sriov_v0.3-8-g8b7ed98
+    kubernetes_sriov_source_hash: md5=c0cc33202afd02e4cc44b977a8faf6e7
+    kubernetes_virtlet_enabled: false
+    kubernetes_virtlet_image: ${_param:kubernetes_virtlet_repo}/virtlet:v1.1.2
+    kubernetes_virtlet_repo: mirantis
+    mcp_docker_registry: docker-prod-local.artifactory.mirantis.com
+  docker:
+    host:
+      options:
+        bip: 172.31.255.1/24
+        storage-driver: overlay2
+      pkgs:
+      - ${_param:kubernetes_docker_package}
+      - python-docker
+  kubernetes:
+    common:
+      addons:
+        calico_policy:
+          enabled: false
+          image: docker-prod-virtual.docker.mirantis.net/mirantis/projectcalico/calico/kube-controllers:v1.0.4
+          namespace: kube-system
+        contrail_network_controller:
+          enabled: ${_param:kubernetes_contrail_network_controller_enabled}
+          image: ${_param:kubernetes_contrail_network_controller_image}
+          namespace: kube-system
+        coredns:
+          enabled: ${_param:kubernetes_coredns_enabled}
+          etcd:
+            base_image: quay.io/coreos/etcd
+            operator_image: quay.io/coreos/etcd-operator:v0.5.2
+            version: 3.1.8
+          image: coredns/coredns:latest
+          namespace: kube-system
+        dashboard:
+          enabled: ${_param:kubernetes_dashboard_enabled}
+          image: ${_param:kubernetes_dashboard_image}
+        dns:
+          autoscaler:
+            enabled: true
+            image: ${_param:kubernetes_dns_autoscaler_image}
+          dnsmasq:
+            cache-size: 1000
+            log-facility: '-'
+            no-resolv: null
+            server: 127.0.0.1#10053
+          dnsmasq_image: ${_param:kubernetes_dnsmasq_image}
+          domain: cluster.local
+          enabled: ${_param:kubernetes_kubedns_enabled}
+          kubedns_image: ${_param:kubernetes_kubedns_image}
+          replicas: 1
+          server: 10.254.0.10
+          sidecar_image: ${_param:kubernetes_sidecar_image}
+        externaldns:
+          domain: ${_param:kubernetes_cluster_domain}
+          enabled: ${_param:kubernetes_externaldns_enabled}
+          image: ${_param:kubernetes_externaldns_image}
+          namespace: kube-system
+          provider: ${_param:kubernetes_externaldns_provider}
+        flannel:
+          image: ${_param:kubernetes_flannel_image}
+        fluentd:
+          aggregator:
+            bind:
+              port: ${_param:kubernetes_fluentd_aggregator_bind_port}
+            es:
+              host: ${_param:kubernetes_fluentd_aggregator_es_host}
+              port: ${_param:kubernetes_fluentd_aggregator_es_port}
+              scheme: ${_param:kubernetes_fluentd_aggregator_es_scheme}
+          enabled: ${_param:kubernetes_fluentd_enabled}
+        heapster_influxdb:
+          enabled: false
+        helm:
+          enabled: false
+          tiller_image: gcr.io/kubernetes-helm/tiller:v2.4.2
+        metallb:
+          enabled: ${_param:kubernetes_metallb_enabled}
+        netchecker:
+          agent_image: mirantis/k8s-netchecker-agent:stable
+          enabled: false
+          interval: 60
+          namespace: netchecker
+          port: 80
+          server_image: mirantis/k8s-netchecker-server:stable
+        virtlet:
+          criproxy_source: ${_param:kubernetes_criproxy_checksum}
+          criproxy_version: ${_param:kubernetes_criproxy_version}
+          enabled: ${_param:kubernetes_virtlet_enabled}
+          image: ${_param:kubernetes_virtlet_image}
+          namespace: kube-system
+      cloudprovider:
+        enabled: false
+        params:
+          domain_name: default
+          region: RegionOne
+        provider: openstack
+      cluster_domain: ${_param:kubernetes_cluster_domain}
+      cluster_name: ${_param:cluster_name}
+      cni:
+        plugins:
+          hash: ${_param:kubernetes_cniplugins_source_hash}
+          source: ${_param:kubernetes_cniplugins_source}
+      hyperkube:
+        image: ${_param:kubernetes_hyperkube_image}
+        pause_image: ${_param:kubernetes_pause_image}
+    pool:
+      container: false
+      enabled: false
+      kubelet:
+        fail_on_swap: ${_param:kubelet_fail_on_swap}
+      network:
+        calico:
+          calicoctl_image: ${_param:kubernetes_calico_calicoctl_image}
+          cni_image: ${_param:kubernetes_calico_cni_image}
+          enabled: ${_param:kubernetes_calico_enabled}
+          image: ${_param:kubernetes_calico_image}
+        flannel:
+          enabled: ${_param:kubernetes_flannel_enabled}
+        genie:
+          enabled: ${_param:kubernetes_genie_enabled}
+          source: ${_param:kubernetes_genie_source}
+          source_hash: ${_param:kubernetes_genie_source_hash}
+        opencontrail:
+          cni_image: ${_param:kubernetes_contrail_cni_image}
+          enabled: ${_param:kubernetes_opencontrail_enabled}
+        sriov:
+          enabled: ${_param:kubernetes_sriov_enabled}
+          source: ${_param:kubernetes_sriov_source}
+          source_hash: ${_param:kubernetes_sriov_source_hash}
+

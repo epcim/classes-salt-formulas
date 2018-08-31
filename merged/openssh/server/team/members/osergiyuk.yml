@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        osergiyuk:
+          enabled: true
+          name: osergiyuk
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Oleg Sergiyuk
+          home: /home/osergiyuk
+          email: osergiyuk@mirantis.com
+  openssh:
+    server:
+      user:
+        osergiyuk:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCmdJA5DWI9BQuvIzaPSdLDoK1QwUOI0Z1XjlXlaySFUuknDpYOZpBCi8SyNxS3uR8G1iO069tQ7e72cTxwP3lBJGSjgo0sg3lBuaXfunZo4D1dcjpOgKSIRMVZSB2W1pWzVuk5wjLSxePj6yaUUcCemWuELzMix3Ew8GBeWYVfgcAZPtXy4l5slxvK7lRxZZGwX1HTja0uN3UbR3J3pGDDsFN+qLdqnAtbofu9wlpXd7ffshB5dWUXHk9SEh20V/HVk1K7mDCEpKTYRC/vRlPaovauoldHEzwGcEnToXmWSmS8wrCYCTAmCw3jVHDNcYJ+kjDkaJsyTQ+KrLcSYzgMc2efRE5L98ShLZCWQMEd8ldSZ5FIynbTPhJ+9KzS4fnwoX+wCpwYGwpYKkw6zs/N+oXw2CTk5tmc2br84qHkY6spr2+ydTn0cbsMxN/XlPIz5Zn6A5O4yBZA0LRf4A+bKMijn596/XH/TPuy+LdTwEbhA13v2o6beA5xlt1TSxmvumzwXfvzMpmzWlyC+xjUR/2x6ak1RxIi1zlDnULyZRtrHdAxz/SiEgRUVmet8uGhwYKno/GMa45UfzzAX+6w2M6rFBfqvia5Wmg19UheVVvVP08ssm4Cb6l7I58sMkFcLnazf918T8uxqE+1E82ZhbkXi2X3c6C7jY2UkVf3dw== osergiyuk@mirantis.com
+          user: ${linux:system:user:osergiyuk}

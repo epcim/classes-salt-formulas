@@ -1,0 +1,10 @@
+applications:
+- jupyter
+classes:
+- service.jupyter.support
+parameters:
+  jupyter:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

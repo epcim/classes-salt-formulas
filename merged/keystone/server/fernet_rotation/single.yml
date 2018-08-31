@@ -1,0 +1,24 @@
+parameters:
+  _param:
+    fernet_rotation_driver: 'rsync'
+    credential_rotation_driver: 'rsync'
+  keystone:
+    server:
+      tokens:
+        fernet_rotation_driver: ${_param:fernet_rotation_driver}
+      credential:
+        credential_rotation_driver: ${_param:credential_rotation_driver}
+  linux:
+    system:
+      job:
+        keystone_fernet_rotate_rsync:
+          command: '/var/lib/keystone/keystone_keys_rotate.sh -r -t fernet >> /var/log/keystone/keystone-rotate.log 2>> /var/log/keystone/keystone-rotate.log'
+          enabled: true
+          user: keystone
+          minute: 0
+        keystone_credential_rotate_rsync:
+          command: '/var/lib/keystone/keystone_keys_rotate.sh -r -t credential >> /var/log/keystone/keystone-rotate.log 2>> /var/log/keystone/keystone-rotate.log'
+          enabled: true
+          user: keystone
+          hour: 0
+          minute: 0

@@ -1,0 +1,10 @@
+applications:
+- mosquitto
+classes:
+- service.mosquitto.support
+parameters:
+  mosquitto:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

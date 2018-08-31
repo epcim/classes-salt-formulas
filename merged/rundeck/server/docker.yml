@@ -1,0 +1,31 @@
+classes:
+  - rundeck.common
+  - rundeck.server.single
+parameters:
+  _param:
+    rundeck_server_ssh_timeout: 300000
+    rundeck_forward_iframe: False
+    rundeck_iframe_host: "external-proxy-endpoint"
+    rundeck_iframe_port: ${_param:haproxy_rundeck_exposed_port}
+    rundeck_iframe_ssl: False
+  rundeck:
+    server:
+      user:
+        uid: 550
+        gid: 550
+      home_dir: /srv/volumes/rundeck
+      root_dir: /srv/volumes/rundeck
+      api:
+        host: ${_param:haproxy_rundeck_bind_host}
+        port: ${_param:haproxy_rundeck_bind_port}
+        https: ${_param:haproxy_rundeck_ssl:enabled}
+      iframe:
+        external_forward: ${_param:rundeck_forward_iframe}
+        host: ${_param:rundeck_iframe_host}
+        port: ${_param:rundeck_iframe_port}
+        https: ${_param:rundeck_iframe_ssl}
+      ssh:
+        user: ${_param:rundeck_runbook_user}
+        private_key: ${_param:rundeck_runbook_private_key}
+        public_key: ${_param:rundeck_runbook_public_key}
+        timeout: ${_param:rundeck_server_ssh_timeout}

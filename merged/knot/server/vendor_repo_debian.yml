@@ -1,0 +1,8 @@
+parameters:
+  linux:
+    system:
+      repo:
+        knot:
+          enabled: true
+          source: 'deb http://deb.knot-dns.cz/knot/ $(lsb_release -sc) main'
+          key_url: 'https://deb.knot-dns.cz/knot/apt.gpg'

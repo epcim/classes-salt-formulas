@@ -1,0 +1,9 @@
+applications:
+- monasca.persister
+classes:
+- monasca.common
+parameters:
+  monasca:
+    persister:
+      enabled: true
+      version: ${_param:monasca_version}

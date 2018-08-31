@@ -1,0 +1,19 @@
+parameters:
+  haproxy:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      telegraf:
+        enabled: true
+      sphinx:
+        enabled: true
+      grafana:
+        enabled: true
+      prometheus:
+        enabled: true
+      fluentd:
+        enabled: true

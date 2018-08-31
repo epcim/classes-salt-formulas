@@ -1,0 +1,3 @@
+classes:
+  - jenkins.client.job.saas.test_saas_ui
+  - jenkins.client.job.saas.test_saas_core_auth

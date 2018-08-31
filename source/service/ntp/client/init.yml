@@ -1,0 +1,17 @@
+applications:
+  - ntp
+classes:
+  - service.ntp.support
+parameters:
+  _param:
+    ntp_strata_host1: ntp.cesnet.cz
+    ntp_strata_host2: pool.ntp.org
+  ntp:
+    client:
+      enabled: true
+      strata:
+      - ${_param:ntp_strata_host1}
+      - ${_param:ntp_strata_host2}
+    server:
+      enabled: false
+      mode7: false

@@ -1,0 +1,12 @@
+parameters:
+  _param:
+    barbican_p11crypto_mkek_length: 32
+  barbican:
+    server:
+      plugin:
+        p11_crypto:
+          library_path: '/usr/lib/libCryptoki2_64.so'
+          login: ${_param:barbican_p11crypto_login}
+          mkek_label: ${_param:barbican_p11crypto_mkek_label}
+          mkek_length: ${_param:barbican_p11crypto_mkek_length}
+          hmac_label: ${_param:barbican_p11crypto_hmac_label}

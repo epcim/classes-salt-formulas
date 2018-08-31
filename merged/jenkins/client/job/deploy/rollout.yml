@@ -1,0 +1,96 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+  jenkins:
+    client:
+      job:
+        deploy_rollout_config_change:
+          name: deploy-rollout-config-change
+          type: workflow-scm
+          discard:
+            build:
+              keep_num: 20
+          concurrent: true
+          display_name: "Deploy - Rollout change"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: rollout-config-change.groovy
+          param:
+            TST_SALT_MASTER_CREDENTIALS:
+              type: string
+            TST_SALT_MASTER_URL:
+              type: string
+            PRD_SALT_MASTER_CREDENTIALS:
+              type: string
+            PRD_SALT_MASTER_URL:
+              type: string
+            MODEL_REPO_URL:
+              type: string
+            MODEL_REPO_CREDENTIALS:
+              type: string
+              default: "gerrit"
+            MODEL_REPO_SOURCE_BRANCH:
+              type: string
+            MODEL_REPO_TARGET_BRANCH:
+              type: string
+            TARGET_SERVERS:
+              type: string
+            TARGET_STATES:
+              type: string
+            TARGET_SUBSET_TEST:
+              type: string
+            TARGET_SUBSET_LIVE:
+              type: string
+            TARGET_BATCH_LIVE:
+              type: string
+              # test
+            TEST_SERVICE:
+              type: string
+            TEST_K8S_API_SERVER:
+              type: string
+              default: "http://127.0.0.1:8080"
+            TEST_K8S_CONFORMANCE_IMAGE:
+              type: string
+              default: "docker-dev-virtual.docker.mirantis.net/mirantis/kubernetes/k8s-conformance:v1.7.5-2_1504192939316"
+            TEST_TEMPEST_IMAGE:
+              type: string
+              description: "Tempest docker image"
+              default: "${_param:mcp_docker_registry}/mirantis/oscore/rally-tempest"
+            TEST_TEMPEST_TARGET:
+              type: string
+              description: "Node to run tests"
+              default: ""
+            TEST_DOCKER_INSTALL:
+              type: boolean
+              description: "Install docker on the target if true"
+              default: "true"
+            TEST_TEMPEST_PATTERN:
+              type: string
+              description: "Run tests matched to pattern only"
+        git_merge_branches:
+          name: git-merge-branches
+          type: workflow-scm
+          discard:
+            build:
+              keep_num: 20
+          concurrent: true
+          display_name: "Git - Merge branches"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: git-merge-branches-pipeline.groovy
+          param:
+            REPO_URL:
+              type: string
+            CREDENTIALS_ID:
+              type: string
+              default: "gerrit"
+            SOURCE_BRANCH:
+              type: string
+            TARGET_BRANCH:
+              type: string

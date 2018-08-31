@@ -1,0 +1,27 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    docker_devops_portal_replicas: 1
+    docker_image_devops_portal: ${_param:mcp_docker_registry}/mirantis/oss/devops-portal:latest
+  docker:
+    client:
+      stack:
+        devops-portal:
+          service:
+            frontend:
+              image: ${_param:docker_image_devops_portal}
+              deploy:
+                replicas: ${_param:docker_devops_portal_replicas}
+                restart_policy:
+                  condition: any
+              ports:
+                - 18800:8000
+              volumes:
+                - /srv/volumes/devops_portal/nginx:/etc/nginx/config
+                - /srv/volumes/devops_portal/config:/opt/devops-portal/config
+          network:
+            default:
+              external:
+                name: oss_backend
+            frontend:
+              driver: overlay

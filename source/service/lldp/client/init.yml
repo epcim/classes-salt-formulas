@@ -1,0 +1,8 @@
+applications:
+- lldp 
+classes:
+parameters:
+  lldp:
+    client:
+      enabled: true
+      interfaces:

@@ -1,0 +1,9 @@
+applications:
+- foreman
+parameters:
+  foreman:
+    smart_proxy:
+      enabled: true
+      proxy:
+        tftp: true
+        dhcp: true

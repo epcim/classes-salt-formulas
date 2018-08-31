@@ -1,0 +1,45 @@
+classes:
+- prometheus.server.container
+parameters:
+  _param:
+    # Backward compatibility for Prometheus 1.7
+    prometheus_storage_local_engine: "persisted"
+    prometheus_storage_heap_size: 3221225472
+    prometheus_storage_num_fingerprint_mutexes: 4096
+  docker:
+    client:
+      stack:
+        monitoring:
+          network:
+            monitoring:
+              driver: overlay
+              driver_opts:
+                encrypted: 1
+          service:
+            server:
+              networks:
+                - monitoring
+              deploy:
+                labels:
+                  com.mirantis.monitoring: "prometheus"
+                restart_policy:
+                  condition: any
+              labels:
+                com.mirantis.monitoring: "prometheus"
+              image: ${_param:docker_image_prometheus}
+              ports:
+                - 15010:${prometheus:server:bind:port}
+              volumes:
+                - ${prometheus:server:dir:config}:${_param:prometheus_server_config_directory}
+                - ${prometheus:server:dir:data}:${_param:prometheus_server_data_directory}
+              environment:
+                PROMETHEUS_CONFIG_DIR: ${_param:prometheus_server_config_directory}
+                PROMETHEUS_DATA_DIR: ${_param:prometheus_server_data_directory}
+                PROMETHEUS_BIND_PORT: ${prometheus:server:bind:port}
+                PROMETHEUS_BIND_ADDRESS: ${prometheus:server:bind:address}
+                PROMETHEUS_STORAGE_LOCAL_RETENTION: ${prometheus:server:storage:local:retention}
+                PROMETHEUS_EXTERNAL_URL: "https://${_param:stacklight_monitor_address}:15010"
+                # Backward compatibility for Prometheus 1.7
+                PROMETHEUS_STORAGE_LOCAL_ENGINE: ${_param:prometheus_storage_local_engine}
+                PROMETHEUS_STORAGE_LOCAL_TARGET_HEAP_SIZE: ${_param:prometheus_storage_heap_size}
+                PROMETHEUS_STORAGE_LOCAL_NUM_FINGERPRINT_MUTEXES: ${_param:prometheus_storage_num_fingerprint_mutexes}

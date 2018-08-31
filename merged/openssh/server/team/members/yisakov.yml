@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        yisakov:
+          enabled: true
+          name: yisakov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Yaroslav Isakov
+          home: /home/yisakov
+          email: yisakov@mirantis.com
+  openssh:
+    server:
+      user:
+        yisakov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeNzT/yP8yYEZNv8C0EUhWuGYyXSs2ch0bSw1K/rD0VMhFwwHa5lvHEH163xypICr/yA9FjJNy01flwEq3us87gsNvPRbJQ3CoYj21YVksSm2I6gGMYZWM3pgs6xjVhebfrGdzhKbi9IC5hv66740hmI4T0G6hjzCGZYq0P4LLWkc5dXegrJgSMQGP1v2EP2Se2UJvTr+8M4UVQF49P+H+nnjazKYhArJAf4swPc9i2GiiWrM5Fc5HGdANjs8Ee37VZjrWD06QCw6UwvnX20G3nkKVduvGRrSLvsD4VJNdhcz/b4rH9JAPuEW0KwhmpRIZ8m7Gg/6VFcNNYeieK1jP yar@yisakov-lpt
+          user: ${linux:system:user:yisakov}

@@ -1,0 +1,22 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        check_pidof:
+          args: "haproxy"
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        stacklight_telemetry_vip:
+          address: ${_param:keepalived_stacklight_telemetry_vip_address}
+          password: ${_param:keepalived_stacklight_telemetry_vip_password}
+          interface: ${_param:keepalived_stacklight_telemetry_vip_interface}
+          virtual_router_id: 120
+          priority: 101
+          track_script: check_pidof

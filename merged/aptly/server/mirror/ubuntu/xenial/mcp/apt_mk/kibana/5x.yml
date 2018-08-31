@@ -1,0 +1,21 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    mirror_mirantis_openstack_xenial_kibana_5x_source: http://mirror.mirantis.com/${_param:apt_mk_version}/elasticsearch-5.x/xenial/
+    mirror_mirantis_openstack_xenial_kibana_5x_distribution: stable
+    mirror_mirantis_openstack_xenial_kibana_5x_components: main
+    mirror_mirantis_openstack_xenial_kibana_5x_gpgkeys:
+      - D88E42B4
+  aptly:
+    server:
+      mirror:
+        mirantis_openstack_xenial_kibana_5x:
+          source: ${_param:mirror_mirantis_openstack_xenial_kibana_5x_source}
+          distribution: ${_param:mirror_mirantis_openstack_xenial_kibana_5x_distribution}
+          components: ${_param:mirror_mirantis_openstack_xenial_kibana_5x_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_mirantis_openstack_xenial_kibana_5x_gpgkeys}
+          publisher:
+            component: kibana-5x
+            distributions:
+              - ubuntu-xenial/kibana/5.x/${_param:apt_mk_version}

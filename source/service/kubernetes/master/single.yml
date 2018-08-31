@@ -1,0 +1,92 @@
+applications:
+- kubernetes
+classes:
+- service.kubernetes.support
+- service.kubernetes.common
+parameters:
+  kubernetes:
+    master:
+      enabled: true
+      unschedulable: false
+      registry:
+        host: tcpcloud
+      host:
+        name: ${linux:system:name}
+      service_addresses: 10.254.0.0/16
+      admin:
+        username: ${_param:kubernetes_admin_user}
+        password: ${_param:kubernetes_admin_password}
+      kubelet:
+        address: ${_param:cluster_local_address}
+        allow_privileged: True
+        fail_on_swap: True
+      apiserver:
+        address: ${_param:single_address}
+        bind_address: 0.0.0.0
+        secure_port: 443
+        internal_address: ${_param:kubernetes_internal_api_address}
+        insecure_address: 127.0.0.1
+        insecure_port: 8080
+      etcd:
+        members:
+          - host: ${_param:single_address}
+            name: ${linux:system:name}
+      addons:
+        dns:
+          enabled: true
+          replicas: 1
+          autoscaler:
+            enabled: true
+          domain: ${_param:kubernetes_cluster_domain}
+          server: 10.254.0.10
+          dnsmasq:
+            cache-size: 1000
+            no-resolv:
+            server: 127.0.0.1#10053
+            log-facility: "-"
+        dashboard:
+          enabled: True
+        heapster_influxdb:
+          enabled: False
+        helm:
+          enabled: False
+          tiller_image: gcr.io/kubernetes-helm/tiller:v2.4.2
+        calico_policy:
+          enabled: False
+          image: docker-prod-virtual.docker.mirantis.net/mirantis/projectcalico/calico/kube-controllers:v1.0.4
+          namespace: kube-system
+        contrail_network_controller:
+          enabled: False
+          namespace: kube-system
+          image: yashulyak/contrail-controller:latest
+        virtlet:
+          enabled: False
+          namespace: kube-system
+          image: mirantis/virtlet:v1.0.3
+      token:
+        admin: ${_param:kubernetes_admin_token}
+        kubelet: ${_param:kubernetes_kubelet_token}
+        kube_proxy: ${_param:kubernetes_kube-proxy_token}
+        scheduler: ${_param:kubernetes_scheduler_token}
+        controller_manager: ${_param:kubernetes_controller-manager_token}
+        dns: ${_param:kubernetes_dns_token}
+      ca: kubernetes
+      storage:
+        engine: none
+      namespace:
+        kube-system:
+          enabled: True
+      network:
+        calico:
+          etcd:
+            members:
+              - host: ${_param:single_address}
+                port: 4001
+      federation:
+        enabled: False
+        name: federation
+        namespace: federation-system
+        source: https://dl.k8s.io/v1.7.3/kubernetes-client-linux-amd64.tar.gz
+        hash: 8d66c7912914ac9add514e660fdc8c963b748a7c588c43a14533157a9f0e1c92
+        service_type: NodePort
+        dns_provider: coredns

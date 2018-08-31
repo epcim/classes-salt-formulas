@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        mchernik:
+          enabled: true
+          name: mchernik
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Mykhailo Chernyk
+          home: /home/mchernik
+          email: mchernik@mirantis.com
+  openssh:
+    server:
+      user:
+        mchernik:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCiYzcWNIP1K3DnSfztIZdMTl6zSr133eixsHDWWqI71Fj5UOny4kMH2P/qYk0WHhm7P9kwBNDgmJBY/eO5jb00D2w9BGHyvsOnkpAgzw5neL4ivRT7qLWkRdbcLo8AAFQN7VW+bgMb8gFfYWfttHyfkbJOQlU2xmi8fvhQ+2IM/12S0f0lP2uIYgVn8g9f+1OmtXKOWi/cKx0+6NYsuFjM2oVRlBhwlhPD2mI00rSL6zYjz/8GapPPkylQnds09NueNmrScjsPmJl6lPzU8maxHABZ/KctIZW/0ucMolv/3Ybm5FJIsj6YGUdz7AWzdE9o4tSfugFR3P7Ng/scxXpZ mchernik@mirantis.com
+          user: ${linux:system:user:mchernik}

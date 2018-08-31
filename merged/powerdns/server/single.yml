@@ -1,0 +1,11 @@
+applications:
+- powerdns
+parameters:
+  powerdns:
+    server:
+      backend:
+        dbname: pdns.sqlite
+        dbpath: /var/lib/powerdns
+        engine: sqlite
+      enabled: true
+

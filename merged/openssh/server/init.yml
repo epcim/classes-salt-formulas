@@ -1,0 +1,10 @@
+applications:
+- openssh
+parameters:
+  openssh:
+    server:
+      enabled: true
+      password_auth: false
+      bind:
+        address: 0.0.0.0
+        port: 22

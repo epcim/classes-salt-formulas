@@ -1,0 +1,10 @@
+ classes:
+   - jenkins.slave
+ parameters:
+   linux:
+     system:
+       package:
+         python:
+           version: latest
+         python-virtualenv:
+           version: latest

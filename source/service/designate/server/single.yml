@@ -1,0 +1,37 @@
+applications:
+- designate
+classes:
+- service.designate.support
+parameters:
+  designate:
+    server:
+      enabled: true
+      region: RegionOne
+      domain_id: 5186883b-91fb-4891-bd49-e6769234a8fc
+      version: ${_param:designate_version}
+      bind:
+        api:
+          address: ${_param:single_address}
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        port: 3306
+        name:
+          main_database: designate
+          pool_manager: designate_pool_manager
+        user: designate
+        password: ${_param:mysql_designate_password}
+      identity:
+        engine: keystone
+        host: ${_param:single_address}
+        port: 35357
+        tenant: service
+        user: designate
+        password: ${_param:keystone_designate_password}
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        port: 5672
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'

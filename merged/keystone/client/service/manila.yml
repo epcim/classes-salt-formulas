@@ -1,0 +1,35 @@
+classes:
+- keystone.client.v3.service.manila
+parameters:
+  _param:
+    cluster_public_protocol: https
+    manila_service_protocol: http
+  keystone:
+    client:
+      server:
+        identity:
+          project:
+            service:
+              user:
+                manila:
+                  is_admin: true
+                  password: ${_param:keystone_manila_password}
+                  email: ${_param:admin_email}
+          service:
+            manila:
+              type: share
+              description: OpenStack Shared File Systems V1
+              endpoints:
+              - region: ${_param:openstack_region}
+                public_address: ${_param:cluster_public_host}
+                public_protocol: ${_param:cluster_public_protocol}
+                public_port: 8786
+                public_path: '/v1/$(tenant_id)s'
+                internal_address: ${_param:manila_service_host}
+                internal_port: 8786
+                internal_path: '/v1/$(tenant_id)s'
+                internal_protocol: ${_param:manila_service_protocol}
+                admin_protocol: ${_param:manila_service_protocol}
+                admin_address: ${_param:manila_service_host}
+                admin_port: 8786
+                admin_path: '/v1/$(tenant_id)s'

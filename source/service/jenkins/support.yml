@@ -1,0 +1,20 @@
+parameters:
+  jenkins:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: false
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      backupninja:
+        enabled: true
+      config:
+        enabled: false
+      grafana:
+        enabled: true
+      prometheus:
+       enabled: true
+

@@ -1,0 +1,6 @@
+applications:
+- barbican
+parameters:
+  barbican:
+    client:
+      enabled: true

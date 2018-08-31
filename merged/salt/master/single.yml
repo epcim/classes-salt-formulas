@@ -1,0 +1,31 @@
+applications:
+- salt
+- git
+- openssh
+classes:
+- git.client
+parameters:
+  _param:
+    salt_master_base_environment: dev
+  linux:
+    system:
+      sysctl:
+        net.core.rmem_max: 16777216
+        net.core.wmem_max: 16777216
+        net.ipv4.tcp_rmem: 4096 87380 16777216
+        net.ipv4.tcp_wmem: 4096 87380 16777216
+  salt:
+    master:
+      accept_policy: auto_accept
+      base_environment: ${_param:salt_master_base_environment}
+      command_timeout: 10
+      enabled: true
+      max_event_size: 100000000
+      max_open_files: 15000
+      peer:
+        .*:
+        - x509.sign_remote_certificate
+      source:
+        engine: pkg
+      worker_threads: 40
+

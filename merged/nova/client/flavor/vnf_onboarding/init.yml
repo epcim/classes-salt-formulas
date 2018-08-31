@@ -1,0 +1,16 @@
+classes:
+- nova.client
+parameters:
+  nova:
+    client:
+      server:
+        admin_identity:
+          flavor:
+            cfy.agent:
+              ram: 2048
+              disk: 20
+              vcpus: 2
+            cfy.mngr:
+              ram: 8192
+              disk: 40
+              vcpus: 4

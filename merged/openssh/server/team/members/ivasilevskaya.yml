@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        ivasilevskaya:
+          enabled: true
+          name: ivasilevskaya
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Inessa Vasilevskaya
+          home: /home/ivasilevskaya
+          email: ivasilevskaya@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        ivasilevskaya:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJk2ip+Rn73D4vt47pe/Hv42ylKJv6JIzeF0k3OflH+RyliVelvo05KMcozfsmmvOKhwgDokBj3KjQ10ewDwD7Fz5H3tosa8JFOs36cuHx9aHrsEmj1oIcIyThrIBwSZGFApqJqj27sLtReVLQJPlYR59RJGw61TogkA/QooOABi+KHzuwPFjAcA1SMfFT8LwiaNPkyUdRb5EQeKCOHniRAEPGNIwskA0sxz25qbB1EU2XBFjkxRE1b5GHfUYL+c2YhAwRWTJbD2JbbcHI6HpsmJutzkS6YIkEn1CK4JuA40OQTYFSEutCk2uPPR0G+77Fec2+vD/8H+ncPxPeDqNR ina@ina-ThinkPad-X240 
+          user: ${linux:system:user:ivasilevskaya}

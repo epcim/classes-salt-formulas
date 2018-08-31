@@ -1,0 +1,8 @@
+classes:
+- docker.swarm.stack.monitoring.prometheus
+- docker.swarm.stack.monitoring.prometheus.global
+- docker.swarm.stack.monitoring.alertmanager
+- docker.swarm.stack.monitoring.prometheus_relay
+- docker.swarm.stack.monitoring.pushgateway
+- docker.swarm.stack.monitoring.remote_agent
+- docker.swarm.stack.monitoring.remote_storage_adapter

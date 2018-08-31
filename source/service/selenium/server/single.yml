@@ -1,0 +1,10 @@
+applications:
+- selenium
+classes:
+- service.selenium.support
+parameters:
+  selenium:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

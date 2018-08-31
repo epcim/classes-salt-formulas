@@ -1,0 +1,34 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    gnocchi_service_protocol: http
+    gnocchi_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            gnocchi:
+              password: ${_param:keystone_gnocchi_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            gnocchi:
+              type: metric
+              description: OpenStack Metric Service
+              endpoints:
+                gnocchi_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:gnocchi_public_host}:8041/
+                  region: ${_param:openstack_region}
+                gnocchi_internal:
+                  interface: 'internal'
+                  url: ${_param:gnocchi_service_protocol}://${_param:gnocchi_service_host}:8041/
+                  region: ${_param:openstack_region}
+                gnocchi_admin:
+                  interface: 'admin'
+                  url: ${_param:gnocchi_service_protocol}://${_param:gnocchi_service_host}:8041/
+                  region: ${_param:openstack_region}

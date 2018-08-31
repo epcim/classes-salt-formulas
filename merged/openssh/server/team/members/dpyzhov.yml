@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        dpyzhov:
+          enabled: true
+          name: dpyzhov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Dmitry Pyzhov
+          home: /home/dpyzhov
+          email: dpyzhov@mirantis.com
+  openssh:
+    server:
+      user:
+        dpyzhov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpCEigzaCPNPSuy0GMef/wsyGvBXjbZLxg4eR7oVKmRDsT01sjOFDgabwSBcbkvc7jeWw3RcxC8Upyhq2ADzwFSh+9AXRPbX1R2GxW85SYWg6xz4gFaM8CJ4XUT3S3lnhJ796xUSG9jOIe/pEk9L/4F41uzX8YSwQkGoio2j6za34ZWEVqDNNZt+PVC4woJjuw6r4jBZiEKWuVONeSLJeVwMwc9vwz1kED89OP3zenGknCY5PvM59CrcKHdVzseqHtzMW89nHTTAPTRPWX+07IgNWpI+IRB1KDbtRmeFpuLUwObfxzWqCDc2vpL6UF6uyIVEzLNBSSU4s0lmu0nyEM/uT5hpt/pchl50lfVBrIj+G3wIG+yy/sB4xddVNB5XxwiChxS1pkXgWx6apsOgrixdsVsw5sqRmYwecm3bqL2GFEl1UmLs3fdDyAfsG8uz/OyDl5I48LBZmklriDE6QB+vOG4n1BHPUkwiF2LeXf3JtUrBPhe7oe80xUVxPXjxZqtIHp2Tooj3u9TK5Wd00yOj4uGMyJoQdICSDqt/BATkTQ4a/JMhBGEb5GC6KuuEAIwfV7DnrDW+jyiV7JJ8GUHGbg3KKVPv7jCVcCnww6icywMClnFuAy+yagiq5DxYFkdk9wa1psbxpQKSXFBOO+iWqOYJoiIFwgSiujdM8ZfQ== dpyzhov@mac-pro-2017
+          user: ${linux:system:user:dpyzhov}

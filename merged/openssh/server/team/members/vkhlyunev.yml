@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        vkhlyunev:
+          enabled: true
+          name: vkhlyunev
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Vladimir Khlyunev
+          home: /home/vkhlyunev
+          email: vkhlyunev@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        vkhlyunev:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1v5pWSan9H2Wl64C8bKWmbULp0QgJUi9FqPyuw1bfS5GfHLxejPxaDzec0uSx0PXWzS9afwIO7aGA1dg+dvdl1iPy9jfpkQbGGsusmSsbLvf6+WLVsPk90Bvoc4anmEsG2DWT1SGR65d/imjlwsnlbHTQIm0YucjDjV/p2MmYlbaFLm+ynfo9mt1mP954GDPKQHvyBpxvAIEHL3xAcnNXcpSXm2jhCNsNGUSpY+R7gin2q8MtrpzQNeZZ8degUMpgba7CTXN1sws2dc3UayJ8KZkyRVJNk6mpt2jey03izJzXzt3ux3hg5lToELvEIMDdHOPHT0b0U7f2H+eBCfH/ vkhlyunev@cz7317
+          user: ${linux:system:user:vkhlyunev}

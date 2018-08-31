@@ -1,0 +1,18 @@
+parameters:
+  glusterfs:
+    server:
+      volumes:
+        backup:
+          storage: /srv/glusterfs/backup
+          replica: 3
+          bricks:
+            - ${_param:cluster_node01_address}:/srv/glusterfs/backup
+            - ${_param:cluster_node02_address}:/srv/glusterfs/backup
+            - ${_param:cluster_node03_address}:/srv/glusterfs/backup
+          options:
+            cluster.readdir-optimize: On
+            nfs.disable: On
+            network.remote-dio: On
+            diagnostics.client-log-level: WARNING
+            diagnostics.brick-log-level: WARNING
+            cluster.favorite-child-policy: mtime

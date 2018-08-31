@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        stripathi:
+          enabled: true
+          name: stripathi
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Sachin Tripathi
+          home: /home/stripathi
+          email: stripathi@mirantis.com
+  openssh:
+    server:
+      user:
+        stripathi:
+          enabled: true
+          public_keys:
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDB0W6+M9T/nsGzLRXcXbRwY9S6CfI5VgVWOrxYj190RenC+Z37gMlfwvR6+J2TgQ9NAos/ht7Si7qIjDDLw4UApPDErCTTKuU6cp4eVWR7U6ZDxWSjarGVYC+wOtcb59aTynZcU/W6l86EMjuGO917bxWt1QhR6SQuXGTxvVRbhqLci+APUYJouMwk4G4eia1Y5Pfk4x2+CaVu/7fnXD0YIHcqrujc4OaW3N2ayXCFTE/icBWlIgLv091MkkLgEIInXg2Q40hn9g9h8UMgbRCwyM4f1EwB2xdPQUNpGwtHENBB3fjLoN+IGDKhJsjcCkHsQwdC71O1URYdE6GTJ9sX
+          user: ${linux:system:user:stripathi}
+

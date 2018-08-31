@@ -1,0 +1,18 @@
+applications:
+- elasticsearch
+classes:
+- service.elasticsearch.support
+parameters:
+  _param:
+    elasticsearch_version: 5
+  elasticsearch:
+    server:
+      enabled: true
+      version: ${_param:elasticsearch_version}
+      bind:
+        address: 127.0.0.1
+        port: 9200
+      index:
+        replicas: 0
+      cluster:
+        multicast: false

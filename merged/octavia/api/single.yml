@@ -1,0 +1,40 @@
+applications:
+- octavia
+parameters:
+  _param:
+    internal_protocol: http
+    keystone_octavia_endpoint_type: internal
+  octavia:
+    api:
+      bind:
+        address: ${_param:single_address}
+        port: 9876
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: octavia
+        password: ${_param:mysql_octavia_password}
+        port: 3306
+        user: octavia
+      debug: true
+      enabled: true
+      identity:
+        endpoint_type: ${_param:keystone_octavia_endpoint_type}
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_octavia_password}
+        port: 35357
+        protocol: ${_param:internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: octavia
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:openstack_message_queue_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      role: ${_param:openstack_node_role}
+      version: ${_param:octavia_version}
+

@@ -1,0 +1,32 @@
+applications:
+- graphite
+classes:
+- graphite.support
+parameters:
+  graphite:
+    server:
+      enabled: true
+      timezone: ${linux:system:timezone}
+      carbon_links: 
+      - host: ${_param:cluster_node01_address}
+        port: 7002
+      - host: ${_param:cluster_node02_address}
+        port: 7002
+      cache:
+        engine: 'memcached'
+        prefix: 'GRAPHITE'
+        members: 
+        - host: ${_param:cluster_node01_address}
+          port: 11211
+        - host: ${_param:cluster_node02_address}
+          port: 11211
+      database:
+        engine: 'postgresql'
+        host: '${_param:graphite_database_host}'
+        name: 'graphite'
+        password: ${_param:postgresql_graphite_password}
+        user: 'graphite'
+      mail:
+        host: localhost
+        password: password
+        user: username

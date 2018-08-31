@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    neutron_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            neutron:
+              password: ${_param:keystone_neutron_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            neutron:
+              type: network
+              description: OpenStack Networking Service
+              endpoints:
+                neutron_public:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:9696/
+                  region: ${_param:openstack_region}
+                neutron_interna;:
+                  interface: 'internal'
+                  url: ${_param:neutron_service_protocol}://${_param:neutron_service_host}:9696/
+                  region: ${_param:openstack_region}
+                neutron_admin:
+                  interface: 'admin'
+                  url: ${_param:neutron_service_protocol}://${_param:neutron_service_host}:9696/
+                  region: ${_param:openstack_region}

@@ -1,0 +1,12 @@
+parameters:
+  kubernetes:
+    control:
+      role:
+        view:
+          enabled: true
+          kind: ClusterRole
+          binding:
+            fluentd-cluster-watch:
+              subject:
+                system:nodes:
+                  kind: Group

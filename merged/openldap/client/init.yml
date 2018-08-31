@@ -1,0 +1,17 @@
+applications:
+- openldap
+parameters:
+  _param:
+    openldap_server: ${_param:cluster_vip_address}
+    openldap_tls: false
+  openldap:
+    client:
+      enabled: true
+      server:
+        auth:
+          password: ${_param:openldap_admin_password}
+          user: cn=admin,${_param:openldap_dn}
+        basedn: ${_param:openldap_dn}
+        host: ${_param:openldap_server}
+        tls: ${_param:openldap_tls}
+

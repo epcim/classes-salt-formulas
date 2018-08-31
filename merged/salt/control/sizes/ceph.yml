@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    salt_control_size_cpu_ceph_mon: 8
+    salt_control_size_ram_ceph_mon: 16384
+    salt_control_size_disk_profile_ceph_mon: large
+    salt_control_size_net_profile_ceph_mon: default
+    salt_control_size_cpu_ceph_rgw: 8
+    salt_control_size_ram_ceph_rgw: 16384
+    salt_control_size_disk_profile_ceph_rgw: small
+    salt_control_size_net_profile_ceph_rgw: default
+  salt:
+    control:
+      size:
+        ceph.mon:
+          cpu: ${_param:salt_control_size_cpu_ceph_mon}
+          ram: ${_param:salt_control_size_ram_ceph_mon}
+          disk_profile: ${_param:salt_control_size_disk_profile_ceph_mon}
+          net_profile: ${_param:salt_control_size_net_profile_ceph_mon}
+        ceph.rgw:
+          cpu: ${_param:salt_control_size_cpu_ceph_rgw}
+          ram: ${_param:salt_control_size_ram_ceph_rgw}
+          disk_profile: ${_param:salt_control_size_disk_profile_ceph_rgw}
+          net_profile: ${_param:salt_control_size_net_profile_ceph_rgw}

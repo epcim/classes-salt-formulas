@@ -1,0 +1,17 @@
+applications:
+- salt
+parameters:
+  salt:
+    minion:
+      enabled: true
+      master:
+        host: ${_param:salt_master_host}
+      max_event_size: 100000000
+      mine:
+        interval: 60
+        module:
+          grains.items: []
+          network.interfaces: []
+      source:
+        engine: pkg
+

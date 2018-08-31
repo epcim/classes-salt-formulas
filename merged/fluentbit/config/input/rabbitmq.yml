@@ -1,0 +1,25 @@
+classes:
+- fluentbit.config
+- fluentbit.config.parser.rabbitmq
+
+parameters:
+  fluentbit:
+    config:
+      input:
+        rabbitmq.conf:
+          tail:
+            multiline: 'On'
+            parser_firstline: rabbitmq
+            ##
+            path: ${_param:fluentbit_config_syslogpath}/rabbitmq/rabbit*
+            path_key: path
+            DB: /var/lib/fluentbit/rabbitmq.flb.db
+            exclude_path: '*.gz,*.xz'
+            #multiline_flush: 20
+            buffer_chunk_size: 32k
+            buffer_max_size: 1M
+            tag: rabbitmq
+      service:
+        td-agent-bit.conf:
+          - '@INCLUDE input_rabbitmq.conf'
+

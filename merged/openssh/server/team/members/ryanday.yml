@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        rday:
+          enabled: true
+          name: rday
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Ryan Day
+          home: /home/rday
+          email: rday@mirantis.com
+  openssh:
+    server:
+      user:
+        rday:
+          enabled: true
+          public_keys:
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5WnQjTI+Elg3I3MeuP1T9Y8FKjuLZSj9qiMbetVb9+AbvjbYqjtam7xWzLxsqeH15d/ZSRHnU4E8f0/Wvk1z9Bl+GKl9+IpLvurewl3WXe2yaeZl4Ey3G9goTLfhluB2BbLqf7gu7t02aei68NhYNkp0Ry1FDBQ75frN1EcUoDubHl4HWJWkTsGJFoiaBTmlNRIkbQBYSEGoY331c4e++W0ZLV+q1rjbXVWcWjzuK+i3wCBrDdAjm4LyPjD60yJ/0n8FO4ChlhnGowhkHxQf7Bt80/QhM8VZuWPG4sQReJ2uMBvkFWRYKf8p2h7MaouFLmUOzW0k/EcILBBZgssekaUhDDyXe3c0Qd6yC2Eb8CCRKgIuhTW9+xTfJhZAFLCPDYN/CDybzvgJSgRCa6esxfCQB+i4aRJOeL5IePXdkO+LY1GMbDzVhIxfPviN4/7NRidvtPHEYwLGvaIQUb/XWX4ILXAhdw/ilfOOu9DQkPzpBTQaAGl9+e2edRP3WAe4fjgCPmeTIruwSRqxJFLdLG19m1JaoRwc7H1cIiUQ1i/lMYq2ntA/60FZRQ/xsLdX5LT+wo896bc3pRxore+zs2o2sATEc84u5eCEFk3wMZvfeJdDz/l489G/1kp1SUKMI1ouyBWoP7qO/fI9m+TXg3jYJ3JOd3pYO7jd3kDBuZQ==
+          user: ${linux:system:user:rday}
+

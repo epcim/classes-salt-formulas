@@ -1,0 +1,3 @@
+classes:
+- aptly.server.mirror.ubuntu.xenial.mcp.apt_mk.kibana.46
+- aptly.server.mirror.ubuntu.xenial.mcp.apt_mk.kibana.5x

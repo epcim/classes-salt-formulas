@@ -1,0 +1,7 @@
+parameters:
+  linux:
+    system:
+      repo:
+        knot:
+          enabled: true
+          source: 'deb http://ppa.launchpad.net/cz.nic-labs/knot-dns/ubuntu $(lsb_release -sc) main'

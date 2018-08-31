@@ -1,0 +1,11 @@
+parameters:
+  fluentd:
+    agent:
+      plugin:
+        fluent-plugin-prometheus:
+          deb: ['td-agent-additional-plugins']
+      config:
+        input:
+          prometheus:
+            metric:
+              type: prometheus

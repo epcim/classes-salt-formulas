@@ -1,0 +1,18 @@
+parameters:
+  _param:
+    opencontrail_gsc_grp_enable: True
+    opencontrail_gsc_grp_restart_time: 60
+    opencontrail_gsc_grp_end_of_rib_timeout: 30
+    opencontrail_gsc_grp_bgp_helper_enable: False
+    opencontrail_gsc_grp_xmpp_helper_enable: False
+    opencontrail_gsc_grp_long_lived_restart_time: 300
+  opencontrail:
+    client:
+      global_system_config:
+        grp:
+          enable: ${_param:opencontrail_gsc_grp_enable}
+          restart_time: ${_param:opencontrail_gsc_grp_restart_time}
+          end_of_rib_timeout: ${_param:opencontrail_gsc_grp_end_of_rib_timeout}
+          bgp_helper_enable: ${_param:opencontrail_gsc_grp_bgp_helper_enable}
+          xmpp_helper_enable: ${_param:opencontrail_gsc_grp_xmpp_helper_enable}
+          long_lived_restart_time: ${_param:opencontrail_gsc_grp_long_lived_restart_time}

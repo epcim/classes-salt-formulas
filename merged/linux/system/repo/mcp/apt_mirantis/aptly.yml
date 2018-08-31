@@ -1,0 +1,14 @@
+classes:
+- linux.system.repo.keystorage.aptly
+parameters:
+  _param:
+    apt_mk_version: stable
+    linux_system_repo_url: http://mirror.mirantis.com/${_param:apt_mk_version}/
+    linux_system_repo_mcp_aptly_url: ${_param:linux_system_repo_url}/aptly/
+  linux:
+    system:
+      repo:
+        mcp_aptly:
+          source: "deb [arch=amd64] ${_param:linux_system_repo_mcp_aptly_url}/${_param:linux_system_codename}/ squeeze main"
+          architectures: amd64
+          clean_file: true

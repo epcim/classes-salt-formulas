@@ -1,0 +1,12 @@
+classes:
+- nova.client
+parameters:
+  nova:
+    client:
+      server:
+        admin_identity:
+          flavor:
+            backend.nginx:
+              ram: 2048
+              disk: 10
+              vcpus: 1

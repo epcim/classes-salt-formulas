@@ -1,0 +1,36 @@
+parameters:
+  linux:
+    system:
+      repo:
+        mcp_maas:
+          # pub   4096R/684D4A1C 2015-08-20
+          key: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            Version: GnuPG v1
+
+            mQINBFXVlyMBEACqM3iz2EGJE0iE3/AAbNCnbBB25m3AWaSxJk+GJfkAAYWGqAKi
+            uWceCcetdNKNTKd8frSZFsRB7IceZr0u5sWpSYur6uoMNHzS8Y5cGdyAVrnEZtbd
+            ak652x13jlX7nrcE9g//lD0w254XW1Loyy5YOGWfUmJkGImndFWtkqd1J7SCVMMW
+            5l/nS4LwsOx/wTxL5m/cFQLi67JyJGqszKXS88oHT1YFBWPyl1VcXifFwecH/32f
+            Rr6WGpEAaxGF4dO45WGvJIQs2yiT5f9ha3tuJCbzI58t9BxiR1MMZ9AAPjdNO6JZ
+            kX2q+/uqgJg9IWNcJ4E+fCgl/hvoB3AURXHmaagH7nMb/6OA/QFSbiR3eciSJ89c
+            EkK+7d0br+p2+shO/dOV6lUrbidVVjiiTdmYlyXzuPcvPWVYmXjDzsOi0sSZZNMq
+            8G3/pAavjyGUvZtb781V1j9/8l3o5ScAPzzamT2W4rF+nCh1iHYz7+wP2XDNifE/
+            oK7fLNb0ig1G5S4PCqZHUp95LUaJrFczYCPwlERUxIC3B9a+UC3SdZmRuuSENWNs
+            YxKUlbU07GCrjxtcDhQHGQDVJDUGbqqkA4B/iKrwW3reA5fHo3yocQMX7YR6C2/Q
+            n+wn/EoEPIB1wkzAQvarnNCCdwjD5AB1VhANEFwUKMWHDEsofKOSTBYvgQARAQAB
+            tBZMYXVuY2hwYWQgUFBBIGZvciBNQUFTiQI4BBMBAgAiBQJV1ZcjAhsDBgsJCAcD
+            AgYVCAIJCgsEFgIDAQIeAQIXgAAKCRAE5/3FaE1KHDH8D/9Mdc+4tw8foj6lILCg
+            fBRi9S37tOyV2m5YvD+qRzefUYgFKXYxleO+H9cjFH2XyHIBwa15dD/Yg+DkcAKb
+            9f/a1llHNTzLkHiNVQl4tl8qeJPj2Obm53HsjhazIgh0L208GRGJxO4HSBbrBTo8
+            FNF00Cl52josZdG1mPCSDuJm1AkeY9q4WeAOnekquz2qjUa+L8J8z+HVPC9rUryE
+            NXdwCyh3TE0G0occjUAsb5oOu3bcKSbVraq+trhjp9sz7o7O4lc4+cT2gFIWl1Rp
+            1djzXH8flU/s3U1vl0RcIFEZbuqsuDWukpxozq4M5y7VKq4y5dq7Y0PbMuJ0Dvgn
+            Bn4fbboMji4LYfgn++vosZv/MXkPIg6wubxdejVdrEoFRFxCcYqW4wObY8vxrvDr
+            Mjp4HrQ2guN8OJDUYnLdVv9P1MMKDAMrDjRdy3NsBpd7GuA9hXRXBPZ8y74nIwCR
+            jEDnIz5jsws9PxZIVabieoCI6RibJMw8qpuicM97Ss2Uq5vURvTBQ3f6wYjCMsdt
+            yqjz6TVJ3zwK9NPfMhXGVrrsxBOxO382r6XXuUbTcXZTDjAkoMsBqfjidlGDGTb3
+            Un0LkZJfpXrmZehyvO/GlsoYiFDhGf+EXJzKwRUEuJlIkVEZ72OtuoUMoBrjuADR
+            lJQUW0ZbcmpOxjK1c6w08nhSvA==
+            =QeWQ
+            -----END PGP PUBLIC KEY BLOCK-----

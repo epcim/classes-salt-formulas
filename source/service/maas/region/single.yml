@@ -1,0 +1,21 @@
+applications:
+- maas
+classes:
+- service.maas.support
+parameters:
+  maas:
+    region:
+      bind:
+        host: localhost
+        port: 80
+      admin:
+        username: admin
+        password: password
+        email:  email@example.com
+      database:
+        engine: postgresql
+        host: localhost
+        name: maasdb
+        password: password
+        username: maas
+      enabled: true

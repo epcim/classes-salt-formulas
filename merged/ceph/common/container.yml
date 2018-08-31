@@ -1,0 +1,13 @@
+applications:
+- ceph
+classes:
+- ceph.monitoring.cluster_stats
+parameters:
+  _param:
+    ceph_common_prefix_dir: /srv/volumes/ceph
+  ceph:
+    common:
+      container_mode: true
+      enabled: true
+      prefix_dir: ${_param:ceph_common_prefix_dir}
+

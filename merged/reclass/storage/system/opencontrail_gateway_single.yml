@@ -1,0 +1,16 @@
+parameters:
+  _param:
+    opencontrail_gateway_hostname: gtw01
+    opencontrail_gateway_system_codename: trusty
+  reclass:
+    storage:
+      node:
+        opencontrail_gateway_node01:
+          name: ${_param:opencontrail_gateway_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.opencontrail.gateway
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:opencontrail_gateway_system_codename}
+            single_address: ${_param:opencontrail_gateway_address}

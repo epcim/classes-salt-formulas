@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        ogrudev:
+          enabled: true
+          name: ogrudev
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Oleksii Grudev
+          home: /home/ogrudev
+          email: ogrudev@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        ogrudev:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDilSKhVkANZQLOY6zhLBxhKD0OabfORbuxL3H1o+Q0TfL223/I2A8FAqpZzu9RdX0FoOcP3S85S51IX1p4odipTAA9Wyp4jEtMNUUWvRkXWTvVR99+QNCq4QiB78c0JhtydKPu29DJNQr3/UHG877BCrLvOyiXFNrVZI+EBC+Md2SEqSN8e1P/DlORUrjgQKAxuKhMhDyoBbyBvnfK32IYbs8bKlYZRusj1dlL3Jv/nR4VvN4YT+CzNOPCBTljFdcxuqdPZvqdAyMBIYDxaCxx2id96L98kYavKlqUZJn0x6mJ8ndtHtfn+Fwjom/+8cPFUjuhULWsQiPRjfqA6p8r agrudev@agrudev-pc
+          user: ${linux:system:user:ogrudev}

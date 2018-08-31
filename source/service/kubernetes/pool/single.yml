@@ -1,0 +1,41 @@
+applications:
+- kubernetes
+classes:
+- service.kubernetes.support
+- service.kubernetes.common
+parameters:
+  kubernetes:
+    pool:
+      enabled: true
+      registry:
+        host: tcpcloud
+      host:
+        name: ${linux:system:name}
+      apiserver:
+        host: ${_param:master_address}
+        secure_port: 443
+        insecure:
+          enabled: True
+        insecure_port: 8080
+        members:
+        - host: ${_param:master_address}
+      address: ${_param:single_address}
+      cluster_dns: 10.254.0.10
+      allow_privileged: True
+      cluster_domain: ${_param:kubernetes_cluster_domain}
+      kubelet:
+        address: ${_param:cluster_local_address}
+        config: /etc/kubernetes/manifests
+        allow_privileged: True
+        frequency: 5s
+        fail_on_swap: True
+      token:
+        kubelet: ${_param:kubernetes_kubelet_token}
+        kube_proxy: ${_param:kubernetes_kube-proxy_token}
+      ca: kubernetes
+      network:
+        calico:
+          etcd:
+            members:
+            - host: ${_param:master_address}
+              port: 4001

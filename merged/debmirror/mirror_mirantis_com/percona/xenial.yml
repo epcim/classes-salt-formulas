@@ -1,0 +1,27 @@
+parameters:
+  _param:
+    apt_mk_version: 'stable'
+    mirror_mirantis_com_percona_xenial_force: False
+    debmirror_mirrors_base_target_dir: "/srv/volumes/aptly/public/${_param:apt_mk_version}/"
+  debmirror:
+    client:
+      enabled: true
+      mirrors:
+        mirror_mirantis_com_percona_xenial:
+          force: ${_param:mirror_mirantis_com_percona_xenial_force}
+          lock_target: True
+          extra_flags: [ '--verbose', '--progress', '--nosource', '--no-check-gpg', '--rsync-extra=none' ]
+          method: "rsync"
+          arch: [ 'amd64' ]
+          mirror_host: "mirror.mirantis.com"
+          mirror_root: ":mirror/${_param:apt_mk_version}/percona/xenial/"
+          target_dir: "${_param:debmirror_mirrors_base_target_dir}/percona/xenial/"
+          log_file: "/var/log/debmirror/mirror_mirantis_com_percona_xenial.log"
+          dist: [ xenial ]
+          section: [ main ]
+          filter:
+            001: "--exclude='(-dbg_|-dbg-)'"
+            002: "--exclude='/percona-server-5.(5|6)'"
+            003: "--exclude='/percona-server-mongodb'"
+            004: "--exclude='/(percona-xtradb-cluster|percona-server-5|percona-xtradb-cluster)'"
+            050: "--include='/*galera*'"

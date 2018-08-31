@@ -1,0 +1,19 @@
+classes:
+- helm.analytics_pipeline.zookeeper
+- helm.analytics_pipeline.kafka
+- helm.analytics_pipeline.spark
+- helm.analytics_pipeline.hdfs
+- helm.analytics_pipeline.tweepub
+- helm.analytics_pipeline.tweetics
+- helm.analytics_pipeline.tweeviz
+- helm.client
+parameters:
+  _param:
+    analytics_enabled: true
+    analytics_repo: mirantisworkloads
+    analytics_release_prefix: analytics-pipeline-
+    analytics_kafka_replicas: 3
+  helm:
+    client:
+      repos:
+        mirantisworkloads: https://mirantisworkloads.storage.googleapis.com/

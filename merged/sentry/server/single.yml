@@ -1,0 +1,27 @@
+applications:
+- sentry
+parameters:
+  _param:
+    sentry_server_name: sentry.domain.com
+  sentry:
+    server:
+      enabled: true
+      secret_key: ${_param:sentry_secret_key}
+      workers: 3
+      bind:
+        name: ${_param:nginx_sentry_server_host}
+        address: 0.0.0.0
+        port: 8090
+      cache:
+        engine: redis
+        host: 127.0.0.1
+        port: 6379
+      database:
+        engine: postgresql
+        name: sentry
+        host: 127.0.0.1
+        port: 5432
+        user: sentry
+        password: ${_param:postgresql_sentry_password}
+      mail:
+        engine: dummy

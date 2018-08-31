@@ -1,0 +1,53 @@
+applications:
+- kubernetes
+classes:
+- docker.host
+- kubernetes.common
+parameters:
+  docker:
+    host:
+      options:
+        iptables: false
+        log-opts:
+          labels: io.kubernetes.pod.name
+  kubernetes:
+    pool:
+      address: ${_param:cluster_local_address}
+      apiserver:
+        host: ${_param:cluster_vip_address}
+        insecure:
+          enabled: true
+        insecure_port: 8080
+        members:
+        - host: ${_param:cluster_vip_address}
+        secure_port: 443
+      ca: kubernetes
+      cluster_dns: 10.254.0.10
+      cluster_domain: ${_param:kubernetes_cluster_domain}
+      enabled: true
+      host:
+        name: ${linux:system:name}
+      kubelet:
+        address: ${_param:cluster_local_address}
+        allow_privileged: true
+        config: /etc/kubernetes/manifests
+        fail_on_swap: true
+        frequency: 5s
+      network:
+        calico:
+          etcd:
+            members:
+            - host: ${_param:cluster_node01_address}
+              port: 4001
+            - host: ${_param:cluster_node02_address}
+              port: 4001
+            - host: ${_param:cluster_node03_address}
+              port: 4001
+          prometheus:
+            enabled: true
+      registry:
+        host: tcpcloud
+      token:
+        kube_proxy: ${_param:kubernetes_kube-proxy_token}
+        kubelet: ${_param:kubernetes_kubelet_token}
+

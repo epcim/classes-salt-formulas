@@ -1,0 +1,17 @@
+parameters:
+  _param:
+    manila_share_type_default_extra_specs:
+      driver_handles_share_servers: False
+      snapshot_support: True
+  manila:
+    client:
+      enabled: true
+      server:
+        admin_identity:
+          share_type:
+            default:
+              name: 'default'
+              # Extra quotes are required to make sure automatic conversion to float
+              # not happening.
+              microversion: '"2.40"'
+              extra_specs: ${_param:manila_share_type_default_extra_specs}

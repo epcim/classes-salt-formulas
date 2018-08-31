@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        dstremkouski:
+          enabled: true
+          name: dstremkouski
+          sudo: true
+          full_name: Dzmitry Stremkouski
+          home: /home/dstremkouski
+          email: dstremkouski@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        dstremkouski:
+          enabled: true
+          public_keys:
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDlvA0GjsFF4p0oRF/49/k0YYqkCpsmKHoMtM2b/ZgRAbUzuobEqOZILkGkbvWTKQrq1BbMjGk/11EvCA07f+N8Z2Rj9lw9+tlqPy4K/90BNPvLcjBlKXruZFZWtQmbBWsA150PjvrqSD1pju+qkpC3tavgC4S0HxT9Gl9F+IuqCEfvRSNhRJrl2UWPHTolTfE7NOlX3745OEXTH4AFp/lgy+wyvGJBujfGZOjjuiGyPl71cS9t7yJBxTXdZxDDrjmaFmsftpK0Q+JccNHLzlj2hrkrWTPnrP70hbzgyoxw+JwOXmsnE8Q8WHxEgYyPfA4dxkZsktQbE51zGvU/yIxGJ5zV9AF2Y7pxzOXHq9sPXwgoJneW9JHCkH7BSw56+EHagEDeYeKD/1aIaRJbeyfltTTbK05J8nhyrdKFGENazEHoDYmhWk7Jdd7X/E2nEYWmYTje4YacHVOM1P9Guqs8n8VrUnYXreogJ9tOZs/Ydl/+I52ITvuK7w+SsVcl5wuxuoclg6dsa1RrDpKm9emN2OKS3RqJBNjnfSUaeGLrDSYENm/+PUEhvhKAd+DTpjnYb+oKsf4QegGFJtoHoZNNIlSvnjpjO2VC+g0Ci11JTaq/LwfNb7OJMYURzFwlW8BRmJWZ8BnnhNhw+vZG6fa7yyeIW9OVpVtqQBPpA5Qumw== argentina
+          user: ${linux:system:user:dstremkouski}

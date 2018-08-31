@@ -1,0 +1,10 @@
+applications:
+- pypiserver
+classes:
+- service.pypiserver.support
+parameters:
+  pypiserver:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

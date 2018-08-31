@@ -1,0 +1,35 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        ceph-add-node:
+          type: workflow-scm
+          concurrent: true
+          display_name: "Ceph - add node"
+          discard:
+            build:
+              keep_num: 50
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: ceph-add-node.groovy
+          param:
+            # general parameters
+            SALT_MASTER_URL:
+              type: string
+              description: URL of Salt master
+              default: "http://${_param:salt_master_host}:6969"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              description: Credentials for login to Salt API
+              default: salt
+            HOST:
+              type: string
+              description: OSD HOST that will be added to Ceph cluster (rgw04*)
+              default: 'rgw04*'
+            HOST_TYPE:
+              type: string
+              description: Type of Ceph node to be added. Valid values are mon/osd/rgw
+              default: 'rgw'

@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        pbasov:
+          enabled: true
+          name: pbasov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Pavel Basov
+          home: /home/pbasov
+          email: pbasov@mirantis.com
+  openssh:
+    server:
+      user:
+        pbasov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6cHg1SvsxWp5tD0Ee7nl4pyW9cLO/ZQYYxUYa2zSn/RWFm9BFuy1VwkJiYCIvk0lTXfKQMiO10mKm2xFC3VT0vpTSGIYDh4oxDu0FpIaTmXX3ULVdLNwWvrkHoPkIbPy1nUYlJQ+9PEh6KWkbxeYXFxVPoouWkDwshF63GrRA7Pyg2CuVn/FEA+ldSeq7mp/kkOWvlKXpJzvKXt4A/6odOCUiCnX//CWreHCnfCV3KsteyBc+UP2ql6wpEXmIIYdrOF0O3ofqRPTx6ivIOGGDuYB6e/XDivoEBPWNcLYcr9d5HKOTgRE6xF2Q1ElzpbvAY4AS+kggEjIgImiB3TxX pbasov@mirantis.com
+          user: ${linux:system:user:pbasov}

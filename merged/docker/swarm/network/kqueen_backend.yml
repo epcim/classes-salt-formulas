@@ -1,0 +1,10 @@
+parameters:
+  _param:
+    docker_kqueen_network_subnet: 10.60.0.0/24
+  docker:
+    client:
+      network:
+        kqueen_backend:
+          subnet: ${_param:docker_kqueen_network_subnet}
+          driver: overlay
+          attachable: true

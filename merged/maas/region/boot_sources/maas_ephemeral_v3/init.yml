@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    maas_region_boot_sources_maas_ephemeral_v3_bs_url: http://mirror.mirantis.com/${_param:apt_mk_version}/maas-ephemeral-v3/
+  maas:
+    region:
+      boot_sources_delete_all_others: true
+      boot_sources:
+        mcp_resources_mirror:
+          url: ${_param:maas_region_boot_sources_maas_ephemeral_v3_bs_url}
+          keyring_file: /usr/share/keyrings/ubuntu-cloudimage-keyring.gpg

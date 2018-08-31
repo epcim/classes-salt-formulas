@@ -1,0 +1,12 @@
+applications:
+- collectd
+classes:
+- service.collectd.support
+parameters:
+  collectd:
+    remote_client:
+      enabled: true
+      read_interval: 10
+      read_threads: 10
+      use_fqdn: false
+      automatic_starting: true

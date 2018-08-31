@@ -1,0 +1,10 @@
+applications:
+- manila
+classes:
+- keystone.client.os_client_config.admin_identity
+- manila.client.share_type
+parameters:
+  manila:
+    client:
+      enabled: true
+

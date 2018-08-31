@@ -1,0 +1,20 @@
+applications:
+- kibana
+parameters:
+  _param:
+    kibana_version: 5
+  kibana:
+    server:
+      bind:
+        address: ${_param:single_address}
+        port: 5601
+      database:
+        engine: elasticsearch
+        host: ${_param:kibana_elasticsearch_host}
+        port: 9200
+      default_app_id: dashboard/logs
+      enabled: true
+      source:
+        engine: file
+      version: ${_param:kibana_version}
+

@@ -1,0 +1,9 @@
+applications:
+- reclass
+classes:
+- service.reclass.support
+parameters:
+  reclass:
+    storage:
+      enabled: true
+      base_dir: /srv/ansible/reclass

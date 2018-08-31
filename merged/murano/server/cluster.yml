@@ -1,0 +1,73 @@
+applications:
+- murano
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.listen.openstack.murano
+- rabbitmq.server.single
+parameters:
+  murano:
+    cluster:
+      bind:
+        address: ${_param:cluster_vip_address}
+        port: 4567
+      enabled: true
+      gcache_size: 4000
+      members:
+      - host: ${_param:cluster_node01_address}
+        port: 4567
+      - host: ${_param:cluster_node02_address}
+        port: 4567
+      name: openstack
+    server:
+      admin:
+        password: ${_param:mysql_admin_password}
+        user: root
+      bind:
+        address: ${_param:single_address}
+        port: 8082
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: murano
+        password: ${_param:mysql_murano_password}
+        port: 3306
+        user: murano
+      enabled: true
+      force_encoding: utf8
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_murano_password}
+        port: 35357
+        tenant: service
+        user: murano
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:openstack_messaging_queue_node01_address}
+        - host: ${_param:openstack_messaging_queue_node02_address}
+        - host: ${_param:openstack_messaging_queue_node03_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      murano_agent_queue:
+        engine: rabbitmq
+        host: ${_param:openstack_proxy_address}
+        password: ${_param:rabbitmq_murano_agent_password}
+        port: 5673
+        user: openstack
+        virtual_host: /catalog
+      network:
+        external: ${_param:murano_external_network}
+      role: ${_param:openstack_node_role}
+      users:
+      - host: localhost
+        name: haproxy
+      - host: '%'
+        name: haproxy
+      - host: ${_param:cluster_local_address}
+        name: haproxy
+      version: ${_param:murano_version}
+

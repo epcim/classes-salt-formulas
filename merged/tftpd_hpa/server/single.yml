@@ -1,0 +1,6 @@
+applications:
+- tftpd_hpa
+parameters:
+  tftpd_hpa:
+    server:
+      enabled: true

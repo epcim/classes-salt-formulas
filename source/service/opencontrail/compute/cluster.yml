@@ -1,0 +1,8 @@
+applications:
+- opencontrail
+classes:
+- service.opencontrail.support
+parameters:
+  opencontrail:
+    compute:
+      enabled: true

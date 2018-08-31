@@ -1,0 +1,19 @@
+classes:
+- nagios.server
+parameters:
+  _param:
+    nagios_automatic_starting: false
+    nagios_status_bind: ${_param:stacklight_monitor_address}
+    nagios_ui_bind: ${_param:stacklight_monitor_address}
+  keepalived:
+    cluster:
+      instance:
+        stacklight_monitor_vip:
+          notify_action:
+            backup:
+            - nagios3 stop
+            fault:
+            - nagios3 stop
+            master:
+            - nagios3 start
+

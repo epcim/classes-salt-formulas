@@ -1,0 +1,63 @@
+applications:
+- cinder
+parameters:
+  _param:
+    internal_protocol: http
+    keystone_cinder_endpoint_type: internalURL
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  cinder:
+    controller:
+      backend: {}
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: cinder
+        password: ${_param:mysql_cinder_password}
+        port: 3306
+        user: cinder
+      default_volume_type: ""
+      enabled: true
+      glance:
+        host: ${_param:single_address}
+        port: 9292
+      identity:
+        endpoint_type: ${_param:keystone_cinder_endpoint_type}
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_cinder_password}
+        port: 35357
+        protocol: ${_param:internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: cinder
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:single_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      osapi:
+        host: ${_param:single_address}
+      role: ${_param:openstack_node_role}
+      version: ${_param:cinder_version}
+    volume:
+      enabled: false
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

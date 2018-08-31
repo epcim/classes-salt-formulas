@@ -1,0 +1,4 @@
+parameters:
+  designate:
+    client:
+      enabled: true

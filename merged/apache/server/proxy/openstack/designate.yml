@@ -1,0 +1,29 @@
+parameters:
+  _param:
+    apache_ssl:
+      enabled: false
+    apache_proxy_ssl: ${_param:apache_ssl}
+    apache_proxy_openstack_api_host: ${_param:cluster_public_host}
+    apache_proxy_openstack_api_address: 0.0.0.0
+    apache_proxy_openstack_designate_host: ${_param:designate_service_host}
+  apache:
+    server:
+      modules:
+       - proxy
+       - proxy_http
+       - headers
+      enabled: true
+      site:
+        apache_proxy_openstack_api_designate:
+          enabled: true
+          type: proxy
+          name: openstack_api_designate
+          proxy:
+            host: ${_param:apache_proxy_openstack_designate_host}
+            port: 9001
+            protocol: http
+          host:
+            name: ${_param:apache_proxy_openstack_api_host}
+            port: 9001
+            address: ${_param:apache_proxy_openstack_api_address}
+          ssl: ${_param:apache_proxy_ssl}

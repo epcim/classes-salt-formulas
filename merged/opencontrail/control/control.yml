@@ -1,0 +1,165 @@
+applications:
+- opencontrail
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.listen.opencontrail.control
+parameters:
+  _param:
+    keystone_admin_password: none
+    keystone_service_token: none
+    multi_tenancy: true
+    opencontrail_identity_port: 35357
+    opencontrail_identity_version: "2.0"
+    opencontrail_message_queue_node01_address: ${_param:openstack_message_queue_node01_address}
+    opencontrail_message_queue_node02_address: ${_param:openstack_message_queue_node02_address}
+    opencontrail_message_queue_node03_address: ${_param:openstack_message_queue_node03_address}
+    opencontrail_version: 2.2
+    openstack_region: RegionOne
+  linux:
+    system:
+      kernel:
+        modules:
+        - nf_conntrack_ipv4
+  opencontrail:
+    common:
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        token: ${_param:keystone_service_token}
+      network:
+        engine: neutron
+        host: ${_param:cluster_vip_address}
+        port: 9696
+      version: ${_param:opencontrail_version}
+    config:
+      analytics:
+        host: ${_param:opencontrail_analytics_address}
+      bind:
+        address: ${_param:cluster_local_address}
+        api_port: 9100
+        discovery_port: 9110
+      database:
+        members:
+        - host: ${_param:cluster_node01_address}
+          port: 9160
+        - host: ${_param:cluster_node02_address}
+          port: 9160
+        - host: ${_param:cluster_node03_address}
+          port: 9160
+      discovery:
+        host: ${_param:cluster_vip_address}
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        region: ${_param:openstack_region}
+        tenant: admin
+        token: ${_param:keystone_service_token}
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      members:
+      - host: ${_param:cluster_node01_address}
+        id: 1
+      - host: ${_param:cluster_node02_address}
+        id: 2
+      - host: ${_param:cluster_node03_address}
+        id: 3
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        members:
+        - host: ${_param:opencontrail_message_queue_node01_address}
+        - host: ${_param:opencontrail_message_queue_node02_address}
+        - host: ${_param:opencontrail_message_queue_node03_address}
+        port: 5672
+      multi_tenancy: ${_param:multi_tenancy}
+      network:
+        engine: neutron
+        host: ${_param:cluster_vip_address}
+        port: 9696
+      version: ${_param:opencontrail_version}
+    control:
+      bind:
+        address: ${_param:cluster_local_address}
+      discovery:
+        host: ${_param:cluster_vip_address}
+      enabled: true
+      id: ${_param:opencontrail_database_id}
+      master:
+        host: ${_param:cluster_local_address}
+      members:
+      - host: ${_param:cluster_node01_address}
+        id: 1
+      - host: ${_param:cluster_node02_address}
+        id: 2
+      - host: ${_param:cluster_node03_address}
+        id: 3
+      version: ${_param:opencontrail_version}
+    database:
+      bind:
+        host: ${_param:cluster_local_address}
+        port: 9042
+        port_configdb: 9041
+        rpc_port: 9160
+        rpc_port_configdb: 9161
+      cassandra:
+        version: 2
+      data_dirs:
+      - /var/lib/cassandra
+      discovery:
+        host: ${_param:cluster_vip_address}
+      enabled: true
+      id: ${_param:opencontrail_database_id}
+      members:
+      - host: ${_param:cluster_node01_address}
+        id: 1
+      - host: ${_param:cluster_node02_address}
+        id: 2
+      - host: ${_param:cluster_node03_address}
+        id: 3
+      minimum_disk: 10
+      name: Contrail
+      original_token: 0
+      type: control
+      version: ${_param:opencontrail_version}
+    web:
+      analytics:
+        host: ${_param:opencontrail_analytics_address}
+      bind:
+        address: ${_param:cluster_local_address}
+      cache:
+        engine: redis
+        host: 127.0.0.1
+        port: 6379
+      database:
+        engine: cassandra
+        port: 9042
+      enabled: true
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_admin_password}
+        port: ${_param:opencontrail_identity_port}
+        region: RegionOne
+        tenant: admin
+        token: ${_param:keystone_service_token}
+        user: admin
+        version: ${_param:opencontrail_identity_version}
+      master:
+        host: ${_param:cluster_vip_address}
+      members:
+      - host: ${_param:cluster_node01_address}
+        id: 1
+      - host: ${_param:cluster_node02_address}
+        id: 2
+      - host: ${_param:cluster_node03_address}
+        id: 3
+      network:
+        engine: neutron
+        host: ${_param:cluster_vip_address}
+      version: ${_param:opencontrail_version}
+

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        vjigulin:
+          enabled: true
+          name: vjigulin
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Vladimir Jigulin
+          home: /home/vjigulin
+          email: vjigulin@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        vjigulin:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI+OmVDWql8hAOtHIN03zmd0vOj6lzgRwgT5/atyJHbkcl9y5CuB5+DdlXplMcPnm7lH+2u9LnWr21dcal3DuoHYSavnRKvyZZfTDDyvWB1FGYwM8igrdrrSGGuhl5yLlRbuXdQzlfo889s0LYtymKDdXIdo+WDdC/jDnVgUXA6J4TWQ/D2U9GLXRoT10J0duN664bbbdmJhSq7Qehq94k2as7Jy9R3HtvT+DIITrCVua3yPg0Zm+SxCA8xT8g3VKtdKTJdTlDG6o6PXWHR3W9jfNbO6CayLTBaiAFXqbKAol31yCaRbcDZfnoWfmFVu6rsQ90WZv4L9gK05uNBH1z mogaika@mogaika
+          user: ${linux:system:user:vjigulin}

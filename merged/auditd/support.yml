@@ -1,0 +1,18 @@
+parameters:
+  auditd:
+    _support:
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: false
+      grafana:
+        enabled: true
+      telegraf:
+        enabled: true
+      prometheus:
+        enabled: true
+

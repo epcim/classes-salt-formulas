@@ -1,0 +1,21 @@
+parameters:
+  _param:
+    apt_mk_version: stable
+    mirror_mirantis_openstack_xenial_saltstack_2016_3_source: http://mirror.mirantis.com/${_param:apt_mk_version}/saltstack-2016.3/xenial/
+    mirror_mirantis_openstack_xenial_saltstack_2016_3_distribution: xenial
+    mirror_mirantis_openstack_xenial_saltstack_2016_3_components: main
+    mirror_mirantis_openstack_xenial_saltstack_2016_3_gpgkeys:
+      - DE57BFBE
+  aptly:
+    server:
+      mirror:
+        mirantis_openstack_xenial_saltstack_2016_3:
+          source: ${_param:mirror_mirantis_openstack_xenial_saltstack_2016_3_source}
+          distribution: ${_param:mirror_mirantis_openstack_xenial_saltstack_2016_3_distribution}
+          components: ${_param:mirror_mirantis_openstack_xenial_saltstack_2016_3_components}
+          architectures: amd64
+          gpgkeys: ${_param:mirror_mirantis_openstack_xenial_saltstack_2016_3_gpgkeys}
+          publisher:
+            component: main
+            distributions:
+              - ubuntu-xenial/salt/2016.3/${_param:apt_mk_version}

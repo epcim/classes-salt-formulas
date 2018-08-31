@@ -1,0 +1,22 @@
+applications:
+- linux
+classes:
+- service.linux.support
+parameters:
+  linux:
+    system:
+      enabled: true
+      user:
+        root:
+          enabled: true
+          name: root
+          home: /root
+      timezone: Europe/Prague
+      cluster: default
+      purge_repos: false
+    network:
+      enabled: true
+      hostname: ${linux:system:name}
+      fqdn: ${linux:system:name}.${linux:system:domain}
+    storage:
+      enabled: true

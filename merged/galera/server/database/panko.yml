@@ -1,0 +1,19 @@
+parameters:
+  _param:
+    mysql_panko_ssl_option: []
+  mysql:
+    server:
+      database:
+        panko:
+          encoding: utf8
+          users:
+          - name: panko
+            password: ${_param:mysql_panko_password}
+            host: '%'
+            rights: all
+            ssl_option: ${_param:mysql_panko_ssl_option}
+          - name: panko
+            password: ${_param:mysql_panko_password}
+            host: ${_param:cluster_local_address}
+            rights: all
+            ssl_option: ${_param:mysql_panko_ssl_option}

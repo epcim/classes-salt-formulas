@@ -1,0 +1,44 @@
+parameters:
+  _param:
+    elasticsearch_curator_indices_pattern: "^(log|notification)-.*$"
+    elasticsearch_curator_retention_period: 31
+  elasticsearch:
+    server:
+      curator:
+        timeout: 900
+        logfile: /var/log/elasticsearch/curator.log
+        logformat: json
+        master_only: true
+        actions:
+          - action: delete_indices
+            description: >-
+                Delete indices older than ${_param:elasticsearch_curator_retention_period} days (based on index creation date).
+            options:
+              ignore_empty_list: True
+              continue_if_exception: False
+              disable_action: False
+            filters:
+            - filtertype: pattern
+              kind: regex
+              value: "${_param:elasticsearch_curator_indices_pattern}"
+            - filtertype: age
+              source: creation_date
+              direction: older
+              unit: days
+              unit_count: ${_param:elasticsearch_curator_retention_period}
+          - action: delete_indices
+            description: >-
+                Delete indices older than ${_param:elasticsearch_curator_retention_period} days (based on index creation date).
+            options:
+              ignore_empty_list: True
+              continue_if_exception: False
+              disable_action: False
+            filters:
+            - filtertype: pattern
+              kind: regex
+              value: "^events_.*$"
+            - filtertype: age
+              source: creation_date
+              direction: older
+              unit: days
+              unit_count: ${_param:elasticsearch_curator_retention_period}

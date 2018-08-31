@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    opendaylight_service_host: 127.0.0.1
+    opendaylight_rest_port: 8080
+    ceilometer:
+      opendaylight:
+        driver: opendaylight.v2
+        auth: basic
+        user: admin
+        password: admin
+        scheme: http
+        interval: 900
+  ceilometer:
+    agent:
+      polling:
+        sources:
+          odl_source:
+            meters:
+              - switch
+              - switch.ports
+              - switch.port
+              - switch.port.uptime
+              - switch.port.receive.drops
+              - switch.port.receive.errors
+              - switch.port.transmit.packets
+              - switch.port.receive.packets
+              - switch.port.transmit.bytes
+              - switch.port.receive.bytes
+            interval: ${_param:ceilometer:opendaylight:interval}
+            resources:
+              - ${_param:ceilometer:opendaylight:driver}://${_param:opendaylight_service_host}:${_param:opendaylight_rest_port}/controller/statistics?auth=${_param:ceilometer:opendaylight:auth}&user=${_param:ceilometer:opendaylight:user}&password=${_param:ceilometer:opendaylight:password}&scheme=${_param:ceilometer:opendaylight:scheme}
+            sinks:
+              - meter_sink

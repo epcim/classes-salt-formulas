@@ -1,0 +1,75 @@
+applications:
+- gerrit
+classes:
+- git.client
+- java.environment
+- postgresql.server.local
+parameters:
+  _param:
+    gerrit_auth_type: HTTP
+    gerrit_server_url: http://${linux:network:fqdn}:8083/
+    java_environment_platform: openjdk
+    java_environment_version: "8"
+  gerrit:
+    server:
+      admin:
+        name: admin
+        password: ${_param:gerrit_admin_password}
+        public_key: ${_param:gerrit_admin_public_key}
+      auth:
+        engine: ${_param:gerrit_auth_type}
+      bind:
+        address: 0.0.0.0
+      canonical_web_url: ${_param:gerrit_server_url}
+      change_cleanup:
+        abandon_after: 3months
+      database:
+        engine: postgresql
+        host: localhost
+        name: gerrit
+        password: ${_param:postgresql_gerrit_password}
+        pool_limit: 250
+        pool_max_idle: 16
+        port: 5432
+        user: gerrit
+      email: mail@domain.com
+      email_private_key: ""
+      enabled: true
+      mail:
+        from: gerrit@domain.com
+        host: localhost
+        include_diff: true
+      plugin:
+        download-commands:
+          engine: gerrit
+        reviewnotes:
+          engine: gerrit
+        singleusergroup:
+          engine: gerrit
+      receive_timeout: 5min
+      source:
+        address: https://gerrit-releases.storage.googleapis.com/gerrit-2.12.4.war
+        engine: http
+        hash: sha256=45786a920a929c6258de6461bcf03ddec8925577bd485905f102ceb6e5e1e47c
+      ssh_rsa_key: ${_param:gerrit_admin_private_key}
+      ssh_rsa_key_pub: ${_param:gerrit_admin_public_key}
+      sshd:
+        batch_threads: 16
+        max_connections_per_user: 64
+        threads: 64
+      token_private_key: ""
+  postgresql:
+    server:
+      database:
+        gerrit:
+          enabled: true
+          encoding: UTF8
+          locale: en_US
+          users:
+          - createdb: true
+            host: localhost
+            name: gerrit
+            password: ${_param:postgresql_gerrit_password}
+            rights: all privileges
+      version: "9.5"
+

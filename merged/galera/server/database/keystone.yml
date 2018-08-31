@@ -1,0 +1,19 @@
+parameters:
+  _param:
+    mysql_keystone_ssl_option: []
+  mysql:
+    server:
+      database:
+        keystone:
+          encoding: utf8
+          users:
+          - name: keystone
+            password: ${_param:mysql_keystone_password}
+            host: '%'
+            rights: all
+            ssl_option: ${_param:mysql_keystone_ssl_option}
+          - name: keystone
+            password: ${_param:mysql_keystone_password}
+            host: ${_param:cluster_local_address}
+            rights: all
+            ssl_option: ${_param:mysql_keystone_ssl_option}

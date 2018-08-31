@@ -1,0 +1,8 @@
+applications:
+- foreman
+parameters:
+  foreman:
+    smart_proxy:
+      enabled: true
+      proxy:
+        dns: true

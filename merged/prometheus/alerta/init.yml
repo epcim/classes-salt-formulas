@@ -1,0 +1,8 @@
+applications:
+- prometheus
+parameters:
+  prometheus:
+    alerta:
+      config_dir: /srv/volumes/local/alerta
+      enabled: true
+

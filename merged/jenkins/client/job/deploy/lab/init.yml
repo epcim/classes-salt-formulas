@@ -1,0 +1,24 @@
+classes:
+  - jenkins.client.job.deploy.lab.cicd
+  - jenkins.client.job.deploy.lab.demo
+  - jenkins.client.job.deploy.lab.cleanup
+  - jenkins.client.job.deploy.lab.release.mcp05
+  - jenkins.client.job.deploy.lab.release.mcp10
+  - jenkins.client.job.deploy.lab.release.mcp11
+  - jenkins.client.job.deploy.lab.component.aaa
+  - jenkins.client.job.deploy.lab.component.ceph
+  - jenkins.client.job.deploy.lab.component.drivetrain
+  - jenkins.client.job.deploy.lab.component.kubernetes
+  - jenkins.client.job.deploy.lab.component.openstack
+  - jenkins.client.job.deploy.lab.component.stacklight
+  - jenkins.client.job.deploy.lab.ironic
+  - jenkins.client.job.deploy.lab.mom_deploy
+
+parameters:
+  jenkins:
+    client:
+      view:
+        Labs:
+          enabled: true
+          type: ListView
+          include_regex: "deploy-(physical|heat).*(mk|mcp).*"

@@ -1,0 +1,18 @@
+parameters:
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_alerta:
+          enabled: true
+          type: nginx_proxy
+          name: alerta
+          proxy:
+            host: ${_param:prometheus_control_address}
+            port: 15017
+            protocol: http
+          host:
+            name: ${_param:cluster_public_host}
+            port: 15017
+            protocol: https
+          ssl: ${_param:nginx_proxy_ssl}

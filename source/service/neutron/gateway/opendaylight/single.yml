@@ -1,0 +1,17 @@
+classes:
+- service.neutron.gateway.single
+parameters:
+  _param:
+    opendaylight_router: odl-router_v2
+    provider_mappings: physnet1:br-floating
+    opendaylight_service_host: 127.0.0.1
+  neutron:
+    gateway:
+      backend:
+        router: ${_param:opendaylight_router}
+        ovsdb_connection: tcp:127.0.0.1:6639
+      opendaylight:
+        ovsdb_server_iface: ptcp:6639:127.0.0.1
+        ovsdb_odl_iface: tcp:${_param:opendaylight_service_host}:6640
+        tunnel_ip: ${_param:tenant_address}
+        provider_mappings: ${_param:provider_mappings}

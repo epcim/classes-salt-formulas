@@ -1,0 +1,11 @@
+applications:
+- monasca.notification
+classes:
+- monasca.common
+parameters:
+  monasca:
+    notification:
+      enabled: true
+      version: ${_param:monasca_version}
+      smtp_host: localhost
+      email_address: admin@bootstrap.local

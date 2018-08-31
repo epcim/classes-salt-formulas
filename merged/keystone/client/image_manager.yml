@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    keystone_image_manager_email: 'root@localhost'
+    keystone_service_protocol: http
+  keystone:
+    client:
+      enabled: true
+      server:
+        identity:
+          admin:
+            host: ${_param:keystone_service_host}
+            port: 35357
+            token: ${_param:keystone_service_token}
+            protocol: ${_param:keystone_service_protocol}
+          roles:
+          - image_manager
+          project:
+            admin:
+              user:
+                image_manager:
+                  is_admin: false
+                  password: ${_param:keystone_image_manager_password}
+                  email: ${_param:keystone_image_manager_email}
+                  roles:
+                  - image_manager

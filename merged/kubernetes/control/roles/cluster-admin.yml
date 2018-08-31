@@ -1,0 +1,13 @@
+parameters:
+  kubernetes:
+    control:
+      role:
+        cluster-admin:
+          binding:
+            root-cluster-admin-binding:
+              subject:
+                admin:
+                  kind: User
+          enabled: true
+          kind: ClusterRole
+

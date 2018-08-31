@@ -1,0 +1,49 @@
+applications:
+- jenkins
+classes:
+- jenkins.support
+- jenkins.client.approved_scripts
+- jenkins.client.plugins
+parameters:
+  _param:
+    jenkins_aptly_storages: local
+    jenkins_client_password: none
+    jenkins_client_user: none
+    jenkins_master_host: ${_param:control_vip_address}
+    jenkins_master_port: 8081
+    jenkins_offline_deployment: "false"
+    jenkins_pipelines_branch: master
+  jenkins:
+    client:
+      enabled: true
+      globalenvprop:
+        OFFLINE_DEPLOYMENT:
+          value: ${_param:jenkins_offline_deployment}
+      lib:
+        pipeline-library:
+          branch: ${_param:jenkins_pipelines_branch}
+          credential_id: gerrit
+          enabled: true
+          url: ${_param:jenkins_gerrit_url}/mcp-ci/pipeline-library
+      master:
+        host: ${_param:jenkins_master_host}
+        password: ${_param:jenkins_client_password}
+        port: ${_param:jenkins_master_port}
+        username: ${_param:jenkins_client_user}
+      view:
+        Mirrors:
+          categories:
+          - group_regex: git-mirror-2way-.*
+            naming_rule: 2way
+          - group_regex: git-mirror-(?!upstream-|2way-).*
+            naming_rule: Downstream
+          - group_regex: git-mirror-upstream-.*
+            naming_rule: Upstream
+          enabled: true
+          include_regex: git-mirror-.*
+          type: CategorizedJobsView
+        Tests:
+          enabled: true
+          include_regex: test-.*
+          type: ListView
+

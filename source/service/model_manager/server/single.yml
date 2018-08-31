@@ -1,0 +1,4 @@
+classes:
+- service.model_manager.integration
+- service.model_manager.delivery
+

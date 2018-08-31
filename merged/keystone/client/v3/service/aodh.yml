@@ -1,0 +1,35 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    aodh_service_protocol: http
+    aodh_public_host: ${_param:cluster_public_host}
+  keystone:
+    client:
+      resources:
+        v3:
+          cloud_name: 'admin_identity'
+          users:
+            aodh:
+              password: ${_param:keystone_aodh_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            aodh:
+              type: alarming
+              description: OpenStack Alarming Service
+              endpoints:
+                aodh_public:
+                  interface: 'public'
+                  region: ${_param:openstack_region}
+                  url: ${_param:cluster_public_protocol}://${_param:aodh_public_host}:8042/
+                aodh_internal:
+                  interface: 'internal'
+                  region: ${_param:openstack_region}
+                  url: ${_param:aodh_service_protocol}://${_param:aodh_service_host}:8042/
+                aodh_admin:
+                  interface: 'admin'
+                  region: ${_param:openstack_region}
+                  url: ${_param:aodh_service_protocol}://${_param:aodh_service_host}:8042/

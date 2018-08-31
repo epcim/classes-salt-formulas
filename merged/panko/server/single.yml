@@ -1,0 +1,50 @@
+applications:
+- panko
+classes:
+- apache.server.site.panko
+parameters:
+  _param:
+    keystone_panko_endpoint_type: internalURL
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+    panko_event_time_to_live: 2592000
+  panko:
+    server:
+      bind:
+        host: ${_param:single_address}
+        port: 8977
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: panko
+        password: ${_param:mysql_panko_password}
+        port: 3306
+        user: panko
+      enabled: true
+      event_time_to_live: ${_param:panko_event_time_to_live}
+      expirer:
+        cron:
+          hour: 2
+          minute: 0
+      identity:
+        endpoint_type: ${_param:keystone_panko_endpoint_type}
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_panko_password}
+        port: 35357
+        region: RegionOne
+        tenant: service
+        user: panko
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      role: ${_param:openstack_node_role}
+      version: ${_param:panko_version}
+

@@ -1,0 +1,8 @@
+applications:
+- saleor
+classes:
+- service.saleor.support
+parameters:
+  saleor:
+    server:
+      enabled: true

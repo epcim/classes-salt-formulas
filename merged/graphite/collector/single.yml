@@ -1,0 +1,28 @@
+applications:
+- graphite
+classes:
+- memcached.server.local
+parameters:
+  _param:
+    rabbitmq_monitor_password: password
+  carbon:
+    aggregator:
+      enabled: true
+      message_queue:
+        exchange: metrics
+        host: ${_param:carbon_message_queue_host}
+        password: ${_param:rabbitmq_monitor_password}
+        port: 5672
+        user: monitor
+        virtual_host: /monitor
+    cache:
+      enabled: true
+      storage_schema:
+        default:
+          pattern: .*
+          retentions:
+          - 60s:1d
+          - 600s:90d
+    relay:
+      enabled: false
+

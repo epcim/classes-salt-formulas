@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    manila_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            manila:
+              password: ${_param:keystone_manila_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            manila:
+              type: share
+              description: OpenStack Shared File Systems V1
+              endpoints:
+                manila_public_v1:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:8786/v1/$(tenant_id)s
+                  region: ${_param:openstack_region}
+                manila_internal_v1:
+                  interface: 'internal'
+                  url: ${_param:manila_service_protocol}://${_param:manila_service_host}:8786/v1/$(tenant_id)s
+                  region: ${_param:openstack_region}
+                manila_admin_v1:
+                  interface: 'admin'
+                  url: ${_param:manila_service_protocol}://${_param:manila_service_host}:8786/v1/$(tenant_id)s
+                  region: ${_param:openstack_region}

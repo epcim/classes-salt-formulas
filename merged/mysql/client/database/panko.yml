@@ -1,0 +1,17 @@
+parameters:
+  mysql:
+    client:
+      server:
+        database:
+          database:
+            panko:
+              encoding: utf8
+              users:
+              - name: panko
+                password: ${_param:mysql_panko_password}
+                host: '%'
+                rights: all
+              - name: panko
+                password: ${_param:mysql_panko_password}
+                host: ${_param:single_address}
+                rights: all

@@ -1,0 +1,20 @@
+applications:
+- kibana
+classes:
+- service.kibana.support
+parameters:
+  _param:
+    kibana_version: 5
+  kibana:
+    server:
+      enabled: true
+      version: ${_param:kibana_version}
+      source:
+        engine: file
+      bind:
+        address: 0.0.0.0
+        port: 5601
+      database:
+        engine: elasticsearch
+        host: localhost
+        port: 9200

@@ -1,0 +1,107 @@
+applications:
+- neutron
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.neutron
+- galera.server.database.neutron
+parameters:
+  _param:
+    cluster_internal_protocol: http
+    keystone_neutron_endpoint_type: internal
+    openstack_fluentd_handler_enabled: false
+    openstack_log_appender: false
+    openstack_ossyslog_handler_enabled: false
+  haproxy:
+    proxy:
+      listen:
+        neutron_api:
+          binds:
+          - address: ${_param:cluster_vip_address}
+            port: 9696
+          servers:
+          - host: ${_param:cluster_node01_address}
+            name: ${_param:cluster_node01_hostname}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            port: 9696
+          - host: ${_param:cluster_node02_address}
+            name: ${_param:cluster_node02_hostname}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            port: 9696
+          - host: ${_param:cluster_node03_address}
+            name: ${_param:cluster_node03_hostname}
+            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            port: 9696
+          service_name: neutron
+          type: openstack-service
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+  neutron:
+    identity:
+      protocol: ${_param:cluster_internal_protocol}
+    server:
+      backend:
+        extension:
+          dns:
+            enabled: false
+            engine: designate
+            host: ${_param:cluster_vip_address}
+            port: 9001
+            protocol: http
+            url: ${neutron:server:backend:extension:dns:protocol}://${neutron:server:backend:extension:dns:host}:${neutron:server:backend:extension:dns:port}/v2
+      bgp_vpn:
+        driver: bagpipe
+        enabled: false
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 9696
+      compute:
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_nova_password}
+        region: RegionOne
+        tenant: service
+        user: nova
+      controller_vip: ${_param:cluster_vip_address}
+      database:
+        engine: mysql
+        host: ${_param:cluster_vip_address}
+        name: neutron
+        password: ${_param:mysql_neutron_password}
+        port: 3306
+        user: neutron
+      dns_domain: novalocal
+      enabled: true
+      identity:
+        endpoint_type: ${_param:keystone_neutron_endpoint_type}
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_neutron_password}
+        port: 35357
+        region: RegionOne
+        tenant: service
+        user: neutron
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+          watchedfile:
+            enabled: true
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:cluster_vip_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      plugin: contrail
+      role: ${_param:openstack_node_role}
+      version: ${_param:neutron_version}
+      vlan_aware_vms: false
+

@@ -1,0 +1,23 @@
+applications:
+- graphite
+parameters:
+  carbon:
+    relay:
+      enabled: false
+    aggregator:
+      enabled: true
+      message_queue:
+        host:  ${_param:carbon_message_queue_host}
+        port: 5672
+        user: monitor
+        password: ${_param:rabbitmq_monitor_password}
+        virtual_host: '/monitor'
+        exchange: 'metrics'
+    cache:
+      enabled: true
+      storage_schema:
+        default:
+          pattern: '.*'
+          retentions:
+          - 60s:1d
+          - 600s:90d

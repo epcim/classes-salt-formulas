@@ -1,0 +1,6 @@
+applications:
+  - manila
+parameters:
+  manila:
+    client:
+      enabled: true

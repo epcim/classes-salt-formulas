@@ -1,0 +1,24 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_docker_vrrp_script_content: "docker service ls"
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        docker_service_ls:
+          content: ${_param:keepalived_docker_vrrp_script_content}
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        stacklight_monitor_vip:
+          address: ${_param:keepalived_stacklight_monitor_vip_address}
+          password: ${_param:keepalived_stacklight_monitor_vip_password}
+          interface: ${_param:keepalived_stacklight_monitor_vip_interface}
+          virtual_router_id: 100
+          priority: 101
+          track_script: docker_service_ls

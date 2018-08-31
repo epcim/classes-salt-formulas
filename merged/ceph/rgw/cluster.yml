@@ -1,0 +1,5 @@
+classes:
+- haproxy.proxy.single
+- haproxy.proxy.listen.radosgw
+- keepalived.cluster.single
+- ceph.radosgw.cluster

@@ -1,0 +1,14 @@
+parameters:
+  _param:
+    salt_control_size_cpu_cicd_control: 8
+    salt_control_size_ram_cicd_control: 32768
+    salt_control_size_disk_profile_cicd_control: xxxlarge
+    salt_control_size_net_profile_cicd_control: default
+  salt:
+    control:
+      size:
+        cicd.control:
+          cpu: ${_param:salt_control_size_cpu_cicd_control}
+          ram: ${_param:salt_control_size_ram_cicd_control}
+          disk_profile: ${_param:salt_control_size_disk_profile_cicd_control}
+          net_profile: ${_param:salt_control_size_net_profile_cicd_control}

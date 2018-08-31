@@ -1,0 +1,7 @@
+parameters:
+  _param:
+    prometheus_pushgateway_data_directory: /opt/pushgateway/data
+  prometheus:
+    pushgateway:
+      dir:
+        data: /srv/volumes/local/pushgateway/data

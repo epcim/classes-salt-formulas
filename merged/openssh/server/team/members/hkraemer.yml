@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        hkraemer:
+          enabled: true
+          name: hkraemer
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Heiko Kraemer
+          home: /home/hkraemer
+          email: hkraemer@mirantis.com
+  openssh:
+    server:
+      user:
+        hkraemer:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDwMJV5+Za6N2M2R9T+r0KAOVOLUHHjJVTq7gABUj4RmHZpkA/ZQhZZJUs6vrOHwGjITRPPSkJJtg9MIzFRNw+qAhrAZ+42CerKH4s+GgGWm48y+JM6RN8Ndy1YdQGRSs+VSrTGt2+XGm5wokr7yViH2ZsiQNbW/3rqSaaXojsL7NQKmQstgczIWrzUckEdCiNMG2ax0oOD/GGIWXDKVzHEiZHsusbhdxRAPjuiuKqM/YtmYDRT9QPwSWLrG5t6J/0OC5KyfrHch7eq6+je0xFSHDYXgDztvX64b6sXUBPnXpnwlQHbn0X6URzgwFQ8nKlVlChnAxTsA0Bi4pecI84Hvn77M2hsCb1wtClGtqUG2Sp+g7JeP5vLrFxeKVGWBkApx/MO8qDRlRM91TTlAv8GY79HfrqTVTLGr+RhKQbuyNKvNRLsnuxClSR4M1uzbLLPkPlwsC+Q+b6Gy8+KOHPjC0wWnxjSQUJZrbjPwGm34uarN2Q4IaPVFJmE0VBlZyoUpf0PCIgzZdfft8QMEeLcir20tZo3YUbfx3PdwD8eWv8d+df/IKMFIfFWosZEyBHOBktjoctPLLNIOeqNP8kWjElNuMPrK34cwTRWFiP19cwc0qB+HY3L8ULtyyNWhgjRte6De8kx9XGmBeOuDGqeLnP7jxMXgN5mdw3eDRBEQ== hkraemer@mirantis.com
+          user: ${linux:system:user:hkraemer}

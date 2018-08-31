@@ -1,0 +1,5 @@
+parameters:
+  glance:
+    server:
+      policy:
+        publicize_image: ['role:admin', 'role:image_manager']

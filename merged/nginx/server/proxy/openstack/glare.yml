@@ -1,0 +1,22 @@
+parameters:
+  _param:
+    nginx_proxy_openstack_api_host: ${_param:cluster_public_host}
+  nginx:
+    server:
+      enabled: true
+      site:
+        nginx_proxy_openstack_api_glare:
+          enabled: true
+          type: nginx_proxy
+          name: openstack_api_glare
+          underscores_in_headers: true
+          check: false
+          proxy:
+            host: ${_param:glance_service_host}
+            port: 9494
+            protocol: http
+            size: 30000m
+          host:
+            name: ${_param:nginx_proxy_openstack_api_host}
+            port: 9494
+          ssl: ${_param:nginx_proxy_ssl}

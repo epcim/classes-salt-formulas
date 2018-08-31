@@ -1,0 +1,35 @@
+classes:
+- service.fluentbit.config
+- service.fluentbit.config.parser.nova
+
+parameters:
+  fluentbit:
+    config:
+      input:
+        nova.conf:
+          # TODO: set individual loggers per component
+          #
+          #/var/log/nova/nova-api.log
+          #/var/log/nova/nova-conductor.log
+          #/var/log/nova/nova-manage.log
+          #/var/log/nova/nova-placement-api.log
+          #/var/log/nova/nova-cert.log
+          #/var/log/nova/nova-consoleauth.log
+          #/var/log/nova/nova-novncproxy.log
+          #/var/log/nova/nova-scheduler.log
+          nova:
+            name: tail
+            parser: nova
+            path: ${_param:fluentbit_config_syslogpath}/nova/nova*.log*
+            path_key: path
+            DB: /var/lib/fluentbit/nova.flb.db
+            exclude_path: '*.gz,*.xz'
+            #multiline_flush: 4
+            multiline: On
+            chunk_size: 32k
+            buffer_max_size: 1M
+            tag: openstack.nova
+      service:
+        td-agent-bit.conf:
+          - '@INCLUDE input_nova.conf'
+

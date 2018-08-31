@@ -1,0 +1,13 @@
+parameters:
+  nova:
+    compute:
+      pkgs:
+        - nova-compute-vmware
+      vmware:
+        host_ip: ${_param:openstack_vcenter_host}
+        host_username: ${_param:openstack_vcenter_host}
+        host_username: ${_param:openstack_vcenter_username}
+        host_password: ${_param:openstack_vcenter_password}
+        cluster_name: ${_param:openstack_vcenter_cluster_name}
+        insecure: true
+

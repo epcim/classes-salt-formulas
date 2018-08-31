@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    _support:
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true
+      collectd:
+        enabled: true
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: true
+      grafana:
+        enabled: true
+      fluentd:
+        enabled: true

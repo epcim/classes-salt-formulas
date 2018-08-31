@@ -1,0 +1,29 @@
+classes:
+- salt.minion.cert.vnc
+parameters:
+  _param:
+    novncproxy_server_ssl_key_file: /etc/pki/nova-novncproxy/server-key.pem
+    novncproxy_server_ssl_cert_file: /etc/pki/nova-novncproxy/server-cert.pem
+    novncproxy_ssl_ca_file: /etc/pki/nova-novncproxy/ca-cert.pem
+  salt:
+    minion:
+      cert:
+        novncproxy_novnc_server:
+          host: ${_param:salt_minion_ca_host}
+          authority: ${_param:qemu_vnc_ca_authority}
+          common_name: ${linux:system:name}.${_param:cluster_domain}
+          signing_policy: cert_server
+          alternative_names: >
+            IP:${_param:cluster_local_address},
+            IP:${_param:cluster_vip_address},
+            DNS:${_param:cluster_local_address},
+            DNS:${linux:system:name},
+            DNS:${_param:cluster_vip_address},
+            DNS:${linux:network:fqdn}
+          key_usage: "digitalSignature,nonRepudiation,keyEncipherment"
+          key_file: ${_param:novncproxy_server_ssl_key_file}
+          cert_file: ${_param:novncproxy_server_ssl_cert_file}
+          ca_file: ${_param:novncproxy_ssl_ca_file}
+          user: nova
+          group: nova
+          mode: 640

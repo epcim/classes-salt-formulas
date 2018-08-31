@@ -1,0 +1,8 @@
+applications:
+- supervisor
+classes:
+- service.supervisor.support
+parameters:
+  supervisor:
+    server:
+      enabled: true

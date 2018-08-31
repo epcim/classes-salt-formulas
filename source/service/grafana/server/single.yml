@@ -1,0 +1,15 @@
+applications:
+- grafana
+classes:
+- service.grafana.support
+parameters:
+  grafana:
+    server:
+      enabled: true
+      database:
+        engine: postgresql
+        host: 127.0.0.1
+        port: 5432
+        name: grafana
+        password: ${_param:postgresql_grafana_password}
+        user: grafana

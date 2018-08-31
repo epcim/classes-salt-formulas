@@ -1,0 +1,15 @@
+parameters:
+  keystone:
+    client:
+      resources:
+        v3:
+          enabled: true
+      server:
+        identity:
+          admin:
+            api_version: 3
+        admin_identity:
+          admin:
+            api_version: ''
+            user_domain_name: 'Default'
+            project_domain_name: 'Default'

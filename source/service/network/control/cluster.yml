@@ -1,0 +1,10 @@
+applications:
+- network
+classes:
+- service.network.support
+parameters:
+  network:
+    control:
+      enabled: true
+      bind:
+        address: 0.0.0.0

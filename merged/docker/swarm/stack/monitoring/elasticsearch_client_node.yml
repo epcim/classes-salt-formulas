@@ -1,0 +1,46 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    docker_image_elasticsearch: ${_param:mcp_docker_registry}/mirantis/external/elasticsearch:nightly
+    elasticsearch_client_node_publish_host: ${_param:cluster_public_host}
+    elasticsearch_cluster_name: elasticsearch
+  docker:
+    client:
+      stack:
+        monitoring:
+          network:
+            monitoring:
+              driver: overlay
+              driver_opts:
+                encrypted: 1
+          service:
+            elasticsearch_client_node:
+              networks:
+                - monitoring
+              deploy:
+                replicas: 1
+                labels:
+                  com.mirantis.monitoring: "elasticsearch"
+                restart_policy:
+                  condition: any
+              environment:
+                ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+                cluster.name: ${_param:elasticsearch_cluster_name}
+                node.master: "false"
+                node.data: "false"
+                node.ingest: "false"
+                node.attr.client_node: "true"
+                search.remote.connect: "false"
+                network.host: 0.0.0.0
+                network.publish_host: ${_param:elasticsearch_client_node_publish_host}
+                xpack.security.enabled: "false"
+                xpack.monitoring.enabled: "false"
+                bootstrap.memory_lock: "false"
+                discovery.zen.minimum_master_nodes: 2
+                discovery.zen.ping.unicast.hosts: ${_param:stacklight_monitor_address}
+              labels:
+                com.mirantis.monitoring: "elasticsearch"
+              image: ${_param:docker_image_elasticsearch}
+              ports:
+                - 9305:9300
+                - 9205:9200

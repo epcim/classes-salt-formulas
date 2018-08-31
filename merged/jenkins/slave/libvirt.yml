@@ -1,0 +1,28 @@
+classes:
+  - jenkins.slave
+  - iptables.server
+parameters:
+  linux:
+    system:
+      user:
+        jenkins:
+          groups:
+            - kvm
+            - libvirtd
+      package:
+        qemu:
+          version: latest
+        libvirt-bin:
+          version: latest
+        # Reguired to simplify building custom cloud-init.iso
+        cloud-image-utils:
+          version: latest
+  # Ensure FORWARD chain to be ACCEPT to avoid issue when running with docker
+  # 1.13 and newer that sets chain to DROP, see:
+  #   https://github.com/docker/docker/pull/28257
+  iptables:
+    service:
+      enabled: true
+      chain:
+        FORWARD:
+          policy: ACCEPT

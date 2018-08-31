@@ -1,0 +1,126 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        deploy-virtual-edge-mom:
+          type: workflow-scm
+          concurrent: true
+          display_name: "Deploy - edge MoM"
+          discard:
+            build:
+              keep_num: 50
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: deploy-virtual-edge-mom.groovy
+          param:
+            # general parameters
+            ASK_ON_ERROR:
+              type: boolean
+              default: 'false'
+            FORMULA_PKG_REVISION:
+              type: string
+              default: ""
+              description: "Formulas revision to install on Salt Master bootstrap stage"
+            # heat parameters
+            HEAT_STACK_ENVIRONMENT:
+              type: string
+              default: "devcloud"
+            HEAT_STACK_PUBLIC_NET:
+              type: string
+              default: "public"
+            HEAT_STACK_ZONE:
+              type: string
+              default: "mcp-oscore"
+            OPENSTACK_API_CLIENT:
+              type: string
+              default: ""
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "openstack-devcloud-credentials"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore"
+            OPENSTACK_API_PROJECT_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_PROJECT_ID:
+              type: string
+              default: ""
+            OPENSTACK_API_URL:
+              type: string
+              default: "https://cloud-cz.bud.mirantis.net:5000"
+            OPENSTACK_API_USER_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_VERSION:
+              type: string
+              default: "3"
+            OPENSTACK_USER_DOMAIN:
+              type: string
+              default: "default"
+            # salt
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt-qa-credentials"
+            SALT_MASTER_URL:
+              type: string
+              default: ""
+            SALT_OVERRIDES:
+              type: text
+              default: ""
+            STACK_CLEANUP_JOB:
+              type: string
+              default: "deploy-stack-cleanup"
+            STACK_DELETE:
+              type: boolean
+              default: 'false'
+              description: "Don't enable it if you need to use the lab after"
+            STACK_INSTALL:
+              type: string
+              default: "core"
+            # deployments
+            STACK_CLUSTER_NAME:
+              type: string
+              default: "virtual-mcp11-aio"
+              description: "Cluster name to use from reclass"
+            STACK_RECLASS_ADDRESS:
+              type: string
+              default: "https://gerrit.mcp.mirantis.net/salt-models/mcp-virtual-aio"
+            STACK_RECLASS_BRANCH:
+              type: string
+              default: "stable/pike"
+            STACK_TEMPLATE:
+              type: string
+              default: "virtual_edge_mom"
+            STACK_TEMPLATE_BRANCH:
+              type: string
+              default: "master"
+            STACK_TEMPLATE_CREDENTIALS:
+              type: string
+              default: "gerrit"
+            STACK_TEMPLATE_URL:
+              type: string
+              default: "${_param:jenkins_gerrit_url}/mk/heat-templates"
+            STACK_TEST:
+              type: string
+              default: ""
+            STACK_TYPE:
+              type: string
+              default: "physical"
+            STATIC_MGMT_NETWORK:
+              type: boolean
+              default: 'false'
+              description: "Check if model contains static IP address definitions for all nodes"
+            TEST_DOCKER_INSTALL:
+              type: boolean
+              description: "Install docker on the target if true"
+              default: "false"
+             # edge deploy
+            EDGE_DEPLOY_SCHEMAS:
+              type: string
+              description: "JSON schemas of edge cloud environments"
+              default: ""
+

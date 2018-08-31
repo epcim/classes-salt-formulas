@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    prometheus_server_config_directory: /srv/prometheus
+    prometheus_server_data_directory: /data
+  prometheus:
+    server:
+      version: 2.0
+      dir:
+        data: /srv/volumes/local/prometheus/data
+        config: /srv/volumes/local/prometheus/config
+        config_in_container: ${_param:prometheus_server_config_directory}

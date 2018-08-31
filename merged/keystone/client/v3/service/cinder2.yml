@@ -1,0 +1,33 @@
+parameters:
+  _param:
+    cluster_public_protocol: https
+    cinder_service_protocol: http
+  keystone:
+    client:
+      resources:
+        v3:
+          users:
+            cinder:
+              password: ${_param:keystone_cinder_password}
+              email: ${_param:admin_email}
+              roles:
+                service_admin:
+                  name: admin
+                  project_id: service
+          services:
+            cinderv2:
+              type: volumev2
+              description: OpenStack Volume Service V2
+              endpoints:
+                cinder_public_v2:
+                  interface: 'public'
+                  url: ${_param:cluster_public_protocol}://${_param:cluster_public_host}:8776/v2/$(project_id)s
+                  region: ${_param:openstack_region}
+                cinder_internal_v2:
+                  interface: 'internal'
+                  url: ${_param:cinder_service_protocol}://${_param:cinder_service_host}:8776/v2/$(project_id)s
+                  region: ${_param:openstack_region}
+                cinder_admin_v2:
+                  interface: 'admin'
+                  url: ${_param:cinder_service_protocol}://${_param:cinder_service_host}:8776/v2/$(project_id)s
+                  region: ${_param:openstack_region}

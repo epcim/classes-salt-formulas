@@ -1,0 +1,10 @@
+classes:
+  - jenkins.client.job.git-mirrors.downstream
+parameters:
+  _param:
+    gerrit_vnf_onboaring_avi_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/avi-loadbalancer"
+    jenkins_git_mirror_downstream_jobs:
+      - name: avi-loadbalancer
+        downstream: vnf-onboarding/avi-loadbalancer
+        upstream: ${_param:gerrit_vnf_onboaring_avi_repo}
+        branches: master

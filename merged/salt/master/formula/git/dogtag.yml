@@ -1,0 +1,10 @@
+parameters:
+  salt:
+    master:
+      environment:
+        dev:
+          formula:
+            dogtag:
+              source: git
+              address: '${_param:salt_master_environment_repository}/salt-formula-dogtag.git'
+              revision: ${_param:salt_master_environment_revision}

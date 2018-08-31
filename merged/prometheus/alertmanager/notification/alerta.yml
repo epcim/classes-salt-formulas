@@ -1,0 +1,20 @@
+parameters:
+  _param:
+    alertmanager_notification_alerta_host: alerta
+    alertmanager_notification_alerta_port: 8080
+  prometheus:
+    alertmanager:
+      enabled: true
+      config:
+        route:
+          routes:
+            alerta:
+              receiver: HTTP-alerta
+              continue: true
+        receiver:
+          HTTP-alerta:
+            enabled: true
+            webhook_configs:
+              alerta:
+                url: "http://${_param:alertmanager_notification_alerta_host}:${_param:alertmanager_notification_alerta_port}/api/webhooks/prometheus"
+                send_resolved: true

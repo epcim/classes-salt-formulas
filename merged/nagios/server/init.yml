@@ -1,0 +1,144 @@
+applications:
+- nagios
+classes:
+- nagios.support
+parameters:
+  _param:
+    nagios_alarm_cluster_default_host: 00-clusters
+    nagios_automatic_starting: true
+    nagios_default_host_alarm_clusters: 00-clusters
+    nagios_host_dimension_key: nagios_host
+    nagios_monitoring_interface:
+    - eth0
+    - ens3
+    nagios_monitoring_network: []
+    nagios_notification_email: root@localhost
+    nagios_notification_from: nagios@localhost
+    nagios_notification_smtp_server: 127.0.0.1
+    nagios_status_bind: 0.0.0.0
+    nagios_status_port: 8001
+    nagios_ui_bind: 0.0.0.0
+    nagios_ui_port: 80
+    nagios_username: nagiosadmin
+  nagios:
+    server:
+      accept_passive_host_checks: 0
+      accept_passive_service_checks: 1
+      automatic_starting: ${_param:nagios_automatic_starting}
+      check_external_commands: 1
+      check_host_freshness: 0
+      check_service_freshness: 1
+      command_check_interval: 15s
+      dynamic:
+        enabled: true
+        grain_hostname: host
+        hostgroups:
+        - expr_from: compound
+          name: All
+          target: G@services:openssh
+        - expr_from: compound
+          name: Nova Controller
+          target: G@roles:nova.controller
+        - name: Nova Compute
+          target: G@roles:nova.compute
+        - name: Keystone server
+          target: G@roles:keystone.server
+        - name: InfluxDB server
+          target: G@roles:influxdb.server
+        - name: Elasticsearchserver
+          target: G@roles:elasticsearch.server
+        hostname_suffix: ${_param:stacklight_environment}
+        hosts:
+        - contact_groups: Operator
+          interface: ${_param:nagios_monitoring_interface}
+          network: ${_param:nagios_monitoring_network}
+          target: G@services:openssh
+          use: generic_host_tpl
+        services:
+        - check_command: check_ssh
+          name: SSH
+          target: G@roles:openssh.server
+          use: generic_service_tpl
+        stacklight_alarm_clusters:
+          default_host: ${_param:nagios_default_host_alarm_clusters}
+          dimension_key: ${_param:nagios_host_dimension_key}
+          enabled: true
+          host_template: generic_host_tpl
+          service_template: generic_service_tpl
+        stacklight_alarms:
+          enabled: true
+          service_template: generic_service_tpl
+      enable_notifications: 1
+      enabled: true
+      execute_host_checks: 1
+      execute_service_checks: 1
+      log_external_commands: 0
+      log_initial_states: 1
+      log_passive_checks: 0
+      log_rotation_method: d
+      notification:
+        smtp:
+          auth: false
+          from: ${_param:nagios_notification_from}
+          host: ${_param:nagios_notification_smtp_server}
+          host_command_name: notify-host-by-smtp
+          host_subject: '** $NOTIFICATIONTYPE$ Env:$_HOSTENV$ Host: $HOSTDISPLAYNAME$
+            is $HOSTSTATE$ **'
+          service_command_name: notify-service-by-smtp
+          service_subject: '** $NOTIFICATIONTYPE$ Env:$_HOSTENV$ Service: $HOSTDISPLAYNAME$/$SERVICEDESC$
+            is $SERVICESTATE$ **'
+      objects:
+        contactgroups:
+          operator:
+            contactgroup_name: Operator
+        contacts:
+          operator:
+            alias: root_at_localhost
+            contact_name: Operator
+            contactgroups:
+            - Operator
+            email: ${_param:nagios_notification_email}
+            host_notification_commands: notify-host-by-smtp
+            host_notification_options: d,r
+            host_notification_period: 24x7
+            host_notifications_enabled: 1
+            service_notification_commands: notify-service-by-smtp
+            service_notification_options: w,u,c,r
+            service_notification_period: 24x7
+            service_notifications_enabled: 1
+        hosts:
+          generic_host_tpl:
+            _env: ${_param:stacklight_environment}
+            contact_groups: Operator
+            event_handler_enabled: 1
+            failure_prediction_enabled: 1
+            flap_detection_enabled: 1
+            max_check_attempts: 10
+            notification_interval: 0
+            notification_options: d,u,r
+            notification_period: 24x7
+            notifications_enabled: 1
+            process_perf_data: 0
+            register: 0
+            retain_nonstatus_information: 1
+            retain_status_information: 1
+        services:
+          generic_service_tpl:
+            contact_groups: Operator
+            max_check_attempts: 3
+            process_perf_data: 0
+            register: 0
+      process_performance_data: 0
+      purge_distribution_config: true
+      ui:
+        auth:
+          basic:
+            password: ${_param:nagios_password}
+            username: ${_param:nagios_username}
+        bind: ${_param:nagios_ui_bind}
+        enabled: true
+        port: ${_param:nagios_ui_port}
+        wsgi:
+          bind: ${_param:nagios_status_bind}
+          port: ${_param:nagios_status_port}
+

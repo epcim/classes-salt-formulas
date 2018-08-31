@@ -1,0 +1,22 @@
+applications:
+- rundeck
+parameters:
+  _param:
+    rundeck_client_host: ${_param:haproxy_rundeck_bind_host}
+    rundeck_client_https: ${_param:haproxy_rundeck_ssl:enabled}
+    rundeck_client_password: ${_param:rundeck_admin_password}
+    rundeck_client_port: ${_param:haproxy_rundeck_bind_port}
+    rundeck_client_username: ${_param:rundeck_admin_username}
+  rundeck:
+    client:
+      enabled: true
+      server:
+        credentials:
+          api_token: ${_param:rundeck_client_password}
+          password: ${_param:rundeck_client_password}
+          username: ${_param:rundeck_client_username}
+        endpoint:
+          host: ${_param:rundeck_client_host}
+          https: ${_param:rundeck_client_https}
+          port: ${_param:rundeck_client_port}
+

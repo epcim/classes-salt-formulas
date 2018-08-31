@@ -1,0 +1,20 @@
+applications:
+- reclass
+classes:
+- git.client
+parameters:
+  reclass:
+    storage:
+      base_dir: /srv/salt/reclass
+      data_source:
+        address: ${_param:reclass_data_repository}
+        branch: ${_param:reclass_data_revision}
+        engine: git
+      enabled: true
+      output: yaml
+  salt:
+    master:
+      pillar:
+        data_dir: /srv/salt/reclass
+        engine: reclass
+

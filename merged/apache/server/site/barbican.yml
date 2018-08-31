@@ -1,0 +1,62 @@
+parameters:
+  _param:
+    apache_ssl:
+      enabled: false
+    apache_barbican_ssl: ${_param:apache_ssl}
+    apache_barbican_api_address: 0.0.0.0
+    apache_barbican_api_host: ${linux:network:fqdn}
+  apache:
+    server:
+      enabled: true
+      site:
+        barbican:
+          enabled: false
+          available: true
+          type: wsgi
+          name: barbican
+          ssl: ${_param:apache_barbican_ssl}
+          wsgi:
+            daemon_process: barbican-api
+            processes: 3
+            threads: 10
+            user: barbican
+            group: barbican
+            display_name: '%{GROUP}'
+            script_alias: '/ /usr/bin/barbican-wsgi-api'
+            application_group: '%{GLOBAL}'
+            authorization: 'On'
+          host:
+            address: ${_param:apache_barbican_api_address}
+            name: ${_param:apache_barbican_api_host}
+            port: 9311
+          log:
+            custom:
+              format: 'combined'
+              file: '/var/log/barbican/barbican-api.log'
+            error:
+              enabled: true
+              file: '/var/log/barbican/barbican-api.log'
+        barbican_admin:
+          enabled: false
+          available: true
+          type: wsgi
+          name: barbican_admin
+          ssl: ${_param:apache_barbican_ssl}
+          wsgi:
+            daemon_process: barbican-api-admin
+            processes: 3
+            threads: 10
+            user: barbican
+            group: barbican
+            display_name: '%{GROUP}'
+          host:
+            address: ${_param:apache_barbican_api_address}
+            name: ${_param:apache_barbican_api_host}
+            port: 9312
+          log:
+            custom:
+              format: 'combined'
+              file: '/var/log/barbican/barbican-api.log'
+            error:
+              enabled: true
+              file: '/var/log/barbican/barbican-api.log'

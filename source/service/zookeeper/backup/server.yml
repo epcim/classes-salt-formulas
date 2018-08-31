@@ -1,0 +1,4 @@
+applications:
+- zookeeper
+classes:
+- service.zookeeper.support

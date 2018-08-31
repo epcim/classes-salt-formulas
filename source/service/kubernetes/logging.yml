@@ -1,0 +1,38 @@
+parameters:
+  _param:
+    kubernetes_syslog_pattern: "%syslogtag:1:32%%msg:::sp-if-no-1st-sp%%msg%\\n"
+  kubernetes:
+    common:
+      logrotate: /var/log/kubernetes.log
+  heka:
+    log_collector:
+      input:
+        kubernetes:
+          engine: logstreamer
+          log_directory: "/var/log"
+          file_match: 'kubernetes\.log\.?(?P<Seq>\d*)$'
+          differentiator: ['kubernetes']
+          priority: ["^Seq"]
+          decoder: "kubernetes_decoder"
+          splitter: "TokenSplitter"
+      decoder:
+        kubernetes:
+          engine: sandbox
+          adjust_timezone: true
+          config:
+            syslog_pattern: ${_param:kubernetes_syslog_pattern}
+  rsyslog:
+    client:
+      output:
+        file:
+          /var/log/kubernetes.log:
+            sync: false
+            filter: "if $programname startswith 'kube' then"
+            stop_processing: true
+            template: ${_param:kubernetes_syslog_pattern}
+            skip_log_collector: true
+            owner: syslog
+            group: adm
+            createmode: "0640"
+            enabled: true
+

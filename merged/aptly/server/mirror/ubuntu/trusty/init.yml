@@ -1,0 +1,12 @@
+## Ubuntu trusty
+classes:
+- aptly.server.mirror.ubuntu.trusty.grafana
+- aptly.server.mirror.ubuntu.trusty.haproxy
+- aptly.server.mirror.ubuntu.trusty.salt
+- aptly.server.mirror.ubuntu.trusty.sssd
+- aptly.server.mirror.ubuntu.trusty.ubuntucloud
+- aptly.server.mirror.ubuntu.trusty.ubuntu
+- aptly.server.mirror.ubuntu.trusty.erlang
+- aptly.server.mirror.ubuntu.trusty.docker
+- aptly.server.mirror.ubuntu.trusty.ceph
+- aptly.server.mirror.ubuntu.trusty.rabbitmq

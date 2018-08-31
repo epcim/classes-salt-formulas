@@ -1,0 +1,10 @@
+classes:
+  - jenkins.client.job.git-mirrors.downstream
+parameters:
+  _param:
+    gerrit_vnf_onboaring_nginx_repo: "https://gerrit.mcp.mirantis.net/vnf-onboarding/nginx-vnf"
+    jenkins_git_mirror_downstream_jobs:
+      - name: nginx-vnf
+        downstream: vnf-onboarding/nginx-vnf
+        upstream: ${_param:gerrit_vnf_onboaring_nginx_repo}
+        branches: master

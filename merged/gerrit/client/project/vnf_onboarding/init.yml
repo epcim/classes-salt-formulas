@@ -1,0 +1,20 @@
+parameters:
+  gerrit:
+    client:
+      project:
+        vnf-onboarding/nfv-platform:
+          enabled: true
+          description: Onboarding platform blueprints and tools
+          upstream: https://gerrit.mcp.mirantis.net/vnf-onboarding/nfv-platform
+          access: ${gerrit:client:default_access}
+          require_change_id: true
+          require_agreement: false
+          merge_content: true
+        vnf-onboarding/pipelines:
+          enabled: true
+          description: VNF onboarding pipelines
+          upstream: https://gerrit.mcp.mirantis.net/vnf-onboarding/pipelines
+          access: ${gerrit:client:default_access}
+          require_change_id: true
+          require_agreement: false
+          merge_content: true

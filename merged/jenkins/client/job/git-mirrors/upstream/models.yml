@@ -1,0 +1,13 @@
+classes:
+  - jenkins.client.job.git-mirrors.upstream
+parameters:
+  _param:
+    jenkins_git_mirror_upstream_jobs:
+      - name: kubernetes-aws-model
+        downstream: kubernetes/kubernetes-aws-model
+        upstream: "git@github.com:Mirantis/kubernetes-aws-model"
+        branches: allinone,master
+      - name: ceph-ha-model
+        downstream: ceph/ceph-ha-model
+        upstream: "git@github.com:Mirantis/ceph-ha-model"
+        branches: master

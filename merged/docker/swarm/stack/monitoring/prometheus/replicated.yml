@@ -1,0 +1,9 @@
+parameters:
+  docker:
+    client:
+      stack:
+        monitoring:
+          service:
+            server:
+              deploy:
+                replicas: 2

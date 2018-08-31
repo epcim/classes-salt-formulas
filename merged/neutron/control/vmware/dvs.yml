@@ -1,0 +1,13 @@
+parameters:
+  neutron:
+    server:
+      backend:
+        engine: 'vmware'
+      core_plugin: vmware_dvs
+      vmware:
+        dvs:
+         host_ip: ${_param:openstack_vcenter_host}
+         host_username: ${_param:openstack_vcenter_username}
+         host_password: ${_param:openstack_vcenter_password}
+         dvs_name: ${_param:openstack_vcenter_dvs_name}
+         insecure: true

@@ -1,0 +1,7 @@
+applications:
+  - neutron
+parameters:
+  neutron:
+    fwaas:
+      enabled: true
+      version: ${_param:neutron_version}

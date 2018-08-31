@@ -1,0 +1,13 @@
+classes:
+- salt.master.single
+- salt.master.formula.pkg.auditd
+- salt.master.formula.pkg.ccp
+- salt.master.formula.pkg.foundation
+- salt.master.formula.pkg.kubernetes
+- salt.master.formula.pkg.openstack
+- salt.master.formula.pkg.oss
+- salt.master.formula.pkg.saltstack
+- salt.master.formula.pkg.stacklight
+- salt.master.formula.pkg.monitoring
+- salt.master.formula.pkg.helm
+- salt.master.formula.pkg.ceph

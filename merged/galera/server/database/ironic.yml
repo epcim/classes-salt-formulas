@@ -1,0 +1,19 @@
+parameters:
+  _param:
+    mysql_ironic_ssl_option: []
+  mysql:
+    server:
+      database:
+        ironic:
+          encoding: utf8
+          users:
+          - name: ironic
+            password: ${_param:mysql_ironic_password}
+            host: '%'
+            rights: all
+            ssl_option: ${_param:mysql_ironic_ssl_option}
+          - name: ironic
+            password: ${_param:mysql_ironic_password}
+            host: ${_param:cluster_local_address}
+            rights: all
+            ssl_option: ${_param:mysql_ironic_ssl_option}

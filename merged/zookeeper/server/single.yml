@@ -1,0 +1,12 @@
+applications:
+- zookeeper
+classes:
+- zookeeper.support
+parameters:
+  zookeeper:
+    server:
+      enabled: true
+      id: 1
+      members:
+      - host: ${_param:single_address}
+        id: 1

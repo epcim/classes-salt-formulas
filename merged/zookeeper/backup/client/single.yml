@@ -1,0 +1,14 @@
+classes:
+- zookeeper.backup.client
+- openssh.client.root
+parameters:
+  _param:
+    zookeeper_remote_backup_server: cfg01
+  zookeeper:
+    backup:
+      client:
+        enabled: true
+        full_backups_to_keep: 3
+        hours_before_full: 24
+        target:
+          host: ${_param:zookeeper_remote_backup_server}

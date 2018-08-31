@@ -1,0 +1,24 @@
+classes:
+- ceilometer.server.publisher.panko
+parameters:
+  _param:
+    openstack_event_alarm_topic: alarm.all
+    ceilometer_create_gnocchi_resources: false
+    ceilometer_gnocchi_filter_project: service
+  # gnocchi and panko are default backends for Ceilometer since Pike
+  # they are incompatible with any legacy database publisher backends
+  ceilometer:
+    server:
+      publisher:
+        gnocchi:
+          enabled: true
+          url: "gnocchi://?filter_project=${_param:ceilometer_gnocchi_filter_project}"
+          publish_metric: true
+          # filter_project is deprecated since queens
+          filter_project: ${_param:ceilometer_gnocchi_filter_project}
+          create_resources: ${_param:ceilometer_create_gnocchi_resources}
+          request_timeout: 30
+        event_alarm_notifier:
+          enabled: true
+          url: "notifier://?topic=${_param:openstack_event_alarm_topic}"
+          publish_event: true

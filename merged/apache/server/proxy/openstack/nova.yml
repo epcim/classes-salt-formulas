@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    apache_ssl:
+      enabled: false
+    apache_proxy_ssl: ${_param:apache_ssl}
+    apache_proxy_openstack_api_host: ${_param:cluster_public_host}
+    apache_proxy_openstack_api_address: 0.0.0.0
+    apache_proxy_openstack_nova_host: ${_param:nova_service_host}
+  apache:
+    server:
+      site:
+        apache_proxy_openstack_api_nova:
+          enabled: true
+          type: proxy
+          name: openstack_api_nova
+          check: false
+          proxy:
+            host: ${_param:apache_proxy_openstack_nova_host}
+            port: 8774
+            protocol: http
+          host:
+            name: ${_param:apache_proxy_openstack_api_host}
+            port: 8774
+            address: ${_param:apache_proxy_openstack_api_address}
+          ssl: ${_param:apache_proxy_ssl}

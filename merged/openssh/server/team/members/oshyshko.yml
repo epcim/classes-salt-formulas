@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        oshyshko:
+          enabled: true
+          name: oshyshko
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Oleksandr Shyshko
+          home: /home/oshyshko
+          email: oshyshko@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        oshyshko:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDHWGXkftochjnkEYF/2SqPp69zmy7pLICG9+DQjgGd6D8uX3lSqftKePqlIJLGn5ZfTpgVI5lIKO36Men95e6hixrlMeEdL2WCNx1yRGr3m1U+dZn3VGg35tqX1sV9eq+6+P8zkOoliCtc4GFbUB9Z683oJyiwtym/40t8qOAZwm4tvaQJ8fMhhnFk/agCN+V5B4hP0blgWpbodnStluiWr1Y6wT1IjCjwImYqTI5MyVlMTQKGewIj2u7eI8Qwtk0j44exjIa8HvN6RL430TTlzav8QrId+xRUBRnAZUpCd7s8Q75WjctCLAn2xGMkupqf4ANml6KP84hEVea9d/V oshyshko@oshyshko-pc
+          user: ${linux:system:user:oshyshko}

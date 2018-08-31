@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        ikolodyazhny:
+          enabled: true
+          name: ikolodyazhny
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Ivan Kolodyazhny
+          home: /home/ikolodyazhny
+          email: ikolodyazhny@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        ikolodyazhny:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAyzhJRhNTqFXr6i21Jel+AFEM4bp6ExFkydkTQfF6OPBQBzDhUjxHac/6wrsmG906gMszjym0riJDh4EWQ0pj162hXBz5hdcmyKxBPC6NbhJU4NjsSpwcPB7fx/OsyWXGcvWUYMUuRv86QS5hwLleY+Z2KoJlnAwe+h6pMT5IG/JvwHg6A1Z6l24DZdpkXqhdeupM6Ot+ODRAsPvMKgy9DxVfs+DaFGtQn0dPYHGa24qoNf56kRQ2DLSJQe9n6LkW41NXYgvO21fSml7vsGAHTAjDj3ZqwlNZX28ti9Bkd0iXe1UPYkoMuLWxhAq25XMvPdyOBYYnyfHyamJqSHGz/Q==
+          user: ${linux:system:user:ikolodyazhny}

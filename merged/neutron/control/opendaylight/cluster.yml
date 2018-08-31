@@ -1,0 +1,22 @@
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- neutron.control.cluster
+- neutron.control.openvswitch.cluster
+parameters:
+  _param:
+    opendaylight_router: odl-router_v2
+    opendaylight_driver: opendaylight_v2
+  neutron:
+    server:
+      backend:
+        opendaylight: true
+        host: ${_param:opendaylight_service_host}
+        rest_api_port: 8282
+        user: admin
+        password: admin
+        ovsdb_connection: tcp:127.0.0.1:6639
+        router: ${_param:opendaylight_router}
+        mechanism:
+          ovs:
+            driver: ${_param:opendaylight_driver}

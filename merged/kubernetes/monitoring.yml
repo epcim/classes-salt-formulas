@@ -1,0 +1,6 @@
+parameters:
+  kubernetes:
+    common:
+      monitoring:
+        backend: prometheus
+

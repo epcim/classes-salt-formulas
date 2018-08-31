@@ -1,0 +1,54 @@
+classes:
+- prometheus.gainsight.container
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-prod-local.artifactory.mirantis.com'
+    gainsight_enabled: 'true'
+    gainsight_csv_upload_url: 'http://localhost:9999'
+    gainsight_account_id: 'default'
+    gainsight_environment_id: 'default'
+    gainsight_app_org_id: 'default'
+    gainsight_access_key: 'default'
+    gainsight_job_id: 'default'
+    gainsight_login: 'default'
+    gainsight_prometheus_url: "http://${_param:stacklight_monitor_address}:15010"
+    gainsight_config_directory: '/srv/gainsight'
+    gainsight_crontab_directory: '/etc/cron.d'
+    gainsight_config_path: "${_param:gainsight_config_directory}/config.ini"
+    docker_image_prometheus_gainsight: '${_param:mcp_docker_registry}/openstack-docker/gainsight:nightly'
+  docker:
+    client:
+      stack:
+        monitoring:
+          network:
+            monitoring:
+              driver: overlay
+              driver_opts:
+                encrypted: 1
+          service:
+            gainsight:
+              networks:
+                - monitoring
+              deploy:
+                replicas: 1
+                labels:
+                  com.mirantis.monitoring: "gainsight"
+                restart_policy:
+                  condition: any
+              labels:
+                com.mirantis.monitoring: "gainsight"
+              image: ${_param:docker_image_prometheus_gainsight}
+              volumes:
+                - ${prometheus:gainsight:dir:config}:${_param:gainsight_config_directory}
+                - ${prometheus:gainsight:dir:crontab}:${_param:gainsight_crontab_directory}
+              environment:
+                CSV_UPLOAD_URL: "${_param:gainsight_csv_upload_url}"
+                ACCOUNT_ID: "${_param:gainsight_account_id}"
+                ENVIRONMENT_ID: "${_param:gainsight_environment_id}"
+                APP_ORG_ID: "${_param:gainsight_app_org_id}"
+                ACCESS_KEY: "${_param:gainsight_access_key}"
+                JOB_ID: "${_param:gainsight_job_id}"
+                LOGIN: "${_param:gainsight_login}"
+                PROMETHEUS_URL: "${_param:gainsight_prometheus_url}"
+                CONFIG_PATH: "${_param:gainsight_config_path}"
+                ENABLED: "${_param:gainsight_enabled}"

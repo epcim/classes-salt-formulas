@@ -1,0 +1,37 @@
+applications:
+  - prometheus
+classes:
+ - service.prometheus.support
+parameters:
+  _param:
+    prometheus_evaluation_interval: "15s"
+    prometheus_region_label: "region1"
+    prometheus_scrape_interval: "15s"
+    prometheus_storage_retention: "360h"
+  prometheus:
+    server:
+      enabled: true
+      is_container: true
+      use_grains:
+        target: true
+        recording: true
+        alert: true
+      dir:
+        config: /srv/volumes/prometheus/server
+        config_in_container: /srv/prometheus
+        data: /srv/volumes/local/prometheus/server
+      bind:
+        port: 9090
+        address: 0.0.0.0
+      storage:
+        local:
+          retention: ${_param:prometheus_storage_retention}
+      alertmanager:
+        notification_queue_capacity: 10000
+      config:
+        global:
+          scrape_interval: ${_param:prometheus_scrape_interval}
+          scrape_timeout: "15s"
+          evaluation_interval: ${_param:prometheus_evaluation_interval}
+          external_labels:
+            region: ${_param:prometheus_region_label}

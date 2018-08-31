@@ -1,0 +1,65 @@
+applications:
+- model_manager
+classes:
+- redis.server.local
+- nginx.server.single
+- nginx.server.site.model_manager
+parameters:
+  _param:
+    model_manager_identity_host: keystone.endpoint.com
+    model_manager_jenkins_host: 127.0.0.1
+    model_manager_jenkins_password: password
+    model_manager_jenkins_user: model-manager
+    model_manager_template_file_name: null
+    model_manager_template_job: generator-job
+    model_manager_template_password: null
+    model_manager_template_path: /etc/model-manager/cookiecutter_context.yaml
+    model_manager_template_project_name: null
+    model_manager_template_remote: http
+    model_manager_template_url: https://git.my-gitlab.io/group/project/raw/master/context.yaml
+    model_manager_template_username: null
+    model_manager_template_version_filter: ""
+    model_manager_template_version_map: {}
+    model_manager_template_versioning_enabled: false
+  model_manager:
+    server:
+      bind:
+        address: 127.0.0.1
+        port: 8000
+      config_files:
+      - _4000_integration
+      - _4010_models_panel_group
+      - _4020_integration_overview_panel
+      - _4030_integration_modeldesigner_panel
+      enabled: true
+      identity:
+        api_version: 3
+        engine: keystone
+        host: ${_param:model_manager_identity_host}
+        protocol: https
+      integration:
+        engine: jenkins
+        host: ${_param:model_manager_jenkins_host}
+        model_template:
+          file_name: ${_param:model_manager_template_file_name}
+          job: ${_param:model_manager_template_job}
+          password: ${_param:model_manager_template_password}
+          path: ${_param:model_manager_template_path}
+          project_name: ${_param:model_manager_template_project_name}
+          remote: ${_param:model_manager_template_remote}
+          url: ${_param:model_manager_template_url}
+          username: ${_param:model_manager_template_username}
+          versioning:
+            enabled: ${_param:model_manager_template_versioning_enabled}
+            filter: ${_param:model_manager_template_version_filter}
+            map: ${_param:model_manager_template_version_map}
+        password: ${_param:model_manager_jenkins_password}
+        port: 443
+        protocol: https
+        user: ${_param:model_manager_jenkins_user}
+      secret_key: ${_param:model_manager_secret_key}
+      source:
+        address: https://github.com/salt-formulas/django-model-manager.git
+        engine: git
+        revision: master
+

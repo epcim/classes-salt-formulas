@@ -1,0 +1,20 @@
+parameters:
+  keystone:
+    client:
+      os_client_config:
+        enabled: true
+        cfgs:
+          root:
+            content:
+              clouds:
+                admin_identity:
+                  region_name: ${_param:openstack_region}
+                  identity_api_version: '3'
+                  interface: 'internal'
+                  auth:
+                    username: 'admin'
+                    password: ${_param:keystone_admin_password}
+                    user_domain_name: 'Default'
+                    project_name: 'admin'
+                    project_domain_name: 'Default'
+                    auth_url: ${_param:keystone_service_protocol}://${_param:keystone_service_host}:5000

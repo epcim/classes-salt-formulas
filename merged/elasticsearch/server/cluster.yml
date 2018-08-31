@@ -1,0 +1,47 @@
+applications:
+- elasticsearch
+classes:
+- java.environment
+parameters:
+  _param:
+    elasticsearch_cluster_name: elasticsearch
+    elasticsearch_version: 5
+    java_environment_platform: openjdk
+    java_environment_version: "8"
+  elasticsearch:
+    server:
+      bind:
+        address: ${_param:single_address}
+        port: 9200
+      cluster:
+        members:
+        - host: ${_param:cluster_node01_address}
+        - host: ${_param:cluster_node02_address}
+        - host: ${_param:cluster_node03_address}
+        minimum_master_nodes: 2
+        multicast: false
+        name: elasticsearch
+      data: true
+      enabled: true
+      gateway:
+        expected_nodes: 3
+        recover_after_nodes: 2
+        recover_after_time: 5m
+      index:
+        replicas: 2
+      master: true
+      mlockall: true
+      name: ${_param:elasticsearch_cluster_name}
+      threadpool:
+        bulk:
+          queue_size: 1000
+      version: ${_param:elasticsearch_version}
+  java:
+    environment:
+      headless: true
+  linux:
+    system:
+      sysctl:
+        vm.max_map_count: 262144
+        vm.swappiness: 0
+

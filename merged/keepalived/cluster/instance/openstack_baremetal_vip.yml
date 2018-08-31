@@ -1,0 +1,28 @@
+applications:
+- keepalived
+classes:
+- keepalived.support
+parameters:
+  _param:
+    keepalived_openstack_baremetal_vip_address: ${_param:cluster_baremetal_vip_address}
+    keepalived_openstack_baremetal_password: password
+    keepalived_openstack_baremetal_vip_interface: eth1
+    keepalived_openstack_baremetal_vip_virtual_router_id: 132
+    keepalived_openstack_baremetal_vip_priority: ${_param:keepalived_vip_priority}
+  keepalived:
+    cluster:
+      vrrp_scripts:
+        check_pidof:
+          args: "haproxy"
+          interval: 10
+          rise: 1
+          fall: 1
+      enabled: true
+      instance:
+        openstack_baremetal_vip:
+          address: ${_param:keepalived_openstack_baremetal_vip_address}
+          password: ${_param:keepalived_openstack_baremetal_password}
+          interface: ${_param:keepalived_openstack_baremetal_vip_interface}
+          virtual_router_id: ${_param:keepalived_openstack_baremetal_vip_virtual_router_id}
+          priority: ${_param:keepalived_openstack_baremetal_vip_priority}
+          track_script: check_pidof

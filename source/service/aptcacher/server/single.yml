@@ -1,0 +1,12 @@
+applications:
+  - aptcacher
+classes:
+  - service.aptcacher.support
+parameters:
+  aptcacher:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0
+        port: 3142
+

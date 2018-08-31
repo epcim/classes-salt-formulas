@@ -1,0 +1,8 @@
+parameters:
+  _param:
+    sensu_source_dimension_key: nagios_host
+  heka:
+    aggregator:
+      sensu_host: 127.0.0.1
+      sensu_source_dimension_key: ${_param:sensu_source_dimension_key}
+

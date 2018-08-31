@@ -1,0 +1,19 @@
+classes:
+- linux.system.repo.keystorage.saltstack
+parameters:
+  _param:
+    apt_mk_version: stable
+    salt_version: 2017.7
+    linux_system_repo_url: http://mirror.mirantis.com/${_param:apt_mk_version}/
+    linux_system_repo_mcp_saltstack_url: ${_param:linux_system_repo_url}/saltstack-${_param:salt_version}/
+  linux:
+    system:
+      repo:
+        mcp_saltstack:
+          source: "deb [arch=amd64] ${_param:linux_system_repo_mcp_saltstack_url}/${_param:linux_system_codename}/ ${_param:linux_system_codename} main"
+          architectures: amd64
+          clean_file: true
+          pin:
+          - pin: 'release o=SaltStack'
+            priority: 1100
+            package: '*'

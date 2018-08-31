@@ -1,0 +1,12 @@
+applications:
+- postgresql
+classes:
+- service.postgresql.server.support
+parameters:
+  postgresql:
+    server:
+      enabled: true
+      bind:
+        address: '0.0.0.0'
+        port: 5432
+        protocol: tcp

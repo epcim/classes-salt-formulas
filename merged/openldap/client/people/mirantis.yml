@@ -1,0 +1,13 @@
+#
+# This class defines Mirantis users. To crypt user password, use this command:
+#   echo "{CRYPT}$(mkpasswd --rounds 500000 -m sha-512 --salt `head -c 40 /dev/random | base64 | sed -e 's/+/./g' |  cut -b 10-25` 'password')"
+#
+classes:
+  - openldap.client.people
+  - openldap.client.groups.mirantis
+parameters:
+  openldap:
+    client:
+      entry:
+        people:
+          entry: {}

@@ -1,0 +1,251 @@
+parameters:
+  _param:
+    linux_system_user_sudo: true
+  linux:
+    system:
+      user:
+        newt:
+          enabled: true
+          name: newt
+          sudo: true
+          full_name: Ales Komarek
+          home: /home/newt
+          email: mail@newt.cz
+        spasquier:
+          enabled: true
+          name: spasquier
+          sudo: true
+          full_name: Simon Pasquier
+          home: /home/spasquier
+          email: spasquier@mirantis.com
+        obourdon:
+          enabled: true
+          name: obourdon
+          sudo: true
+          full_name: Olivier Bourdon
+          home: /home/obourdon
+          email: obourdon@mirantis.com
+        dkalashnik:
+          enabled: true
+          name: dkalashnik
+          sudo: true
+          full_name: Dmitry Kalashnik
+          home: /home/dkalashnik
+          email: dkalashnik@mirantis.com
+        rpromyshlennikov:
+          enabled: true
+          name: rpromyshlennikov
+          sudo: true
+          full_name: Rodion Promyshlennikov
+          home: /home/rpromyshlennikov
+          email: rpromyshlennikov@mirantis.com
+        vgusev:
+          enabled: true
+          name: vgusev
+          sudo: true
+          full_name: Vitaly Gusev
+          home: /home/vgusev
+          email: vgusev@mirantis.com
+        mpolreich:
+          enabled: true
+          name: mpolreich
+          sudo: true
+          full_name: Martin Polreich
+          home: /home/mpolreich
+          email: mpolreich@mirantis.com
+        isvetlov:
+          enabled: true
+          name: isvetlov
+          sudo: true
+          full_name: Ildar Svetlov
+          home: /home/isvetlov
+          email: isvetlov@mirantis.com
+        akholkin:
+          enabled: true
+          name: akholkin
+          sudo: true
+          full_name: Aleksandr Kholkin
+          home: /home/akholkin
+          email: akholkin@mirantis.com
+        kszukielojc:
+          enabled: true
+          name: kszukielojc
+          sudo: true
+          full_name: Krzysztof Szukiełojć
+          home: /home/kszukielojc
+          email: kszukielojc@mirantis.com
+        bkupidura:
+          enabled: true
+          name: bkupidura
+          sudo: true
+          full_name: Bartosz Kupidura
+          home: /home/bkupidura
+          email: bkupidura@mirantis.com
+        isviridov:
+          enabled: true
+          name: isviridov
+          sudo: true
+          full_name: Illia Svyrydov
+          home: /home/isviridov
+          email: isviridov@mirantis.com
+        nzaporozhets:
+          enabled: true
+          name: nzaporozhets
+          sudo: true
+          full_name: Nikita Zaporozhets
+          home: /home/nzaporozhets
+          email: nzaporozhets@mirantis.com
+        sbanka:
+          enabled: true
+          name: sbanka
+          sudo: true
+          full_name: Szymon Banka
+          home: /home/sbanka
+          email: sbanka@mirantis.com
+        crh:
+          enabled: true
+          name: crh
+          sudo: true
+          full_name: Christian Huebner
+          home: /home/crh
+          email: chuebner@mirantis.com
+        mmatuszkowiak:
+          enabled: true
+          name: mmatuszkowiak
+          sudo: true
+          full_name: Mateusz Matuszkowiak
+          home: /home/mmatuszkowiak
+          email: mmatuszkowiak@mirantis.com
+        mkobus:
+          enabled: true
+          name: mkobus
+          sudo: true
+          full_name: Michal Kobus
+          home: /home/mkobus
+          email: mkobus@mirantis.com
+  openssh:
+    client:
+      enabled: true
+    server:
+      enabled: true
+      user:
+        newt:
+          enabled: true
+          public_keys:
+          - ${public_keys:newt}
+          user: ${linux:system:user:newt}
+        spasquier:
+          enabled: true
+          public_keys:
+          - ${public_keys:spasquier}
+          user: ${linux:system:user:spasquier}
+        obourdon:
+          enabled: true
+          public_keys:
+          - ${public_keys:obourdon}
+          user: ${linux:system:user:obourdon}
+        dkalashnik:
+          enabled: true
+          public_keys:
+          - ${public_keys:dkalashnik}
+          user: ${linux:system:user:dkalashnik}
+        rpromyshlennikov:
+          enabled: true
+          public_keys:
+          - ${public_keys:rpromyshlennikov}
+          user: ${linux:system:user:rpromyshlennikov}
+        vgusev:
+          enabled: true
+          public_keys:
+          - ${public_keys:vgusev}
+          user: ${linux:system:user:vgusev}
+        mpolreich:
+          enabled: true
+          public_keys:
+          - ${public_keys:mpolreich}
+          user: ${linux:system:user:mpolreich}
+        isvetlov:
+          enabled: true
+          public_keys:
+          - ${public_keys:isvetlov}
+          user: ${linux:system:user:isvetlov}
+        akholkin:
+          enabled: true
+          public_keys:
+          - ${public_keys:akholkin}
+          user: ${linux:system:user:akholkin}
+        kszukielojc:
+          enabled: true
+          public_keys:
+          - ${public_keys:kszukielojc}
+          user: ${linux:system:user:kszukielojc}
+        bkupidura:
+          enable: true
+          public_keys:
+          - ${public_keys:bkupidura}
+          user: ${linux:system:user:bkupidura}
+        isviridov:
+          enabled: true
+          public_keys:
+          - ${public_keys:isviridov}
+          user: ${linux:system:user:isviridov}
+        nzaporozhets:
+          enabled: true
+          public_keys:
+          - ${public_keys:nzaporozhets}
+          user: ${linux:system:user:nzaporozhets}
+        sbanka:
+          enabled: true
+          public_keys:
+          - ${public_keys:sbanka}
+          user: ${linux:system:user:sbanka}
+        crh:
+          enabled: true
+          public_keys:
+          - ${public_keys:crh}
+          user: ${linux:system:user:crh}
+        mmatuszkowiak:
+          enabled: true
+          public_keys:
+          - ${public_keys:mmatuszkowiak}
+          user: ${linux:system:user:mmatuszkowiak}
+        mkobus:
+          enabled: true
+          public_keys:
+          - ${public_keys:mkobus}
+          user: ${linux:system:user:mkobus}
+  public_keys:
+    newt:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3odU+3V2uDA2ptAFL9hrJRPNEEdAyztWOZFQ5Oyd9oerTGOU3p4xmrgWWjfKFKbYGhiiIUcYAol5PkTfKukGEkkjCHYA1t023soCaaAj85wCZCnw2zQNAziwxTYmAzTqgxiSvtZNMMrtJvFHRIRDzJ3M1lV0prWNWkMM1/3FAd4W49y6VT3fkMCo8uqG7CfGdgR2DgBCxf9KaNPfW5eDEPOgmE5lK8tVSEI6T+Cg7hbcTf4lFYnlFBnlQgp/0JstsM4Vbwb4B34LOpOsf2S8rrWk2xQMjwaMHXkc2s/E8iW3F5nVFuyEXYISFQIiAHw8dzC6CHgLcyHUVWwznKawZ newt@newt-dev1
+    spasquier:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCXBHKQaGUNB92DsnyvflmCbmuXnkiuNahZiue3hnyXqLA2q8jmQmzBbxReAJzexnVfJhrUCTw8IPJUpMUP27u3igvGdkhfctdUuxVf9yGJErtGNgHK/aGbeLCvUOmhw6X/xbf3IbyFL1gwxOJ2cmmjlSptYU9E1W2xFY+IMFWBhzO3vso5EABgPVli/UUMfeXUUd++lIZpoyYe2Hkri1QGNhzfbZcFjEO78+vNiLZrvjJEtkXWu7iZTYK6eE365CiFJzqFL7N6Ichb28qakcmVqR/foreuz3cOMqMGssKoOQk1213x8w4fE0yLwf9Ft8L7GMf+vXQvuNt0ZKBPWqn7 spasquier@mirantis.com
+    obourdon:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOd0PnoQhjjo/UrmCotaGZxXfpxLoMmuZ+XjKqAkEb9kE+aE0+k8t2EUs8PIctEgIcIC9vmovqOzIt5uNLV5MyN4R+pdIBKyWEQ5fQPaFhn/uZKf7AxLYhTVVW1wM+cDzrpWTyNQ0w59JBfNPZ/BDMtdpch9gTP24pwJ8yUDHHMSt1FnVqa7+Czw8jig4/oM05Mob5DQKlWOdtdUP3XYHSGJuHY4tHmc5sPvzIqs5r47uj5VD4gaCUqYeRS2C1YJcisN880qIqUHuCK0k9gQP+0DKJPVPmPPCuwebBzUUfjhKcbqiikKxPS0p4DWiprmeF8xjvmVWX+V8lP/v0hXiVgMc3wMoXJklH+XM7U5y5uzN8MF4YqAi4M/uSK5UF+TPn5dtu9s+joQmqt5XXaV4iFQe5kcdIYEMNJUGxiwMzByhvqWgC1reYSD8FquqLTH/5ITvFFmaTyQbBJMnXAE+QxdTXMfhTnfI/pbbhAUmfr5w8Z34lZG5UDnUy/rR+LlvJS76MqCr3nemZTHqhUYIrIJA8f9Xa8o9UJTy2QICdj2NidW1UzHCPybc/nH7qc6TjZJALLdhzK2QDbO6seJLOXuVHwSxjOx2Jdv5HImpFSeEfiGRQqc8bT+NGZI5V+cW+FuztU8i46VaSPXFM8t+57Ut/MdndAVYSPqgc7E3u3w== obourdon@mirantis.com
+    dkalashnik:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAyz5ovMK/rRxlhiy7x4dVwFkUqN/hhdVIpsQRQoGgTOjVhH6Y+eTE3si0RRq/HKZMwkcClJIqzMgjoajT5eQQphQrAAn2pwuCyZj0mXJJ1RSXQm+nSnhoqyB1r7Nl3keopgxrDlBLWyvyS3dJM9RJy4TimIwhuSA3qdhmfeqRm5M=
+    rpromyshlennikov:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3dCFNCYVxHQQD+/X1JJ9auAzpj15AkEl6yO4lJ1XL43ljxJbzWXXl3RN9vAjiBE1tvxEfuPEIxF7kO2sc1xPKtkw40RIwXrDIGfjlVCaBLtnxCPnCQX349UMSJl/AXpkHqKGVeAW+AO4zbeI8XnS9aDNMuX6ncgrLRMxWCxETL3J/IIE1LZ5v0QvyQBHuJc5jbyODVb4onff296SbjzYm96elJZcRFo4FzFaIcKtis+Sm4+6OAGCNDIXxfB9e5TK579x+L+ci/W1k83Fcz6NpQU/OM1R1CZVMap/Xet424aRMFPmA8sTF4hdYvWd6adBihco2isaW51b1Gkc+K9N9wELiEBMpdKQtqkPOvm98UhoRk7Wp+8+zSamj1uEs/7m6VCGFebq8V3xqTexWH2dCUznxZ5+KS6WLBh+3f4P6wG8VuWfgFjIUf7jjYKjidBXfSXFDxRkhf/LV8V0jLv+Ma1mjKBUX+rk7IFxm0X/PkjqNhVFlg3rH4Wre0+9WdsTCyzWS0HEaTxIKdPtwwULLEiwClO1LLebdlVjx9yhen0czXxMAHONbZeTvxN8ULfei+b7c07oYm16T8T9JAdiWn5nGxiT8TAUrCPBJMpbE4xQJLztYhAbMpfhFSdkKfTotFxTK9AKpTg4TZFY0NYOktFtV2R9ZnzP7hHZDSIg2Bw== rpromyshlennikov@mirantis.com
+    vgusev:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrCyaZjs8hiwx38LfpeQ2z9n9ptwQ7gFrhq2z5sK9q/LQMCubbnp5xhyF0SMY1jmQUewBOKXhnq3QSX+DmtNsnhitnZBw2BE5PBXllCBWMMiWULfAYvB0of728Q3EEjrtyfHkt7o2E+CvreVJcVI4kBwjKh5WpVBZ8mmkW/sexLGMuYu0bUWjCddu6ZlhUa+y14VZKOKp44auemza1VL/UzqOVZkBAfR2gPV2pBG3Im+SlnOlDRxKPEXQbsn3u/sNeZq0wSY++khY86AU7jAKfL2NiNsoA7CyB0jTEKwYO3vOWOhECifZuHwY/TNWyRFWM2ImW3mT9aO7nE4w4jXXJ vgusev@vgusev
+    mpolreich:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC6jbVpCqvru+Te2RGLPy/AkcaoRqyqxdBi3OjjXdRjPQYGNuAEFgmlQDZvs5xBMAKOcrcCl8wLcFb3mmpr9+xBJAdR4K0bEqwMfCKRejsN+6AubCbrOeoWb9SsTdvBOl7rOFyICt/XuSNX56C8k1hJojC0U21DIertWSCd8h5RExE8Skqd9+KdHSFa+TZffWbysMrwba29UBt7XsAPuQr1BUOqhA8JOx146ul5HszitCOSvglre8pSJKpw6a4Fk/cb1J8Oc/AfSMdTvTLAfuF+d2Mw6SEawFEocSXq0WKCdZfJpZrWPr6SEB+7zoq3kvhIWgUH2ypYZvvqf0EVlWx polreichmartin@gmail.com
+    isvetlov:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9lvegjKq6OP7cgF9YU9mPOk1/mfJbov3YnYnhiW1Ks0hrWZyAo+0TV3O7LgWZ8jqD9abbYaOiWCt4d9ABkLUJfCLNAqOJRapJ+tybPAxJKx4eV8pptJ7UF0EdItasTdd+gqJJ4Krk869rwmqVQ4hethdykjhKyWu3bG+uVtFUF5xUj9zaT9NThA6/Xhz0idAiTO8ArmLng4W8ne45gANaHIWXpIsklo6GLUSZwl4z6j2z4joxNJsB1hrw0msT56F26ctkDo6thNMAzPMyZsLjYJBJIRYhdC1d4Up9114nVcY4pzYw76+zXU9zED2XNRLdyAaxFlwXvumAs3iMLI8Z isvetlov@isvetlov-mac.local
+    akholkin:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDjpy9RI6iEDH/04eOOwreDa+R32USZiWxyFiKHa8zoDAlOfwaZVg6mZWepOxzwxCJPYusPGXCwQ6Zw9tHxVWOCgtzzPpsCCfhUU4v+99Wh08//W8d/s/WFka+5vqyskAO5Z8Ekk+kQU+jpUBG8/gMxAPBjj0fFc5BNeqDY9r9nmMNK6N2RVjvA6wZ8G5hLGxL9bn5Prhf/+avui1NAfy6gsT/mRt1W+eHWTvpijyNGm+m83jU34dQO6gE48n6WdSylLh/fY/p31rzAURaq1V/AZhdbSuZ8aJYDnfHevpK5+hMjoOop3v3hb7WHEmybGujQfW5HVaaWmG7SFlHeKGE/gZ2P9T+bQ+SgO+PmEAw4LayiBkzTPAHdZ2UGZe+3BI5gdM/ayovK2WVO1jS5FNlNGIvEQW+ws9V+ph+S1jL4jobDJEjs358iXrAYpf4JL+LvxFHiuj6EL51tbo8EU22z5mmgRQQ5eFrDzBuVLhcim651A3a5iSlmCeAQ5rTmHX/Op/PbK+3vAtI8vnlK4AhycLvWQ3kK2DRx+Uhzrlk5v6E14SopAhvpGOHqrLgmoHwHp1xt/9M1JgxkOUK5gccFKTQduxLHoTNBaNcP60IOG/MjqUPcOXSBcAN4Y1RDBg+pwXe4PFgOzwKdFoYeuhvtm8y185S0IvvfCHLCD8pNfQ== akholkin@mirantis.com
+    kszukielojc:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCiUm3Z3W3t4v7oe143rCNM/hbg9NU2bYUmQXek8DJPA4c3Xm6u0q+RL9kEXME+3zcj2HKqMxKsCBLXXdFIsgdUbOBV8AYiuySE220FTnEKRmdxsEnfSaBhXxFyIBNoew4gI7URSqAOclt5WuPJTqRM7K4VhbtzwEgeWVd/NUhxMCCtgkdJCYTSmycxmxs7R6V8vMr9Mb8DOqKkSpOu6f3JkR0lwnFN9zGGC4V/60FlJSDzvvI5Tn40ANPHITivs8xME0znsx7t0bF4vQUimvhYn1mumQCY1NwIaxJ/QqasD6Ag9Sn5dxSg9b3SeLn0JM6qKoIqZtfPYVuCp9gmlH0fyzJUdqu4lKKb2wBw/H5lK6icH4+owMawkav55rbvinHQOqmVCr/Bg/rTfc35ycVqjTXH/5J7OhzioKjU0yFkXFS2X/s8gpyxp3beJ+Ea4faoX+kcs0gyhMYzqC7/DOamrau7aVyEAjKYJNy60xRfjCQzjqiurbxVFh+3Fi64UUn7Bl1QV8VEiU3ztJ118psEI7zA+x2VROLZ1jrtaBYZTYB118JZicaFDycEVgg3+BHX3pFH/QSOjLsA4SK+HJjSz8CFKvWwaO6QJv1/3KHpcGEacMvmqKxwpQK0E4WpjWhglZRMPObQ0dBaGClOujgoOIHXtFGILEpWy2SdzDQkHw== kszukielojc@w541
+    bkupidura:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAfsAyuh1O+SfVRgddjQ8nByz2nNzXm71sP9FAPi5G5WoJA7El3fdrOWsG5bj5kQveVZj/M4qlETajcxMLwaFQd36nS4C0WjmzfoX2i6X+iWHFH/L/ha0UaDclfYkuGdxtCeYRakJ0Xqsm0vNuMpGhIGQP8j+OSLK0Q9pnrd1md+jrxx6JS1MXM5iUh+zU4roklrGy75WQvDJcCD3miVnktJsjb2hda8cIxkRf+l88xPm5TcC82cVAWpXF91+kUVdcHiB1D13t0IDEL6BdeUHffQij1++9x6JUukIEVDoP8Ot6DC16cbma4H9ssjdc9vnTGJjsZiu7Am+BNLKD4zsMnuSqWWfPYzQuoG5HZlyonzQIYncxo98LsHLRtrEE/CWnnO+jrd8Zfe9nAatelBgVv86UHoKEPyL666nd4UxaTiyKaXfNlvHWhfgbV67ZGRTrmllfdTmu1olOIniO706L3t3V+Zu6RjN5VjYdLegKKMo2E6XwhkMCcIg9Syi95pj8x8jFoKwjvOhb1EleuZyNHNbEvosIjAy1HsUgEo5bIwiV8K0aWIQE8VVyqyhdXOpR/Gk9UtFYsACyfCX84DjQBXp7OXIkyYt9s5N15Panml2X1CXnNgsh9M60+RvJBsFj3k8M57zcc7VAarAUKnYrI59l3cCZZVLtd4aIp8= zynzel@banshee
+    isviridov:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGNZxzOm7OsZi/q6Qk71fnvjCfWk4BfxpZ5hDig6N1f9D0iAMaINyNmlF2PxstSLW0Mjdq2tXTUvVWlYpGrw+YLHQmVk8dckmLdUAxe2Z0oEvtWhiQC64927ibBTgQ2Tjfkao+PFYPbdjiO4FgRymS1/FpGKhvpdyPDCcOLrxsMSK9YpPi4kbkd4GmlGMercuaEzP3JOOzJioOOLtEw3LOLWG5mAIzXjGFxuCNdTI4gqxQm/iw/tOpb9PcsY10EapZsS4Pd8j58vuhJlwdoTxI3gzySJcTlWm0tcphex0g8X0tEUI+zVjemJcrYkZgUpb6x5/mUjNxC4nv+4A4yMTP
+    nzaporozhets:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/UtqwBD6qkEoWSrmO0jXa9sUcwumySxmkX2XCTlAj+e8tzCNndNhaUueu01pbcNrGrB7xvCHyTa5cxgJEv0RAJRxZnObTjluegiuW+/KNSGwiSDy90bwPVb6zWalrDg12xGh8C0ybmv90uC+GrGO1UXFpm5N1qL3ZsUvSjWBRZ70xXjUI4self+fWxBYJhu7hGZ0RVCeA8TjRutzdOWcSZwN2Arn2Oq+fx9n5HP8iXlPcfM6aWj+QvkXphvKjUhDYiImQ07kJctYvxEwMei5pM1dAPZefQ6FRsUP1gKYKPVp1CiBHPIKLG3LMwxp0/LWQmHB4umZvA6HYplSUXZLMd+FhCRuocVFdxe308JWeIFWyw7og/qEBlpxqW4BUk0bR3c4deI9QDKWCuuunTDB4oEB8ZnkI7utknpx7sqO72Ev2UNS/CSi3yyqgOajojQ3l+McWn9bm08KSLzuuMaexETRYQ9dgjE79N7fH+DEt5Ryii+GA2a8Gl3iRtTZs9WA94mTb/KjZBrVxh+PixpQ6s3oGFelFCPMKSPWIEb+rwuAUi0Ulrqb2UZDzJYhT50QfbCzRN2MU+8bR7PJt/xpAADvQX0iMMrMUvAVngs2YrXKapJliyHhTZxOmVdDRIyCQ1YpK2ktBJf+E+RXl3R5XUmbJkT4jZ1R6cA1QJOEKVQ== nzaporozhets@mirantis.com
+    sbanka:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMdgjQ/jeWwQTaPyy7G5JJAkM+QPNPFkzMldPHJzOxEBzt/M5zAooj0XgbRIDIztolhXhmj8N5QSG5n3Wn9T9e2KpoxrLaVhMV5WGTgMrXMmyT8oXLV3gLxGNHMWFvplSbHLK78EsZQQ1/kBQMyPXB1+FpIuSHVOxaospOQObJ08lvQfvlO7AUUV4ecpFj3PpV5vkKPRS+KfiRm84BeGIu51BL1BClZcOyHZPBQT+DUBjm8y4Nd7pVZRjsiBzZBvUotCbn5+RqWJnu4kyoGoRNmk8pvCx7jGL1G9rE8NNsKlCUWedvyNkDeoWKvleJuzkj3ggfuCj/iTtDoXFR95e3
+    crh:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDjW4PSMoILjoZWDM8RnbiW6HXHBFntnDd6jgAlokJhTpYIjzUHpoh/OqphraKbNFnPbzL2nkIbaKZqKj+uuvbsitHnApmdFgSpOmBRGeaSExA30GqweYrIMKN5JAQTbONZWLSm+LD689CXRv2s6Th/YMELYfoi2W0pkvwiBdr+/0NxpdRvJydCn36SE6wOigu4uJXIXeNqIjTD+x4sW6GB54Ugbg+SMmI9D5ONlmfEj8K/ZmG1THdPGOLlquy/VLiuOBuwNoJCBV9shsGEmdg8NiOu8NPupQlsbmClZDbBAklJ0AF6ElAwKSiqCOhbaa7hu4qJFrCKC+XAgYxS9t7r
+    mmatuszkowiak:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC6TGCQAH3FGNSOhSbovhwODabOAsgVqG71rEDdXvDSShwyNB3RIICefas3mdSLsG7+1K9mZ1jicWzNbotvePwzrM/MESzntzp4QZ5J/9L3BMiqWWKL2u6BQ65LGe0YMzMmdSkqMAj0uxt3+OiFDPDrwqH6qN0hwxAJM+byeUlQW8uWQYm/pmWMD60GUrnjYUfKfEa/S3symaZBHQvjtp26De8D6u/jr4TWi5VJpKqVREqU7Z4IKwn8JvHMmUbRO4endW3cRiv35Qb7s66rO6TD0KlDFnnTxOtFvLhL51j58X4MrV9FHUI6czoqjAgEDe9CW7DzZ1xMj03d6IAipgL
+    mkobus:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCBqe3X+LrneiuieWGjlw5wRtgixBu2Q8LZjH6W+8nsOkB7iN6qRdKom3jac1Cdd5wSJ0NFAhDNcTLK4Etz/3YACglsTxk09TzXlqs1V0Y7U5a2eqn3KTOgMNsJ1aOhFq/LnmUwTdN8NXac6TIkwZZBj5KhHSvIoO+mfsascct5FIVU/+p32d3o/4NqMDDdTg/qxIMKQsh5sw5Y9Tz9h28LGbDh+QF2lW+b5YJhnCG21Uw17xcyxf3/53EpJwTXfElonSR7HMVLxrq7oDzmqKFZ2z8i9do6EgODKlZpSkxiAFOBw5oA2hPtEeqtXqvddu2FcNGuSNhx/6O8ZHIKq3Xh/tTOYnoc+qYDMRCzDwzeyivfr5Ci3n64giUaZl+KUr6D1CKeL2s8j9+kod/1JJDEeoYR+V93MTiTD/39N8eQAGv+6r9HBapXIkvr3iNuTH1+5eN36Vc90jXXRmGMZkF5P9ivNGDZGcy2pBwwPg/bRn2xb0zx1fsxd4qOi+Cd7mBCF4+SfnVCqUd2H9R0O3S7WgfLr+wOXpFq6/WwgjzI9RVhLJ5cZmePJKvYZYYhkAxsVwWSE639zFFuU1zhFXr49wa0njK9DdYWiQEhOki0ki3huABmVbWKg/zP1Rlllmtk0S4mwggJ57JYbuhEV3a1x1KOtWMzODW5cb3HlPTQw==

@@ -1,0 +1,23 @@
+parameters:
+  linux:
+    system:
+      user:
+        mcp-scale-jenkins:
+          enabled: true
+          name: mcp-scale-jenkins
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: MCP Scale team
+          home: /home/mcp-scale-jenkins
+          email: mos-scale-jenkins@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        mcp-scale-jenkins:
+          enabled: true
+          public_keys: ${public_keys:mcp-scale-jenkins}
+          user: ${linux:system:user:mcp-scale-jenkins}
+  public_keys:
+    mcp-scale-jenkins:
+      - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDnaV3xTY8bzK9zdsgNgnQMFyMuuM3sjMaC10Lv5nM0Zl4+4r76XMNMN/Vd1FbI3U5StlHo1CHr0Byrufrnzg4YjoqPED4vlyPwwr5oWeqVHWt7pFitu7HB1xyUPdADR4PSqxUsGV6VWvj+mv18jRZj2w006NJvTSN7N2T7F99lUqUIm9FlfliIH9gNepyX4jaN+/aUppAtFMqomUNjWDbdCxedWQRO2f7H+ZbuRq23jhSbnNTrvhCzg+E6yroarkSKv5lASuBS8nOAw233PZzBi7E1boRF9B9yTDYBX1yFjR9iZyFTq+WXQzvxN2HTInSiL6VFnpz2My5fa3J2ZiTZ
+

@@ -1,0 +1,6 @@
+parameters:
+  barbican:
+    server:
+      plugin:
+        simple_crypto:
+          kek: ${_param:barbican_simple_crypto_kek}

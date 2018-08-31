@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    heat_data_revision: master
+  heat:
+    client:
+      enabled: true
+      source:
+        address: ${_param:heat_data_repository}
+        engine: git
+        revision: ${_param:heat_data_revision}
+

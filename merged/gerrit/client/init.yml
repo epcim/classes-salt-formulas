@@ -1,0 +1,94 @@
+applications:
+- gerrit
+parameters:
+  _param:
+    gerrit_server_host: ${_param:cluster_vip_address}
+    gerrit_try_login: true
+  gerrit:
+    client:
+      default_access:
+        refs/*:
+          actions:
+          - group: Non-Interactive Users
+            name: read
+        refs/heads/*:
+          actions:
+          - group: devops-core
+            name: abandon
+          - group: devops-core
+            name: create
+          labels:
+          - group: devops-core
+            name: Code-Review
+            score: -2..+2
+          - group: Non-Interactive Users
+            name: Code-Review
+            score: -1..+1
+          - group: Non-Interactive Users
+            name: Verified
+            score: -1..+1
+          - group: devops-core
+            name: Workflow
+            score: -1..+1
+        refs/tags/*:
+          actions:
+          - force: true
+            group: Administrators
+            name: pushTag
+          - force: true
+            group: Project Owners
+            name: pushTag
+          - group: devops-core
+            name: pushSignedTag
+          - group: Administrators
+            name: pushSignedTag
+          - group: Project Owners
+            name: pushSignedTag
+          - group: devops-core
+            name: create
+          - group: Administrators
+            name: create
+          - group: devops-core
+            name: push
+          - force: true
+            group: Administrators
+            name: push
+          - group: devops-core
+            name: forgeCommitter
+          - group: Administrators
+            name: forgeCommitter
+          - group: devops-core
+            name: forgeAuthor
+          - group: Administrators
+            name: forgeAuthor
+          - group: Administrators
+            name: forgeServerAsCommitter
+      dir:
+        gerrit_config: /srv/volumes/gerrit/etc/gerrit.config
+        gerrit_secure_config: /srv/volumes/gerrit/etc/secure.config
+        git: /srv/volumes/gerrit/git
+      enabled: true
+      group:
+        Event Streaming Users:
+          description: Event Streaming Users
+        devops-contrib:
+          description: Service developers
+        devops-core:
+          description: Core maintainers
+        devops-release:
+          description: Release engineers
+      server:
+        auth_method: basic
+        email: ${_param:gerrit_admin_email}
+        host: ${_param:gerrit_server_host}
+        http_port: 8080
+        key: ${_param:gerrit_admin_private_key}
+        password: ${_param:gerrit_admin_password}
+        protocol: http
+        ssh_port: 29418
+        user: admin
+      try_login: ${_param:gerrit_try_login}
+      user:
+        admin:
+          ssh_key: ${_param:gerrit_admin_public_key}
+

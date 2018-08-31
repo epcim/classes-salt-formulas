@@ -1,0 +1,27 @@
+parameters:
+  _param:
+    gnocchi_default_policy_granularity_1: '0:01:00'
+    gnocchi_default_policy_points_1: 10080
+    gnocchi_default_policy_timespan_1: '7 days'
+    gnocchi_default_policy_granularity_2: '1:00:00'
+    gnocchi_default_policy_points_2: 8760
+    gnocchi_default_policy_timespan_2: '365 days'
+    gnocchi_default_policy_rule_metric_pattern: '"*"'
+  gnocchi:
+    client:
+      resources:
+        v1:
+          enabled: true
+          cloud_name: 'admin_identity'
+          archive_policies:
+            default:
+              definition:
+                - granularity: "${_param:gnocchi_default_policy_granularity_1}"
+                  points: "${_param:gnocchi_default_policy_points_1}"
+                  timespan: "${_param:gnocchi_default_policy_timespan_1}"
+                - granularity: "${_param:gnocchi_default_policy_granularity_2}"
+                  points: "${_param:gnocchi_default_policy_points_2}"
+                  timespan: "${_param:gnocchi_default_policy_timespan_2}"
+              rules:
+                default:
+                  metric_pattern: "${_param:gnocchi_default_policy_rule_metric_pattern}"

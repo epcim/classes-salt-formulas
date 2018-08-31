@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    remote_collector_telegraf_port: 8186
+  heka:
+    remote_collector:
+      alarms_enabled: false
+      emit_rates: false
+      influxdb_host: ${_param:remote_collector_telegraf_host}
+      influxdb_port: ${_param:remote_collector_telegraf_port}
+      influxdb_timeout: 2000
+

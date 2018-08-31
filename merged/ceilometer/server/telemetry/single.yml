@@ -1,0 +1,6 @@
+classes:
+- ceilometer.server.single.common
+parameters:
+  ceilometer:
+    server:
+      role: ${_param:openstack_node_role}

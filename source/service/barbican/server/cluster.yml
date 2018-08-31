@@ -1,0 +1,70 @@
+applications:
+- barbican
+classes:
+- service.barbican.support
+parameters:
+  _param:
+    openstack_log_appender: false
+    openstack_fluentd_handler_enabled: false
+    openstack_ossyslog_handler_enabled: false
+    keystone_barbican_endpoint_type: internalURL
+    cluster_internal_protocol: 'http'
+    barbican_service_protocol: ${_param:cluster_internal_protocol}
+  barbican:
+    server:
+      enabled: true
+      version: ${_param:barbican_version}
+      region: ${_param:openstack_region}
+      host_href: "${_param:barbican_service_protocol}://${_param:cluster_vip_address}:9311"
+      is_proxied: true
+      logging:
+        log_appender: ${_param:openstack_log_appender}
+        log_handlers:
+          watchedfile:
+            enabled: true
+          fluentd:
+            enabled: ${_param:openstack_fluentd_handler_enabled}
+          ossyslog:
+            enabled: ${_param:openstack_ossyslog_handler_enabled}
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 9311
+        admin_port: 9312
+      database:
+        engine: "mysql+pymysql"
+        host: ${_param:cluster_vip_address}
+        port: 3306
+        name: barbican
+        user: barbican
+        password: ${_param:mysql_barbican_password}
+        sql_idle_timeout: 180
+      identity:
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        port: 35357
+        domain: default
+        tenant: service
+        user: barbican
+        password: ${_param:keystone_barbican_password}
+        endpoint_type: ${_param:keystone_barbican_endpoint_type}
+      message_queue:
+        engine: rabbitmq
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+          port: 5672
+        - host: ${_param:openstack_message_queue_node02_address}
+          port: 5672
+        - host: ${_param:openstack_message_queue_node03_address}
+          port: 5672
+      cache:
+        members:
+        - host: ${_param:openstack_control_node01_address}
+          port: 11211
+        - host: ${_param:openstack_control_node02_address}
+          port: 11211
+        - host: ${_param:openstack_control_node03_address}
+          port: 11211
+

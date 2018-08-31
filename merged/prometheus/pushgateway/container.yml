@@ -1,0 +1,14 @@
+applications:
+- prometheus
+classes:
+- prometheus.pushgateway
+parameters:
+  prometheus:
+    pushgateway:
+      bind:
+        address: 0.0.0.0
+        port: 9091
+      dir:
+        data: /srv/volumes/local/pushgateway
+      enabled: true
+

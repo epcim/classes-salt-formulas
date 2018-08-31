@@ -1,0 +1,17 @@
+parameters:
+  octavia:
+    _support:
+      collectd:
+        enabled: false
+      heka:
+        enabled: true
+      sensu:
+        enabled: false
+      sphinx:
+        enabled: false
+      grafana:
+        enabled: true
+      prometheus:
+        enabled: true
+      telegraf:
+        enabled: true

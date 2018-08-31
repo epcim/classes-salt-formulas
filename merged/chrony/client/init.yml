@@ -1,0 +1,24 @@
+applications:
+- chrony
+classes:
+  - chrony.support
+parameters:
+  chrony:
+    client:
+      enabled: true
+      strata:
+      - ntp.cesnet.cz prefer
+      driftfile: /var/lib/chrony/drift
+      keyfile: etc/chrony.keys
+      commandkey: 1
+      logchange: 0.5
+      logdir: /var/log/chrony
+      dumponexit: true
+      dumpdir: /var/lib/chrony
+      rtconutc: true
+      local:  stratum 10
+      maxupdateskew: 100.0
+      log:
+        - tracking
+        - measurements
+        - statistics

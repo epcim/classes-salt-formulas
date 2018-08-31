@@ -1,0 +1,4 @@
+classes:
+- jenkins.client.job.k8s-test.mcp-k8s-test-pipeline
+- jenkins.client.job.k8s-test.mcp-k8s-merge-pipeline
+- jenkins.client.job.k8s-test.mcp-k8s-formula-test-pipeline

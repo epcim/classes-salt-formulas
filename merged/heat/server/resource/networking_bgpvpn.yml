@@ -1,0 +1,11 @@
+parameters:
+  linux:
+    system:
+      package:
+        python-networking-bgpvpn:
+          version: latest
+  heat:
+    server:
+      dir:
+        plugins:
+        - /usr/lib/python2.7/dist-packages/networking_bgpvpn_heat

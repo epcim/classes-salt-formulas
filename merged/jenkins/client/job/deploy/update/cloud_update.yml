@@ -1,0 +1,171 @@
+#
+# Jobs to update cloud packages on given Salt master environment
+#
+parameters:
+  _param:
+    jenkins_salt_api_url: "http://${_param:salt_master_host}:6969"
+  jenkins:
+    client:
+      job:
+        deploy-update-cloud:
+          type: workflow-scm
+          concurrent: true
+          discard:
+            build:
+              keep_num: 10
+            artifact:
+              keep_num: 10
+          display_name: "Deploy - update cloud"
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
+            branch: "${_param:jenkins_pipelines_branch}"
+            credentials: "gerrit"
+            script: cloud-update.groovy
+          param:
+            SALT_MASTER_URL:
+              type: string
+              default: "${_param:jenkins_salt_api_url}"
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt"
+            SNAPSHOT_NAME:
+              type: string
+              default: "updateSnapshot1"
+              description: "Live snapshot name"
+            CFG_NODE_PROVIDER:
+              type: string
+              default: ""
+              description: "Physical machine hosting Salt-Master VM (ex. kvm01*)"
+            INTERACTIVE:
+              type: boolean
+              default: 'false'
+              description: "Ask interactive questions during pipeline run"
+            PER_NODE:
+              type: boolean
+              default: 'true'
+              description: "Target nodes will be managed one by one"
+            ROLLBACK_BY_REDEPLOY:
+              type: boolean
+              default: 'false'
+              description: "Omit taking live snapshots. Rollback is planned to be done by redeployment"
+            STOP_SERVICES:
+              type: boolean
+              default: 'true'
+              description: "Stop API services before update"
+            TARGET_KERNEL_UPDATES:
+              type: string
+              default: "cfg,ctl,prx,msg,dbs"
+              description: "Comma separated list of nodes to update kernel if newer version is available (Valid values are cfg,ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cid,cmp,kvm,osd,gtw-physical)"
+            TARGET_REBOOT:
+              type: string
+              default: "cfg,ctl,prx,msg,dbs"
+              description: "Comma separated list of nodes to reboot after update or physical machine rollback (Valid values are cfg,ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cid,cmp,kvm,osd,gtw-physical)"
+            TARGET_HIGHSTATE:
+              type: string
+              default: "cfg,ctl,prx,msg,dbs"
+              description: "Comma separated list of nodes to run Salt Highstate on after update or physical machine rollback (Valid values are cfg,ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cid,cmp,kvm,osd,gtw-physical)"
+            TARGET_UPDATES:
+              type: string
+              default: "cfg,ctl,prx,msg,dbs"
+              description: "Comma separated list of nodes to update (Valid values are cfg,ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cid,cmp,kvm,osd,gtw-physical)"
+            TARGET_ROLLBACKS:
+              type: string
+              default: ""
+              description: "Comma separated list of nodes to rollback (Valid values are ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cmp,kvm,osd,gtw-physical)"
+            TARGET_SNAPSHOT_MERGES:
+              type: string
+              default: ""
+              description: "Comma separated list of nodes to merge live snapshot for (Valid values are cfg,ctl,prx,msg,dbs,log,mon,mtr,ntw,nal,gtw-virtual,cmn,rgw,cid)"
+            CTL_TARGET:
+              type: string
+              default: "ctl*"
+              description: "Salt targeted CTL nodes (ex. ctl*)"
+            PRX_TARGET:
+              type: string
+              default: "prx*"
+              description: "Salt targeted PRX nodes (ex. prx*)"
+            MSG_TARGET:
+              type: string
+              default: "msg*"
+              description: "Salt targeted MSG nodes (ex. msg*)"
+            DBS_TARGET:
+              type: string
+              default: "dbs*"
+              description: "Salt targeted DBS nodes (ex. dbs*)"
+            LOG_TARGET:
+              type: string
+              default: "log*"
+              description: "Salt targeted LOG nodes (ex. log*)"
+            MON_TARGET:
+              type: string
+              default: "mon*"
+              description: "Salt targeted MON nodes (ex. mon*)"
+            MTR_TARGET:
+              type: string
+              default: "mtr*"
+              description: "Salt targeted MTR nodes (ex. mtr*)"
+            NTW_TARGET:
+              type: string
+              default: "ntw*"
+              description: "Salt targeted NTW nodes (ex. ntw*)"
+            NAL_TARGET:
+              type: string
+              default: "nal*"
+              description: "Salt targeted NAL nodes (ex. nal*)"
+            CMN_TARGET:
+              type: string
+              default: "cmn*"
+              description: "Salt targeted CMN nodes (ex. cmn*)"
+            RGW_TARGET:
+              type: string
+              default: "rgw*"
+              description: "Salt targeted RGW nodes (ex. rgw*)"
+            CID_TARGET:
+              type: string
+              default: "cid*"
+              description: "Salt targeted CID nodes (ex. cid*)"
+            CMP_TARGET:
+              type: string
+              default: "cmp001*"
+              description: "Salt targeted physical compute nodes (ex. cmp001*)"
+            KVM_TARGET:
+              type: string
+              default: "kvm01*"
+              description: "Salt targeted physical KVM nodes (ex. kvm01*)"
+            CEPH_OSD_TARGET:
+              type: string
+              default: "osd001*"
+              description: "Salt targeted physical Ceph OSD nodes (ex. osd001*)"
+            GTW_TARGET:
+              type: string
+              default: "gtw01*"
+              description: "Salt targeted physical or virtual GTW nodes (ex. gtw01*)"
+            ROLLBACK_PKG_VERSIONS:
+              type: string
+              default: ""
+              description: "Space separated list of pkgs=versions to rollback to on physical targeted machines (ex. pkg_name1=pkg_version1 pkg_name2=pkg_version2)"
+            PURGE_PKGS:
+              type: string
+              default: ""
+              description: "Space separated list of pkgs=versions to be purged on physical targeted machines (ex. pkg_name1=pkg_version1 pkg_name2=pkg_version2)"
+            REMOVE_PKGS:
+              type: string
+              default: ""
+              description: "Space separated list of pkgs=versions to be removed on physical targeted machines (ex. pkg_name1=pkg_version1 pkg_name2=pkg_version2)"
+            RESTORE_GALERA:
+              type: boolean
+              default: 'false'
+              description: "Restore Galera DB"
+            RESTORE_CONTRAIL_DB:
+              type: boolean
+              default: 'false'
+              description: "Restore Cassandra and Zookeeper DBs for OpenContrail"
+            RUN_CVP_TESTS:
+              type: boolean
+              default: 'false'
+              description: "Run cloud validation pipelines before and after update"
+            MINIONS_TEST_TIMEOUT:
+              type: string
+              default: 10
+              description: "Time in seconds for a Salt result to receive a response when calling a minionsReachable method."

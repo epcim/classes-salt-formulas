@@ -1,0 +1,214 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        oscore-test_virtual_model:
+          concurrent: true
+          description: ${_param:job_description_oscore}
+          discard:
+            build:
+              keep_num: 30
+            artifact:
+              keep_num: 30
+          plugin_properties:
+            throttleconcurrents:
+              enabled: true
+              throttle_option: category
+              categories:
+                - oscore-ci-ha-builds
+          display_name: oscore-test-virtual-model
+          name: oscore-test-virtual-model
+          param:
+            SALT_MASTER_CREDENTIALS:
+              type: string
+              default: "salt-qa-credentials"
+              description: Jenkins credential ID for Salt master
+            CREDENTIALS_ID:
+              default: gerrit
+              type: string
+              description: "Name of creadentials to use when connecting to gerrit"
+            ARTIFACTORY_CREDENTIALS:
+              type: string
+              default: "artifactory"
+              description: Jenkins credential ID for Artifactory
+            HEAT_STACK_ZONE:
+              type: string
+              description: "Heat stack zone where build stack"
+              default: "mcp-oscore-ci"
+            HEAT_STACK_ENVIRONMENT:
+              type: string
+              description: "Heat stack env parameters for deployment"
+              default: "devcloud"
+            STACK_RECLASS_ADDRESS:
+              type: string
+              default: 'https://gerrit.mcp.mirantis.net/salt-models/mcp-virtual-lab'
+              description: 'Url to repository with stack salt models'
+            STACK_RECLASS_BRANCH:
+              type: string
+              default: 'master'
+              description: 'Branch of repository with stack salt models'
+            STACK_CLUSTER_NAME:
+              type: string
+              default: ""
+              description: "Cluster name to use from reclass"
+            STACK_DELETE:
+              type: boolean
+              default: 'false'
+              description: "Enable it when stack have to be deleted."
+            FORMULA_PKG_REVISION:
+              type: string
+              description: Version of formulas for salt-master bootstrap
+              default: "nightly"
+            BOOTSTRAP_EXTRA_REPO_PARAMS:
+              type: string
+              default: ""
+              description: "Defines a list of extra repos with parameters, format: repo 1, repo priority 1, repo pin 1; repo 2, repo priority 2, repo pin 2"
+            # openstack api
+            OPENSTACK_API_URL:
+              type: string
+              default: "https://cloud-cz.bud.mirantis.net:5000"
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "openstack-devcloud-credentials"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore-ci"
+            OPENSTACK_API_PROJECT_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_PROJECT_ID:
+              type: string
+              default: ""
+            OPENSTACK_API_USER_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_CLIENT:
+              type: string
+              default: ""
+            OPENSTACK_API_VERSION:
+              type: string
+              default: "3"
+            # Test params
+            TEST_CONF:
+              type: string
+              description: Tempest configuration file path inside container
+              default: "/home/rally/rally_reports/tempest_generated.conf"
+            TEST_TARGET:
+              type: string
+              description: Node to run tests
+              default: "gtw01*"
+            TEST_CONCURRENCY:
+              type: string
+              description: How much test threads to run
+              default: "2"
+            RUN_SMOKE:
+              type: boolean
+              default: "false"
+              description: Enabling of running smoke tests
+            USE_RALLY:
+              type: boolean
+              description: Whether to use container with rally
+              default: "false"
+            TEST_PASS_THRESHOLD:
+              type: string
+              description: Tests pass rate to consider build successful
+              default: "96"
+            FAIL_ON_TESTS:
+              type: boolean
+              default: 'true'
+              description: Whether to fail build on test results
+            TEST_PATTERN:
+              type: string
+              description: Run tests matched to pattern only
+              default: ''
+            TEST_MILESTONE:
+              type: string
+              description: Product milestone
+              default: 'MCP1.1'
+            TESTRAIL:
+              type: boolean
+              description: Whether to upload results to testrail or not
+              default: "false"
+            OPENSTACK_VERSION:
+             type: string
+             description: Version of openstack to test
+             default: ""
+          scm:
+            script: test-virtual-model-pipeline.groovy
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines"
+            credentials: "gerrit"
+          type: workflow-scm
+        oscore-test_virtual_models:
+          concurrent: true
+          description: ${_param:job_description_oscore}
+          discard:
+            build:
+              keep_num: 30
+            artifact:
+              keep_num: 30
+          trigger:
+              timer:
+               spec: "H 05 * * *"
+          display_name: oscore-test-virtual-models
+          name: oscore-test-virtual-models
+          param:
+            CREDENTIALS_ID:
+              default: gerrit
+              type: string
+              description: "Name of creadentials to use when connecting to gerrit"
+            HEAT_STACK_ZONE:
+              type: string
+              description: "Heat stack zone where build stack"
+              default: "mcp-oscore-ci"
+            STACK_RECLASS_ADDRESS:
+              type: string
+              default: 'https://gerrit.mcp.mirantis.net/salt-models/mcp-virtual-lab'
+              description: 'Url to repository with stack salt models'
+            STACK_RECLASS_BRANCH:
+              type: string
+              default: 'master'
+              description: 'Branch of repository with stack salt models'
+            STACK_CLUSTER_NAMES:
+              type: string
+              default: "virtual-mcp-pike-ovs,virtual-mcp-pike-dvr,virtual-mcp-pike-dvr-ssl"
+              description: "Comma separated list of cluster names to test."
+            STACK_DELETE:
+              type: boolean
+              default: 'true'
+              description: "Enable it when stack have to be deleted."
+            FORMULA_PKG_REVISION:
+              type: string
+              description: Version of formulas for salt-master bootstrap
+              default: "nightly"
+            # openstack api
+            OPENSTACK_API_URL:
+              type: string
+              default: "https://cloud-cz.bud.mirantis.net:5000"
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              default: "openstack-devcloud-credentials"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore-ci"
+            OPENSTACK_API_PROJECT_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_PROJECT_ID:
+              type: string
+              default: ""
+            OPENSTACK_API_USER_DOMAIN:
+              type: string
+              default: "default"
+            OPENSTACK_API_CLIENT:
+              type: string
+              default: ""
+            OPENSTACK_API_VERSION:
+              type: string
+              default: "3"
+          scm:
+            script: test-virtual-models-pipeline.groovy
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines"
+            credentials: "gerrit"
+          type: workflow-scm

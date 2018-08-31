@@ -1,0 +1,20 @@
+applications:
+- opencontrail
+classes:
+- haproxy.proxy.single
+- keepalived.cluster.single
+parameters:
+  opencontrail:
+    compute:
+      tor:
+        agent:
+          tor01:
+            address: ${_param:single_address}
+            id: 0
+            port: 6632
+            ssl:
+              enabled: true
+        bind:
+          port: 8086
+        enabled: true
+

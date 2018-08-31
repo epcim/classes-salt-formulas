@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    salt_control_size_cpu_opencontrail_control: 8
+    salt_control_size_ram_opencontrail_control: 65536
+    salt_control_size_disk_profile_opencontrail_control: large
+    salt_control_size_net_profile_opencontrail_control: default
+    salt_control_size_cpu_opencontrail_analytics: 16
+    salt_control_size_ram_opencontrail_analytics: 98304
+    salt_control_size_disk_profile_opencontrail_analytics: xhuge
+    salt_control_size_net_profile_opencontrail_analytics: default
+  salt:
+    control:
+      size:
+        opencontrail.control:
+          cpu: ${_param:salt_control_size_cpu_opencontrail_control}
+          ram: ${_param:salt_control_size_ram_opencontrail_control}
+          disk_profile: ${_param:salt_control_size_disk_profile_opencontrail_control}
+          net_profile: ${_param:salt_control_size_net_profile_opencontrail_control}
+        opencontrail.analytics:
+          cpu: ${_param:salt_control_size_cpu_opencontrail_analytics}
+          ram: ${_param:salt_control_size_ram_opencontrail_analytics}
+          disk_profile: ${_param:salt_control_size_disk_profile_opencontrail_analytics}
+          net_profile: ${_param:salt_control_size_net_profile_opencontrail_analytics}

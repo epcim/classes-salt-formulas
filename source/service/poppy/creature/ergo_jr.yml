@@ -1,0 +1,12 @@
+applications:
+- poppy
+classes:
+- service.poppy.support
+parameters:
+  _param:
+    poppy_name: ergo-jr
+  poppy:
+    creature:
+      enabled: true
+      name: ${_param:poppy_name}
+      kind: poppy-ergo-jr

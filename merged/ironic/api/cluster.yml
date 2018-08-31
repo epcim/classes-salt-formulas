@@ -1,0 +1,46 @@
+applications:
+- ironic
+parameters:
+  ironic:
+    api:
+      api_type: ${_param:ironic_api_type}
+      bind:
+        address: ${_param:cluster_baremetal_local_address}
+        port: 6385
+        protocol: http
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        name: ironic
+        password: ${_param:mysql_ironic_password}
+        port: 3306
+        user: ironic
+      enabled: true
+      identity:
+        auth_type: password
+        engine: keystone
+        host: ${_param:cluster_vip_address}
+        password: ${_param:keystone_ironic_password}
+        port: 35357
+        project_domain_id: default
+        protocol: http
+        region: RegionOne
+        tenant: service
+        user: ironic
+        user_domain_id: default
+      message_queue:
+        engine: rabbitmq
+        host: ${_param:openstack_message_queue_address}
+        password: ${_param:rabbitmq_openstack_password}
+        port: 5672
+        user: openstack
+        virtual_host: /openstack
+      role: ${_param:openstack_node_role}
+      version: ${_param:ironic_version}
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+

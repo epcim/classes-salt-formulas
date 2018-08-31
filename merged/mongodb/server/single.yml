@@ -1,0 +1,12 @@
+applications:
+- mongodb
+parameters:
+  _param:
+    mongodb_server_replica_set: stacklight
+  mongodb:
+    server:
+      bind:
+        address: 127.0.0.1
+        port: 27017
+      enabled: true
+
