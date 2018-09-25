@@ -33,7 +33,7 @@ parameters:
         active_discovery_interval: 600
         commissioning_distro_series: xenial
         default_distro_series: xenial
-        default_min_hwe_kernel: ""
+        default_min_hwe_kernel: hwe-16.04
         default_osystem: ubuntu
         default_storage_layout: lvm
         disk_erase_with_secure_erase: true

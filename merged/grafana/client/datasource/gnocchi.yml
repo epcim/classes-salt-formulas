@@ -1,0 +1,23 @@
+parameters:
+  _param:
+    grafana_gnocchi_is_default: false
+    grafana_gnocchi_ds_name: gnocchi
+    grafana_gnocchi_address: ${_param:gnocchi_public_host}
+    keystone_public_url_path: /identity
+    keystone_gnocchi_user: gnocchi
+    grafana_gnocchi_domain: default
+    grafana_gnocchi_project: service
+  grafana:
+    client:
+      datasource:
+        gnocchi:
+          type: gnocchixyz-gnocchi-datasource
+          name: ${_param:grafana_gnocchi_ds_name}
+          host: ${_param:grafana_gnocchi_address}
+          url_path: ${_param:keystone_public_url_path}
+          mode: keystone
+          domain: ${_param:grafana_gnocchi_domain}
+          project: ${_param:grafana_gnocchi_project}
+          user: ${_param:keystone_gnocchi_user}
+          password: ${_param:keystone_gnocchi_password}
+          is_default: ${_param:grafana_gnocchi_is_default}

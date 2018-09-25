@@ -3,11 +3,19 @@ applications:
 classes:
 - haproxy.proxy.single
 - haproxy.proxy.listen.openstack.manila
+- salt.minion.cert.mysql.clients.openstack.manila
+- salt.minion.cert.rabbitmq.clients.openstack.manila
 parameters:
   _param:
+    galera_ssl_enabled: false
+    manila_cluster_vip_address: ${_param:cluster_vip_address}
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   manila:
     common:
       database:
@@ -16,11 +24,18 @@ parameters:
         name: manila
         password: ${_param:mysql_manila_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: manila
+        x509:
+          ca_file: ${_param:mysql_manila_ssl_ca_file}
+          cert_file: ${_param:mysql_manila_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_manila_client_ssl_key_file}
       identity:
         auth_type: password
         engine: keystone
-        host: ${_param:cluster_vip_address}
+        host: ${_param:manila_cluster_vip_address}
         password: ${_param:keystone_manila_password}
         port: 35357
         project_domain_id: default
@@ -42,8 +57,15 @@ parameters:
         engine: rabbitmq
         host: ${_param:openstack_message_queue_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_manila_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_manila_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_manila_client_ssl_key_file}
       version: ${_param:openstack_version}
 

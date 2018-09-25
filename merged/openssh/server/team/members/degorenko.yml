@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        degorenko:
+          enabled: true
+          name: degorenko
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Denis Egorenko
+          home: /home/degorenko
+          email: degorenko@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        degorenko:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBUclrfSgL1AGw8gjjAcfD2XP9beQVRcP+FMTsuro/2UXjNN7fQ9oXm0TbIk5u+hgILrgjOkbxb1K7bYzdS7+zF3cFoK5B8GKaQog/frEZ2Y4NdkyK3nm5RX1NfxguND3pzEhr5tar/gi+C59uNWA70FF6lqi2yzqA6cWsBM4lP8ZVCOoKJpJNbXe8HXNDmHbVLP+kXzG7k0j/ifAHaF4Rsp+r9B7NupA28N0VhOaXooDRt8TrbqVPZRKuk2XIvitiw73b7ZoiErfOarkkAR6vI2pMrJLFiXm1J2kZHf1CLCl2EdVuS2ba7LtQo77Qw++YeYM4zdGQ5Xr+yjztgxXX degorenko
+          user: ${linux:system:user:degorenko}

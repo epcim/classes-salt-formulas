@@ -1,6 +1,8 @@
 parameters:
   _param:
     opencontrail_stats_password: password
+    opencontrail_api_start_offset: 0
+    opencontrail_api_workers_count: 1
   haproxy:
     proxy:
       listen:
@@ -15,14 +17,20 @@ parameters:
             host: ${_param:cluster_node01_address}
             port: 9100
             params: check inter 2000 rise 2 fall 3
+            port_range_length: ${_param:opencontrail_api_workers_count}
+            port_range_start_offset: ${_param:opencontrail_api_start_offset}
           - name: ntw02
             host: ${_param:cluster_node02_address}
             port: 9100
             params: check inter 2000 rise 2 fall 3
+            port_range_length: ${_param:opencontrail_api_workers_count}
+            port_range_start_offset: ${_param:opencontrail_api_start_offset}
           - name: ntw03
             host: ${_param:cluster_node03_address}
             port: 9100
             params: check inter 2000 rise 2 fall 3
+            port_range_length: ${_param:opencontrail_api_workers_count}
+            port_range_start_offset: ${_param:opencontrail_api_start_offset}
         contrail_discovery:
           type: contrail-api
           service_name: contrail

@@ -1,3 +1,6 @@
+classes:
+- keystone.client.os_client_config.octavia_identity
+
 parameters:
   _param:
     cluster_public_protocol: https
@@ -5,8 +8,25 @@ parameters:
     octavia_service_protocol: http
   keystone:
     client:
+      server:
+        identity:
+          octavia:
+            api_version: 3
+        octavia_identity:
+          admin:
+            api_version: ''
+            user_domain_name: 'Default'
+            project_domain_name: 'Default'
       resources:
         v3:
+          cloud_name: 'octavia_identity'
+          roles:
+            global_load_balancer_member:
+              name: load-balancer_member
+              enabled: true
+            global_load_balancer_admin:
+              name: load-balancer_admin
+              enabled: true
           users:
             octavia:
               password: ${_param:keystone_octavia_password}
@@ -17,7 +37,7 @@ parameters:
                   project_id: service
           services:
             octavia:
-              type: octavia
+              type: load-balancer
               description: OpenStack Loadbalancing Service
               endpoints:
                 octavia_public:

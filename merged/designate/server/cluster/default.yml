@@ -1,0 +1,80 @@
+classes:
+- keepalived.cluster.single
+- haproxy.proxy.single
+- haproxy.proxy.listen.openstack.designate
+- designate.server.cluster
+- salt.minion.cert.mysql.clients.openstack.designate
+- salt.minion.cert.rabbitmq.clients.openstack.designate
+parameters:
+  _param:
+    designate_admin_api_enabled: false
+    cluster_internal_protocol: 'http'
+    openstack_mysql_x509_enabled: False
+    galera_ssl_enabled: False
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
+    openstack_rabbitmq_port: 5672
+  linux:
+    system:
+      package:
+        python-pymysql:
+          fromrepo: ${_param:openstack_version}
+          version: latest
+  designate:
+    _support:
+      sensu:
+        enabled: false
+    server:
+      enabled: true
+      local_bind: true
+      region: ${_param:openstack_region}
+      domain_id: ${_param:designate_domain_id}
+      version: ${_param:designate_version}
+      role: ${_param:openstack_node_role}
+      admin_api:
+        enabled: ${_param:designate_admin_api_enabled}
+        enabled_extensions_admin: quotas
+      database:
+        engine: mysql
+        host: ${_param:openstack_database_address}
+        port: 3306
+        name:
+          main_database: designate
+          pool_manager: designate_pool_manager
+        user: designate
+        password: ${_param:mysql_designate_password}
+        x509:
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          ca_file: ${_param:mysql_designate_ssl_ca_file}
+          key_file: ${_param:mysql_designate_client_ssl_key_file}
+          cert_file: ${_param:mysql_designate_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
+      identity:
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        port: 35357
+        tenant: service
+        user: designate
+        password: ${_param:keystone_designate_password}
+        protocol: ${_param:cluster_internal_protocol}
+      bind:
+        api:
+          address: ${_param:single_address}
+      message_queue:
+        engine: rabbitmq
+        port: ${_param:openstack_rabbitmq_port}
+        members:
+        - host: ${_param:openstack_message_queue_node01_address}
+        - host: ${_param:openstack_message_queue_node02_address}
+        - host: ${_param:openstack_message_queue_node03_address}
+        user: openstack
+        password: ${_param:rabbitmq_openstack_password}
+        virtual_host: '/openstack'
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_designate_ssl_ca_file}
+          key_file: ${_param:rabbitmq_designate_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_designate_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}

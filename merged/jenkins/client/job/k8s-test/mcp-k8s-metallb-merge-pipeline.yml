@@ -1,0 +1,43 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+    mcp_prod_docker_registry: 'docker-prod-local.docker.mirantis.net'
+  jenkins:
+    client:
+      job:
+        mcp_k8s_metallb_merge_pipeline:
+          type: workflow-scm
+          name: mcp-k8s-metallb-merge-pipeline
+          display_name: "MetalLB merge pipeline"
+          discard:
+            build:
+              keep_num: 20
+          concurrent: false
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/kubernetes-ci/kubernetes-pipelines"
+            credentials: "gerrit"
+            script: pipelines/mcp-k8s-metallb-pipeline.groovy
+          trigger:
+            gerrit:
+              project:
+                kubernetes/metallb:
+                  branches:
+                    - compare_type: "ANT"
+                      name: "**mcp**"
+              message:
+                build_successful: "Build successful"
+                build_unstable: "Build unstable"
+                build_failure: "Build failed"
+              event:
+                change:
+                  - merged
+          param:
+            KUBE_DOCKER_REGISTRY:
+              type: string
+              default: ${_param:mcp_docker_registry}
+              description: 'Docker registry for binaries and images'
+            KUBE_PROD_DOCKER_REGISTRY:
+              type: string
+              default: ${_param:mcp_prod_docker_registry}
+              description: 'Prod docker registry for binaries and images'

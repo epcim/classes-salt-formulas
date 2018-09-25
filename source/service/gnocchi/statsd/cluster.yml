@@ -1,0 +1,13 @@
+applications:
+- gnocchi
+classes:
+- service.gnocchi.common.cluster
+- service.gnocchi.support
+parameters:
+  gnocchi:
+    statsd:
+      enabled: true
+      resource_id: ${_param:gnocchi_statsd_resource_id}
+      bind:
+        address: ${_param:cluster_local_address}
+        port: 8125

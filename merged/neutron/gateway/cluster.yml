@@ -1,9 +1,13 @@
 classes:
 - neutron.gateway.single
+- salt.minion.cert.rabbitmq.clients.openstack.neutron
 parameters:
   _param:
     neutron_enable_qos: False
     neutron_enable_vlan_aware_vms: False
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
+    openstack_rabbitmq_port: 5672
   linux:
     system:
       kernel:
@@ -18,7 +22,15 @@ parameters:
       backend:
         tenant_network_types: ${_param:neutron_tenant_network_types}"
       message_queue:
+        port: ${_param:openstack_rabbitmq_port}
         members:
           - host: ${_param:openstack_message_queue_node01_address}
           - host: ${_param:openstack_message_queue_node02_address}
           - host: ${_param:openstack_message_queue_node03_address}
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_neutron_ssl_ca_file}
+          key_file: ${_param:rabbitmq_neutron_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_neutron_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}

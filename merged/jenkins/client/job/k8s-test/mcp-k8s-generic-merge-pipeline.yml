@@ -1,0 +1,65 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+    mcp_prod_docker_registry: 'docker-prod-local.docker.mirantis.net'
+  jenkins:
+    client:
+      job_template:
+        mcp-k8s-generic-merge-pipeline:
+          name: mcp-k8s-{{name}}-merge-pipeline
+          jobs:
+            - name: coredns
+              display_name: "CoreDNS merge pipeline"
+              pipeline: mcp-k8s-coredns-pipeline.groovy
+              repo: kubernetes/coredns
+            - name: dashboard
+              display_name: "Kubernetes dashboard merge pipeline"
+              pipeline: mcp-k8s-dashboard-pipeline.groovy
+              repo: kubernetes/dashboard
+            - name: external-dns
+              display_name: "External DNS merge pipeline"
+              pipeline: mcp-k8s-ext-dns-pipeline.groovy
+              repo: kubernetes/external-dns
+            - name: metallb
+              display_name: "Metal LB merge pipeline"
+              pipeline: mcp-k8s-metallb-pipeline.groovy
+              repo: kubernetes/metallb
+            - name: nginx-ingress
+              display_name: "NGINX ingress merge pipeline"
+              pipeline: mcp-k8s-ingress-nginx-pipeline.groovy
+              repo: kubernetes/ingress-nginx
+          template:
+            type: workflow-scm
+            display_name: "{{display_name}}"
+            discard:
+              build:
+                keep_num: 20
+            concurrent: false
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/kubernetes-ci/kubernetes-pipelines"
+              credentials: "gerrit"
+              script: "pipelines/{{pipeline}}"
+            trigger:
+              gerrit:
+                project:
+                  "{{repo}}":
+                    branches:
+                      - compare_type: "ANT"
+                        name: "**mcp**"
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+                event:
+                  change:
+                    - merged
+            param:
+              KUBE_DOCKER_REGISTRY:
+                type: string
+                default: ${_param:mcp_docker_registry}
+                description: 'Docker registry for binaries and images'
+              KUBE_PROD_DOCKER_REGISTRY:
+                type: string
+                default: ${_param:mcp_prod_docker_registry}
+                description: 'Prod docker registry for binaries and images'

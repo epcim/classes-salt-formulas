@@ -1,9 +1,5 @@
 classes:
-- keepalived.cluster.single
-- haproxy.proxy.single
 - neutron.control.cluster
-- haproxy.proxy.listen.openstack.neutron
-- galera.server.database.neutron
 parameters:
   neutron:
     server:
@@ -13,11 +9,6 @@ parameters:
       identity:
         region: ${_param:openstack_region}
         host: ${_param:openstack_control_address}
-      message_queue:
-        members:
-          - host: ${_param:openstack_message_queue_node01_address}
-          - host: ${_param:openstack_message_queue_node02_address}
-          - host: ${_param:openstack_message_queue_node03_address}
       compute:
         host: ${_param:openstack_control_address}
         region: ${_param:openstack_region}

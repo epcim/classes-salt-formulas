@@ -1,8 +1,5 @@
 classes:
-- keepalived.cluster.single
-- haproxy.proxy.single
 - neutron.control.cluster
-- galera.server.database.neutron
 parameters:
   _param:
     neutron_control_dvr: True
@@ -17,6 +14,7 @@ parameters:
     cluster_internal_protocol: 'http'
   neutron:
     server:
+      role: ${_param:openstack_node_role}
       global_physnet_mtu: ${_param:neutron_global_physnet_mtu}
       l3_ha: ${_param:neutron_l3_ha}
       dvr: ${_param:neutron_control_dvr}
@@ -39,30 +37,3 @@ parameters:
       identity:
         region: ${_param:openstack_region}
         protocol: ${_param:cluster_internal_protocol}
-      message_queue:
-        members:
-          - host: ${_param:openstack_message_queue_node01_address}
-          - host: ${_param:openstack_message_queue_node02_address}
-          - host: ${_param:openstack_message_queue_node03_address}
-  haproxy:
-    proxy:
-      listen:
-        neutron_api:
-          type: openstack-service
-          service_name: neutron
-          binds:
-          - address: ${_param:cluster_vip_address}
-            port: 9696
-          servers:
-          - name: ${_param:cluster_node01_hostname}
-            host: ${_param:cluster_node01_address}
-            port: 9696
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
-          - name: ${_param:cluster_node02_hostname}
-            host: ${_param:cluster_node02_address}
-            port: 9696
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
-          - name: ${_param:cluster_node03_hostname}
-            host: ${_param:cluster_node03_address}
-            port: 9696
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3

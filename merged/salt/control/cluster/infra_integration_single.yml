@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    infra_integration_backend_image: ${_param:salt_control_xenial_image_backend}
   salt:
     control:
       size:
@@ -16,4 +19,5 @@ parameters:
               name: ${_param:cicd_control_node01_hostname}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:infra_integration_backend_image}
               size: infra.integration

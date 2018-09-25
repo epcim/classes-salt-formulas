@@ -1,0 +1,11 @@
+parameters:
+  prometheus:
+    server:
+      config:
+        alertmanager:
+          kubernetes_alertmanager:
+            enabled: true
+            kubernetes_sd_configs:
+              role: pod
+              namespace: ${_param:kubernetes_alertmanager_namespace}
+              pod_name_regex: ^alertmanager.*

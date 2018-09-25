@@ -1,2 +1,9 @@
 classes:
 - ceph.backup.server
+parameters:
+  linux:
+    system:
+      cron:
+        user:
+          ceph:
+            enabled: true

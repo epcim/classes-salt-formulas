@@ -1,12 +1,13 @@
 parameters:
   _param:
     manila_share_address: ${_param:single_address}
+    manila_lvm_volume_name: manila-volume
   linux:
     storage:
       lvm:
         manila-vg:
           enabled: true
-          name: manila-volume
+          name: ${_param:manila_lvm_volume_name}
           devices: ${_param:manila_lvm_devices}
     system:
       package:
@@ -25,4 +26,4 @@ parameters:
             - "${_param:manila_share_address}"
           dhss: false
           share_driver: manila.share.drivers.lvm.LVMShareDriver
-          lvm_share_volume_group: manila-volume
+          lvm_share_volume_group: ${_param:manila_lvm_volume_name}

@@ -1,9 +1,16 @@
 classes:
 - designate.server.cluster
+- salt.minion.cert.mysql.clients.openstack.designate
+- salt.minion.cert.rabbitmq.clients.openstack.designate
 parameters:
   _param:
     designate_admin_api_enabled: false
     cluster_internal_protocol: 'http'
+    openstack_mysql_x509_enabled: False
+    galera_ssl_enabled: False
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
+    openstack_rabbitmq_port: 5672
   linux:
     system:
       package:
@@ -33,6 +40,13 @@ parameters:
           pool_manager: designate_pool_manager
         user: designate
         password: ${_param:mysql_designate_password}
+        x509:
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          ca_file: ${_param:mysql_designate_ssl_ca_file}
+          key_file: ${_param:mysql_designate_client_ssl_key_file}
+          cert_file: ${_param:mysql_designate_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
       identity:
         engine: keystone
         host: ${_param:openstack_control_address}
@@ -46,7 +60,7 @@ parameters:
           address: ${_param:single_address}
       message_queue:
         engine: rabbitmq
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
         members:
         - host: ${_param:openstack_message_queue_node01_address}
         - host: ${_param:openstack_message_queue_node02_address}
@@ -54,6 +68,13 @@ parameters:
         user: openstack
         password: ${_param:rabbitmq_openstack_password}
         virtual_host: '/openstack'
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_designate_ssl_ca_file}
+          key_file: ${_param:rabbitmq_designate_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_designate_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
       pools:
         default:
           description: 'default pool'

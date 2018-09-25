@@ -17,6 +17,7 @@ parameters:
           image: ${_param:kubernetes_calico_image}
           calicoctl_image: ${_param:kubernetes_calico_calicoctl_image}
           cni_image: ${_param:kubernetes_calico_cni_image}
+          kube_controllers_image: ${_param:kubernetes_calico_kube_controllers_image}
         opencontrail:
           enabled: ${_param:kubernetes_opencontrail_enabled}
           cni_image: ${_param:kubernetes_contrail_cni_image}

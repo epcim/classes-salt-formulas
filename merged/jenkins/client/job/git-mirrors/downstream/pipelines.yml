@@ -8,8 +8,8 @@ parameters:
       - name: pipeline-library
         downstream: mcp-ci/pipeline-library
         upstream: "${_param:gerrit_pipeline_library_repo}"
-        branches: master
+        branches: "master,release/2018.8.1"
       - name: mk-pipelines
         downstream: mk/mk-pipelines
         upstream: "${_param:gerrit_mk_pipelines_repo}"
-        branches: master
+        branches: "master,release/2018.8.1"

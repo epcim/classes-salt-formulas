@@ -1,4 +1,6 @@
 parameters:
+  _param:
+    haproxy_nova_novnc_check_params: check
   haproxy:
     proxy:
       listen:
@@ -13,13 +15,13 @@ parameters:
           - name: ${_param:cluster_node01_hostname}
             host: ${_param:cluster_node01_address}
             port: 6080
-            params: check
+            params: ${_param:haproxy_nova_novnc_check_params}
           - name: ${_param:cluster_node02_hostname}
             host: ${_param:cluster_node02_address}
             port: 6080
-            params: check
+            params: ${_param:haproxy_nova_novnc_check_params}
           - name: ${_param:cluster_node03_hostname}
             host: ${_param:cluster_node03_address}
             port: 6080
-            params: check
+            params: ${_param:haproxy_nova_novnc_check_params}
 

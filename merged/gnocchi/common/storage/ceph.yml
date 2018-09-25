@@ -1,0 +1,11 @@
+parameters:
+  _param:
+    gnocchi_storage_ceph_pool: gnocchi
+    gnocchi_storage_ceph_user: gnocchi
+    gnocchi_storage_driver: ceph
+  gnocchi:
+    common:
+      storage:
+        driver: ${_param:gnocchi_storage_driver}
+        ceph_pool: ${_param:gnocchi_storage_ceph_pool}
+        ceph_username: ${_param:gnocchi_storage_ceph_user}

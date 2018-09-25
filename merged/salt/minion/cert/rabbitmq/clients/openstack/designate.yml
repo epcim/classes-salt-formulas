@@ -1,0 +1,22 @@
+parameters:
+  _param:
+    salt_minion_ca_host: cfg01.${_param:cluster_domain}
+    salt_minion_ca_authority: salt_master_ca
+    rabbitmq_designate_client_ssl_key_file: /etc/designate/ssl/rabbitmq/client-key.pem
+    rabbitmq_designate_client_ssl_cert_file: /etc/designate/ssl/rabbitmq/client-cert.pem
+    rabbitmq_designate_ssl_ca_file: /etc/designate/ssl/rabbitmq/ca-cert.pem
+  salt:
+    minion:
+      cert:
+        rabbitmq-designate-client:
+          host: ${_param:salt_minion_ca_host}
+          authority: ${_param:salt_minion_ca_authority}
+          common_name: rabbitmq-designate-client
+          signing_policy: cert_client
+          key_usage: "digitalSignature,nonRepudiation,keyEncipherment"
+          key_file: ${_param:rabbitmq_designate_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_designate_client_ssl_cert_file}
+          ca_file: ${_param:rabbitmq_designate_ssl_ca_file}
+          user: designate
+          group: designate
+          mode: 640

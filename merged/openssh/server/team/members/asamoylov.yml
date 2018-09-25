@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        asamoylov:
+          enabled: true
+          name: asamoylov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Anton Samoylov
+          home: /home/asamoylov
+          email: asamoylov@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        asamoylov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwNiivTQ04f2ckhd6Zku7SFav6vAnVhGas3E9JbqIa222YhZdIqeCp7Su1jDmyuMsCe+ibRWNh9z+TnGb40qr2mbR+XyAeXv2kkUy1hc61Si1SWc2n0mrx7xh8aiGqMifra+WojBVVMHnknmdVFqGtq2hJSWrNYikdxKKI241EQ9Grta/iIjzlXmSSetcf54amsMJS8qMWOU7nW65EhSXNH3gUBdUV/85PJaTAChAKeOI3K7/jjogJ9hwYcpTVZCcCxEST6R6Q8Xhm5FXx1Fa6+nuGQYF8j9DF+tqWtoIuwlpNF5jn7ddr4qhVQkNpVEnMORT+2qhtOsvRPySqHbGb
+          user: ${linux:system:user:asamoylov}

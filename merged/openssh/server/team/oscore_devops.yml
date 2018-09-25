@@ -11,6 +11,8 @@ classes:
 - openssh.server.team.members.kkushaev
 - openssh.server.team.members.sgarbuz
 - openssh.server.team.members.oshyshko
+- openssh.server.team.members.pshchelo
+- openssh.server.team.members.obryndzii
 parameters:
   _param:
     linux_system_user_sudo: true

@@ -10,6 +10,10 @@ parameters:
         credential_rotation_driver: ${_param:credential_rotation_driver}
   linux:
     system:
+      cron:
+        user:
+          keystone:
+            enabled: true
       job:
         keystone_fernet_rotate_rsync:
           command: '/var/lib/keystone/keystone_keys_rotate.sh -r -t fernet >> /var/log/keystone/keystone-rotate.log 2>> /var/log/keystone/keystone-rotate.log'

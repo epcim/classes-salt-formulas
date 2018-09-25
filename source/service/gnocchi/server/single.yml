@@ -1,0 +1,24 @@
+applications:
+- gnocchi
+classes:
+- service.gnocchi.common.single
+- service.gnocchi.support
+parameters:
+  gnocchi:
+    server:
+      enabled: true
+      debug: false
+      enable_proxy_headers_parsing: true
+      api:
+        auth_mode: keystone
+      identity:
+        engine: keystone
+        region: RegionOne
+        protocol: http
+        host: ${_param:single_address}
+        port: 35357
+        private_port: 5000
+        user: gnocchi
+        password: ${_param:keystone_gnocchi_password}
+        tenant: service
+        auth_type: password

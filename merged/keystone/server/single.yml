@@ -3,8 +3,11 @@ applications:
 classes:
 - linux.system.users.keystone
 - keystone.server.fernet_rotation.single
+- salt.minion.cert.mysql.clients.openstack.keystone
+- salt.minion.cert.rabbitmq.clients.openstack.keystone
 parameters:
   _param:
+    galera_ssl_enabled: false
     keystone_admin_password: password
     keystone_service_protocol: http
     keystone_service_token: token
@@ -14,8 +17,12 @@ parameters:
     mysql_keystone_password: password
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_node_role: primary
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   keystone:
     database:
       host: 127.0.0.1
@@ -47,7 +54,14 @@ parameters:
         host: ${_param:single_address}
         name: keystone
         password: ${_param:mysql_keystone_password}
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: keystone
+        x509:
+          ca_file: ${_param:mysql_keystone_ssl_ca_file}
+          cert_file: ${_param:mysql_keystone_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_keystone_client_ssl_key_file}
       enabled: true
       logging:
         log_appender: ${_param:openstack_log_appender}
@@ -63,9 +77,16 @@ parameters:
         ha_queues: true
         host: ${_param:single_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_keystone_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_keystone_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_keystone_client_ssl_key_file}
       region: ${_param:openstack_region}
       role: ${_param:openstack_node_role}
       roles:

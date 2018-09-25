@@ -4,8 +4,12 @@ parameters:
   _param:
     internal_protocol: http
     keystone_octavia_endpoint_type: internal
+    octavia_api_v1_enabled: true
+    octavia_api_v2_enabled: true
   octavia:
     api:
+      api_v1_enabled: ${_param:octavia_api_v1_enabled}
+      api_v2_enabled: ${_param:octavia_api_v2_enabled}
       bind:
         address: ${_param:single_address}
         port: 9876

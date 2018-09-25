@@ -1,0 +1,74 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        stacklight-test-cookiecutter-model:
+          display_name: stacklight-test-cookiecutter-model
+          name: stacklight-test-cookiecutter-model
+          concurrent: true
+          description: Test specified cookiecutter context
+          discard:
+            build:
+             keep_num: 60
+            artifact:
+             keep_num: 60
+          type: workflow-scm
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines"
+            credentials: "gerrit"
+            branch: 'master'
+            script: test-cookiecutter-model-pipeline.groovy
+          trigger:
+            timer:
+              spec: "H H(0-3) * * *"
+          param:
+            CREDENTIALS_ID:
+              type: string
+              description: "ID of jenkins credentials for connecting to gerrit"
+              default: "gerrit"
+            COOKIECUTTER_TEMPLATE_CONTEXT_FILE:
+              type: string
+              description: "Context for cookiecutter template specified as filename"
+              default: 'stacklight-openstack-ovs-core-pike'
+            OPENSTACK_ENVIRONMENT:
+              type: choice
+              description: "Target openstack environment"
+              choices:
+                - devcloud
+                - presales
+                - oscore_devcloud
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              description: "Credentials to the OpenStack API"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-stacklight"
+            HEAT_STACK_ZONE:
+              type: string
+              default: "mcp-stacklight"
+            FLAVOR_PREFIX:
+              type: string
+              default: 'dev'
+            RUN_SMOKE:
+              type: boolean
+              description: "Run smoke after deployment or not (bool)"
+              default: 'false'
+            COOKIECUTTER_EXTRA_CONTEXT:
+              type: text
+              description: "Extra context items, will be merged to COOKIECUTTER_TEMPLATE_CONTEXT_FILE"
+              default: |-
+                #Extra context that will be merged with content of COOKIECUTTER_TEMPLATE_CONTEXT_FILE
+                default_context:
+                  openssh_groups: "qa_scale,oscore_devops,networking,tcpcloud,stacklight,k8s_team"
+                  cookiecutter_template_url: https://gerrit.mcp.mirantis.net/mk/cookiecutter-templates.git
+                  cookiecutter_template_branch: 'master'
+                  shared_reclass_url: https://gerrit.mcp.mirantis.net/salt-models/reclass-system.git
+                  shared_reclass_branch: 'master'
+            STACK_INSTALL:
+              type: string
+              default: 'core,openstack,ovs,stacklight'
+            STACK_DELETE:
+              type: boolean
+              description: "Delete Heat stack when finished (bool). Don't enable it if you need to use the lab after"
+              default: 'true'

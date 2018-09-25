@@ -2,6 +2,12 @@ classes:
   - jenkins.client.job.deploy.lab.deploy
 parameters:
   _param:
+    heat_stack_zone_job_param:
+      type: string
+      default: "mcp-stacklight"
+    openstack_api_projects_job_param:
+      type: string
+      default: "mcp-stacklight"
     jenkins_deploy_jobs:
       - stack_name: stacklight_k8s_calico
         stack_env: devcloud

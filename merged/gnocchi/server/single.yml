@@ -1,9 +1,28 @@
+applications:
+- gnocchi
+classes:
+- gnocchi.support
 parameters:
   gnocchi:
     server:
-      role: ${_param:openstack_node_role}
+      api:
+        auth_mode: keystone
+      debug: false
+      enable_proxy_headers_parsing: true
+      enabled: true
       identity:
+        auth_type: password
+        engine: keystone
+        host: ${_param:single_address}
+        password: ${_param:keystone_gnocchi_password}
+        port: 35357
+        private_port: 5000
+        protocol: ${_param:internal_protocol}
         region: ${_param:openstack_region}
+        tenant: service
+        user: gnocchi
       metricd:
         metric_processing_delay: 15
         metric_reporting_delay: 30
+      role: ${_param:openstack_node_role}
+

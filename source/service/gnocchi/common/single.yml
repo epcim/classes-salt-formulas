@@ -1,0 +1,10 @@
+parameters:
+  gnocchi:
+    common:
+      version: ${_param:gnocchi_version}
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: gnocchi
+        password: ${_param:mysql_gnocchi_password}
+        user: gnocchi

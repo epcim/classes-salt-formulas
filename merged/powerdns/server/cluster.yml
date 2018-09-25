@@ -1,0 +1,43 @@
+classes:
+  - powerdns.server.single
+parameters:
+  _param:
+    powerdns_axfr_ips_address01: ${_param:openstack_control_node01_address}
+    powerdns_axfr_ips_address02: ${_param:openstack_control_node02_address}
+    powerdns_axfr_ips_address03: ${_param:openstack_control_node03_address}
+    powerdns_supermaster_node01_address: ${_param:openstack_control_node01_address}
+    powerdns_supermaster_node02_address: ${_param:openstack_control_node02_address}
+    powerdns_supermaster_node03_address: ${_param:openstack_control_node03_address}
+    powerdns_supermaster_node01_name: ${_param:openstack_control_node01_hostname}.${_param:cluster_domain}
+    powerdns_supermaster_node02_name: ${_param:openstack_control_node02_hostname}.${_param:cluster_domain}
+    powerdns_supermaster_node03_name: ${_param:openstack_control_node03_hostname}.${_param:cluster_domain}
+    powerdns_webserver_port: 8081
+  powerdns:
+    server:
+      enabled: true
+      api:
+       enabled: true
+       key: ${_param:designate_pdns_api_key}
+      axfr_ips:
+       - ${_param:powerdns_axfr_ips_address01}
+       - ${_param:powerdns_axfr_ips_address02}
+       - ${_param:powerdns_axfr_ips_address03}
+       - 127.0.0.1
+      bind:
+        address: ${_param:single_address}
+      overwrite_supermasters: true
+      supermasters:
+        - ip: ${_param:powerdns_supermaster_node01_address}
+          nameserver: ${_param:powerdns_supermaster_node01_name}
+          account: master
+        - ip: ${_param:powerdns_supermaster_node02_address}
+          nameserver: ${_param:powerdns_supermaster_node02_name}
+          account: master
+        - ip: ${_param:powerdns_supermaster_node03_address}
+          nameserver:  ${_param:powerdns_supermaster_node03_name}
+          account: master
+      webserver:
+          enabled: true
+          address: ${_param:single_address}
+          password: ${_param:powerdns_webserver_password}
+          port: ${_param:powerdns_webserver_port}

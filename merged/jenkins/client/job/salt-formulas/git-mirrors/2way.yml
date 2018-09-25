@@ -338,6 +338,9 @@ parameters:
             - name: sentry
               branches: ${_param:salt_formulas_branches}
               notification_recipients: ${_param:salt_formulas_notification_recipients}
+            - name: shibboleth
+              branches: ${_param:salt_formulas_branches}
+              notification_recipients: ${_param:salt_formulas_notification_recipients}
             - name: sphinx
               branches: ${_param:salt_formulas_branches}
               notification_recipients: ${_param:salt_formulas_notification_recipients}
@@ -453,7 +456,7 @@ parameters:
               default: "gerrit"
             BRANCHES:
               type: string
-              default: "master"
+              default: "master,release/2018.8.1"
         git-mirror-2way-salt-formulas-cookiecutter:
           description: ${_param:job_description_2way}
           discard:

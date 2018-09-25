@@ -1,0 +1,7 @@
+parameters:
+  _param:
+    mysql_designate_client_ssl_x509_subject: '/C=cz/CN=mysql-designate-client/L=Prague/O=Mirantis'
+    mysql_designate_client_ssl_x509_issuer: '/C=cz/CN=Salt Master CA/L=Prague/O=Mirantis'
+    mysql_designate_ssl_option:
+      - SUBJECT: ${_param:mysql_designate_client_ssl_x509_subject}
+      - ISSUER: ${_param:mysql_designate_client_ssl_x509_issuer}

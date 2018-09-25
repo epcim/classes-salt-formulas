@@ -2,7 +2,8 @@ classes:
 - salt.minion.cert.rabbitmq_server
 parameters:
   _param:
-    rabbitmq_port: 5671
+    openstack_rabbitmq_port: 5671
+    openstack_rabbitmq_x509_enabled: false
     rabbitmq_ssl_enabled: true
   rabbitmq:
     server:
@@ -12,4 +13,6 @@ parameters:
         cert_file: /etc/rabbitmq/ssl/cert.pem
         enabled: ${_param:rabbitmq_ssl_enabled}
         key_file: /etc/rabbitmq/ssl/key.pem
+      x509:
+        enabled: ${_param:openstack_rabbitmq_x509_enabled}
 

@@ -2,7 +2,12 @@ applications:
 - ceilometer
 classes:
 - ceilometer.server.single.common
+- salt.minion.cert.rabbitmq.clients.openstack.ceilometer
 parameters:
+  _param:
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   ceilometer:
     server:
       database:
@@ -22,6 +27,17 @@ parameters:
         password: ${_param:mongodb_ceilometer_password}
         port: 27017
         user: ceilometer
+      identity:
+        protocol: ${_param:cluster_internal_protocol}
+      message_queue:
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
+        x509:
+          ca_file: ${_param:rabbitmq_ceilometer_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_ceilometer_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_ceilometer_client_ssl_key_file}
       publisher:
         default:
           enabled: true

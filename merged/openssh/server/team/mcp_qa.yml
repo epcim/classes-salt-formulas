@@ -1,3 +1,9 @@
+classes:
+- linux.system.sudo
+- openssh.server.team.members.mshalamov
+- openssh.server.team.members.sandriichenko
+- openssh.server.team.members.aminasyan
+- openssh.server.team.members.imenkov
 parameters:
   _param:
     linux_system_user_sudo: true
@@ -70,12 +76,6 @@ parameters:
           sudo: true
           full_name: Sergey Sokolov
           home: /home/ssokolov
-        mshalamov:
-          enabled: true
-          name: mshalamov
-          sudo: true
-          full_name: Maksym Shalamov
-          home: /home/mshalamov
         schipiga:
           enabled: true
           name: schipiga
@@ -149,20 +149,6 @@ parameters:
           full_name: Sergey Novikov
           home: /home/snovikov
           email: snovikov@mirantis.com
-        aminasyan:
-          enabled: true
-          name: aminasyan
-          sudo: true
-          full_name: Artem Minasyan
-          home: /home/aminasyan
-          email: aminasyan@mirantis.com
-        imenkov:
-          enabled: true
-          name: imenkov
-          sudo: true
-          full_name: Ilya Menkov
-          home: /home/imenkov
-          email: imenkov@mirantis.com
       group:
         libvirtd:
           enabled: true
@@ -226,11 +212,6 @@ parameters:
           public_keys:
           - ${public_keys:ssokolov}
           user: ${linux:system:user:ssokolov}
-        mshalamov:
-          enabled: true
-          public_keys:
-          - ${public_keys:mshalamov}
-          user: ${linux:system:user:mshalamov}
         schipiga:
           enabled: true
           public_keys:
@@ -286,16 +267,6 @@ parameters:
           public_keys:
           - ${public_keys:snovikov}
           user: ${linux:system:user:snovikov}
-        aminasyan:
-          enable: true
-          public_keys:
-          - ${public_keys:aminasyan}
-          user: ${linux:system:user:aminasyan}
-        imenkov:
-          enable: true
-          public_keys:
-          - ${public_keys:imenkov}
-          user: ${linux:system:user:imenkov}
   public_keys:
     ddmitriev:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDuD4wJ8hzkchQ0pfgdwWukQyps1xYRfHOsjosmDu/mmgaXVud5mnpwb2q35E2YYTox2mx+ulJqyS+099gz6MPg4P8D5qdMuRbAsJqbceLaaIGQhdT8qgSo7ESrl5pwvYnfWzKLKF0z5s7nrW0nvArC40zhV9o9XpvzzzSFByepWfkwA8ReldGUYVvTKp8YXaCrqEdMZrU42adPM2nl+fYBbGF+h4/Ka247aVjPeER0blV3znFXbv2Kf38G+i/TEGaktgpBdtGGDi1tX2loMypmTJeqZRJnM0Eoly0BnynB7CSxn11eoIXBUe1mVYNqmQd1hw6uh59iymhK5j939v9J ddmitriev@dis_xcom
@@ -319,8 +290,6 @@ parameters:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGRD/zStceB/CAJu8bnsWs9VPWY8W1F6fz2AvX2BiyEXCE2W4uMY11In+qHQtIaWeyWVR/XmoCw0mZxk7emTz91Y1FioinEgumkhpNPLY0fPdDHzwu3atCjAc7B3ZCCXusiUC6k99aCa9YXIZ0/0/75kqilRmIcxGeneL9S2+iuFn/HSpNR7IZN03AEzWgIfXEhB4lyNs9n3RHf+XXy2wxAKkcKpMyocEO9gc3uLY5OdUhGFHRKhEZwgz3K6ysDOCIOTkiiJ8KXMM07FIDLjs5pjUjnVkZ1kWq+virLMbhhyCbMR8zrPvWMjP5oYGm9U9aEeUMA5iMCa7K+qs2AM3 adamheczko@Adams-MacBook-Pro.local
     ssokolov:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHuIo/dLh5qt+8jV4UUPqDo6ktJc12HVFg10S3hinjJUlAOxq8554l0LMvxmiZSrIjxGE/qUr8PlRgjLi4x4zQDggBdNGC/S4zcYNEiTQ7HaOFOjEJ0si6ODZfssQsr/A/bXdNOZE/nIZTUhTddJG+3nKUvuPnTeOQLqEOp4IFJwwvwnD2Wo4I1nc6+yDSJLuG8ANLtLlStzpMKr8wHvPWCUcB9B1oeeOVtw9+vEKxuUBkheXnXMh7shiyt4vmaFVbcgcHGPg8DjP8alKeAbIk0AYhiuNHV/rFzL+/kfImS94gU93A8vt0U2vCj8golqt2huxJblKDr4Abq1lDXLwn ssm@n104309
-    mshalamov:
-      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzGhXA8t3nWeeM8+L3drG+4ACt9pOS1CVAAsW634Q6EtbxSzpsdp3NEJ3X8jKmfiwGZmqUiJ0G0lzS+vHdQ4vJ58M9f7YpXYYah8/557YLvIgg+F/3cltS7PHSE3jqNZgQBHG0f4SRwiBq4zhWhDOCXtzHmsT4EUj+9K6EOlPk7SjrOQAZA0XcPl//lw8g5zHAAC6phNa+WzHLzQSyWAZZhIKyvbXTHpSAUAww5rIlquucxVMbnbqlSOD4FTikSOLQa9iq4Nx10c3ZZTD3xTMuissSj5XJU5LaO7qlraOBsKTlkO0T+VS1aMnfJ943QSI2wu6epKWWHAFXV7Z2nsTL mshalamov@mirantis.com
     schipiga:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDamKTbqCQCGW1JLo+4PgntC1TkRrwbDOELyRVHxAlc56CcJE9QjrNnCOTqvgRoAmIC+P86nzUQxwSREMd0qgVCefAxKQVFVQ38oym9G90TF0nx4fFT3hUhEQwjMBjHhR2Vo+uUwbT2Hg51U1gBPx/WFa0U5Cf7V6+XNJ3r22W4XG8OrbuAoapwl4WN1346HEj3d0U6Z8Unsqjx9pRpZ1eYCeng4emLZ1UOhvLBfw22vSTkujjjRdfY6g52Gv4hRsgsS+JWulO+z/qd1GFcUp9j+yIvur+eeTWHelAbXq4kRNQfQjAs6nMM8Hp8gPa5jLYqMz2GgD96p8wOQCdK2nyL schipiga@mirantis.com
     obutenko:
@@ -343,8 +312,3 @@ parameters:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEaWwPVtsj39s0A2efRQ1ejL5B7ZetFPmXJDi/8W/gTWIIII3xP750H8QWZfvbjiJ+KBCxOndDL8aL3SHC/iRCvmzrVkgXBgf5J9vTu8uas7BNGf7oiDBuB75fryDtkg57Pam/A47IlgxJTCwYz+ofUGHb6WrWwQ+MUTEWAk9PB+RPyxjwNC4XxEwtULkKQMgFmg52kauESpx0R0ni8/LLKUJucdse7NCcUTvEcafppnXsxdZ640G0K82ADS1neg1CDwdtCPKLG57GZYs4iL3sPcOhQxnVUoONXsRpBD8kQTKOMl5R6hTDJHBd3oimUPEXlPqeb/XeGKatVraRA6nJ ekhomyakova@ekhomyakova
     snovikov:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYj97WGfiL550eVPyQmFyrgpTw61tfins1CpgrZewWqAWJMgYklRdMYl4OReE5UO2po7ag0f/QsOtGU8aQbnxnWUYPZyS3Qk+Bg8OOSBmewPxmT7WH97KdGKBdC9b3xUNFOUXEUOMmOe3jq9YET+xebUnfsA5qwYU5dL9Cb5UAPzVxYI8z5RiaNTo8dtwZr7lbJJRy8YfSWCtiD59vewc6BE2NTUyDjsfmKd9K/IkyKboGU9AC5mLYDsjvWwiGcNdfigRyaYWKmoo7Xhe1W2Og4dpI5pozOwVg7hISW9NRgLXrZP/9me1rFBH7EQjpjO3+Pto1//R3Nx9QLsB59yuj snovikov@snovikov
-    aminasyan:
-      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCo9BHw8WdIFOEuY10XvUqHPl1jCqtA8TYntt5Aee2rR8X8pLG9lWjHPFkNArD5upCRvv6f88Xs4QLoEGWMWcbfMkJE4gMNkOWL4As5iNgagw+DybQrA6nXyassHi8le+quwICfJ1v16IXxPgMBCcrRcSYvHKv+n8KsuBH1csRnJ8aHvIZJTL43Eq0F+aj2S0/9D+m2dyRwcmamn6EqX61NfL5UP3422i4JykTXY6I8iwEHs7Er+jPBD7rtJ/q4Kn/bIyT/Vz0tGHiWyVt7B8GBoPb3PgDuzXKvU7OtOxFb3uhANeecjzIz5G5rAsAQcizf+MGCOoBwFLFJTPAharWN artem@Artem
-    imenkov:
-      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSWoSuHV1FNRuooS3d0nVkTRCwC+Tc585Z1cPcMQns7H1ogLIya//T3gMfxINxCjlF1eek18vI9B5QszZZUL2P7prFxe5EJlt6iM8jD61umkncaTbx6oc8r8xu5ufH9RDxfKHvQX1mhhID5JK+/GoRDIW5Zs7wFSHCrANYV2dtmOfmRSc/qpgh87Z9X10UDymp5MLjpQZzjM+qZCtz6yV14m835j4eiEN7+QZ2XZ/Wtzer7VVdhtjbw8gESSyuPIVf66keuLVUixk0CXosQYrqWDPWpT0Rhh63lnUacgplh74TU+bb+vYRjIHxCgOY2Ex6Pk5jrsroi0YoWtI4SErD imenkov@atopilin-nb-wifi.srt.mirantis.net
-

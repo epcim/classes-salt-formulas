@@ -1,0 +1,42 @@
+parameters:
+  _param:
+    openstack_barbican_node01_hostname: kmn01
+    openstack_barbican_node02_hostname: kmn02
+    openstack_barbican_node03_hostname: kmn03
+    openstack_barbican_system_codename: xenial
+  reclass:
+    storage:
+      node:
+        openstack_barbican_node01:
+          name: ${_param:openstack_barbican_node01_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.barbican
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_barbican_system_codename}
+            single_address: ${_param:openstack_barbican_node01_address}
+            keepalived_vip_priority: 103
+            openstack_node_role: primary
+        openstack_barbican_node02:
+          name: ${_param:openstack_barbican_node02_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.barbican
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_barbican_system_codename}
+            single_address: ${_param:openstack_barbican_node02_address}
+            keepalived_vip_priority: 102
+            openstack_node_role: secondary
+        openstack_barbican_node03:
+          name: ${_param:openstack_barbican_node03_hostname}
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.barbican
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: ${_param:openstack_barbican_system_codename}
+            single_address: ${_param:openstack_barbican_node03_address}
+            keepalived_vip_priority: 101
+            openstack_node_role: secondary

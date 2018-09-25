@@ -8,6 +8,9 @@ classes:
 - openssh.server.team.members.psvimbersky
 - openssh.server.team.members.gzimin
 - openssh.server.team.members.dpyzhov
+- openssh.server.team.members.asamoylov
+- openssh.server.team.members.mrasskazov
+- openssh.server.team.members.ibumarskov
 parameters:
   _param:
     linux_system_user_sudo: true

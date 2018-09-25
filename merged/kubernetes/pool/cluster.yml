@@ -43,6 +43,8 @@ parameters:
               port: 4001
             - host: ${_param:cluster_node03_address}
               port: 4001
+          policy:
+            enabled: false
           prometheus:
             enabled: true
       registry:

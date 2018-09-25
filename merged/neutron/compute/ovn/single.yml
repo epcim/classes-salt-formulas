@@ -18,6 +18,12 @@ parameters:
       external_bridge: ${_param:ovn_external_bridge}
       backend:
         engine: ovn
+        ovsdb_connection: tcp:127.0.0.1:6640
+      metadata:
+        enabled: true
+        ovsdb_server_iface: ptcp:6640:127.0.0.1
+        host: ${_param:cluster_vip_address}
+        password: ${_param:metadata_password}
       logging:
         log_appender: ${_param:openstack_log_appender}
         log_handlers:

@@ -1,7 +1,4 @@
 classes:
-- keepalived.cluster.single
-- haproxy.proxy.single
-- neutron.control.cluster
 - neutron.control.openvswitch.cluster
 parameters:
   _param:

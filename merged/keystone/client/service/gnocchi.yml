@@ -5,6 +5,8 @@ parameters:
     cluster_public_protocol: https
     gnocchi_service_protocol: http
     gnocchi_public_host: ${_param:cluster_public_host}
+    gnocchi_public_port: 8041
+    gnocchi_public_path: '/'
   keystone:
     client:
       server:
@@ -24,8 +26,8 @@ parameters:
               - region: ${_param:openstack_region}
                 public_address: ${_param:gnocchi_public_host}
                 public_protocol: ${_param:cluster_public_protocol}
-                public_port: 8041
-                public_path: '/'
+                public_port: ${_param:gnocchi_public_port}
+                public_path: ${_param:gnocchi_public_path}
                 internal_address: ${_param:gnocchi_service_host}
                 internal_port: 8041
                 internal_path: '/'

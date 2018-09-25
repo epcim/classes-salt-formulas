@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        iberezovskiy:
+          enabled: true
+          name: iberezovskiy
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Ivan Berezovskiy
+          home: /home/iberezovskiy
+          email: iberezovskiy@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        iberezovskiy:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDnn18VJ7z3CIBaQmIRfYltyh/BogwBq4B9KVUZ0Gl1EWd5AutuR00xCOYdFeU7okaURYILC+8W2A7a9qkML9G99sX+KD+7CDsKm33XeCP4YJ9QhOwA+OYPS84lLExvK+9AoVPnB06sEK8CvPdU6byQE/EX1VA9gFFCraOH1D0eABaC01csHI+GaiIA5qSjDMH+ieii1Rv5Zb6NHyYRktaCSHB2asu5Y7VxmL2srweFJonpk4Z80+TWlc2ESRLc9EFMefRt/MixIyFjBgvcsE++eCO6MModCAoP5V1Tmgd+cztcvm/tlQqJirve/64SFLvDbjYLE9QxQ8bY4/d4MjcX iberezovskiy@tests-MacBook-Pro.local
+          user: ${linux:system:user:iberezovskiy}

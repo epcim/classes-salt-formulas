@@ -1,0 +1,42 @@
+classes:
+  - designate.server.cluster.default
+parameters:
+  _param:
+    designate_pool_manager_enabled: true
+    designate_pool_manager_periodic_sync_interval: '120'
+    designate_mdns_address: 0.0.0.0
+    # required for supermasters functionality
+    designate_mdns_port: 53
+  designate:
+    pool_manager:
+      # required for supermasters functionality
+      enabled: ${_param:designate_pool_manager_enabled}
+      periodic_sync_interval: ${_param:designate_pool_manager_periodic_sync_interval}
+    server:
+      mdns:
+        address: ${_param:designate_mdns_address}
+        port: ${_param:designate_mdns_port}
+      pools:
+        default:
+          description: 'default pool'
+          ns_records: ${_param:designate_pool_ns_records}
+          nameservers: ${_param:designate_pool_nameservers}
+          targets:
+            default:
+              type: pdns4
+              description: 'default target1'
+              masters: ${_param:designate_pool_target_masters}
+              options:
+                host: ${_param:openstack_dns_node01_address}
+                port: 53
+                api_endpoint: "http://${_param:openstack_dns_node01_address}:${_param:powerdns_webserver_port}"
+                api_token: ${_param:designate_pdns_api_key}
+            default1:
+              type: pdns4
+              description: 'default target2'
+              masters: ${_param:designate_pool_target_masters}
+              options:
+                host: ${_param:openstack_dns_node02_address}
+                port: 53
+                api_endpoint: "http://${_param:openstack_dns_node02_address}:${_param:powerdns_webserver_port}"
+                api_token: ${_param:designate_pdns_api_key}

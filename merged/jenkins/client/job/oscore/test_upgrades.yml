@@ -19,17 +19,30 @@ parameters:
               credentials: "gerrit"
               branch: 'master'
               script: test-openstack-upgrade-pipeline.groovy
+            trigger:
+              timer:
+               spec: "H 22 * * *"
             param:
               CREDENTIALS_ID:
                 type: string
                 description: "ID of jenkins credentials to be used when connecting to gerrit."
                 default: "gerrit"
+              OPENSTACK_ENVIRONMENT:
+                type: choice
+                description: "Target openstack environment."
+                choices:
+                  - devcloud
+                  - presales
+                  - oscore_devcloud
+              OPENSTACK_API_CREDENTIALS:
+                type: string
+                description: "Credentials to the OpenStack API"
               OPENSTACK_API_PROJECT:
                 type: string
-                default: "mcp-oscore"
+                default: "mcp-oscore-ci"
               HEAT_STACK_ZONE:
                 type: string
-                default: "mcp-oscore"
+                default: "mcp-oscore-ci"
               FLAVOR_PREFIX:
                 type: string
                 default: 'dev'
@@ -40,8 +53,57 @@ parameters:
               TEST_SCHEME:
                 type: string
                 description: "Yaml based scheme to be applied in testing"
-                default: '{"old": {"context_file_name": "openstack-ovs-core-{{openstack_version_old}}","extra_context": {"default_context": {"openstack_version": "{{openstack_version_old}}"}}}, "new": {"extra_context": {"default_context": {"openstack_version": "{{openstack_version_new}}"}}}}'
+                default: '{"old": {"run_smoke": True, "context_file_name": "openstack-ovs-core-{{openstack_version_old}}","extra_context": {"default_context": {"openstack_version": "{{openstack_version_old}}"}}}, "new": {"run_smoke": True, "extra_context": {"default_context": {"openstack_version": "{{openstack_version_new}}"}}}}'
       job:
+        oscore-test-openstack-upgrade-mitaka-newton:
+          display_name: oscore-test-openstack-upgrade-mitaka-newton
+          name: oscore-test-openstack-upgrade-mitaka-newton
+          concurrent: true
+          description: Test upgrade flow for opentack cluster
+          discard:
+            build:
+             keep_num: 60
+            artifact:
+             keep_num: 60
+          type: workflow-scm
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/openstack-ci/openstack-pipelines"
+            credentials: "gerrit"
+            branch: 'master'
+            script: test-openstack-upgrade-pipeline.groovy
+          param:
+            CREDENTIALS_ID:
+              type: string
+              description: "ID of jenkins credentials to be used when connecting to gerrit."
+              default: "gerrit"
+            OPENSTACK_ENVIRONMENT:
+              type: choice
+              description: "Target openstack environment."
+              choices:
+                - devcloud
+                - presales
+                - oscore_devcloud
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              description: "Credentials to the OpenStack API"
+            OPENSTACK_API_PROJECT:
+              type: string
+              default: "mcp-oscore"
+            HEAT_STACK_ZONE:
+              type: string
+              default: "mcp-oscore"
+            FLAVOR_PREFIX:
+              type: string
+              default: 'dev'
+            STACK_DELETE:
+              type: boolean
+              default: 'true'
+              description: Don't enable it if you need to use the lab after
+            TEST_SCHEME:
+              type: string
+              description: "Yaml based scheme to be applied in testing"
+              default: '{"old": {"run_smoke": True, "context_file_name": "openstack-ovs-core-mitaka","extra_context": {"default_context": {"openstack_version": "mitaka"}}}, "new": {"run_smoke": True, "extra_context": {"default_context": {"openstack_version": "newton"}}}}'
         oscore-test-adjust-cluster-model:
           display_name: oscore-test-adjust-cluster-model
           name: oscore-test-adjust-cluster-model

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        mshalamov:
+          enabled: true
+          name: mshalamov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Maksym Shalamov
+          home: /home/mshalamov
+          email: mshalamov@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        mshalamov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzGhXA8t3nWeeM8+L3drG+4ACt9pOS1CVAAsW634Q6EtbxSzpsdp3NEJ3X8jKmfiwGZmqUiJ0G0lzS+vHdQ4vJ58M9f7YpXYYah8/557YLvIgg+F/3cltS7PHSE3jqNZgQBHG0f4SRwiBq4zhWhDOCXtzHmsT4EUj+9K6EOlPk7SjrOQAZA0XcPl//lw8g5zHAAC6phNa+WzHLzQSyWAZZhIKyvbXTHpSAUAww5rIlquucxVMbnbqlSOD4FTikSOLQa9iq4Nx10c3ZZTD3xTMuissSj5XJU5LaO7qlraOBsKTlkO0T+VS1aMnfJ943QSI2wu6epKWWHAFXV7Z2nsTL mshalamov@mirantis.com
+          user: ${linux:system:user:mshalamov}

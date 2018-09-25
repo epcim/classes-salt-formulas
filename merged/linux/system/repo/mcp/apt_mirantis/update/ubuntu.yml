@@ -1,0 +1,22 @@
+parameters:
+  _param:
+    linux_system_repo_update_url: http://mirror.mirantis.com/update/${_param:apt_mk_version}/
+    linux_system_repo_update_ubuntu_url: ${_param:linux_system_repo_update_url}/ubuntu/
+  linux:
+    system:
+      repo:
+        ubuntu_update:
+          refresh_db: ${_param:linux_repo_refresh_db}
+          source: "deb [arch=amd64] ${_param:linux_system_repo_update_ubuntu_url} ${_param:linux_system_codename} main restricted universe"
+          architectures: amd64
+          default: true
+        ubuntu_updates_update:
+          refresh_db: ${_param:linux_repo_refresh_db}
+          source: "deb [arch=amd64] ${_param:linux_system_repo_update_ubuntu_url} ${_param:linux_system_codename}-updates main restricted universe"
+          architectures: amd64
+          default: true
+        ubuntu_security_update:
+          refresh_db: ${_param:linux_repo_refresh_db}
+          source: "deb [arch=amd64] ${_param:linux_system_repo_update_ubuntu_url} ${_param:linux_system_codename}-security main restricted universe"
+          architectures: amd64
+          default: true

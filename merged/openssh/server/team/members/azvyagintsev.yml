@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        azvyagintsev:
+          enabled: true
+          name: azvyagintsev
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Aleksey Zvyagintsev
+          home: /home/azvyagintsev
+          email: azvyagintsev@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        azvyagintsev:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGmNI+xV2sgIZX6tr5i4eQcxM4rkNoMiFbUuxtZYw5rKci9cSp9C/NC11VnJzpLG3lf11vLwTztlaM7hjdYlKoynpfDhfRhg1p5w/Pd/uoh6bO7KP/r2QuSpVsc6NGAHD2f0qxmrFX81xMG6zq0MCHXc+BGMZTKWAW7dMGsjJUnIa/wv24J25DOILoEBhclGQHx5r7R5ysqSOTdBEgN304KL8XPP+bAwDFTNJIwtfBdNt8jSv6yR2CyfB7t8pqXf93DvwaGBJfuu1r4gljj5ozCyvGExEtRTzvAC+oLq2NIfDOCC3iRWXrls3iDLZYxwm7VLcQSre4Yp6jfp+WuRI7 azvyagintsev@mirantis.com
+          user: ${linux:system:user:azvyagintsev}

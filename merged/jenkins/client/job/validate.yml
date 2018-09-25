@@ -133,6 +133,10 @@ parameters:
               type: string
               default: ""
               description: Rally scenarios directory or file with scenarios
+            RALLY_SL_SCENARIOS:
+              type: string
+              default: ""
+              description: Stacklight Rally scenarios directory or file with scenarios
             RALLY_TASK_ARGS_FILE:
               type: string
               default: ""
@@ -161,6 +165,10 @@ parameters:
               type: boolean
               default: 'false'
               description: If chosen then K8S Rally test will be executed
+            STACKLIGHT_RALLY:
+              type: boolean
+              default: 'false'
+              description: If chosen then Stacklight Rally test will be executed
             JOB_TIMEOUT:
               type: string
               default: "3"
@@ -276,10 +284,6 @@ parameters:
               type: string
               default: "https://github.com/Mirantis/cvp-configuration"
               description: URL of repo where testing tools, scenarios, configs are located.
-            TEMPEST_VERSION:
-              type: string
-              default: "15.0.0"
-              description: Version of Tempest
         cvp-ha:
           type: workflow-scm
           name: cvp-ha

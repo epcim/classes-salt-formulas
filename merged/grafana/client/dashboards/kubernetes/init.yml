@@ -1,0 +1,12 @@
+classes:
+- grafana.client.dashboards.kubernetes.calico
+- grafana.client.dashboards.kubernetes.etcd
+- grafana.client.dashboards.kubernetes.kubernetes_cluster
+- grafana.client.dashboards.core.docker.yml
+- grafana.client.dashboards.core.glusterfs.yml
+- grafana.client.dashboards.core.haproxy.yml
+- grafana.client.dashboards.core.keepalived.yml
+- grafana.client.dashboards.core.memcached.yml
+- grafana.client.dashboards.core.nginx.yml
+- grafana.client.dashboards.core.ntp.yml
+- grafana.client.dashboards.core.system.yml

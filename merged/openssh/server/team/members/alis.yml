@@ -1,0 +1,19 @@
+parameters:
+  linux:
+    system:
+      user:
+        alis:
+          enabled: true
+          name: alis
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Adam Lis
+          home: /home/alis
+          email: alis@mirantis.com
+  openssh:
+    server:
+      user:
+        alis:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDW3VR61NPwpwW0PGAaIuimtOtQjXIp3zAE15KphEejPEciceE/AJeKTsBpvKmP23pCJYhoCJOSQxxxWIiLHPoUEr2aGgy8+wLnResqEOtobpbtGHYzvsAUY/Uc+1Vk6S6Ho9ysrhlpY+Ih4yuSzTaZKqMFXx47/L0HZLNZmCbPD/siki0X3tnCS09RS8KSaTJdZ/Sd/PnUEb6JGg5taid9VNkUUOcgYoudNWPJS3Pjrtijiczq9IZ0cArueEVx4NCkKEb+dDUls4BRVGfNUt3iZY2LrGTd4FeyrWV7IGoPTxyiaJdtpcjDHe4omqsY705LRvBQs6de6enG0PMpQ9KR adamlis@tuchiegu
+          user: ${linux:system:user:alis}

@@ -20,6 +20,8 @@ parameters:
             linux_system_codename: ${_param:linux_system_codename}
             single_address: ${_param:openstack_share_node01_address}
             manila_share_address: ${_param:openstack_share_node01_share_address}
+            keepalived_vip_priority: 103
+            openstack_node_role: primary
         openstack_share_node02:
           name: ${_param:openstack_share_node02_hostname}
           domain: ${_param:cluster_domain}
@@ -30,6 +32,8 @@ parameters:
             linux_system_codename: ${_param:linux_system_codename}
             single_address: ${_param:openstack_share_node02_address}
             manila_share_address: ${_param:openstack_share_node02_share_address}
+            keepalived_vip_priority: 102
+            openstack_node_role: secondary
         openstack_share_node03:
           name: ${_param:openstack_share_node03_hostname}
           domain: ${_param:cluster_domain}
@@ -40,3 +44,5 @@ parameters:
             linux_system_codename: ${_param:linux_system_codename}
             single_address: ${_param:openstack_share_node03_address}
             manila_share_address: ${_param:openstack_share_node03_share_address}
+            keepalived_vip_priority: 101
+            openstack_node_role: secondary

@@ -1,0 +1,20 @@
+parameters:
+  _param:
+    salt_minion_ca_host: kmn01.${_param:cluster_domain}
+    salt_minion_ca_authority: salt_master_ca
+    barbican_cert_alternative_names: IP:127.0.0.1,IP:${_param:cluster_local_address},IP:${_param:cluster_vip_address},DNS:${linux:system:name},DNS:${linux:network:fqdn}
+  salt:
+    minion:
+        cert:
+          barbican_server:
+            host: ${_param:salt_minion_ca_host}
+            authority: ${_param:salt_minion_ca_authority}
+            common_name: barbican_server
+            signing_policy: cert_server
+            alternative_names: ${_param:barbican_cert_alternative_names}
+            key_file: ${barbican:server:ssl:key_file}
+            cert_file: ${barbican:server:ssl:cert_file}
+            all_file: ${barbican:server:ssl:all_file}
+            ca_file: ${barbican:server:ssl:ca_file}
+            enabled: true
+            engine: salt

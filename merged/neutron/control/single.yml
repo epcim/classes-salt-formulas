@@ -2,13 +2,20 @@ applications:
 - neutron
 classes:
 - galera.server.database.neutron
+- salt.minion.cert.mysql.clients.openstack.neutron
+- salt.minion.cert.rabbitmq.clients.openstack.neutron
 parameters:
   _param:
+    galera_ssl_enabled: false
     internal_protocol: http
     keystone_neutron_endpoint_type: internal
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   linux:
     system:
       package:
@@ -45,7 +52,14 @@ parameters:
         name: neutron
         password: ${_param:mysql_neutron_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: neutron
+        x509:
+          ca_file: ${_param:mysql_neutron_ssl_ca_file}
+          cert_file: ${_param:mysql_neutron_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_neutron_client_ssl_key_file}
       dns_domain: novalocal
       enabled: true
       fwaas: false
@@ -72,9 +86,16 @@ parameters:
         engine: rabbitmq
         host: ${_param:single_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_neutron_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_neutron_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_neutron_client_ssl_key_file}
       qos: false
       role: ${_param:openstack_node_role}
       security_groups_enabled: true

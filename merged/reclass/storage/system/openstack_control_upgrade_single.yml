@@ -15,3 +15,4 @@ parameters:
             linux_system_codename: ${_param:openstack_upgrade_system_codename}
             single_address: ${_param:openstack_upgrade_node01_address}
             openstack_node_role: primary
+            glusterfs_node_role: primary

@@ -1,0 +1,37 @@
+classes:
+- prometheus.server.container
+parameters:
+  _param:
+    kubernetes_prometheus_image: ${_param:mcp_docker_registry}/openstack-docker/prometheus:2018.8.0
+    kubernetes_prometheus_enabled: false
+    kubernetes_prometheus_namespace: stacklight
+    kubernetes_prometheus_server_resources_limits_memory: 500M
+    kubernetes_prometheus_server_resources_requests_memory: 500M
+    kubernetes_prometheus_server_bind_host_port: 31990
+    kubernetes_prometheus_server_storage_local_engine: persisted
+    kubernetes_prometheus_server_use_static_datadir: true
+  kubernetes:
+    common:
+      addons:
+        prometheus:
+          enabled:  ${_param:kubernetes_prometheus_enabled}
+          image: ${_param:kubernetes_prometheus_image}
+          namespace: ${_param:kubernetes_prometheus_namespace}
+          server:
+            bind:
+              port: ${prometheus:server:bind:port}
+              host: ${prometheus:server:bind:address}
+              host_port: ${_param:kubernetes_prometheus_server_bind_host_port}
+            config:
+              config_dir: ${prometheus:server:dir:config_in_container}
+              host_config_dir: ${prometheus:server:dir:config}
+              data_dir: ${_param:prometheus_server_data_directory}
+              host_data_dir: ${prometheus:server:dir:data}
+              storage_local_engine: ${_param:kubernetes_prometheus_server_storage_local_engine}
+              storage_local_retention: ${prometheus:server:storage:local:retention}
+              use_static_datadir: ${_param:kubernetes_prometheus_server_use_static_datadir}
+            resources:
+              limits:
+                memory: ${_param:kubernetes_prometheus_server_resources_limits_memory}
+              requests:
+                memory: ${_param:kubernetes_prometheus_server_resources_requests_memory}

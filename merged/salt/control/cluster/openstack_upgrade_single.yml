@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    openstack_upgrade_backend_image: ${_param:salt_control_xenial_image_backend}
   salt:
     control:
       size:
@@ -15,4 +18,5 @@ parameters:
             upg01:
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_upgrade_backend_image}
               size: openstack.upgrade

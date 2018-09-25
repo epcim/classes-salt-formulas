@@ -1,8 +1,16 @@
 applications:
 - ironic
+classes:
+- salt.minion.cert.mysql.clients.openstack.ironic
+- salt.minion.cert.rabbitmq.clients.openstack.ironic
 parameters:
   _param:
+    galera_ssl_enabled: false
     neutron_service_protocol: http
+    openstack_mysql_x509_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   ironic:
     conductor:
       api_url: http://${_param:cluster_baremetal_vip_address}:6385
@@ -13,7 +21,14 @@ parameters:
         name: ironic
         password: ${_param:mysql_ironic_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: ironic
+        x509:
+          ca_file: ${_param:mysql_ironic_ssl_ca_file}
+          cert_file: ${_param:mysql_ironic_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_ironic_client_ssl_key_file}
       enabled: true
       enabled_drivers:
       - agent_ipmitool
@@ -50,9 +65,16 @@ parameters:
         engine: rabbitmq
         host: ${_param:openstack_message_queue_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_ironic_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_ironic_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_ironic_client_ssl_key_file}
       my_ip: ${_param:cluster_baremetal_local_address}
       neutron:
         auth_strategy: keystone

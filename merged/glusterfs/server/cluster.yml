@@ -8,6 +8,7 @@ parameters:
       iptables:
         enabled: false
     server:
+      role: ${_param:glusterfs_node_role}
       peers:
       - ${_param:cluster_node01_address}
       - ${_param:cluster_node02_address}

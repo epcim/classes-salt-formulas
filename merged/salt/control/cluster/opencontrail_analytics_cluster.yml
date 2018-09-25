@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_trusty_image_backend: /var/lib/libvirt/images/backends/trusty.qcow2
+    opencontrail_analytics_backend_image: ${_param:salt_control_trusty_image_backend}
   salt:
     control:
       size:
@@ -16,14 +19,17 @@ parameters:
               name: ${_param:opencontrail_analytics_node01_hostname}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_trusty_image}
+              backend: ${_param:opencontrail_analytics_backend_image}
               size: opencontrail.analytics
             nal02:
               name: ${_param:opencontrail_analytics_node02_hostname}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_trusty_image}
+              backend: ${_param:opencontrail_analytics_backend_image}
               size: opencontrail.analytics
             nal03:
               name: ${_param:opencontrail_analytics_node03_hostname}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_trusty_image}
+              backend: ${_param:opencontrail_analytics_backend_image}
               size: opencontrail.analytics

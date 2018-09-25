@@ -1,0 +1,23 @@
+classes:
+- salt.minion.cert.mysql.clients.openstack.gnocchi
+parameters:
+  _param:
+    galera_ssl_enabled: false
+    openstack_mysql_x509_enabled: false
+  gnocchi:
+    common:
+      database:
+        engine: mysql
+        host: ${_param:single_address}
+        name: gnocchi
+        password: ${_param:mysql_gnocchi_password}
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
+        user: gnocchi
+        x509:
+          ca_file: ${_param:mysql_gnocchi_ssl_ca_file}
+          cert_file: ${_param:mysql_gnocchi_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_gnocchi_client_ssl_key_file}
+      version: ${_param:gnocchi_version}
+

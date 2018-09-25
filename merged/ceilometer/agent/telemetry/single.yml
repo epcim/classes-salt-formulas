@@ -1,2 +1,21 @@
 classes:
 - ceilometer.agent.single.common
+- salt.minion.cert.rabbitmq.clients.openstack.ceilometer
+parameters:
+  _param:
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
+  ceilometer:
+    agent:
+      message_queue:
+        port: ${_param:openstack_rabbitmq_port}
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_ceilometer_ssl_ca_file}
+          key_file: ${_param:rabbitmq_ceilometer_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_ceilometer_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
+      identity:
+        protocol: ${_param:internal_protocol}

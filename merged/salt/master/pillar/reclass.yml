@@ -2,6 +2,7 @@ parameters:
   salt:
     master:
       pillar:
+        data_dir: /srv/salt/reclass
         engine: reclass
         reclass:
           inventory_base_uri: /srv/salt/reclass

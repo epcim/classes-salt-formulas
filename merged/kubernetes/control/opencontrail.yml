@@ -1,0 +1,48 @@
+parameters:
+  _param:
+    opencontrail_identity_user: admin
+    opencontrail_identity_password: contrail123
+    opencontrail_identity_tenant: admin
+    opencontrail_public_ip_range: 172.17.47.128/25
+    opencontrail_public_ip_network: default-domain:default-project:Public
+    opencontrail_private_ip_range: 10.150.0.0/16
+  kubernetes:
+    pool:
+      network:
+        engine: none
+        opencontrail:
+          enabled: false
+    master:
+      network:
+        engine: none
+        opencontrail:
+          version: ${_param:opencontrail_version}
+          public_ip_range: ${_param:opencontrail_public_ip_range}
+          public_network: ${_param:opencontrail_public_ip_network}
+          private_ip_range: ${_param:opencontrail_private_ip_range}
+          cluster_network:
+            project: 'default'
+            domain: 'default-domain'
+            name: 'cluster-network'
+          config:
+            api:
+              host: ${_param:opencontrail_control_address}
+          identity:
+            auth_user: ${_param:opencontrail_identity_user}
+            auth_password: ${_param:opencontrail_identity_password}
+            auth_tenant: ${_param:opencontrail_identity_tenant}
+          message_queue:
+            host: ${_param:single_address}
+          database:
+            members:
+              - host: ${_param:kubernetes_control_node01_address}
+                port: 9161
+              - host: ${_param:kubernetes_control_node02_address}
+                port: 9161
+              - host: ${_param:kubernetes_control_node03_address}
+                port: 9161
+          collector:
+            members:
+              - host: ${_param:kubernetes_control_node01_address}
+              - host: ${_param:kubernetes_control_node02_address}
+              - host: ${_param:kubernetes_control_node03_address}

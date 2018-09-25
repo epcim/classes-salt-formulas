@@ -44,6 +44,8 @@ parameters:
                     compare_type: REG_EXP
                     branches:
                       - master
+                      - compare_type: ANT
+                        name: release/*
                 skip_vote:
                   - successful
                   - failed

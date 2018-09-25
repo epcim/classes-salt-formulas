@@ -21,9 +21,6 @@ parameters:
         secure_port: 6443
         vip_address: ${_param:cluster_vip_address}
       ca: kubernetes
-      calico:
-        prometheus:
-          enabled: true
       enabled: true
       etcd:
         members:
@@ -60,6 +57,10 @@ parameters:
               port: 4001
             - host: ${_param:cluster_node03_address}
               port: 4001
+          policy:
+            enabled: false
+          prometheus:
+            enabled: true
       registry:
         host: tcpcloud
       service_addresses: 10.254.0.0/16

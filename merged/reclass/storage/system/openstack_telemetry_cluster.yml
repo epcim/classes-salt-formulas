@@ -18,6 +18,7 @@ parameters:
             single_address: ${_param:openstack_telemetry_node01_address}
             keepalived_vip_priority: 103
             openstack_node_role: primary
+            glusterfs_node_role: primary
             ceilometer_create_gnocchi_resources: true
             redis_cluster_role: 'master'
         openstack_telemetry_node02:
@@ -31,6 +32,7 @@ parameters:
             single_address: ${_param:openstack_telemetry_node02_address}
             keepalived_vip_priority: 102
             openstack_node_role: secondary
+            glusterfs_node_role: secondary
             redis_cluster_role: 'slave'
         openstack_telemetry_node03:
           name: ${_param:openstack_telemetry_node03_hostname}
@@ -43,4 +45,5 @@ parameters:
             single_address: ${_param:openstack_telemetry_node03_address}
             keepalived_vip_priority: 101
             openstack_node_role: secondary
+            glusterfs_node_role: secondary
             redis_cluster_role: 'slave'

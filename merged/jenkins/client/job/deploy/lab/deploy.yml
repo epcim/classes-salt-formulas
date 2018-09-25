@@ -117,9 +117,6 @@ parameters:
                 type: string
                 default: ""
                 description: "Formulas revision to install on Salt Master bootstrap stage"
-              EXTRA_FORMULAS:
-                type: string
-                default: ""
               STATIC_MGMT_NETWORK:
                   type: boolean
                   default: 'false'

@@ -1,3 +1,5 @@
+applications:
+- gnocchi
 classes:
 - haproxy.proxy.single
 - apache.server.site.gnocchi
@@ -10,14 +12,8 @@ parameters:
     gnocchi_memcached_node03_address: ${_param:cluster_node03_address}
   gnocchi:
     server:
-      enable_proxy_headers_parsing: true
-      role: ${_param:openstack_node_role}
-      metricd:
-        metric_processing_delay: 15
-        metric_reporting_delay: 30
-      identity:
-        host: ${_param:openstack_control_address}
-        region: ${_param:openstack_region}
+      api:
+        auth_mode: keystone
       cache:
         engine: memcached
         members:
@@ -27,3 +23,22 @@ parameters:
           port: 11211
         - host: ${_param:gnocchi_memcached_node03_address}
           port: 11211
+      debug: false
+      enable_proxy_headers_parsing: true
+      enabled: true
+      identity:
+        auth_type: password
+        engine: keystone
+        host: ${_param:openstack_control_address}
+        password: ${_param:keystone_gnocchi_password}
+        port: 35357
+        private_port: 5000
+        protocol: ${_param:cluster_internal_protocol}
+        region: ${_param:openstack_region}
+        tenant: service
+        user: gnocchi
+      metricd:
+        metric_processing_delay: 15
+        metric_reporting_delay: 30
+      role: ${_param:openstack_node_role}
+

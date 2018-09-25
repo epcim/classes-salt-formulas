@@ -1,4 +1,6 @@
 parameters:
+  _param:
+    haproxy_ironic_deploy_check_params: check
   haproxy:
     proxy:
       listen:
@@ -13,12 +15,12 @@ parameters:
           - name: bmt01
             host: ${_param:openstack_baremetal_node01_baremetal_address}
             port: 6385
-            params: check
+            params: ${_param:haproxy_ironic_deploy_check_params}
           - name: bmt02
             host: ${_param:openstack_baremetal_node02_baremetal_address}
             port: 6385
-            params: check
+            params: ${_param:haproxy_ironic_deploy_check_params}
           - name: bmt03
             host: ${_param:openstack_baremetal_node03_baremetal_address}
             port: 6385
-            params: check
+            params: ${_param:haproxy_ironic_deploy_check_params}

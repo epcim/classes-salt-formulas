@@ -1,15 +1,17 @@
+classes:
+- linux.system.repo.keystorage.mirantis_com
 parameters:
   _param:
-    apt_mk_version: stable
     linux_system_architecture: 'amd64'
+    linux_system_repo_url: http://mirror.mirantis.com/${_param:apt_mk_version}/
+    linux_system_repo_mirantis_openstack_url: ${_param:linux_system_repo_url}/openstack-${_param:openstack_version}/
   linux:
     system:
       repo:
         mirantis_openstack:
-          source: "deb http://mirror.mirantis.com/${_param:apt_mk_version}/openstack-${_param:openstack_version}/${_param:linux_system_codename} ${_param:linux_system_codename} main"
+          source: "deb ${_param:linux_system_repo_mirantis_openstack_url}/${_param:linux_system_codename} ${_param:linux_system_codename} main"
           architectures: ${_param:linux_system_architecture}
           clean_file: true
-          key_url: https://mirror.mirantis.com/${_param:apt_mk_version}/openstack-${_param:openstack_version}/${_param:linux_system_codename}/archive-${_param:openstack_version}.key
           pin:
           - pin: 'release o=Mirantis'
             priority: 1100

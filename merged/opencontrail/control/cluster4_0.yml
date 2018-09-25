@@ -22,6 +22,7 @@ parameters:
     opencontrail_controller_container_name: opencontrail_controller_1
     opencontrail_analytics_container_name: opencontrail_analytics_1
     opencontrail_analyticsdb_container_name: opencontrail_analyticsdb_1
+    opencontrail_api_workers_count: 6
     analytics_vip_address: ${_param:opencontrail_analytics_address}
 # Temprorary fix for MOS9 packages to pin old version of kafka
   linux:
@@ -81,6 +82,7 @@ parameters:
         host: None
       api:
         host: ${_param:opencontrail_control_address}
+        workers_count: ${_param:opencontrail_api_workers_count}
       analytics:
         members:
         - host: ${_param:cluster_node01_address}

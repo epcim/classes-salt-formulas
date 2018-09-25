@@ -1,0 +1,9 @@
+classes:
+- grafana.client.dashboards.opencontrail.cassandra
+- grafana.client.dashboards.opencontrail.contrail_4_controller
+- grafana.client.dashboards.opencontrail.vrouter
+- grafana.client.dashboards.opencontrail.zookeeper
+- grafana.client.dashboards.core.haproxy.yml
+- grafana.client.dashboards.core.keepalived.yml
+- grafana.client.dashboards.core.ntp.yml
+- grafana.client.dashboards.core.system.yml

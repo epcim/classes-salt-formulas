@@ -1,0 +1,25 @@
+parameters:
+  _param:
+    salt_minion_ca_host: cfg01.${_param:cluster_domain}
+    salt_minion_ca_authority: salt_master_ca
+    rabbitmq_neutron_client_ssl_key_file: /etc/neutron/ssl/rabbitmq/client-key.pem
+    rabbitmq_neutron_client_ssl_cert_file: /etc/neutron/ssl/rabbitmq/client-cert.pem
+    rabbitmq_neutron_ssl_ca_file: /etc/neutron/ssl/rabbitmq/ca-cert.pem
+  salt:
+    minion:
+      cert:
+        rabbitmq-neutron-client:
+          host: ${_param:salt_minion_ca_host}
+          authority: ${_param:salt_minion_ca_authority}
+          common_name: rabbitmq-neutron-client
+          signing_policy: cert_client
+          alternative_names: >
+            DNS:${linux:system:name},
+            DNS:${linux:network:fqdn}
+          key_usage: "digitalSignature,nonRepudiation,keyEncipherment"
+          key_file: ${_param:rabbitmq_neutron_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_neutron_client_ssl_cert_file}
+          ca_file: ${_param:rabbitmq_neutron_ssl_ca_file}
+          user: neutron
+          group: neutron
+          mode: 640

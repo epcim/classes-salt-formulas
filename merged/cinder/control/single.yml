@@ -1,12 +1,20 @@
 applications:
 - cinder
+classes:
+- salt.minion.cert.mysql.clients.openstack.cinder
+- salt.minion.cert.rabbitmq.clients.openstack.cinder
 parameters:
   _param:
+    galera_ssl_enabled: false
     internal_protocol: http
     keystone_cinder_endpoint_type: internalURL
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   cinder:
     controller:
       backend: {}
@@ -16,7 +24,14 @@ parameters:
         name: cinder
         password: ${_param:mysql_cinder_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: cinder
+        x509:
+          ca_file: ${_param:mysql_cinder_ssl_ca_file}
+          cert_file: ${_param:mysql_cinder_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_cinder_client_ssl_key_file}
       default_volume_type: ""
       enabled: true
       glance:
@@ -45,9 +60,16 @@ parameters:
         engine: rabbitmq
         host: ${_param:single_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_cinder_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_cinder_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_cinder_client_ssl_key_file}
       osapi:
         host: ${_param:single_address}
       role: ${_param:openstack_node_role}

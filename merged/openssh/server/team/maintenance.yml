@@ -2,10 +2,9 @@ classes:
 - linux.system.sudo
 - openssh.server.team.members.dmeltsaykin
 - openssh.server.team.members.omolchanov
-- openssh.server.team.members.ibumarskov
 - openssh.server.team.members.vkhlyunev
-- openssh.server.team.members.vjigulin
 - openssh.server.team.members.dtsapikov
+- openssh.server.team.members.rlubianyi
 parameters:
   _param:
     linux_system_user_sudo: true

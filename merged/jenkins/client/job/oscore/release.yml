@@ -59,6 +59,10 @@ parameters:
                 type: string
                 default: "{{test_scheme}}"
                 description: "Structure which defines parameters of deployment jobs"
+              TEST_MILESTONE:
+                type: string
+                description: Product milestone
+                default: "{{test_milestone}}"
               MIRROR_HOST:
                 type: string
                 default: "mirror.mirantis.com"

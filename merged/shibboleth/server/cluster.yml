@@ -5,9 +5,9 @@ classes:
 parameters:
   shibboleth:
     server:
-      enabled: true
-      keystone_protocol: http
-      keystone_public_address: ${_param:proxy_vip_address_public}
-      keystone_port: 5000
+      app:
+        entity_id: http://${_param:proxy_vip_address_public}:5000
+        signing: "false"
+        encryption: "false"
       idp_url: "https://saml.example.com/oam/fed"
       idp_metadata_url: "https://saml.example.com/oamfed/idp/metadata"

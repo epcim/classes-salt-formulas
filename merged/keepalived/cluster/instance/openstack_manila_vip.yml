@@ -1,0 +1,11 @@
+classes:
+- keepalived.cluster.single
+parameters:
+  _param:
+    keepalived_openstack_manila_vip_address: ${_param:cluster_vip_address}
+    keepalived_openstack_manila_vip_password: password
+    keepalived_openstack_manila_vip_interface: eth1
+    keepalived_vip_virtual_router_id: 235
+    keepalived_vip_address: ${_param:keepalived_openstack_manila_vip_address}
+    keepalived_vip_password: ${_param:keepalived_openstack_manila_vip_password}
+    keepalived_vip_interface: ${_param:keepalived_openstack_manila_vip_interface}

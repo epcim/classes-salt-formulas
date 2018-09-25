@@ -1,15 +1,18 @@
 classes:
- - manila.common.cluster
+ - manila.common.single
  - apache.server.site.manila
 parameters:
+  _param:
+    openstack_node_role: primary
   manila:
     common:
       dhss: false
+      default_share_type: default
       version: ${_param:openstack_version}
     api:
+      role: ${_param:openstack_node_role}
       enabled: true
       version: ${_param:openstack_version}
-      role: ${_param:openstack_node_role}
     scheduler:
       enabled: true
       version: ${_param:openstack_version}

@@ -1,6 +1,11 @@
 classes:
 - ceilometer.agent.cluster.common
+- salt.minion.cert.rabbitmq.clients.openstack.ceilometer
 parameters:
+  _param:
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
   ceilometer:
     agent:
       region: ${_param:openstack_region}
@@ -15,7 +20,9 @@ parameters:
         user: ceilometer
         password: ${_param:keystone_ceilometer_password}
         region: ${_param:openstack_region}
+        protocol: ${_param:cluster_internal_protocol}
       message_queue:
+        port: ${_param:openstack_rabbitmq_port}
         engine: rabbitmq
         members:
           - host: ${_param:openstack_message_queue_node01_address}
@@ -25,6 +32,13 @@ parameters:
         password: ${_param:rabbitmq_openstack_password}
         virtual_host: '/openstack'
         ha_queues: true
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_ceilometer_ssl_ca_file}
+          key_file: ${_param:rabbitmq_ceilometer_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_ceilometer_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
   nova:
     compute:
       notification:

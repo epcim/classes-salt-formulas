@@ -29,27 +29,19 @@ parameters:
             SALT_MASTER_CREDENTIALS:
               type: string
               default: "salt"
-            STAGE_TEST_UPGRADE:
-              type: boolean
-              default: 'true'
-              description: "Test if syncdb and APIs succeed"
-            STAGE_REAL_UPGRADE:
-              type: boolean
-              default: 'true'
-              description: "Run real control upgrade"
-            STAGE_ROLLBACK_UPGRADE:
-              type: boolean
-              default: 'true'
-              description: "Rollback if control upgrade fails"
-            OPERATING_SYSTEM_RELEASE_UPGRADE:
+            OS_DIST_UPGRADE:
               type: boolean
               default: 'false'
-              description: "Set to true if operating system release upgrade is desired. For ex. from Ubuntu 14.04 currently running on ctl and prx nodes to Ubuntu 16.04"
-            SKIP_VM_RELAUNCH:
+              description: "Upgrade system packages including kernel (apt-get dist-upgrade)"
+            OS_UPGRADE:
               type: boolean
               default: 'false'
-              description: "Set to true if vms should not be recreated"
+              description: "Upgrade all installed applications (apt-get upgrade)"
             INTERACTIVE:
               type: boolean
               default: 'true'
               description: "Ask interactive questions during pipeline run (bool)"
+            TARGET_SERVERS:
+              type: string
+              default: 'ctl*'
+              description: "Salt compound expression to get control servers to upgrade."

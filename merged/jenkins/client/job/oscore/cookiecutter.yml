@@ -35,6 +35,7 @@ parameters:
                 - openstack-ovs-core-manila-pike
                 - openstack-ovs-core-telemetry-pike
                 - openstack-ovs-core-queens
+                - openstack-ovs-core-ssl-queens
             STACK_INSTALL:
               type: string
               default: 'core,openstack,ovs'
@@ -42,6 +43,16 @@ parameters:
               type: boolean
               description: "Delete Heat stack when finished (bool)"
               default: 'false'
+            OPENSTACK_ENVIRONMENT:
+              type: choice
+              description: "Target openstack environment."
+              choices:
+                - devcloud
+                - presales
+                - oscore_devcloud
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              description: "Credentials to the OpenStack API"
             OPENSTACK_API_PROJECT:
               type: string
               default: "mcp-oscore"
@@ -61,7 +72,7 @@ parameters:
               default: |-
                 #Extra context that will be merged with content of COOKIECUTTER_TEMPLATE_CONTEXT_FILE
                 default_context:
-                  openssh_groups: "qa_scale,oscore_devops,networking,tcpcloud,stacklight,k8s_team"
+                  openssh_groups: "qa_scale,oscore_devops,networking,tcpcloud,stacklight,k8s_team,mcp_qa"
                   cookiecutter_template_url: https://gerrit.mcp.mirantis.net/mk/cookiecutter-templates.git
                   cookiecutter_template_branch: 'master'
                   shared_reclass_url: https://gerrit.mcp.mirantis.net/salt-models/reclass-system.git
@@ -97,6 +108,8 @@ parameters:
                  compare_type: 'REG_EXP'
                  branches:
                    - master
+                   - compare_type: ANT
+                     name: release/*
              skip_vote:
                - successful
                - failed
@@ -111,6 +124,16 @@ parameters:
               type: string
               default: "gerrit"
               description: "ID of jenkins credentials to be used when connecting to gerrit."
+            OPENSTACK_ENVIRONMENT:
+              type: choice
+              description: "Target openstack environment."
+              choices:
+                - devcloud
+                - presales
+                - oscore_devcloud
+            OPENSTACK_API_CREDENTIALS:
+              type: string
+              description: "Credentials to the OpenStack API"
             OPENSTACK_API_PROJECT:
               type: string
               default: "mcp-oscore-ci"

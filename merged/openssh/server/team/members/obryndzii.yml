@@ -16,6 +16,5 @@ parameters:
         obryndzii:
           enabled: true
           public_keys:
-          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdHeeCZb+4YOBC925Byc0JkdFiNHnxl1DikrJlvza66n+URnfpTvtYhy70oT4jWruWf5dGAh81LK6SJfcLKqDvSNwAU4utQp1t71VllPB482oUhFSBAPOhWHElFakWcgnayOFVtMKhUZ4d5i+C7vXr+JpporBk6le7LuHD0/vNEG6SywexV3/lDZV1kahPSHblBxaED6nNeAODXXRMAOzgV25+UcDINaVTSzzQtCfUHydkVmw+TmxYc5wbdac1AtUkFmFbC6XTsv4VyZsH563jHNRf4UYPN6MP4SWv8axPiGUU5jr4laaIpDQ0TF/b+0Z+QidDxxTIsQxR0r/auUJp obryndzii@obryndzii-pc
-          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDD+5Ykrt46voaBAZ4BnYCB7EjRWNd6R+IqLaoQJzHh0joXVyZj/MsV0LcegxVV21Qnecp3qSw9XQiyJ9cghJbN3/AhEFpx7yZzf7sHez7FxRFefBSCO2IYSDBabO4eyv1X8UXtJrZ88lJBmWQr8nVy3E78za1cq0jRKNlGyvTrRtwY69WDhhc6k8CxIGAUrT6uAFeNCfroRKuw3zDm0FIxoq0eExNwBNw0rIXXUowDoCafTYSVpqSQ+Sby/wfRMc12ISmUnOQ2d9A1+YWoZgdHs+G/OK1ADQu/6edaSOWhX0BGLNRig5lWfgbOmAlzIqNqcLDMaBrcwcpi2LN5pIQf obryndzii@obryndzii-pc
+          - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCHoSxtdURZfgjJbbcKDA4TUUTixKVcRkGfgISYu55IF3scjoFRynaFP4zjBIitcTzxuvo7ZlE5ymxMHC0UNm5HU8tjmVscKcQs73lrjTr7jT24dZ8mr27nEbuTOa73FotPoIH5ao0wSSDc7PDXRUvJNI3xoZAd2KW1NZVRFFJ5jo/byuIfqIJLIAvOBTyUDoIrbL+3/WFIjdZ8MPlfyC8Bi09KfrM4hmzGDja4Mcfm4M7kMcw+B2DCpTtYUFCqjuYgTNC6EbTch21Afe9MCtdVqBBddFKFDU0WZtKfcHTuOVfiSrK47jA0ljU6HdHxFGmh3cz1ajux58T6/RHfXID obryndzii@obryndzii-pc
           user: ${linux:system:user:obryndzii}

@@ -6,14 +6,21 @@ classes:
 - haproxy.proxy.listen.openstack.keystone.standalone
 - linux.system.users.keystone
 - keystone.server.fernet_rotation.cluster
+- salt.minion.cert.mysql.clients.openstack.keystone
+- salt.minion.cert.rabbitmq.clients.openstack.keystone
 parameters:
   _param:
     cluster_internal_protocol: http
+    galera_ssl_enabled: false
     keystone_tokens_expiration: 3600
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_node_role: primary
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   keystone:
     server:
       admin_email: ${_param:admin_email}
@@ -47,7 +54,14 @@ parameters:
         host: ${_param:openstack_database_address}
         name: keystone
         password: ${_param:mysql_keystone_password}
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: keystone
+        x509:
+          ca_file: ${_param:mysql_keystone_ssl_ca_file}
+          cert_file: ${_param:mysql_keystone_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_keystone_client_ssl_key_file}
       enabled: true
       logging:
         log_appender: ${_param:openstack_log_appender}
@@ -67,9 +81,16 @@ parameters:
         - host: ${_param:openstack_message_queue_node02_address}
         - host: ${_param:openstack_message_queue_node03_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_keystone_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_keystone_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_keystone_client_ssl_key_file}
       region: ${_param:openstack_region}
       role: ${_param:openstack_node_role}
       service_tenant: service

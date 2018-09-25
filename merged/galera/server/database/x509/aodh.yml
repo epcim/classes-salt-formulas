@@ -1,0 +1,7 @@
+parameters:
+  _param:
+    mysql_aodh_client_ssl_x509_subject: '/C=cz/CN=mysql-aodh-client/L=Prague/O=Mirantis'
+    mysql_aodh_client_ssl_x509_issuer: '/C=cz/CN=Salt Master CA/L=Prague/O=Mirantis'
+    mysql_aodh_ssl_option:
+      - SUBJECT: ${_param:mysql_aodh_client_ssl_x509_subject}
+      - ISSUER: ${_param:mysql_aodh_client_ssl_x509_issuer}

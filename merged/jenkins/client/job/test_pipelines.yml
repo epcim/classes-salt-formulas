@@ -35,6 +35,8 @@ parameters:
                   "{{repo}}":
                     branches:
                       - master
+                      - compare_type: ANT
+                        name: release/*
                 event:
                   patchset:
                     - created:

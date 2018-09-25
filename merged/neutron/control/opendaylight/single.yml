@@ -1,5 +1,4 @@
 classes:
-- neutron.control.single
 - neutron.control.openvswitch.single
 parameters:
   _param:

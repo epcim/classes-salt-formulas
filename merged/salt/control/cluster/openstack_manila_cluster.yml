@@ -1,0 +1,35 @@
+parameters:
+  _param:
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    openstack_manila_backend_image: ${_param:salt_control_xenial_image_backend}
+  salt:
+    control:
+      size:
+        openstack.manila:
+          cpu: 1
+          ram: 2048
+          disk_profile: large
+          net_profile: default
+      cluster:
+        internal:
+          domain: ${_param:cluster_domain}
+          engine: virt
+          node:
+            share01:
+              name: ${_param:openstack_share_node01_hostname}
+              provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
+              image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_manila_backend_image}
+              size: openstack.manila
+            share02:
+              name: ${_param:openstack_share_node02_hostname}
+              provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
+              image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_manila_backend_image}
+              size: openstack.manila
+            share03:
+              name: ${_param:openstack_share_node03_hostname}
+              provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+              image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_manila_backend_image}
+              size: openstack.manila

@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_trusty_image_backend: /var/lib/libvirt/images/backends/trusty.qcow2
+    openstack_billing_backend_image: ${_param:salt_control_trusty_image_backend}
   salt:
     control:
       size:
@@ -15,4 +18,5 @@ parameters:
             bil01:
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_trusty_image}
+              backend: ${_param:openstack_billing_backend_image}
               size: openstack.control

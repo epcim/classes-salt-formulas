@@ -2,6 +2,12 @@ parameters:
   _param:
     elasticsearch_curator_indices_pattern: "^(log|notification)-.*$"
     elasticsearch_curator_retention_period: 31
+  linux:
+    system:
+      cron:
+        user:
+          elasticsearch:
+            enabled: true
   elasticsearch:
     server:
       curator:

@@ -22,7 +22,11 @@ parameters:
                 "mcp/docker-ci-tempest":
                   branches:
                     - master
+                    - queens
                     - pike
+                    - ocata
+                    - newton
+                    - mitaka
               event:
                 patchset:
                   - created:

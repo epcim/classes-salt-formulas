@@ -48,10 +48,6 @@ parameters:
               PARALLEL_NODE_GROUP_SIZE:
                 type: string
                 default: "9"
-              # Salt master setup extra formulas
-              EXTRA_FORMULAS:
-                type: string
-                default: "{{extra_formulas}}"
               FORMULAS_SOURCE:
                 type: string
                 default: "{{formulas_src}}"
@@ -158,10 +154,6 @@ parameters:
               PARALLEL_NODE_GROUP_SIZE:
                 type: string
                 default: "9"
-              # Salt master setup extra formulas
-              EXTRA_FORMULAS:
-                type: string
-                default: "{{extra_formulas}}"
               FORMULAS_SOURCE:
                 type: string
                 default: "{{formulas_src}}"
@@ -217,6 +209,8 @@ parameters:
                   salt-models/{{name}}:
                     branches:
                       - master
+                      - compare_type: ANT
+                        name: release/*
                 event:
                   comment:
                     - addedContains:
@@ -242,10 +236,10 @@ parameters:
             - cookiecutter_template: cookiecutter-templates
           template:
             discard:
-             build:
-               keep_num: 50
-             artifact:
-               keep_num: 50
+              build:
+                keep_days: 4
+              artifact:
+                keep_days: 4
             type: workflow-scm
             concurrent: true
             scm:
@@ -260,6 +254,8 @@ parameters:
                   mk/{{cookiecutter_template}}:
                     branches:
                       - master
+                      - compare_type: ANT
+                        name: release/*
                 event:
                   comment:
                     - addedContains:
@@ -268,37 +264,36 @@ parameters:
               COOKIECUTTER_TEMPLATE_URL:
                 type: string
                 default: "${_param:jenkins_gerrit_url}/mk/{{cookiecutter_template}}"
-              CREDENTIALS_ID:
-                type: string
-                default: gerrit
               COOKIECUTTER_TEMPLATE_BRANCH:
                 type: string
                 default: master
-              RECLASS_MODEL_URL:
+                description: "Those variable will be ignored, in case gerritTrigger=>GERRIT_BRANCH"
+              COOKIECUTTER_TEMPLATE_REF:
+                type: string
+                default: ""
+                description: "Example: refs/changes/49/25549/1"
+              RECLASS_SYSTEM_URL:
                 type: string
                 default: "${_param:jenkins_gerrit_url}/salt-models/reclass-system"
-              RECLASS_MODEL_BRANCH:
+              RECLASS_SYSTEM_BRANCH:
                 type: string
                 default: master
+                description: "Those variable will be ignored, in case gerritTrigger=>GERRIT_BRANCH"
+              RECLASS_SYSTEM_GIT_REF:
+                type: string
+                default: ""
+                description: "Example: refs/changes/49/25549/1"
               DISTRIB_REVISION:
                 type: string
                 default: 'nightly'
-              SYSTEM_GIT_URL:
-                type: string
-                default: ""
-              SYSTEM_GIT_REF:
-                type: string
-                default: ""
-              PARALLEL_NODE_GROUP_SIZE:
-                type: string
-                default: "1"
-              EXTRA_FORMULAS:
-                type: string
-                default: "aptly artifactory auditd backupninja collectd devops-portal docker elasticsearch fluentd freeipa gerrit glusterfs grafana haproxy heka horizon influxdb jenkins keepalived kibana libvirt maas memcached mysql nginx ntp openldap openssh postfix prometheus rsync rsyslog rundeck sensu sphinx telegraf xtrabackup watchdog logrotate"
+                description: "Those variable will be ignored, in case gerritTrigger=>GERRIT_BRANCH. Version of bin-artifacts,passed to test-env"
               RECLASS_VERSION:
                 type: string
                 default: 'v1.5.4'
-                description: "Version (branch) of Reclass we will use"
+                description: "Version (branch) of reclass PACKAGE we will use"
+              CREDENTIALS_ID:
+                type: string
+                default: gerrit
       job:
         test-salt-model-node:
           name: test-salt-model-node
@@ -337,9 +332,6 @@ parameters:
             CREDENTIALS_ID:
               type: string
               default: "gerrit"
-            EXTRA_FORMULAS:
-              type: string
-              default: ""
             FORMULAS_SOURCE:
               type: string
               default: "pkg"
@@ -379,9 +371,9 @@ parameters:
           name: test-mk-cookiecutter-templates-chunk
           discard:
             build:
-              keep_num: 300
+              keep_days: 3
             artifact:
-              keep_num: 30
+              keep_days: 3
           type: workflow-scm
           concurrent: true
           plugin_properties:
@@ -398,5 +390,5 @@ parameters:
             script: test-cookiecutter-reclass-chunk.groovy
           param:
             EXTRA_VARIABLES_YAML:
-              type: string
+              type: text
               default: ""

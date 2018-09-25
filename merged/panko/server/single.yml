@@ -2,13 +2,22 @@ applications:
 - panko
 classes:
 - apache.server.site.panko
+- salt.minion.cert.mysql.clients.openstack.panko
 parameters:
   _param:
+    galera_ssl_enabled: false
     keystone_panko_endpoint_type: internalURL
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_ossyslog_handler_enabled: false
     panko_event_time_to_live: 2592000
+  linux:
+    system:
+      cron:
+        user:
+          panko:
+            enabled: true
   panko:
     server:
       bind:
@@ -20,7 +29,14 @@ parameters:
         name: panko
         password: ${_param:mysql_panko_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: panko
+        x509:
+          ca_file: ${_param:mysql_panko_ssl_ca_file}
+          cert_file: ${_param:mysql_panko_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_panko_client_ssl_key_file}
       enabled: true
       event_time_to_live: ${_param:panko_event_time_to_live}
       expirer:
@@ -33,6 +49,7 @@ parameters:
         host: ${_param:single_address}
         password: ${_param:keystone_panko_password}
         port: 35357
+        protocol: ${_param:internal_protocol}
         region: RegionOne
         tenant: service
         user: panko

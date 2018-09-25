@@ -1,6 +1,7 @@
 applications:
-  - octavia
+- octavia
 parameters:
   octavia:
     client:
       enabled: true
+

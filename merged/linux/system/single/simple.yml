@@ -8,6 +8,16 @@ parameters:
     local_package_repos: false
   linux:
     system:
+      at:
+        enabled: true
+        user:
+          root:
+            enabled: true
+      cron:
+        enabled: true
+        user:
+          root:
+            enabled: true
       local_package_repos: ${_param:local_package_repos}
       timezone: UTC
       locale:

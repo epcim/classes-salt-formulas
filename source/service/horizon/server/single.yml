@@ -86,4 +86,3 @@ parameters:
           source: file
           name: bgpvpn_policy.json
           enabled: ${_param:neutron_enable_bgp_vpn}
-

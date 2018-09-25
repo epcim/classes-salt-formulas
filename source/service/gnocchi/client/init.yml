@@ -1,0 +1,6 @@
+applications:
+  - gnocchi
+parameters:
+  gnocchi:
+    client:
+      enabled: true

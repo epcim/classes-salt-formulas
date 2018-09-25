@@ -1,0 +1,4 @@
+parameters:
+  _param:
+    mysql_aodh_ssl_option:
+      - SSL: True

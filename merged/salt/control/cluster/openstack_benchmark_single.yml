@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_trusty_image_backend: /var/lib/libvirt/images/backends/trusty.qcow2
+    openstack_benchmark_backend_image: ${_param:salt_control_trusty_image_backend}
   salt:
     control:
       size:
@@ -16,4 +19,5 @@ parameters:
               name: ${_param:openstack_benchmark_node01_hostname}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_trusty_image}
+              backend: ${_param:openstack_benchmark_backend_image}
               size: openstack.benchmark

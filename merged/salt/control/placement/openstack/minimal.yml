@@ -14,6 +14,11 @@ parameters:
     openstack_message_queue_node03_hostname: msg03
     openstack_proxy_node01_hostname: prx01
     openstack_proxy_node02_hostname: prx02
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    openstack_control_backend_image: ${_param:salt_control_xenial_image_backend}
+    openstack_database_backend_image: ${_param:salt_control_xenial_image_backend}
+    openstack_message_queue_backend_image: ${_param:salt_control_xenial_image_backend}
+    openstack_proxy_backend_image: ${_param:salt_control_xenial_image_backend}
   salt:
     control:
       cluster:
@@ -22,55 +27,66 @@ parameters:
             ctl01:
               name: ${_param:openstack_control_node01_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_control_backend_image}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               size: openstack.control
             ctl02:
               name: ${_param:openstack_control_node02_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_control_backend_image}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               size: openstack.control
             ctl03:
               name: ${_param:openstack_control_node03_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_control_backend_image}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               size: openstack.control
             dbs01:
               name: ${_param:openstack_database_node01_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_database_backend_image}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               size: openstack.database
             dbs02:
               name: ${_param:openstack_database_node02_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_database_backend_image}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               size: openstack.database
             dbs03:
               name: ${_param:openstack_database_node03_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_database_backend_image}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               size: openstack.database
             msg01:
               name: ${_param:openstack_message_queue_node01_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_message_queue_backend_image}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               size: openstack.message_queue
             msg02:
               name: ${_param:openstack_message_queue_node02_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_message_queue_backend_image}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               size: openstack.message_queue
             msg03:
               name: ${_param:openstack_message_queue_node03_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_message_queue_backend_image}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               size: openstack.message_queue
             prx01:
               name: ${_param:openstack_proxy_node01_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_proxy_backend_image}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               size: openstack.proxy
             prx02:
               name: ${_param:openstack_proxy_node02_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:openstack_proxy_backend_image}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               size: openstack.proxy

@@ -1,0 +1,21 @@
+parameters:
+  linux:
+    system:
+      user:
+        aminasyan:
+          enabled: true
+          name: aminasyan
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Artem Minasyan
+          home: /home/aminasyan
+          email: aminasyan@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        aminasyan:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCo9BHw8WdIFOEuY10XvUqHPl1jCqtA8TYntt5Aee2rR8X8pLG9lWjHPFkNArD5upCRvv6f88Xs4QLoEGWMWcbfMkJE4gMNkOWL4As5iNgagw+DybQrA6nXyassHi8le+quwICfJ1v16IXxPgMBCcrRcSYvHKv+n8KsuBH1csRnJ8aHvIZJTL43Eq0F+aj2S0/9D+m2dyRwcmamn6EqX61NfL5UP3422i4JykTXY6I8iwEHs7Er+jPBD7rtJ/q4Kn/bIyT/Vz0tGHiWyVt7B8GBoPb3PgDuzXKvU7OtOxFb3uhANeecjzIz5G5rAsAQcizf+MGCOoBwFLFJTPAharWN artem@Artem
+          user: ${linux:system:user:aminasyan}
+          

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        imenkov:
+          enabled: true
+          name: imenkov
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Ilya Menkov
+          home: /home/imenkov
+          email: imenkov@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        imenkov:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSWoSuHV1FNRuooS3d0nVkTRCwC+Tc585Z1cPcMQns7H1ogLIya//T3gMfxINxCjlF1eek18vI9B5QszZZUL2P7prFxe5EJlt6iM8jD61umkncaTbx6oc8r8xu5ufH9RDxfKHvQX1mhhID5JK+/GoRDIW5Zs7wFSHCrANYV2dtmOfmRSc/qpgh87Z9X10UDymp5MLjpQZzjM+qZCtz6yV14m835j4eiEN7+QZ2XZ/Wtzer7VVdhtjbw8gESSyuPIVf66keuLVUixk0CXosQYrqWDPWpT0Rhh63lnUacgplh74TU+bb+vYRjIHxCgOY2Ex6Pk5jrsroi0YoWtI4SErD imenkov@atopilin-nb-wifi.srt.mirantis.net
+          user: ${linux:system:user:imenkov}

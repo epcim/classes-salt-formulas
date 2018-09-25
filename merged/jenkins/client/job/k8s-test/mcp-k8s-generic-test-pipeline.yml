@@ -1,0 +1,69 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+  jenkins:
+    client:
+      job_template:
+        mcp-k8s-generic-test-pipeline:
+          name: mcp-k8s-{{name}}-test-pipeline
+          jobs:
+            - name: coredns
+              display_name: "CoreDNS test pipeline"
+              pipeline: mcp-k8s-coredns-pipeline.groovy
+              repo: kubernetes/coredns
+            - name: dashboard
+              display_name: "Kubernetes dashboard test pipeline"
+              pipeline: mcp-k8s-dashboard-pipeline.groovy
+              repo: kubernetes/dashboard
+            - name: external-dns
+              display_name: "External DNS test pipeline"
+              pipeline: mcp-k8s-ext-dns-pipeline.groovy
+              repo: kubernetes/external-dns
+            - name: metallb
+              display_name: "Metal LB test pipeline"
+              pipeline: mcp-k8s-metallb-pipeline.groovy
+              repo: kubernetes/metallb
+            - name: nginx-ingress
+              display_name: "NGINX ingress test pipeline"
+              pipeline: mcp-k8s-ingress-nginx-pipeline.groovy
+              repo: kubernetes/ingress-nginx
+          template:
+            type: workflow-scm
+            display_name: "{{display_name}}"
+            discard:
+              build:
+                keep_num: 50
+            concurrent: true
+            scm:
+              type: git
+              url: "${_param:jenkins_gerrit_url}/kubernetes-ci/kubernetes-pipelines"
+              credentials: "gerrit"
+              script: "pipelines/{{pipeline}}"
+            trigger:
+              gerrit:
+                project:
+                  "{{repo}}":
+                    branches:
+                      - compare_type: "ANT"
+                        name: "**"
+                message:
+                  build_successful: "Build successful"
+                  build_unstable: "Build unstable"
+                  build_failure: "Build failed"
+                event:
+                  patchset:
+                    - created:
+                        excludeDrafts: false
+                        excludeTrivialRebase: false
+                        excludeNoCodeChange: false
+                  comment:
+                    - addedContains:
+                        commentAddedCommentContains: '(recheck|reverify)'
+                override-votes:
+                  gerritBuildUnstableVerifiedValue: 1
+                  gerritBuildUnstableCodeReviewValue: 1
+            param:
+              KUBE_DOCKER_REGISTRY:
+                type: string
+                default: ${_param:mcp_docker_registry}
+                description: 'Docker registry for binaries and images'

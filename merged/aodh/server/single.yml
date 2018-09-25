@@ -1,13 +1,21 @@
 applications:
 - aodh
+classes:
+- salt.minion.cert.mysql.clients.openstack.aodh
+- salt.minion.cert.rabbitmq.clients.openstack.aodh
 parameters:
   _param:
     aodh_alarm_history_ttl: 2592000
+    galera_ssl_enabled: false
     keystone_aodh_endpoint_type: internalURL
     openstack_event_alarm_topic: alarm.all
     openstack_fluentd_handler_enabled: false
     openstack_log_appender: false
+    openstack_mysql_x509_enabled: false
     openstack_ossyslog_handler_enabled: false
+    openstack_rabbitmq_port: 5672
+    openstack_rabbitmq_x509_enabled: false
+    rabbitmq_ssl_enabled: false
   aodh:
     server:
       bind:
@@ -19,7 +27,14 @@ parameters:
         name: aodh
         password: ${_param:mysql_aodh_password}
         port: 3306
+        ssl:
+          enabled: ${_param:galera_ssl_enabled}
         user: aodh
+        x509:
+          ca_file: ${_param:mysql_aodh_ssl_ca_file}
+          cert_file: ${_param:mysql_aodh_client_ssl_cert_file}
+          enabled: ${_param:openstack_mysql_x509_enabled}
+          key_file: ${_param:mysql_aodh_client_ssl_key_file}
       enabled: true
       event_alarm_topic: ${_param:openstack_event_alarm_topic}
       expirer:
@@ -32,6 +47,7 @@ parameters:
         host: ${_param:single_address}
         password: ${_param:keystone_aodh_password}
         port: 35357
+        protocol: ${_param:internal_protocol}
         region: ${_param:openstack_region}
         tenant: service
         user: aodh
@@ -48,14 +64,27 @@ parameters:
         engine: rabbit
         host: ${_param:single_address}
         password: ${_param:rabbitmq_openstack_password}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
         rpc_thread_pool_size: 5
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
         user: openstack
         virtual_host: /openstack
+        x509:
+          ca_file: ${_param:rabbitmq_aodh_ssl_ca_file}
+          cert_file: ${_param:rabbitmq_aodh_client_ssl_cert_file}
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          key_file: ${_param:rabbitmq_aodh_client_ssl_key_file}
       notifications:
         store_events: true
       region: ${_param:openstack_region}
       role: ${_param:openstack_node_role}
       ttl: ${_param:aodh_alarm_history_ttl}
       version: ${_param:aodh_version}
+  linux:
+    system:
+      cron:
+        user:
+          aodh:
+            enabled: true
 

@@ -1,0 +1,2 @@
+classes:
+- linux.system.repo.mcp.apt_mirantis.update.ubuntu

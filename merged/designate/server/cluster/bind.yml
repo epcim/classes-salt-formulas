@@ -1,0 +1,39 @@
+classes:
+  - designate.server.cluster.default
+parameters:
+  _param:
+    designate_bind9_rndc_algorithm: hmac-sha512
+  designate:
+    worker:
+      enabled: true
+    server:
+      backend:
+        bind9:
+          rndc_key: "${_param:designate_bind9_rndc_key}"
+          rndc_algorithm: "${_param:designate_bind9_rndc_algorithm}"
+      pools:
+        default:
+          description: 'default pool'
+          ns_records: ${_param:designate_pool_ns_records}
+          nameservers: ${_param:designate_pool_nameservers}
+          targets:
+            default01:
+              type: bind9
+              description: 'default target01'
+              masters: ${_param:designate_pool_target_masters}
+              options:
+                host: ${_param:openstack_dns_node01_address}
+                port: 53
+                rndc_host: ${_param:openstack_dns_node01_address}
+                rndc_port: 953
+                rndc_key_file: /etc/designate/rndc.key
+            default02:
+              type: bind9
+              description: 'default target02'
+              masters: ${_param:designate_pool_target_masters}
+              options:
+                host: ${_param:openstack_dns_node02_address}
+                port: 53
+                rndc_host: ${_param:openstack_dns_node02_address}
+                rndc_port: 953
+                rndc_key_file: /etc/designate/rndc.key

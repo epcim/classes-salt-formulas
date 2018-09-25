@@ -3,6 +3,8 @@ applications:
 classes:
 - docker.support
 parameters:
+  _param:
+    docker_garbage_collection_enabled: false
   docker:
     host:
       enabled: true
@@ -20,4 +22,17 @@ parameters:
       pkgs:
       - docker-ce
       - python-docker
+  linux:
+    system:
+      cron:
+        user:
+          root:
+            enabled: true
+      job:
+        docker_garbage_collection:
+          command: docker system prune -f --filter until=$(date +%s -d "1 week ago")
+          enabled: ${_param:docker_garbage_collection_enabled}
+          hour: 6
+          minute: 0
+          user: root
 

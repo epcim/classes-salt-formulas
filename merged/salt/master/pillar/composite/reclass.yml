@@ -1,8 +1,12 @@
 parameters:
+  reclass:
+    storage:
+      allow_none_override: true
   salt:
     master:
       pillar:
         reclass:
+          allow_none_override: true
           ignore_class_notfound: false
           index: 1
           inventory_base_uri: /srv/salt/reclass

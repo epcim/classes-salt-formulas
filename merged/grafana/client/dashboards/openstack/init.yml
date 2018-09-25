@@ -1,0 +1,17 @@
+classes:
+- grafana.client.dashboards.openstack.cinder
+- grafana.client.dashboards.openstack.glance
+- grafana.client.dashboards.openstack.heat
+- grafana.client.dashboards.openstack.keystone
+- grafana.client.dashboards.openstack.neutron
+- grafana.client.dashboards.openstack.nova
+- grafana.client.dashboards.core.apache.yml
+- grafana.client.dashboards.core.galera.yml
+- grafana.client.dashboards.core.glusterfs.yml
+- grafana.client.dashboards.core.haproxy.yml
+- grafana.client.dashboards.core.keepalived.yml
+- grafana.client.dashboards.core.memcached.yml
+- grafana.client.dashboards.core.nginx.yml
+- grafana.client.dashboards.core.ntp.yml
+- grafana.client.dashboards.core.rabbitmq.yml
+- grafana.client.dashboards.core.system.yml

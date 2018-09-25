@@ -1,0 +1,4 @@
+parameters:
+  _param:
+    mysql_keystone_ssl_option:
+      - SSL: True

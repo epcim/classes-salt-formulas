@@ -12,6 +12,8 @@ parameters:
     server:
       enabled: true
       default_mpm: event
+      modules:
+        - wsgi
       site:
         manila:
           enabled: false

@@ -1,0 +1,48 @@
+parameters:
+  _param:
+    mcp_docker_registry: 'docker-dev-local.docker.mirantis.net'
+  jenkins:
+    client:
+      job:
+        mcp_k8s_metallb_test_pipeline:
+          type: workflow-scm
+          name: mcp-k8s-metallb-test-pipeline
+          display_name: "MetalLB tests pipeline"
+          discard:
+            build:
+              keep_num: 50
+          concurrent: true
+          scm:
+            type: git
+            url: "${_param:jenkins_gerrit_url}/kubernetes-ci/kubernetes-pipelines"
+            credentials: "gerrit"
+            script: pipelines/mcp-k8s-metallb-pipeline.groovy
+          trigger:
+            gerrit:
+              project:
+                kubernetes/metallb:
+                  branches:
+                    - compare_type: "ANT"
+                      name: "**"
+              message:
+                build_successful: "Build successful"
+                build_unstable: "Build unstable"
+                build_failure: "Build failed"
+              event:
+                patchset:
+                  - created:
+                      excludeDrafts: false
+                      excludeTrivialRebase: false
+                      excludeNoCodeChange: false
+                comment:
+                  - addedContains:
+                      commentAddedCommentContains: '(recheck|reverify)'
+              override-votes:
+                gerritBuildUnstableVerifiedValue: 1
+                gerritBuildUnstableCodeReviewValue: 1
+          param:
+            KUBE_DOCKER_REGISTRY:
+              type: string
+              default: ${_param:mcp_docker_registry}
+              description: 'Docker registry for binaries and images'
+

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        akiseleva:
+          enabled: true
+          name: akiseleva
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Alena Kiseleva
+          home: /home/akiseleva
+          email: akiseleva@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        akiseleva:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyxzlFKlCcfwagnnmCg1r9SUVfAgy/IdPSxsnpELjCRaz3FI66sYa1F1RdZngoXmYxe5qlmkiRQ0rCjIYk12I08du5FJGYQvMttJEgmVeHtFKW0o3uGBIKNJ5nCni3lR8idPTRXqhwdXYeA4A9+COQO4MGcaJZrqHgEviZt4jQrYy90WdqbKTD4meBRy4MC9+TOUs719kTxK54tmMHBq2l/ukmv3FwgtLz2xMeNW7htiS/1rzA9CEerjkvpc0mOxc4DCY4bH8sR2Ts3Y33Rx6aUN8shTij2aX2v8UvUay2JPqQTJicY+IsYl4D8w/XPx00Oj/3b54f6kTLlzzoNDq5 alena@alena-Lenovo-V580c
+          user: ${linux:system:user:akiseleva}

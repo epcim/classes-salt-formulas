@@ -20,6 +20,7 @@ classes:
 - openssh.server.team.members.mchernik
 - openssh.server.team.members.hkraemer
 - openssh.server.team.members.pbasov
+- openssh.server.team.members.alis
 parameters:
   _param:
     linux_system_user_sudo: true

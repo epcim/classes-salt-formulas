@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    haproxy_glance_api_check_params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+    haproxy_glance_registry_api_check_params: check
   haproxy:
     proxy:
       listen:
@@ -12,15 +15,15 @@ parameters:
           - name: ${_param:cluster_node01_hostname}
             host: ${_param:cluster_node01_address}
             port: 9292
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_glance_api_check_params}
           - name: ${_param:cluster_node02_hostname}
             host: ${_param:cluster_node02_address}
             port: 9292
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_glance_api_check_params}
           - name: ${_param:cluster_node03_hostname}
             host: ${_param:cluster_node03_address}
             port: 9292
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_glance_api_check_params}
         glance_registry_api:
           type: general-service
           service_name: glance
@@ -31,12 +34,12 @@ parameters:
           - name: ${_param:cluster_node01_hostname}
             host: ${_param:cluster_node01_address}
             port: 9191
-            params: check
+            params: ${_param:haproxy_glance_registry_api_check_params}
           - name: ${_param:cluster_node02_hostname}
             host: ${_param:cluster_node02_address}
             port: 9191
-            params: check
+            params: ${_param:haproxy_glance_registry_api_check_params}
           - name: ${_param:cluster_node03_hostname}
             host: ${_param:cluster_node03_address}
             port: 9191
-            params: check
+            params: ${_param:haproxy_glance_registry_api_check_params}

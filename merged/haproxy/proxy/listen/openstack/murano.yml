@@ -1,4 +1,6 @@
 parameters:
+  _param:
+    haproxy_murano_api_check_params: check
   haproxy:
     proxy:
       listen:
@@ -12,7 +14,8 @@ parameters:
           - name: ${_param:cluster_node01_hostname}
             host: ${_param:cluster_node01_address}
             port: 8082
-            params: check
+            params: ${_param:haproxy_murano_api_check_params}
           - name: ${_param:cluster_node02_hostname}
             host: ${_param:cluster_node02_address}
             port: 8082
+            params: ${_param:haproxy_murano_api_check_params}

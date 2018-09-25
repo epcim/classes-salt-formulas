@@ -1,4 +1,6 @@
 parameters:
+  _param:
+    haproxy_octavia_api_check_params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
   haproxy:
     proxy:
       listen:
@@ -12,12 +14,12 @@ parameters:
           - name: ${_param:cluster_node01_hostname}
             host: ${_param:cluster_node01_address}
             port: 9876
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_octavia_api_check_params}
           - name: ${_param:cluster_node02_hostname}
             host: ${_param:cluster_node02_address}
             port: 9876
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_octavia_api_check_params}
           - name: ${_param:cluster_node03_hostname}
             host: ${_param:cluster_node03_address}
             port: 9876
-            params: check inter 10s fastinter 2s downinter 3s rise 3 fall 3
+            params: ${_param:haproxy_octavia_api_check_params}

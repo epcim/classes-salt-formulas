@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        rlubianyi:
+          enabled: true
+          name: rlubianyi
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Roman Lubianyi
+          home: /home/rlubianyi
+          email: rlubianyi@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        rlubianyi:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCXWwy6p3t4AGvaCtFDJxqKZiPDotJnbu2IKg2p7sl7YXQw+APLKk9maHyUehQQuGzidgBZpmBOMAXENcO1FGFj56cnp4W9tldTiRq1bWcUMq42wfNwIToP6dAXj5ZyhL+UZj1GsCThSasDhFe4Xife0cn69KHJqtmahApQK6D7tpZr2UNDYNWh/2JIrUOcJXZU+BqNg7zm1KNb6e9lKXL6KLDeaCiQ0bj+L/unqepLdg26eO7AQSZ/rt2qAnbfcquozECtDhT4cbK8q9xJODlJQ3eQGOgTH3m8jGijL+3UdPFUzbo4KwSK4V9FmB711HVBCQM4nlH9zumIUSxutnkd rlubianyi@rlubianyi-pc
+          user: ${linux:system:user:rlubianyi}

@@ -1,0 +1,13 @@
+applications:
+- gnocchi
+classes:
+- service.gnocchi.common.single
+- service.gnocchi.support
+parameters:
+  gnocchi:
+    statsd:
+      enabled: true
+      resource_id: ${_param:gnocchi_statsd_resource_id}
+      bind:
+        address: ${_param:single_address}
+        port: 8125

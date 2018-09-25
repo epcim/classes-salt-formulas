@@ -12,7 +12,7 @@ parameters:
         host: ${_param:openstack_control_address}
       message_queue:
         members:
-          - host: ${_param:openstack_message_queue_node01_address}
+          - host: ${_param:single_address}
       compute:
         host: ${_param:openstack_control_address}
         region: ${_param:openstack_region}

@@ -1,0 +1,20 @@
+parameters:
+  linux:
+    system:
+      user:
+        sandriichenko:
+          enabled: true
+          name: sandriichenko
+          sudo: ${_param:linux_system_user_sudo}
+          full_name: Sofiia Andriichenko
+          home: /home/sandriichenko
+          email: sandriichenko@mirantis.com
+  openssh:
+    server:
+      enabled: true
+      user:
+        sandriichenko:
+          enabled: true
+          public_keys:
+            - key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC36ZGwGD7WgfEwCDfSkQjiNI3cfgitrRcY+QzXP1+HNLwGoRFiZwmOp2vuYE2JiwvZfxVGXfmFmlDqypFA+H+gNobizGM2S/w7Hz8S5Qja75YBWty9KqdwcRVo7+/cPi4IHsWDxb1xpsiiFMfW2RRvrA3rE131xhwwnfKdZBj5HTlDO+qLIJD0FbJVYehKhJwIJuVGKQyVgj3hepaO17UTbG6IqtZeDz6nb9Sl+3eX5zS+8xS86cHf868M09zmxwrA3uI/eyYT49kMZN+HUezqvrZSG7v3ociOh9P1TI+4TIJN7JaRUAen7hTV2ufgZtNUrOzqXZTuUTmJQmRapAi9 sandriichenko@sandriichenko-pc
+          user: ${linux:system:user:sandriichenko}

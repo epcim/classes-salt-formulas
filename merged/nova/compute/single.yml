@@ -2,6 +2,7 @@ applications:
 - nova
 classes:
 - nova.compute.kvm
+- salt.minion.cert.rabbitmq.clients.openstack.nova
 parameters:
   _param:
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
@@ -36,6 +37,9 @@ parameters:
       SG9MrLHCd5l60aCUQg0UA5ed7Hd6SA314k+HwxJno9/wJ+voBeacMg==
       -----END RSA PRIVATE KEY-----
     cluster_internal_protocol: 'http'
+    openstack_rabbitmq_x509_enabled: False
+    rabbitmq_ssl_enabled: False
+    openstack_rabbitmq_port: 5672
   openssh:
     client:
       enabled: True
@@ -72,10 +76,17 @@ parameters:
       message_queue:
         engine: rabbitmq
         host: ${_param:control_address}
-        port: 5672
+        port: ${_param:openstack_rabbitmq_port}
         user: openstack
         password: ${_param:rabbitmq_openstack_password}
         virtual_host: '/openstack'
+        x509:
+          enabled: ${_param:openstack_rabbitmq_x509_enabled}
+          ca_file: ${_param:rabbitmq_nova_ssl_ca_file}
+          key_file: ${_param:rabbitmq_nova_client_ssl_key_file}
+          cert_file: ${_param:rabbitmq_nova_client_ssl_cert_file}
+        ssl:
+          enabled: ${_param:rabbitmq_ssl_enabled}
       image:
         engine: glance
         host: ${_param:control_address}

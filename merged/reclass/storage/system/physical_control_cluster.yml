@@ -32,6 +32,7 @@ parameters:
             deploy_address: ${_param:infra_kvm_node01_deploy_address}
             public_address: ${_param:infra_kvm_node01_public_address}
             storage_address: ${_param:infra_kvm_node01_storage_address}
+            glusterfs_node_role: primary
         infra_kvm_node02:
           name: ${_param:infra_kvm_node02_hostname}
           domain: ${_param:cluster_domain}
@@ -44,6 +45,7 @@ parameters:
             deploy_address: ${_param:infra_kvm_node02_deploy_address}
             public_address: ${_param:infra_kvm_node02_public_address}
             storage_address: ${_param:infra_kvm_node02_storage_address}
+            glusterfs_node_role: secondary
         infra_kvm_node03:
           name: ${_param:infra_kvm_node03_hostname}
           domain: ${_param:cluster_domain}
@@ -56,3 +58,4 @@ parameters:
             deploy_address: ${_param:infra_kvm_node03_deploy_address}
             public_address: ${_param:infra_kvm_node03_public_address}
             storage_address: ${_param:infra_kvm_node03_storage_address}
+            glusterfs_node_role: secondary

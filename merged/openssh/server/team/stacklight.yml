@@ -1,3 +1,5 @@
+classes:
+- openssh.server.team.members.akiseleva
 parameters:
   _param:
     linux_system_user_sudo: true
@@ -123,6 +125,13 @@ parameters:
           full_name: Michal Kobus
           home: /home/mkobus
           email: mkobus@mirantis.com
+        akiseleva:
+          enabled: true
+          name: akiseleva
+          sudo: true
+          full_name: Alena Kiseleva
+          home: /home/akiseleva
+          email: akiseleva@mirantis.com
   openssh:
     client:
       enabled: true
@@ -214,6 +223,11 @@ parameters:
           public_keys:
           - ${public_keys:mkobus}
           user: ${linux:system:user:mkobus}
+        akiseleva:
+          enabled: true
+          public_keys:
+          - ${public_keys:akiseleva}
+          user: ${linux:system:user:akiseleva}
   public_keys:
     newt:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3odU+3V2uDA2ptAFL9hrJRPNEEdAyztWOZFQ5Oyd9oerTGOU3p4xmrgWWjfKFKbYGhiiIUcYAol5PkTfKukGEkkjCHYA1t023soCaaAj85wCZCnw2zQNAziwxTYmAzTqgxiSvtZNMMrtJvFHRIRDzJ3M1lV0prWNWkMM1/3FAd4W49y6VT3fkMCo8uqG7CfGdgR2DgBCxf9KaNPfW5eDEPOgmE5lK8tVSEI6T+Cg7hbcTf4lFYnlFBnlQgp/0JstsM4Vbwb4B34LOpOsf2S8rrWk2xQMjwaMHXkc2s/E8iW3F5nVFuyEXYISFQIiAHw8dzC6CHgLcyHUVWwznKawZ newt@newt-dev1
@@ -249,3 +263,5 @@ parameters:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC6TGCQAH3FGNSOhSbovhwODabOAsgVqG71rEDdXvDSShwyNB3RIICefas3mdSLsG7+1K9mZ1jicWzNbotvePwzrM/MESzntzp4QZ5J/9L3BMiqWWKL2u6BQ65LGe0YMzMmdSkqMAj0uxt3+OiFDPDrwqH6qN0hwxAJM+byeUlQW8uWQYm/pmWMD60GUrnjYUfKfEa/S3symaZBHQvjtp26De8D6u/jr4TWi5VJpKqVREqU7Z4IKwn8JvHMmUbRO4endW3cRiv35Qb7s66rO6TD0KlDFnnTxOtFvLhL51j58X4MrV9FHUI6czoqjAgEDe9CW7DzZ1xMj03d6IAipgL
     mkobus:
       key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCBqe3X+LrneiuieWGjlw5wRtgixBu2Q8LZjH6W+8nsOkB7iN6qRdKom3jac1Cdd5wSJ0NFAhDNcTLK4Etz/3YACglsTxk09TzXlqs1V0Y7U5a2eqn3KTOgMNsJ1aOhFq/LnmUwTdN8NXac6TIkwZZBj5KhHSvIoO+mfsascct5FIVU/+p32d3o/4NqMDDdTg/qxIMKQsh5sw5Y9Tz9h28LGbDh+QF2lW+b5YJhnCG21Uw17xcyxf3/53EpJwTXfElonSR7HMVLxrq7oDzmqKFZ2z8i9do6EgODKlZpSkxiAFOBw5oA2hPtEeqtXqvddu2FcNGuSNhx/6O8ZHIKq3Xh/tTOYnoc+qYDMRCzDwzeyivfr5Ci3n64giUaZl+KUr6D1CKeL2s8j9+kod/1JJDEeoYR+V93MTiTD/39N8eQAGv+6r9HBapXIkvr3iNuTH1+5eN36Vc90jXXRmGMZkF5P9ivNGDZGcy2pBwwPg/bRn2xb0zx1fsxd4qOi+Cd7mBCF4+SfnVCqUd2H9R0O3S7WgfLr+wOXpFq6/WwgjzI9RVhLJ5cZmePJKvYZYYhkAxsVwWSE639zFFuU1zhFXr49wa0njK9DdYWiQEhOki0ki3huABmVbWKg/zP1Rlllmtk0S4mwggJ57JYbuhEV3a1x1KOtWMzODW5cb3HlPTQw==
+    akiseleva:
+      key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyxzlFKlCcfwagnnmCg1r9SUVfAgy/IdPSxsnpELjCRaz3FI66sYa1F1RdZngoXmYxe5qlmkiRQ0rCjIYk12I08du5FJGYQvMttJEgmVeHtFKW0o3uGBIKNJ5nCni3lR8idPTRXqhwdXYeA4A9+COQO4MGcaJZrqHgEviZt4jQrYy90WdqbKTD4meBRy4MC9+TOUs719kTxK54tmMHBq2l/ukmv3FwgtLz2xMeNW7htiS/1rzA9CEerjkvpc0mOxc4DCY4bH8sR2Ts3Y33Rx6aUN8shTij2aX2v8UvUay2JPqQTJicY+IsYl4D8w/XPx00Oj/3b54f6kTLlzzoNDq5 alena@alena-Lenovo-V580c

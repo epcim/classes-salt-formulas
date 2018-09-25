@@ -1,0 +1,10 @@
+classes:
+- openssh.server.team.members.azvyagintsev
+- openssh.server.team.members.degorenko
+- openssh.server.team.members.iberezovskiy
+parameters:
+  _param:
+    linux_system_user_sudo: true
+  openssh:
+    server:
+      enabled: true

@@ -13,7 +13,16 @@ parameters:
           source: "deb [arch=amd64] ${_param:linux_system_repo_mcp_saltstack_url}/${_param:linux_system_codename}/ ${_param:linux_system_codename} main"
           architectures: amd64
           clean_file: true
-          pin:
-          - pin: 'release o=SaltStack'
-            priority: 1100
-            package: '*'
+          pinning:
+            10:
+              enabled: true
+              pin: 'release o=SaltStack'
+              # WA for https://github.com/saltstack/salt/issues/49653
+              # Should be removed with new version\fix in upstream.
+              priority: 50
+              package: 'libsodium18'
+            20:
+              enabled: true
+              pin: 'release o=SaltStack'
+              priority: 1100
+              package: '*'

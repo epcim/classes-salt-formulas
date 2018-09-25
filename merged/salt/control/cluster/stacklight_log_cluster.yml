@@ -1,4 +1,7 @@
 parameters:
+  _param:
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    stacklight_log_backend_image: ${_param:salt_control_xenial_image_backend}
   salt:
     control:
       size:
@@ -16,14 +19,17 @@ parameters:
               name: ${_param:stacklight_log_node01_hostname}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:stacklight_log_backend_image}
               size: stacklight.log
             log02:
               name: ${_param:stacklight_log_node02_hostname}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:stacklight_log_backend_image}
               size: stacklight.log
             log03:
               name: ${_param:stacklight_log_node03_hostname}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:stacklight_log_backend_image}
               size: stacklight.log

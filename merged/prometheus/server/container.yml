@@ -4,14 +4,16 @@ classes:
 - prometheus.server
 parameters:
   _param:
+    prometheus_am_queue_capacity: 10000
     prometheus_evaluation_interval: 15s
     prometheus_region_label: region1
     prometheus_scrape_interval: 15s
+    prometheus_scrape_timeout: 15s
     prometheus_storage_retention: 360h
   prometheus:
     server:
       alertmanager:
-        notification_queue_capacity: 10000
+        notification_queue_capacity: ${_param:prometheus_am_queue_capacity}
       bind:
         address: 0.0.0.0
         port: 9090
@@ -21,7 +23,7 @@ parameters:
           external_labels:
             region: ${_param:prometheus_region_label}
           scrape_interval: ${_param:prometheus_scrape_interval}
-          scrape_timeout: 15s
+          scrape_timeout: ${_param:prometheus_scrape_timeout}
       dir:
         config: /srv/volumes/prometheus/server
         config_in_container: /srv/prometheus

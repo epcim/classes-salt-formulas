@@ -6,6 +6,8 @@ parameters:
     cicd_control_node01_hostname: cid01
     cicd_control_node02_hostname: cid02
     cicd_control_node03_hostname: cid03
+    salt_control_xenial_image_backend: /var/lib/libvirt/images/backends/xenial.qcow2
+    cicd_control_backend_image: ${_param:salt_control_xenial_image_backend}
   salt:
     control:
       cluster:
@@ -14,15 +16,18 @@ parameters:
             cid01:
               name: ${_param:cicd_control_node01_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:cicd_control_backend_image}
               provider: ${_param:infra_kvm_node01_hostname}.${_param:cluster_domain}
               size: cicd.control
             cid02:
               name: ${_param:cicd_control_node02_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:cicd_control_backend_image}
               provider: ${_param:infra_kvm_node02_hostname}.${_param:cluster_domain}
               size: cicd.control
             cid03:
               name: ${_param:cicd_control_node03_hostname}
               image: ${_param:salt_control_xenial_image}
+              backend: ${_param:cicd_control_backend_image}
               provider: ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
               size: cicd.control

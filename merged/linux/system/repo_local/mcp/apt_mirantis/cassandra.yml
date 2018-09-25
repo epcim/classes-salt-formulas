@@ -1,3 +1,5 @@
+# DEPRECATED since 2018.7+ release.
+# Please use system/repo/mcp/apt_mirantis
 parameters:
   _param:
     apt_mk_version: stable

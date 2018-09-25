@@ -11,7 +11,7 @@ parameters:
             - name: mcp-common-scripts
               source: mcp/mcp-common-scripts
               target: Mirantis/mcp-common-scripts
-              branches: "master"
+              branches: "master,release/2018.8.1"
             - name: mcp-local-repo-model
               source: mcp/mcp-local-repo-model
               target: Mirantis/mcp-local-repo-model
@@ -23,6 +23,10 @@ parameters:
             - name: mcp-drivetrain-model
               source: mcp/mcp-drivetrain-model
               target: Mirantis/mcp-drivetrain-model
+              branches: "master"
+            - name: model-manager
+              source: python-apps/model-manager
+              target: salt-formulas/django-model-manager
               branches: "master"
           template:
             description: ${_param:job_description_2way}

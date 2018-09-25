@@ -2,10 +2,12 @@ parameters:
   _param:
     prometheus_server_config_directory: /srv/prometheus
     prometheus_server_data_directory: /data
+    prometheus_server_host_config_directory: /srv/volumes/local/prometheus/config
+    prometheus_server_host_data_directory: /srv/volumes/local/prometheus/data
   prometheus:
     server:
       version: 2.0
       dir:
-        data: /srv/volumes/local/prometheus/data
-        config: /srv/volumes/local/prometheus/config
+        data: ${_param:prometheus_server_host_data_directory}
+        config: ${_param:prometheus_server_host_config_directory}
         config_in_container: ${_param:prometheus_server_config_directory}

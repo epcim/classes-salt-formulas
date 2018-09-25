@@ -71,7 +71,11 @@ parameters:
                   mcp/{{oscore-qa-project}}:
                     branches:
                       - master
+                      - queens
                       - pike
+                      - ocata
+                      - newton
+                      - mitaka
                 event:
                   patchset:
                     - created
